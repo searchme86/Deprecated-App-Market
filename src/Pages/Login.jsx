@@ -1,84 +1,110 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { apiPost } from '../Config/Api/Axios';
-import { ErrorHandler } from '../Config/ErrorHandler';
+import React, { useState, useEffect } from 'react';
+import {
+  MDBCard,
+  MDBCardBody,
+  MDBInput,
+  MDBCardFooter,
+  MDBValidation,
+  MDBBtn,
+  MDBIcon,
+  MDBSpinner,
+} from 'mdb-react-ui-kit';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { googleSignIn, login } from '../Store/Features/AuthSlice';
+
+const initialState = {
+  email: '',
+  password: '',
+};
 
 function Login() {
-  const LOGIN_URL = '/auth/login';
-
-  const [user, setUser] = useState('');
-  const [pwd, setPwd] = useState('');
-  const [errMsg, setErrMsg] = useState('');
-
-  const userInputRef = useRef(null);
-
+  const [formValue, setFormValue] = useState(initialState);
+  const { loading, error } = useSelector((state) => ({ ...state.auth }));
+  const { email, password } = formValue;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
-  const whereUserfrom = location.state?.from?.pathname || '/';
 
   useEffect(() => {
-    userInputRef.current.focus();
-  });
+    error && toast.error(error);
+  }, [error]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const {
-        data: { roles, accessToken },
-      } = await apiPost('post', LOGIN_URL, { user, pwd });
-      setUser('');
-      setPwd('');
-      navigate(whereUserfrom, { replace: true });
-    } catch (error) {
-      const message = ErrorHandler(error);
-      setErrMsg(message);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email && password) {
+      dispatch(login({ formValue, navigate, toast }));
     }
   };
+  const onInputChange = (e) => {
+    let { name, value } = e.target;
+    setFormValue({ ...formValue, [name]: value });
+  };
+
+  // const devEnv = process.env.NODE_ENV !== 'production';
 
   return (
-    <section>
-      <p className={errMsg ? 'errmsg' : 'offscreen'} aria-live="assertive">
-        {errMsg}
-      </p>
-      <h1>Sign In</h1>
-
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          ref={userInputRef}
-          onChange={(e) => setUser(e.target.value)}
-          autoComplete="off"
-          required
-        />
-
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          onChange={(e) => setPwd(e.target.value)}
-          required
-        />
-        <button type="submit">Sign In</button>
-        {/* <div className="persistCheck">
-          <input
-            type="checkbox"
-            id="persist"
-            onChange={toggleCheck}
-            checked={check}
-          />
-          <label htmlFor="persist">Trust This Device</label>
-        </div> */}
-      </form>
-      <p>
-        Need an Account?
-        <br />
-        <span className="line">
-          <Link to="/register">Sign Up</Link>
-        </span>
-      </p>
-    </section>
+    <div
+      style={{
+        margin: 'auto',
+        padding: '15px',
+        maxWidth: '450px',
+        alignContent: 'center',
+        marginTop: '120px',
+      }}
+    >
+      <MDBCard alignment="center">
+        <MDBIcon fas icon="user-circle" className="fa-2x" />
+        <h5>Sign In</h5>
+        <MDBCardBody>
+          <MDBValidation onSubmit={handleSubmit} noValidate className="row g-3">
+            <div className="col-md-12">
+              <MDBInput
+                label="Email"
+                type="email"
+                value={email}
+                name="email"
+                onChange={onInputChange}
+                required
+                invalid
+                validation="Please provide your email"
+              />
+            </div>
+            <div className="col-md-12">
+              <MDBInput
+                label="Password"
+                type="password"
+                value={password}
+                name="password"
+                onChange={onInputChange}
+                required
+                invalid
+                validation="Please provide your password"
+              />
+            </div>
+            <div className="col-12">
+              <MDBBtn style={{ width: '100%' }} className="mt-2">
+                {loading && (
+                  <MDBSpinner
+                    size="sm"
+                    role="status"
+                    tag="span"
+                    className="me-2"
+                  />
+                )}
+                Login
+              </MDBBtn>
+            </div>
+          </MDBValidation>
+          <br />
+        </MDBCardBody>
+        <MDBCardFooter>
+          <Link to="/register">
+            <p>Don't have an account ? Sign Up</p>
+          </Link>
+        </MDBCardFooter>
+      </MDBCard>
+    </div>
   );
 }
 
