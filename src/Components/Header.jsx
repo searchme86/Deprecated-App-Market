@@ -51,7 +51,7 @@ function Header() {
   };
 
   return (
-    <MDBNavbar fixed="top" expand="lg" style={{ backgroundColor: '#f0e6ea' }}>
+    <MDBNavbar expand="lg" style={{ backgroundColor: '#f0e6ea' }}>
       <MDBContainer>
         <MDBNavbarBrand
           href="/"
