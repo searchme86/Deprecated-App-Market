@@ -55,6 +55,20 @@ export const changeProfile = createAsyncThunk(
   }
 );
 
+export const checkPwd = createAsyncThunk(
+  'auth/password',
+  async ({ formValue, navigate, toast }, { rejectWithValue }) => {
+    try {
+      const response = await api.checkPwd(formValue);
+      toast.success('변경가능한 비밀번호 입니다.');
+      navigate('/');
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 // export const googleSignIn = createAsyncThunk(
 //   'auth/googleSignIn',
 //   async ({ result, navigate, toast }, { rejectWithValue }) => {

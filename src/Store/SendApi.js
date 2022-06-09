@@ -22,8 +22,11 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-//profile
+//profile(new)
 export const profile = (formData) => API.post('/user/profile', formData);
+
+// check pwd (new)
+export const checkPwd = (formData) => API.post('/user/password', formData);
 
 //sign
 export const signIn = (formData) => API.post('/users/signin', formData);
