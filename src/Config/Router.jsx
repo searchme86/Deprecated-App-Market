@@ -50,7 +50,7 @@ function Router() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
-          path="/user"
+          path="/profile"
           element={
             <PrivateRoute>
               <UserPage />
