@@ -49,14 +49,16 @@ function Router() {
         <Route path="/tours/tag/:tag" element={<TagTours />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-              <UserPage />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/profile">
+          <Route
+            path=":nickname"
+            element={
+              <PrivateRoute>
+                <UserPage />
+              </PrivateRoute>
+            }
+          />
+        </Route>
         <Route
           path="/addTour"
           element={
