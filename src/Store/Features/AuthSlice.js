@@ -57,13 +57,15 @@ export const changeProfile = createAsyncThunk(
 
 export const checkPwd = createAsyncThunk(
   'auth/password',
-  async ({ formValue, navigate, toast }, { rejectWithValue }) => {
+  async ({ nickname, password }, { rejectWithValue }) => {
+    console.log(nickname, password);
     try {
-      const response = await api.checkPwd(formValue);
-      toast.success('변경가능한 비밀번호 입니다.');
-      navigate('/');
+      const response = await api.checkIfPwd(nickname, password);
+      // toast.success('변경가능한 비밀번호 입니다.');
       return response.data;
     } catch (err) {
+      console.log('error', err.response);
+      console.log('error', err.response.data);
       return rejectWithValue(err.response.data);
     }
   }
@@ -87,6 +89,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     user: null,
+    pwdChangable: '',
     error: '',
     loading: false,
   },
@@ -124,6 +127,17 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = action.payload.message;
     },
+    [checkPwd.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [checkPwd.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.pwdChangable = action.payload;
+    },
+    [checkPwd.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
     [changeProfile.pending]: (state, action) => {
       state.loading = true;
     },
@@ -133,6 +147,7 @@ const authSlice = createSlice({
     },
     [changeProfile.rejected]: (state, action) => {
       state.loading = false;
+      state.error = action.payload.message;
     },
 
     // [googleSignIn.pending]: (state, action) => {
