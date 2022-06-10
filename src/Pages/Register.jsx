@@ -18,6 +18,7 @@ import { register } from '../Store/Features/AuthSlice';
 const initialState = {
   firstName: '',
   lastName: '',
+  nickname: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -27,8 +28,15 @@ const initialState = {
 function Register() {
   const [formValue, setFormValue] = useState(initialState);
   const { loading, error } = useSelector((state) => ({ ...state.auth }));
-  const { email, password, firstName, lastName, confirmPassword, imageFile } =
-    formValue;
+  const {
+    firstName,
+    lastName,
+    nickname,
+    email,
+    password,
+    confirmPassword,
+    imageFile,
+  } = formValue;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -42,10 +50,11 @@ function Register() {
       return toast.error('패스워드가 일치하지 않습니다');
     }
     if (
-      email &&
-      password &&
+      nickname &&
       firstName &&
       lastName &&
+      email &&
+      password &&
       confirmPassword &&
       imageFile
     ) {
@@ -95,6 +104,20 @@ function Register() {
                 validation="Please provide last name"
               />
             </div>
+            {/*  */}
+            <div className="col-md-12">
+              <MDBInput
+                label="nickname"
+                type="text"
+                value={nickname}
+                name="nickname"
+                onChange={onInputChange}
+                required
+                invalid
+                validation="Please provide nickname"
+              />
+            </div>
+            {/*  */}
             <div className="col-md-12">
               <MDBInput
                 label="Email"
