@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const devEnv = process.env.NODE_ENV !== 'production';
-
+// const devEnv = process.env.NODE_ENV !== 'production';
 // const { REACT_APP_DEV_API, REACT_APP_PROD_API } = process.env;
 
 const API = axios.create({
@@ -23,10 +22,11 @@ API.interceptors.request.use((req) => {
 });
 
 //profile(new)
-export const profile = (formData) => API.post('/user/profile', formData);
+export const profile = (formData) => API.post('/users/profile/', formData);
 
 // check pwd (new)
-export const checkPwd = (formData) => API.post('/user/password', formData);
+export const checkIfPwd = (nickname, formData) =>
+  API.post(`/users/profile/${nickname}`, formData);
 
 //sign
 export const signIn = (formData) => API.post('/users/signin', formData);
