@@ -26,9 +26,10 @@ function UserPage() {
   //비밀번호 확인 폼에 입력하는 값이 저장하는 로컬 스테이트
   const [confirmValue, setConfirmValue] = useState('');
 
-  //[-비밀번호 확인-]
-  //비밀번호 확인 값과 비밀번호 확인의 값이 일치하는 검사 로컬 스테이트
-  const [match, setMatch] = useState(false);
+  // //[-비밀번호 확인-]
+  // //비밀번호 확인 값과 비밀번호 확인의 값이 일치하는 검사 로컬 스테이트
+
+  const [alert, setAlert] = useState('');
 
   //[-버튼, 변경하기-]
   //모든 작업을 하고 성공했는지를 확인하는 로컬 스테이트
@@ -45,9 +46,22 @@ function UserPage() {
   } = user;
   const dispatch = useDispatch();
 
+  const isMatch = [pwd, confirmValue].every(Boolean) && pwd === confirmValue;
+  const allBlank = !pwd && !confirmValue;
+  const confirmBlank = pwd && !confirmValue;
+  const pwdBlank = !pwd && confirmValue;
+
   useEffect(() => {
     pwdRef.current.focus();
+    setAlert('');
   }, []);
+
+  useEffect(() => {
+    if (!pwd || !confirmValue) {
+      setAlert(null);
+      console.log('ddd');
+    }
+  }, [pwd, confirmValue]);
 
   useEffect(() => {
     error && toast.error(error);
@@ -67,6 +81,7 @@ function UserPage() {
   // 비밀번호를 입력할때 이것을 pwd에 저장하는 핸들러
   const isChangable = (e) => {
     setPwd(e.target.value);
+    handleMatch();
     console.log('pwd', pwd);
     console.log({ nickname, password: pwd });
   };
@@ -82,17 +97,10 @@ function UserPage() {
   // <--------비밀번호 확인-------->
 
   //[-비밀번호 확인-]
-  // 변경할 비밀번호와 비밀번호 확인의 값이 서로 일치하는지 검사여부 핸들러
-  const handleMatch = () => {
-    if (pwd === confirmValue) {
-      setMatch((value) => !value);
-    }
-  };
-
-  //[-비밀번호 확인-]
   // 비밀번호 확인 폼에 값을 저장하는 핸들러
   const handleConfirm = (e) => {
     setConfirmValue(e.target.value);
+
     handleMatch();
   };
 
@@ -106,6 +114,18 @@ function UserPage() {
     e.preventDefault();
   };
 
+  console.log('allBlank', allBlank);
+  console.log('confirmBlank', confirmBlank);
+  console.log('pwdBlank', pwdBlank);
+
+  const handleMatch = () => {
+    if (isMatch) {
+      setAlert('비밀번호가 일치합니다.');
+    } else {
+      setAlert('비밀번호가 일치하지 않습니다.');
+    }
+  };
+
   //1. 만약 하나 폼이 있으면,
   console.log(
     'pwdChangable , message, changable',
@@ -116,8 +136,6 @@ function UserPage() {
 
   console.log('imageFile', imageFile);
   console.log('match', pwd === confirmValue);
-
-  const canSave = [pwd, confirmValue].every(Boolean) && pwd === confirmValue;
 
   return (
     <div className="settings">
@@ -162,6 +180,7 @@ function UserPage() {
                     id="changePwd"
                     autoComplete="off"
                     onChange={isChangable}
+                    onKeyUp={handleMatch}
                     // aria-invalid={validPwd ? 'false' : 'true'}
                     aria-describedby="변경 비밀번호"
                   />
@@ -188,15 +207,11 @@ function UserPage() {
                     aria-describedby="변경 비밀번호 확인"
                   />
                 </div>
-                {match ? (
-                  <p>비밀번호가 일치합니다</p>
-                ) : (
-                  <p>비밀번호가 일치하지 않습니다</p>
-                )}
+                {alert}
               </div>
             </li>
           </ul>
-          <button type="submit" onClick={handleChange} disabled={!canSave}>
+          <button type="submit" onClick={handleChange} disabled={!isMatch}>
             변경하기
           </button>
         </form>
