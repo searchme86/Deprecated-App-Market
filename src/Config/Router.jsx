@@ -30,6 +30,7 @@ import Dashboard from '../Pages/Dashboard';
 import NotFound from '../Pages/NotFound';
 import TagTours from '../Pages/TagTours';
 import UserPage from '../Pages/Manager/UserPage';
+import UploadProduct from '../Pages/Manager/UploadProduct';
 
 function Router() {
   const dispatch = useDispatch();
@@ -59,6 +60,16 @@ function Router() {
             }
           />
         </Route>
+        {/*  */}
+        <Route
+          path="/upload"
+          element={
+            <PrivateRoute>
+              <UploadProduct />
+            </PrivateRoute>
+          }
+        />
+        {/*  */}
         <Route
           path="/addTour"
           element={
