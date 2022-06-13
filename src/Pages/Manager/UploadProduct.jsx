@@ -13,15 +13,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { saveUp } from '../../Store/Features/ProductSlice';
 
 const initialState = {
-  //아이템 이름
   itemTitle: '',
-  //아이템이 속한 카테고리
   itemCategory: '',
-  //아이템 가격,
   itemPrice: '',
-  //아이템 소개
   itemDescription: '',
-  //아이템 관련한 해쉬태그
   itemHasTag: [],
 };
 
@@ -79,7 +74,8 @@ function UploadProduct() {
       itemHasTag &&
       itemPrice
     ) {
-      dispatch(saveUp({ uploadData }));
+      dispatch(saveUp({ uploadData, toast }));
+      handleClear();
     }
   };
 
