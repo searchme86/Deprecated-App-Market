@@ -12,15 +12,15 @@ import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveUp } from '../../Store/Features/ProductSlice';
 
-const initialState = {
-  itemTitle: '',
-  itemCategory: '',
-  itemPrice: '',
-  itemDescription: '',
-  itemHasTag: [],
-};
-
 function UploadProduct() {
+  const initialState = {
+    itemTitle: '',
+    itemCategory: '',
+    itemPrice: '',
+    itemDescription: '',
+    itemHasTag: [],
+  };
+
   const [uploadData, setUploadData] = useState(initialState);
   const [tagErrMsg, setTagErrMsg] = useState(null);
   const { error } = useSelector((state) => state.product);

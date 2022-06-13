@@ -55,3 +55,7 @@ export const likeTour = (id) => API.patch(`/tour/like/${id}`);
 //uploadProduct
 export const uploadProduct = (uploadData) =>
   API.post('/product/upload', uploadData);
+
+//*-------category-------*
+export const createCategory = (categoryData) =>
+  API.post('/category/upload', categoryData);

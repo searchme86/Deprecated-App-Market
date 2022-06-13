@@ -5,6 +5,7 @@ import AuthReducer from './Features/AuthSlice';
 import CartReducer from './Features/CartSlice';
 import TourReducer from './Features/TourSlice';
 import ProductReducer from './Features/ProductSlice';
+import CategoryReducer from './Features/CategorySlice';
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     tour: TourReducer,
     cart: CartReducer,
     product: ProductReducer,
+    category: CategoryReducer,
   },
 });
