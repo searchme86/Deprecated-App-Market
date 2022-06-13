@@ -15,6 +15,7 @@ import { createTour, updateTour } from '../Store/Features/TourSlice';
 
 const initialState = {
   title: '',
+  category: '',
   description: '',
   tags: [],
 };
@@ -29,11 +30,12 @@ function AddEditTour() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { title, description, tags } = tourData;
+  const { title, category, description, tags } = tourData;
   //등록한 아이템을 변경하기 위해 useParam을 import했고, id를 destructuring 한다
   const { id } = useParams();
 
   useEffect(() => {
+    //현재 로그인한 유저가 등록한 아이템의 디비에 저장된 _id를 가져오기 위한 로직
     if (id) {
       const singleTour = userTours.find((tour) => tour._id === id);
       //dashboard 글자를 클릭할때,
@@ -56,7 +58,7 @@ function AddEditTour() {
     if (!tags.length) {
       setTagErrMsg('Please provide some tags');
     }
-    if (title && description && tags) {
+    if (title && category && description && tags) {
       const updatedTourData = { ...tourData, name: user?.result?.name };
 
       if (!id) {
@@ -82,7 +84,7 @@ function AddEditTour() {
     });
   };
   const handleClear = () => {
-    setTourData({ title: '', description: '', tags: [] });
+    setTourData({ title: '', category: '', description: '', tags: [] });
   };
 
   return (
@@ -140,6 +142,23 @@ function AddEditTour() {
               />
               {tagErrMsg && <div className="tagErrMsg">{tagErrMsg}</div>}
             </div>
+            {/* ------------카테고리 넣을 공간 ------------*/}
+            <div className="col-md-12">
+              <MDBInput
+                placeholder="제품에 해당하는 카테고리는 무엇인가요?"
+                type="text"
+                value={category}
+                name="category"
+                onChange={onInputChange}
+                className="form-control"
+                required
+                invalid
+                textarea
+                rows={4}
+                validation="카테고리 입력공간에 텍스트가 없습니다."
+              />
+            </div>
+            {/* ------------카테고리 넣을 공간 ------------*/}
             <div className="d-flex justify-content-start">
               <FileBase
                 type="file"
