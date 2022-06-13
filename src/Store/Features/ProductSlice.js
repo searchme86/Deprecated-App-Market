@@ -1,4 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import * as api from '../SendApi';
+
+export const saveUp = createAsyncThunk(
+  'product/createTour',
+  async ({ uploadData, toast }, { rejectWithValue }) => {
+    try {
+      const response = await api.uploadProduct(uploadData);
+      toast.success('Product Added Successfully');
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
 
 const ProductSlice = createSlice({
   name: 'product',
@@ -14,15 +28,31 @@ const ProductSlice = createSlice({
     //페이징을 하기 위한
     currentPage: 1,
     numberOfPages: null,
-    error: '',
     loading: false,
+    isFetching: false,
+    error: '',
   },
   reducers: {
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
     },
   },
-  extraReducers: {},
+  extraReducers: {
+    [saveUp.pending]: (state, action) => {
+      state.isFetching = false;
+      state.loading = true;
+    },
+    [saveUp.fulfilled]: (state, action) => {
+      state.isFetching = true;
+      state.loading = false;
+      state.products = [action.payload];
+    },
+    [saveUp.rejected]: (state, action) => {
+      state.isFetching = false;
+      state.loading = false;
+      state.error = action.payload;
+    },
+  },
 });
 
 export const { setCurrentPage } = ProductSlice.actions;
