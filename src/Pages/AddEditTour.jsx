@@ -35,6 +35,7 @@ function AddEditTour() {
   const { id } = useParams();
 
   useEffect(() => {
+    //현재 로그인한 유저가 등록한 아이템의 디비에 저장된 _id를 가져오기 위한 로직
     if (id) {
       const singleTour = userTours.find((tour) => tour._id === id);
       //dashboard 글자를 클릭할때,
