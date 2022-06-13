@@ -95,13 +95,22 @@ function Header() {
               </>
             )}
             {user?.result?._id ? (
-              <MDBNavbarItem>
-                <MDBNavbarLink href="/login">
-                  <p className="header-text" onClick={() => handleLogout()}>
-                    Logout
-                  </p>
-                </MDBNavbarLink>
-              </MDBNavbarItem>
+              <>
+                <MDBNavbarItem>
+                  <MDBNavbarLink href="/login">
+                    <p className="header-text" onClick={() => handleLogout()}>
+                      Logout
+                    </p>
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
+                {/* 상품등록 헤더 작업중 */}
+                <MDBNavbarItem>
+                  <MDBNavbarLink href={`/profile/${user.result.nickname}`}>
+                    <p className="header-text">상품등록</p>
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
+                {/* 상품등록 헤더 작업중 */}
+              </>
             ) : (
               <MDBNavbarItem>
                 <MDBNavbarLink href="/login">
