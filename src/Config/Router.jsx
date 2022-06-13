@@ -31,6 +31,7 @@ import NotFound from '../Pages/NotFound';
 import TagTours from '../Pages/TagTours';
 import UserPage from '../Pages/Manager/UserPage';
 import UploadProduct from '../Pages/Manager/UploadProduct';
+import UploadCategory from '../Pages/Manager/UploadCategory';
 
 function Router() {
   const dispatch = useDispatch();
@@ -66,6 +67,14 @@ function Router() {
           element={
             <PrivateRoute>
               <UploadProduct />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/category"
+          element={
+            <PrivateRoute>
+              <UploadCategory />
             </PrivateRoute>
           }
         />

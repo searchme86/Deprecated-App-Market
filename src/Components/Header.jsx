@@ -108,6 +108,11 @@ function Header() {
                     <p className="header-text">상품등록</p>
                   </MDBNavbarLink>
                 </MDBNavbarItem>
+                <MDBNavbarItem>
+                  <MDBNavbarLink href="/category">
+                    <p className="header-text">카테고리 관리</p>
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
               </>
             ) : (
               <MDBNavbarItem>
