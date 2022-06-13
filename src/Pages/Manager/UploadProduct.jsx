@@ -17,6 +17,8 @@ const initialState = {
   itemTitle: '',
   //아이템이 속한 카테고리
   itemCategory: '',
+  //아이템 가격,
+  itemPrice: '',
   //아이템 소개
   itemDescription: '',
   //아이템 관련한 해쉬태그
@@ -28,7 +30,8 @@ function UploadProduct() {
   const [tagErrMsg, setTagErrMsg] = useState(null);
   const { error } = useSelector((state) => state.product);
   const dispatch = useDispatch();
-  const { itemTitle, itemCategory, itemDescription, itemHasTag } = uploadData;
+  const { itemTitle, itemCategory, itemDescription, itemHasTag, itemPrice } =
+    uploadData;
 
   useEffect(() => {
     error && toast.error(error);
@@ -59,6 +62,7 @@ function UploadProduct() {
       itemTitle: '',
       itemCategory: '',
       itemDescription: '',
+      itemPrice: '',
       itemHasTag: [],
     });
   };
@@ -68,7 +72,13 @@ function UploadProduct() {
     if (!itemHasTag.length) {
       setTagErrMsg('Please provide some tags');
     }
-    if (itemTitle && itemCategory && itemDescription && itemHasTag) {
+    if (
+      itemTitle &&
+      itemCategory &&
+      itemDescription &&
+      itemHasTag &&
+      itemPrice
+    ) {
       dispatch(saveUp({ uploadData }));
     }
   };
@@ -119,6 +129,21 @@ function UploadProduct() {
                   textarea
                   rows={4}
                   validation="Please provide description"
+                />
+              </div>
+              <div className="col-md-12">
+                <MDBInput
+                  placeholder="Enter itemPrice"
+                  type="text"
+                  value={itemPrice}
+                  name="itemPrice"
+                  onChange={onInputChange}
+                  className="form-control"
+                  required
+                  invalid
+                  textarea
+                  rows={4}
+                  validation="Please provide itemPrice"
                 />
               </div>
               <div className="col-md-12">
