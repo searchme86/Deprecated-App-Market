@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import * as api from '../SendApi';
 
 export const saveUp = createAsyncThunk(
-  'product/createTour',
+  'product/upload',
   async ({ uploadData, toast }, { rejectWithValue }) => {
     try {
       const response = await api.uploadProduct(uploadData);
