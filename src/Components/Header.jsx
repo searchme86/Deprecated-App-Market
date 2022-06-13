@@ -103,13 +103,11 @@ function Header() {
                     </p>
                   </MDBNavbarLink>
                 </MDBNavbarItem>
-                {/* 상품등록 헤더 작업중 */}
                 <MDBNavbarItem>
-                  <MDBNavbarLink href={`/profile/${user.result.nickname}`}>
+                  <MDBNavbarLink href="/upload">
                     <p className="header-text">상품등록</p>
                   </MDBNavbarLink>
                 </MDBNavbarItem>
-                {/* 상품등록 헤더 작업중 */}
               </>
             ) : (
               <MDBNavbarItem>
