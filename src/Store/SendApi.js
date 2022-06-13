@@ -54,4 +54,4 @@ export const likeTour = (id) => API.patch(`/tour/like/${id}`);
 //*-------product-------*
 //uploadProduct
 export const uploadProduct = (uploadData) =>
-  API.pody('/product/upload', uploadData);
+  API.post('/product/upload', uploadData);
