@@ -17,3 +17,7 @@ export const AlignComponents = styled.div`
   juatify-conetent: center;
   align-items: center;
 `;
+
+export const AlignList = styled.ul`
+  display: flex;
+`;
