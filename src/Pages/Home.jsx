@@ -7,6 +7,7 @@ import Spinner from '../Components/Spinner';
 import Pagination from '../Components/Pagination';
 
 import { useLocation } from 'react-router-dom';
+import ManageCategory from './Manager/category/ManageCategory';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -47,6 +48,12 @@ function Home() {
         alignContent: 'center',
       }}
     >
+      {/* 새롭게 데이터가 들어갈 공간 */}
+      <div className="">
+        <ManageCategory />
+      </div>
+      {/* 새롭게 데이터가 들어갈 공간 */}
+
       <MDBRow className="mt-5">
         {tours?.length === 0 && location.pathname === '/' && (
           <MDBTypography className="text-center mb-0" tag="h2">
