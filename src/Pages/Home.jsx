@@ -40,52 +40,53 @@ function Home() {
   console.log('tours length', tours);
 
   return (
-    <div
-      style={{
-        margin: 'auto',
-        padding: '15px',
-        maxWidth: '1000px',
-        alignContent: 'center',
-      }}
-    >
+    <>
       {/* 새롭게 데이터가 들어갈 공간 */}
       <div className="">
         <ManageCategory />
       </div>
       {/* 새롭게 데이터가 들어갈 공간 */}
+      <div
+        style={{
+          margin: 'auto',
+          padding: '15px',
+          maxWidth: '1000px',
+          alignContent: 'center',
+        }}
+      >
+        <MDBRow className="mt-5">
+          {tours?.length === 0 && location.pathname === '/' && (
+            <MDBTypography className="text-center mb-0" tag="h2">
+              No Tours Found
+            </MDBTypography>
+          )}
 
-      <MDBRow className="mt-5">
-        {tours?.length === 0 && location.pathname === '/' && (
-          <MDBTypography className="text-center mb-0" tag="h2">
-            No Tours Found
-          </MDBTypography>
+          {tours?.length === 0 && location.pathname !== '/' && (
+            <MDBTypography className="text-center mb-0" tag="h2">
+              We couldn't find any matches for "{searchQuery}"
+            </MDBTypography>
+          )}
+
+          <MDBCol>
+            <MDBContainer>
+              <MDBRow className="row-cols-1 row-cols-md-3 g-2">
+                {tours &&
+                  tours.map((item) => <CardTour key={item._id} {...item} />)}
+              </MDBRow>
+            </MDBContainer>
+          </MDBCol>
+        </MDBRow>
+
+        {tours?.length > 0 && !searchQuery && (
+          <Pagination
+            setCurrentPage={setCurrentPage}
+            numberOfPages={numberOfPages}
+            currentPage={currentPage}
+            dispatch={dispatch}
+          />
         )}
-
-        {tours?.length === 0 && location.pathname !== '/' && (
-          <MDBTypography className="text-center mb-0" tag="h2">
-            We couldn't find any matches for "{searchQuery}"
-          </MDBTypography>
-        )}
-
-        <MDBCol>
-          <MDBContainer>
-            <MDBRow className="row-cols-1 row-cols-md-3 g-2">
-              {tours &&
-                tours.map((item) => <CardTour key={item._id} {...item} />)}
-            </MDBRow>
-          </MDBContainer>
-        </MDBCol>
-      </MDBRow>
-
-      {tours?.length > 0 && !searchQuery && (
-        <Pagination
-          setCurrentPage={setCurrentPage}
-          numberOfPages={numberOfPages}
-          currentPage={currentPage}
-          dispatch={dispatch}
-        />
-      )}
-    </div>
+      </div>
+    </>
   );
 }
 
