@@ -13,17 +13,25 @@ function CategoryView({ categories }) {
     <CategoryWrapper>
       <h1>여기서부터 수정</h1>
       <ul>
-        {categories.map((category) => (
-          <li key={category._id}>
-            <div className="">
-              <div>
-                <img src={category.imageFile} alt={category.categoryLink} />
+        {categories.map(
+          ({
+            _id,
+            categoryTitle,
+            categoryDescription,
+            categoryLink,
+            imageFile,
+          }) => (
+            <li key={_id}>
+              <div className="">
+                <div>
+                  <img src={imageFile} alt={categoryLink} />
+                </div>
               </div>
-            </div>
-            <p className="offscreen">{category.categoryDescription}</p>
-            <strong>{category.categoryTitle}</strong>
-          </li>
-        ))}
+              <p className="offscreen">{categoryDescription}</p>
+              <strong>{categoryTitle}</strong>
+            </li>
+          )
+        )}
       </ul>
     </CategoryWrapper>
   );
