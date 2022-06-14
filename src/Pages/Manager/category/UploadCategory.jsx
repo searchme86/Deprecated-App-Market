@@ -9,13 +9,14 @@ import {
 import FileBase from 'react-file-base64';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
-import { createCategory } from '../../Store/Features/CategorySlice';
+import { createCategory } from '../../../Store/Features/CategorySlice';
 
 function UploadCategory() {
   const initialState = {
     categoryTitle: '',
     categoryDescription: '',
     categoryLink: '',
+    ImageDescription: '',
   };
 
   const [category, setCategory] = useState(initialState);
@@ -23,7 +24,8 @@ function UploadCategory() {
   const { error } = useSelector((state) => state.category);
   const dispatch = useDispatch();
 
-  const { categoryTitle, categoryDescription, categoryLink } = category;
+  const { categoryTitle, categoryDescription, categoryLink, ImageDescription } =
+    category;
 
   useEffect(() => {
     error && toast.error(error);
@@ -39,12 +41,18 @@ function UploadCategory() {
       categoryTitle: '',
       categoryDescription: '',
       categoryLink: '',
+      ImageDescription: '',
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (categoryTitle && categoryDescription && categoryLink) {
+    if (
+      categoryTitle &&
+      categoryDescription &&
+      categoryLink &&
+      ImageDescription
+    ) {
       dispatch(createCategory({ category, toast }));
       console.log({ category, toast });
       handleClear();
@@ -121,6 +129,21 @@ function UploadCategory() {
                   onDone={({ base64 }) =>
                     setCategory({ ...category, imageFile: base64 })
                   }
+                />
+              </div>
+              <div className="col-md-12">
+                <MDBInput
+                  placeholder="Enter ImageDescription"
+                  type="text"
+                  value={ImageDescription}
+                  name="ImageDescription"
+                  onChange={onInputChange}
+                  className="form-control"
+                  required
+                  invalid
+                  textarea
+                  rows={4}
+                  validation="Please provide ImageDescription"
                 />
               </div>
               <div className="col-12">

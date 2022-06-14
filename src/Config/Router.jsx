@@ -31,7 +31,7 @@ import NotFound from '../Pages/NotFound';
 import TagTours from '../Pages/TagTours';
 import UserPage from '../Pages/Manager/UserPage';
 import UploadProduct from '../Pages/Manager/UploadProduct';
-import UploadCategory from '../Pages/Manager/UploadCategory';
+import UploadCategory from '../Pages/Manager/category/UploadCategory';
 
 function Router() {
   const dispatch = useDispatch();

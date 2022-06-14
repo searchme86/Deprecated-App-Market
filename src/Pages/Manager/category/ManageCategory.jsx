@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getCategoryList } from '../../../Store/Features/CategorySlice.js';
+import CategoryView from './CategoryView';
 
 function ManageCategory() {
   const { categories } = useSelector((state) => state.category);
@@ -18,7 +19,7 @@ function ManageCategory() {
   return (
     <div className="">
       <h1>ManageCategory</h1>
-      {console.log('categories', categories)}
+      <CategoryView categories={categories} />
     </div>
   );
 }
