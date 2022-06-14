@@ -56,7 +56,7 @@ const categorySlice = createSlice({
     [getCategoryList.fulfilled]: (state, action) => {
       state.loading = false;
       // state.categories.concat(action.payload);
-      state.categories = [action.payload];
+      state.categories = action.payload;
     },
     [getCategoryList.rejected]: (state, action) => {
       state.loading = false;
