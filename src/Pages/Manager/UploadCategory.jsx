@@ -46,6 +46,7 @@ function UploadCategory() {
     e.preventDefault();
     if (categoryTitle && categoryDescription && categoryLink) {
       dispatch(createCategory({ category, toast }));
+      console.log({ category, toast });
       handleClear();
     }
   };
