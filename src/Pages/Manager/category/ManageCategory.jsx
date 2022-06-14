@@ -14,14 +14,9 @@ function ManageCategory() {
     };
 
     listOfCategory();
-  }, [dispatch]);
+  }, []);
 
-  return (
-    <div className="">
-      <h1>ManageCategory</h1>
-      <CategoryView categories={categories} />
-    </div>
-  );
+  return <CategoryView categories={categories} />;
 }
 
 export default ManageCategory;
