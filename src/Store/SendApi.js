@@ -59,3 +59,5 @@ export const uploadProduct = (uploadData) =>
 //*-------category-------*
 export const createCategory = (categoryData) =>
   API.post('/category/upload', categoryData);
+
+export const getCategories = () => API.get('/category/categories');
