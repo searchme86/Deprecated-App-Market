@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { BasicLi, BasicStrong } from '../../../Assets/Styles/Basic.style';
+import { NavLink } from 'react-router-dom';
 
 export const Info = styled.div`
   opacity: 0;
@@ -56,4 +57,8 @@ export const CategoryTitle = styled(BasicStrong)`
   text-align: center;
   color: #424242;
   font-size: 19px;
+`;
+
+export const CreateCategoryBtn = styled(NavLink)`
+  margin: 0 10px 0 10px;
 `;
