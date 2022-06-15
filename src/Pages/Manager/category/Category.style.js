@@ -7,15 +7,16 @@ import {
 import { NavLink } from 'react-router-dom';
 
 export const CategoryWrapper = styled.div`
-  background-color: #f5fbfd;
+  ${'' /* background-color: #f5fbfd; */}
 `;
 
 export const CategoryItem = styled(BasicLi)`
-  width: 170px;
+  width: 200px;
   &:not(:last-child) {
     margin-right: 20px;
   }
-  border: 1px solid red;
+  border-radius: 14px;
+  box-shadow: 4px 12px 30px 6px rgb(0 0 0 / 9%);
 `;
 
 export const CategoryTitle = styled(BasicStrong)`

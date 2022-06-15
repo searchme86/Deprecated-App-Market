@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export const SectionDivier = styled.div`
-  margin: 10px 0;
+export const SectionDivier = styled.section`
+  margin: 20px 0;
 `;
 
 export const ContentDivider = styled.div`
