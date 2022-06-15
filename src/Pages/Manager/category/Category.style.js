@@ -4,7 +4,6 @@ import {
   BasicStrong,
   BasicButton,
 } from '../../../Assets/Styles/Basic.style';
-import { NavLink } from 'react-router-dom';
 
 export const CategoryWrapper = styled.div`
   ${'' /* background-color: #f5fbfd; */}
@@ -25,7 +24,7 @@ export const CategoryTitle = styled(BasicStrong)`
   font-size: 19px;
 `;
 
-export const CreateCategoryBtn = styled(NavLink)`
+export const CreateCategoryBtn = styled(BasicButton)`
   margin: 0 10px 0 10px;
 `;
 
