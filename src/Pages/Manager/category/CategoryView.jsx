@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -24,18 +24,28 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { deleteCategory } from '../../../Store/Features/CategorySlice';
+import ReactWrapperModal from './CategoryModal/ReactWrapperModal';
 
 function CategoryView({ categories }) {
   console.log('categories', categories);
-
+  const [isOpen, setIsOpen] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const handleDelete = (id) => {
-    console.log('_id', id);
-    console.log('삭제됐습니다.');
-    dispatch(deleteCategory({ id, toast }));
-  };
+  const handleModal = useCallback(() => {
+    setIsOpen((value) => !value);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const handleDelete = useCallback(
+    (id) => {
+      dispatch(deleteCategory({ id, toast }));
+    },
+    [dispatch]
+  );
 
   const updateCategory = (_id) => {
     console.log('_id', _id);
@@ -45,58 +55,63 @@ function CategoryView({ categories }) {
   return (
     <CategoryWrapper>
       {user ? (
-        <AlignComponents>
-          <ListContainer>
-            {categories.map(
-              ({
-                _id,
-                categoryTitle,
-                categoryDescription,
-                categoryLink,
-                imageFile,
-                ImageDescription,
-              }) => (
-                <CategoryItem key={_id}>
-                  <Link to={categoryLink}>
-                    <ImageHolder>
-                      <Image
-                        src={imageFile}
-                        alt={ImageDescription}
-                        radius={'14px'}
-                      />
-                    </ImageHolder>
+        <>
+          <AlignComponents>
+            <ListContainer>
+              {categories.map(
+                ({
+                  _id,
+                  categoryTitle,
+                  categoryDescription,
+                  categoryLink,
+                  imageFile,
+                  ImageDescription,
+                }) => (
+                  <CategoryItem key={_id}>
+                    <Link to={categoryLink}>
+                      <ImageHolder>
+                        <Image
+                          src={imageFile}
+                          alt={ImageDescription}
+                          radius={'14px'}
+                        />
+                      </ImageHolder>
+                      <ContentDivider>
+                        <OffScreen>{categoryDescription}</OffScreen>
+                        <CategoryTitle>{categoryTitle}</CategoryTitle>
+                      </ContentDivider>
+                    </Link>
                     <ContentDivider>
-                      <OffScreen>{categoryDescription}</OffScreen>
-                      <CategoryTitle>{categoryTitle}</CategoryTitle>
+                      <AlignList>
+                        <FunctionList>
+                          <FontAwesomeIcon
+                            icon={faPenToSquare}
+                            style={{ fontSize: 30, color: '#146ebe' }}
+                            onClick={updateCategory}
+                          />
+                        </FunctionList>
+                        <FunctionList>
+                          <FontAwesomeIcon
+                            icon={faTrashCan}
+                            style={{ fontSize: 30, color: '#ffd43b' }}
+                            onClick={() => handleDelete(_id)}
+                          />
+                        </FunctionList>
+                      </AlignList>
                     </ContentDivider>
-                    {/* {user ? <div></div> : ''} */}
-                  </Link>
-                  <ContentDivider>
-                    <AlignList>
-                      <FunctionList>
-                        <FontAwesomeIcon
-                          icon={faPenToSquare}
-                          style={{ fontSize: 30, color: '#146ebe' }}
-                          onClick={updateCategory}
-                        />
-                      </FunctionList>
-                      <FunctionList>
-                        <FontAwesomeIcon
-                          icon={faTrashCan}
-                          style={{ fontSize: 30, color: '#ffd43b' }}
-                          onClick={() => handleDelete(_id)}
-                        />
-                      </FunctionList>
-                    </AlignList>
-                  </ContentDivider>
-                </CategoryItem>
-              )
-            )}
-          </ListContainer>
-          <CreateCategoryBtn to="/category">
-            <FontAwesomeIcon icon={faCirclePlus} style={{ fontSize: 50 }} />
-          </CreateCategoryBtn>
-        </AlignComponents>
+                  </CategoryItem>
+                )
+              )}
+            </ListContainer>
+            <CreateCategoryBtn onClick={handleModal}>
+              <FontAwesomeIcon icon={faCirclePlus} style={{ fontSize: 50 }} />
+            </CreateCategoryBtn>
+          </AlignComponents>
+          {/* 최신 새롭게 만든 모달 부분 */}
+          <ReactWrapperModal handleClose={handleClose} isOpen={isOpen} />
+
+          {/* 최신 새롭게 만든 모달 부분 */}
+        </>
       ) : (
         <ListContainer>
           {categories.map(
