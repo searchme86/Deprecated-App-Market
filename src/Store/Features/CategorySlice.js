@@ -30,6 +30,21 @@ export const getCategoryList = createAsyncThunk(
   }
 );
 
+//해당 _id의 카테고리를 지움
+export const deleteCategory = createAsyncThunk(
+  'category/deleteCategory',
+  async ({ id, toast }, { rejectWithValue }) => {
+    try {
+      const response = await api.deleteCategory(id);
+      console.log('response', response);
+      toast.success('Category Deleted Successfully');
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const categorySlice = createSlice({
   name: 'category',
   initialState: {
@@ -59,6 +74,25 @@ const categorySlice = createSlice({
       state.categories = action.payload;
     },
     [getCategoryList.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [deleteCategory.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [deleteCategory.fulfilled]: (state, action) => {
+      state.loading = false;
+      console.log('action', action);
+      console.log('action.payload', action.payload);
+      const {
+        arg: { id },
+      } = action.meta;
+      if (id) {
+        state.categories = state.categories.filter((item) => item._id !== id);
+        // state.tours = state.tours.filter((item) => item._id !== id);
+      }
+    },
+    [deleteCategory.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },

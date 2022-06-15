@@ -11,9 +11,14 @@ export const OffScreen = styled.p`
   clip-path: inset(50%);
 `;
 
+export const BasicUl = styled.ul`
+  margin: 0 auto;
+`;
+
 export const BasicLi = styled.li`
   display: inline-block;
   vertical-align: top;
+  text-align: center;
 `;
 
 export const BasicButton = styled.button`

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-export const SectionDivier = styled.div`
-  margin: 10px 0;
+export const SectionDivier = styled.section`
+  margin: 20px 0;
 `;
 
 export const ContentDivider = styled.div`
@@ -13,5 +13,11 @@ export const ListContainer = styled.ul`
 `;
 
 export const AlignComponents = styled.div`
+  display: flex;
+  juatify-conetent: center;
+  align-items: center;
+`;
+
+export const AlignList = styled.ul`
   display: flex;
 `;
