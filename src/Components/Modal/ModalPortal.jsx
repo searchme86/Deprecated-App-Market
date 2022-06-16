@@ -1,7 +1,7 @@
 import { useState, useLayoutEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-function ReactPortal({ children, wrapperId = 'react-portal-wrapper' }) {
+function ModalPortal({ children, wrapperId = 'react-portal-wrapper' }) {
   const [wrapperElement, setWrapperElement] = useState(null);
 
   useLayoutEffect(() => {
@@ -32,4 +32,4 @@ function ReactPortal({ children, wrapperId = 'react-portal-wrapper' }) {
   return createPortal(children, wrapperElement);
 }
 
-export default ReactPortal;
+export default ModalPortal;

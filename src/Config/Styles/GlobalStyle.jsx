@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
     table { border-collapse: collapse; border-spacing: 0; }
     td, th { padding: 0; }
     main,nav,footer{display:block; width:100%;}
+    button{ text-transform:none; border:0; outline:none; cursor:pointer;}
 
 `;
 

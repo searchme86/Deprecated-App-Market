@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import {
-  BasicLi,
-  BasicStrong,
-  BasicButton,
-} from '../../../Assets/Styles/Basic.style';
+import { BasicLi } from '../../../Assets/Styles/Basic.style';
+
+import { CommonBtn } from '../../../Config/Styles/Button.style';
+import { BasicStrong } from '../../../Assets/Styles/Text.style';
 
 export const CategoryWrapper = styled.div`
   ${'' /* background-color: #f5fbfd; */}
@@ -24,11 +23,11 @@ export const CategoryTitle = styled(BasicStrong)`
   font-size: 19px;
 `;
 
-export const CreateCategoryBtn = styled(BasicButton)`
+export const CreateCategoryBtn = styled(CommonBtn)`
   margin: 0 10px 0 10px;
 `;
 
-export const DeleteCategoryBtn = styled(BasicButton)`
+export const DeleteCategoryBtn = styled(CommonBtn)`
   width: 20px;
 `;
 

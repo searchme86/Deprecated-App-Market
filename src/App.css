@@ -48,7 +48,7 @@
 html {
   font-family: 'Nunito', sans-serif;
   font-size: 22px;
-  color: #fff;
+  /* color: #fff; */
 }
 
 body {
@@ -65,17 +65,6 @@ body {
   /* padding: 1rem 0.5rem; */
 }
 
-section {
-  width: 100%;
-  max-width: 420px;
-  min-height: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
 form {
   display: flex;
   flex-direction: column;
@@ -84,14 +73,13 @@ form {
   padding-bottom: 1rem;
 }
 
-a,
+/* a,
 a:visited {
   color: #fff;
-}
+} */
 
 input[type='text'],
 input[type='password'],
-button,
 textarea {
   font-family: 'Nunito', sans-serif;
   font-size: 22px;
@@ -99,14 +87,13 @@ textarea {
   border-radius: 0.5rem;
 }
 
-label,
-button {
+label {
   margin-top: 1rem;
 }
 
-button {
+/* button {
   padding: 0.5rem;
-}
+} */
 
 li {
   list-style-type: none;
@@ -116,7 +103,7 @@ li {
   font-size: 0.75rem;
   border-radius: 0.5rem;
   background: #000;
-  color: #fff;
+  /* color: #fff; */
   padding: 0.25rem;
   position: relative;
   bottom: -10px;
