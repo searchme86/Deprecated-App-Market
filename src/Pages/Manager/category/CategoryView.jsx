@@ -24,7 +24,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { deleteCategory } from '../../../Store/Features/CategorySlice';
-import ReactWrapperModal from './CategoryModal/ReactWrapperModal';
+import CategoryModal from './CategoryModal/CategoryModal';
 
 function CategoryView({ categories }) {
   console.log('categories', categories);
@@ -108,7 +108,7 @@ function CategoryView({ categories }) {
             </CreateCategoryBtn>
           </AlignComponents>
           {/* 최신 새롭게 만든 모달 부분 */}
-          <ReactWrapperModal handleClose={handleClose} isOpen={isOpen} />
+          <CategoryModal handleClose={handleClose} isOpen={isOpen} />
 
           {/* 최신 새롭게 만든 모달 부분 */}
         </>
