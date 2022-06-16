@@ -87,7 +87,8 @@ function CategoryView({ categories }) {
                           <FontAwesomeIcon
                             icon={faPenToSquare}
                             style={{ fontSize: 30, color: '#146ebe' }}
-                            onClick={updateCategory}
+                            // onClick={updateCategory}
+                            onClick={handleModal}
                           />
                         </FunctionList>
                         <FunctionList>

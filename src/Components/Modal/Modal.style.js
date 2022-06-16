@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { AlignComponents } from '../../Assets/Styles/Layout.style';
 import {
   PrimaryButton,
@@ -22,8 +22,8 @@ export const ModalLayer = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  min-width: 500px;
-  max-width: 500px;
+  min-width: 540px;
+  max-width: 540px;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
@@ -77,6 +77,13 @@ export const ModalList = styled.ul`
 `;
 
 export const ModalItem = styled.li`
+  ${({ display }) =>
+    display
+      ? css`
+          display: flex;
+          align-items: center;
+        `
+      : ''}
   margin-bottom: ${({ mb }) => (mb ? mb : '20')}px;
   &:first-child {
     margin-top: 0;
@@ -88,6 +95,8 @@ export const ModalItem = styled.li`
 
 export const ModalInfo = styled.div`
   background: #fbfbfb;
+  margin: 0 0 30px 0;
+  padding: 10px;
 `;
 
 export const ModalInfoTitle = styled.strong`
@@ -98,7 +107,21 @@ export const ModalInfoTitle = styled.strong`
   margin: 0 0 8px 0;
 `;
 
-export const ModalInfoList = styled.ul``;
+export const ModalInfoList = styled.ul`
+  padding: 0 0 0 5px;
+`;
+
+export const ModalInfoDes = styled.p`
+  margin: 0 0 0 5px;
+  font-size: 12px;
+`;
+
+export const ModalInfoBold = styled.strong`
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 2px 0 2px;
+  font-size: 12px;
+`;
 
 export const ModalAction = styled(AlignComponents)`
   ${'' /* background: #f8f8f8; */}
