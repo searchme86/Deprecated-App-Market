@@ -107,10 +107,7 @@ function CategoryView({ categories }) {
               <FontAwesomeIcon icon={faCirclePlus} style={{ fontSize: 50 }} />
             </CreateCategoryBtn>
           </AlignComponents>
-          {/* 최신 새롭게 만든 모달 부분 */}
           <CategoryModal handleClose={handleClose} isOpen={isOpen} />
-
-          {/* 최신 새롭게 만든 모달 부분 */}
         </>
       ) : (
         <ListContainer>
