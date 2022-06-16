@@ -14,7 +14,7 @@ export const ListContainer = styled.ul`
 
 export const AlignComponents = styled.div`
   display: flex;
-  juatify-conetent: center;
+  justify-content: center;
   align-items: center;
 `;
 
