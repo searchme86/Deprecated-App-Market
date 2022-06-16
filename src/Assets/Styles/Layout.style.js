@@ -8,10 +8,6 @@ export const ContentDivider = styled.div`
   padding: 10px;
 `;
 
-export const ListContainer = styled.ul`
-  display: ${({ display }) => display};
-`;
-
 export const AlignComponents = styled.div`
   display: flex;
   justify-content: center;
@@ -20,4 +16,8 @@ export const AlignComponents = styled.div`
 
 export const AlignList = styled.ul`
   display: flex;
+`;
+
+export const ListContainer = styled.ul`
+  display: ${({ display }) => display};
 `;

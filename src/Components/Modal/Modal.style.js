@@ -4,6 +4,7 @@ import {
   PrimaryButton,
   SeconDaryButton,
   BasicIconBtn,
+  BasicButton,
 } from '../../Config/Styles/Button.style';
 
 export const ModalWrapper = styled.div`
@@ -62,13 +63,33 @@ export const ModalTitle = styled.h2`
 `;
 
 export const ModalContent = styled.div`
-  padding: 20px;
+  padding: 20px 20px 20px 20px;
   background: #fbfbfb;
 `;
 
+export const ModalForm = styled.form`
+  display: block;
+  width: 100%;
+`;
+
+export const ModalList = styled.ul`
+  width: 65%;
+  margin: 0 10px 0 0;
+`;
+
+export const ModalItem = styled.li`
+  margin: 0 0 20px 0;
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
 export const ModalAction = styled(AlignComponents)`
-  background: #f8f8f8;
-  padding: 20px 20px 20px 20px;
+  ${'' /* background: #f8f8f8; */}
+  padding: 20px 0 20px 0;
 `;
 
 export const ModalPrimaryBtn = styled(PrimaryButton)`
@@ -79,4 +100,9 @@ export const ModalPrimaryBtn = styled(PrimaryButton)`
 export const ModalSeconDaryBtn = styled(SeconDaryButton)`
   ${'' /* 10px는  버튼 간격 */}
   width: calc(100vw - 10px);
+`;
+
+export const ResetButton = styled(BasicButton)`
+  color: #fff;
+  background: #ea035c;
 `;
