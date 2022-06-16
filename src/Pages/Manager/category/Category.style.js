@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { BasicLi, BasicStrong } from '../../../Assets/Styles/Basic.style';
+import { BasicLi } from '../../../Assets/Styles/Basic.style';
 
 import { CommonBtn } from '../../../Config/Styles/Button.style';
+import { BasicStrong } from '../../../Assets/Styles/Text.style';
 
 export const CategoryWrapper = styled.div`
   ${'' /* background-color: #f5fbfd; */}

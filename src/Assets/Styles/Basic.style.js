@@ -31,8 +31,3 @@ export const BasicLi = styled.li`
   vertical-align: top;
   text-align: center;
 `;
-
-export const BasicStrong = styled.strong`
-  display: inline-block;
-  vertical-align: top;
-`;
