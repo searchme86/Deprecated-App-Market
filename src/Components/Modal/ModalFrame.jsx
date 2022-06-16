@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import ModalPortal from './ModalPortal';
 import {
-  ModalContent,
+  ModalContainer,
   ModalLayer,
   ModalWrapper,
-  ModalButton,
   ModalCloseButton,
   ModalLayOut,
-  ModalAction,
 } from './Modal.style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -37,10 +35,7 @@ function ModalFrame({ children, isOpen, handleClose }) {
                 style={{ fontSize: 30, color: '#146ebe' }}
               />
             </ModalCloseButton>
-            <ModalContent>{children}</ModalContent>
-            <ModalAction>
-              <ModalButton>항목 변경하기</ModalButton>
-            </ModalAction>
+            <ModalContainer>{children}</ModalContainer>
           </ModalLayOut>
         </ModalLayer>
       </ModalWrapper>

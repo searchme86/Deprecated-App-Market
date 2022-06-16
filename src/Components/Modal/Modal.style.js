@@ -36,10 +36,6 @@ export const ModalLayOut = styled.div`
   position: relative;
 `;
 
-export const ModalContent = styled.div`
-  position: relative;
-`;
-
 export const ModalCloseButton = styled(BasicIconBtn)`
   width: ${({ width }) => width};
   position: absolute;
@@ -48,9 +44,20 @@ export const ModalCloseButton = styled(BasicIconBtn)`
   border: 1px solid red;
 `;
 
-export const ModalAction = styled(AlignComponents)`
-  border: 1px solid red;
+export const ModalContainer = styled.section`
+  position: relative;
 `;
+
+export const ModalTitle = styled.h2`
+  font-weight: 500;
+  font-size: 20px;
+  color: #000;
+  word-break: keep-all;
+`;
+
+export const ModalContent = styled.div``;
+
+export const ModalAction = styled(AlignComponents)``;
 
 export const ModalButton = styled(BasicButton)`
   ${'' /* 10px는  버튼 간격 */}
