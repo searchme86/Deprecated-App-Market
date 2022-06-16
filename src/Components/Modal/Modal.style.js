@@ -64,7 +64,6 @@ export const ModalTitle = styled.h2`
 
 export const ModalContent = styled.div`
   padding: 20px 20px 20px 20px;
-  background: #fbfbfb;
 `;
 
 export const ModalForm = styled.form`
@@ -78,7 +77,7 @@ export const ModalList = styled.ul`
 `;
 
 export const ModalItem = styled.li`
-  margin: 0 0 20px 0;
+  margin-bottom: ${({ mb }) => (mb ? mb : '20')}px;
   &:first-child {
     margin-top: 0;
   }
@@ -86,6 +85,20 @@ export const ModalItem = styled.li`
     margin-bottom: 0;
   }
 `;
+
+export const ModalInfo = styled.div`
+  background: #fbfbfb;
+`;
+
+export const ModalInfoTitle = styled.strong`
+  display: inline-block;
+  vertical-align: top;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 8px 0;
+`;
+
+export const ModalInfoList = styled.ul``;
 
 export const ModalAction = styled(AlignComponents)`
   ${'' /* background: #f8f8f8; */}
