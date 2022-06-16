@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { AlignComponents } from '../../Assets/Styles/Layout.style';
 import {
   PrimaryButton,
@@ -33,7 +33,6 @@ export const ModalLayer = styled.div`
   z-index: 2;
   overflow: hidden;
   box-sizing: border-box;
-  padding: 20px;
 `;
 
 export const ModalLayOut = styled.div`
@@ -43,12 +42,16 @@ export const ModalLayOut = styled.div`
 export const ModalCloseButton = styled(BasicIconBtn)`
   width: ${({ width }) => width};
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 11px;
+  right: 20px;
 `;
 
 export const ModalContainer = styled.section`
   position: relative;
+`;
+
+export const ModalHeader = styled.header`
+  padding: 25px 20px 0px 20px;
 `;
 
 export const ModalTitle = styled.h2`
@@ -58,9 +61,15 @@ export const ModalTitle = styled.h2`
   word-break: keep-all;
 `;
 
-export const ModalContent = styled.div``;
+export const ModalContent = styled.div`
+  padding: 20px;
+  background: #fbfbfb;
+`;
 
-export const ModalAction = styled(AlignComponents)``;
+export const ModalAction = styled(AlignComponents)`
+  background: #f8f8f8;
+  padding: 20px 20px 20px 20px;
+`;
 
 export const ModalPrimaryBtn = styled(PrimaryButton)`
   ${'' /* 10px는  버튼 간격 */}
