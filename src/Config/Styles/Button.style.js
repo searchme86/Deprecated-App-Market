@@ -30,6 +30,14 @@ export const BasicButton = styled(CommonBtn)`
   }
 `;
 
+export const PrimaryButton = styled(BasicButton)``;
+
+export const SeconDaryButton = styled(BasicButton)`
+  color: #767676;
+  border: 1px solid #bcbcbc;
+  background: #fff;
+`;
+
 export const BasicIconBtn = styled(CommonBtn)`
   z-index: 1;
   background: #fff;

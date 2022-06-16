@@ -1,9 +1,11 @@
 import React from 'react';
 import {
   ModalAction,
-  ModalButton,
+  // ModalButton,
   ModalTitle,
   ModalContent,
+  ModalPrimaryBtn,
+  ModalSeconDaryBtn,
 } from '../../../../Components/Modal/Modal.style';
 import ModalFrame from '../../../../Components/Modal/ModalFrame';
 
@@ -14,7 +16,8 @@ function CategoryModal({ handleClose, isOpen }) {
         <ModalTitle>모달타이틀</ModalTitle>
         <ModalContent>ddddd</ModalContent>
         <ModalAction>
-          <ModalButton>항목 변경하기</ModalButton>
+          <ModalSeconDaryBtn>취소</ModalSeconDaryBtn>
+          <ModalPrimaryBtn>등록</ModalPrimaryBtn>
         </ModalAction>
       </>
     </ModalFrame>

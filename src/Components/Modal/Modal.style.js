@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { AlignComponents } from '../../Assets/Styles/Layout.style';
-import { BasicButton, BasicIconBtn } from '../../Config/Styles/Button.style';
+import {
+  PrimaryButton,
+  SeconDaryButton,
+  BasicIconBtn,
+} from '../../Config/Styles/Button.style';
 
 export const ModalWrapper = styled.div`
   position: fixed;
@@ -41,7 +45,6 @@ export const ModalCloseButton = styled(BasicIconBtn)`
   position: absolute;
   top: 0;
   right: 0;
-  border: 1px solid red;
 `;
 
 export const ModalContainer = styled.section`
@@ -59,7 +62,12 @@ export const ModalContent = styled.div``;
 
 export const ModalAction = styled(AlignComponents)``;
 
-export const ModalButton = styled(BasicButton)`
+export const ModalPrimaryBtn = styled(PrimaryButton)`
+  ${'' /* 10px는  버튼 간격 */}
+  width: calc(100vw - 10px);
+`;
+
+export const ModalSeconDaryBtn = styled(SeconDaryButton)`
   ${'' /* 10px는  버튼 간격 */}
   width: calc(100vw - 10px);
 `;
