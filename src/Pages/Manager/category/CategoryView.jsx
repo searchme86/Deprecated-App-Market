@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   CategoryItem,
   CategoryWrapper,
@@ -26,6 +26,7 @@ import { toast } from 'react-toastify';
 import {
   deleteCategory,
   createCategory,
+  getCategoryList,
 } from '../../../Store/Features/CategorySlice';
 import CategoryModal from './CategoryModal/CategoryModal';
 
@@ -42,6 +43,7 @@ function CategoryView({ categories }) {
 
   const { user } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.category);
+  const navigate = useNavigate();
 
   const { categoryTitle, categoryDescription, categoryLink, ImageDescription } =
     category;
@@ -92,32 +94,30 @@ function CategoryView({ categories }) {
     });
   }, []);
 
-  const handleSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      if (
-        categoryTitle &&
-        categoryDescription &&
-        categoryLink &&
-        ImageDescription
-      ) {
-        dispatch(createCategory({ category, toast }));
-        console.log({ category, toast });
-        handleClear();
-      }
-    },
-    [
-      dispatch,
-      category,
-      categoryTitle,
-      categoryDescription,
-      categoryLink,
-      ImageDescription,
-      handleClear,
-    ]
-  );
-
-  const isError = '';
+  const registerForm = useCallback(() => {
+    if (
+      categoryTitle &&
+      categoryDescription &&
+      categoryLink &&
+      ImageDescription
+    ) {
+      dispatch(createCategory({ category, toast, navigate }));
+      dispatch(getCategoryList({ toast }));
+      console.log({ category, toast, navigate });
+      handleClear();
+      handleClose();
+    }
+  }, [
+    dispatch,
+    navigate,
+    category,
+    categoryTitle,
+    categoryDescription,
+    categoryLink,
+    ImageDescription,
+    handleClear,
+    handleClose,
+  ]);
 
   const canTrigger = [
     categoryTitle,
@@ -133,12 +133,12 @@ function CategoryView({ categories }) {
     setCategory,
     onInputChange,
     handleClear,
-    handleSubmit,
+    registerForm,
     categoryTitle,
     categoryDescription,
     categoryLink,
     ImageDescription,
-    isError,
+
     canTrigger,
   };
 
@@ -227,7 +227,6 @@ function CategoryView({ categories }) {
                     <OffScreen>{categoryDescription}</OffScreen>
                     <CategoryTitle>{categoryTitle}</CategoryTitle>
                   </ContentDivider>
-                  {user ? <div></div> : ''}
                 </Link>
               </CategoryItem>
             )
