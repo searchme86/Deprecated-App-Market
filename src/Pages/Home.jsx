@@ -8,6 +8,8 @@ import Pagination from '../Components/Pagination';
 
 import { useLocation } from 'react-router-dom';
 import ManageCategory from './Manager/category/ManageCategory';
+import { getCategoryList } from '../Store/Features/CategorySlice';
+import { toast } from 'react-toastify';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -32,6 +34,13 @@ function Home() {
     dispatch(getTours(currentPage));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
+
+  useEffect(() => {
+    const listOfCategory = () => {
+      dispatch(getCategoryList({ toast }));
+    };
+    listOfCategory();
+  }, [dispatch]);
 
   if (loading) {
     return <Spinner />;
