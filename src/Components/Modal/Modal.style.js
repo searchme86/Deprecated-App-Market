@@ -131,6 +131,12 @@ export const ModalAction = styled(AlignComponents)`
 export const ModalPrimaryBtn = styled(PrimaryButton)`
   ${'' /* 10px는  버튼 간격 */}
   width: calc(100vw - 10px);
+  ${(props) =>
+    props.disabled &&
+    css`
+      cursor: not-allowed !important;
+      pointer-events: all !important;
+    `}
 `;
 
 export const ModalSeconDaryBtn = styled(SeconDaryButton)`
