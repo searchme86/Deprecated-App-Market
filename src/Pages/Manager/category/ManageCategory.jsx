@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
-import { getCategoryList } from '../../../Store/Features/CategorySlice.js';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import CategoryView from './CategoryView';
 import { SectionTitle } from '../../../Assets/Styles/Text.style.js';
 import { SectionDivier } from '../../../Assets/Styles/Layout.style.js';
