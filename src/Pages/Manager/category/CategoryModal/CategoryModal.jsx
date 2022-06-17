@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AlignComponents } from '../../../../Assets/Styles/Layout.style';
 import {
   ModalAction,
@@ -25,7 +25,6 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  FormHelperText,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -34,6 +33,7 @@ import {
 } from '@chakra-ui/react';
 
 import FileBase from 'react-file-base64';
+import { useForm } from 'react-hook-form';
 
 function CategoryModal({ ParentProps }) {
   const {
@@ -43,14 +43,33 @@ function CategoryModal({ ParentProps }) {
     setCategory,
     onInputChange,
     handleClear,
-    handleSubmit,
+    registerForm,
     categoryTitle,
     categoryDescription,
     categoryLink,
     ImageDescription,
-    isError,
     canTrigger,
   } = ParentProps;
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  const onSubmit = (data, e) => {
+    console.log('data', data);
+    console.log('e', e);
+    registerForm();
+  };
+
+  const onError = (errors, e) => {
+    console.log('errors', errors);
+    console.log('e', e);
+  };
+
+  console.log('isSubmitting', isSubmitting);
+
   return (
     <ModalFrame handleClose={handleClose} isOpen={isOpen}>
       <>
@@ -58,8 +77,8 @@ function CategoryModal({ ParentProps }) {
           <ModalTitle>카테고리 등록하기</ModalTitle>
         </ModalHeader>
         <ModalContent>
-          <ModalForm>
-            <FormControl isRequired isInvalid={isError} onSubmit={handleSubmit}>
+          <ModalForm onSubmit={handleSubmit(onSubmit, onError)}>
+            <FormControl isInvalid={errors}>
               <AlignComponents mb="30" bg="#fbfbfb">
                 <ModalList>
                   <ModalItem>
@@ -74,27 +93,30 @@ function CategoryModal({ ParentProps }) {
                     <Input
                       id="categoryTitle"
                       type="text"
-                      placeholder="카테고리 타이틀을 입력해주세요"
                       value={categoryTitle || ''}
                       name="categoryTitle"
-                      onChange={onInputChange}
+                      {...register('categoryTitle', {
+                        required: '카테고리 타이틀 입력을 해주세요',
+                        minLength: {
+                          value: 5,
+                          message: '최소입력 글자는 5글자입니다.',
+                        },
+                        onChange: onInputChange,
+                        pattern: {
+                          value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
+                          message: '숫자와 특수문자, 공백은 허용하지 않습니다.',
+                        },
+                      })}
                       size="sm"
                       variant="flushed"
                       color="teal"
                       fontSize="xs"
                       _placeholder={{ color: 'inherit' }}
                       autoComplete="off"
-                      isInvalid
-                      focusBorderColor="lime"
-                      errorBorderColor="crimson"
                     />
-                    {isError ? (
-                      <FormHelperText as="p" mt={0}>
-                        카테고리 타이틀을 입력해주세요
-                      </FormHelperText>
-                    ) : (
-                      ''
-                    )}
+                    <FormErrorMessage as="p">
+                      {errors.categoryTitle && errors.categoryTitle.message}
+                    </FormErrorMessage>
                   </ModalItem>
                   <ModalItem>
                     <FormLabel
@@ -105,37 +127,31 @@ function CategoryModal({ ParentProps }) {
                     >
                       카테고리 설명
                     </FormLabel>
-                    {/* <Input
-                      id="categoryDescription"
-                      type="text"
-                      placeholder="카테고리에 대해 설명해주세요"
-                      // value={categoryDescription}
-                      size="sm"
-                      variant="flushed"
-                      color="teal"
-                      fontSize="xs"
-                      _placeholder={{ color: 'inherit' }}
-                      isInvalid
-                      focusBorderColor="lime"
-                      errorBorderColor="crimson"
-                    /> */}
                     <Textarea
                       id="categoryDescription"
                       value={categoryDescription}
                       name="categoryDescription"
-                      onChange={onInputChange}
-                      placeholder="카테고리에 대해 설명해주세요"
+                      {...register('categoryDescription', {
+                        required: '카테고리에 대해 설명해주세요',
+                        minLength: {
+                          value: 10,
+                          message: '최소입력 글자는 10글자입니다.',
+                        },
+                        onChange: onInputChange,
+                        pattern: {
+                          value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
+                          message:
+                            '입력항목은 특수문자/숫자로 시작 할 수 없으며, 숫자와 특수문자를 포함할 수 없습니다.',
+                        },
+                      })}
                       size="sm"
                       fontSize="xs"
                       isRequired
                     />
-                    {isError ? (
-                      <FormHelperText as="p" mt={0}>
-                        카테고리에 대한 설명을 입력해주세요
-                      </FormHelperText>
-                    ) : (
-                      ''
-                    )}
+                    <FormErrorMessage as="p">
+                      {errors.categoryDescription &&
+                        errors.categoryDescription.message}
+                    </FormErrorMessage>
                   </ModalItem>
                   <ModalItem>
                     <FormLabel
@@ -146,16 +162,27 @@ function CategoryModal({ ParentProps }) {
                     >
                       카테고리 링크
                     </FormLabel>
-
                     <InputGroup size="sm">
                       <InputLeftAddon children="category/" />
                       <Input
                         id="categoryLink"
                         type="text"
-                        placeholder="해당 카테고리명 을 입력해주세요"
                         value={categoryLink}
                         name="categoryLink"
                         onChange={onInputChange}
+                        {...register('categoryLink', {
+                          required: '해당 카테고리명 을 입력해주세요',
+                          minLength: {
+                            value: 3,
+                            message: '최소입력 글자는 3글자입니다.',
+                          },
+                          pattern: {
+                            value: /^[a-zA-Z]+$/,
+                            message:
+                              '입력항목은 특수문자와 숫자, 한글, 공백은 허용하지 않습니다.',
+                          },
+                          onChange: onInputChange,
+                        })}
                         size="sm"
                         p="2"
                         variant="flushed"
@@ -169,14 +196,9 @@ function CategoryModal({ ParentProps }) {
                       />
                       <InputRightAddon children=".com" />
                     </InputGroup>
-
-                    {isError ? (
-                      <FormHelperText as="p" mt={0}>
-                        해당 카테고리로 이동할 링크명을 입력해주세요
-                      </FormHelperText>
-                    ) : (
-                      ''
-                    )}
+                    <FormErrorMessage as="p">
+                      {errors.categoryLink && errors.categoryLink.message}
+                    </FormErrorMessage>
                   </ModalItem>
                   <ModalItem>
                     <div className="">
@@ -199,39 +221,32 @@ function CategoryModal({ ParentProps }) {
                       카테고리 설명
                     </FormLabel>
 
-                    {/* <Input
-                      id="ImageDescription"
-                      type="text"
-                      placeholder="해당 카테고리로 이동할 링크명을 입력해주세요"
-                      // value={ImageDescription}
-                      size="sm"
-                      variant="flushed"
-                      color="teal"
-                      fontSize="xs"
-                      _placeholder={{ color: 'inherit' }}
-                      isInvalid
-                      focusBorderColor="lime"
-                      errorBorderColor="crimson"
-                    /> */}
-
                     <Textarea
                       id="ImageDescription"
-                      placeholder="카테고리 이미지에 대한 간략한 설명을 남겨주세요"
                       value={ImageDescription}
+                      {...register('ImageDescription', {
+                        required:
+                          '카테고리 이미지에 대한 간략한 설명을 남겨주세요',
+                        minLength: {
+                          value: 10,
+                          message: '최소입력 글자는 10글자입니다.',
+                        },
+                        onChange: onInputChange,
+                        pattern: {
+                          value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
+                          message:
+                            '입력항목은 특수문자/숫자로 시작 할 수 없으며, 숫자와 특수문자를 포함할 수 없습니다.',
+                        },
+                      })}
                       name="ImageDescription"
-                      onChange={onInputChange}
                       size="sm"
                       fontSize="xs"
                       isRequired
                     />
-
-                    {isError ? (
-                      <FormHelperText as="p" mt={0}>
-                        카테고리 이미지에 대한 설명글을 입력해주세요
-                      </FormHelperText>
-                    ) : (
-                      ''
-                    )}
+                    <FormErrorMessage as="p">
+                      {errors.ImageDescription &&
+                        errors.ImageDescription.message}
+                    </FormErrorMessage>
                   </ModalItem>
                 </ModalList>
                 <ResetButton
@@ -312,7 +327,7 @@ function CategoryModal({ ParentProps }) {
                   취소
                 </ModalSeconDaryBtn>
                 <ModalPrimaryBtn
-                  // type="submit"
+                  type="submit"
                   disabled={!canTrigger}
                   role="button"
                 >
