@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -23,15 +23,36 @@ import {
   faPenToSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
-import { deleteCategory } from '../../../Store/Features/CategorySlice';
+import {
+  deleteCategory,
+  createCategory,
+} from '../../../Store/Features/CategorySlice';
 import CategoryModal from './CategoryModal/CategoryModal';
 
 function CategoryView({ categories }) {
-  console.log('categories', categories);
+  const initialState = {
+    categoryTitle: '',
+    categoryDescription: '',
+    categoryLink: '',
+    ImageDescription: '',
+  };
+
   const [isOpen, setIsOpen] = useState(false);
+  const [category, setCategory] = useState(initialState);
+
   const { user } = useSelector((state) => state.auth);
+  const { error } = useSelector((state) => state.category);
+
+  const { categoryTitle, categoryDescription, categoryLink, ImageDescription } =
+    category;
+
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
+
   const dispatch = useDispatch();
 
+  // 부모에서 사용하는
   const handleModal = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
@@ -52,6 +73,78 @@ function CategoryView({ categories }) {
     console.log('업데이트 됐습니다.');
   };
 
+  //자식에서 사용하는
+  const onInputChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setCategory({ ...category, [name]: value });
+    },
+    [category]
+  );
+
+  const handleClear = useCallback(() => {
+    setCategory({
+      categoryTitle: '',
+      categoryDescription: '',
+      categoryLink: '',
+      ImageDescription: '',
+      imageFile: '',
+    });
+  }, []);
+
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (
+        categoryTitle &&
+        categoryDescription &&
+        categoryLink &&
+        ImageDescription
+      ) {
+        dispatch(createCategory({ category, toast }));
+        console.log({ category, toast });
+        handleClear();
+      }
+    },
+    [
+      dispatch,
+      category,
+      categoryTitle,
+      categoryDescription,
+      categoryLink,
+      ImageDescription,
+      handleClear,
+    ]
+  );
+
+  const isError = '';
+
+  const canTrigger = [
+    categoryTitle,
+    categoryDescription,
+    categoryLink,
+    ImageDescription,
+  ].every(Boolean);
+
+  const ParentProps = {
+    handleClose,
+    isOpen,
+    category,
+    setCategory,
+    onInputChange,
+    handleClear,
+    handleSubmit,
+    categoryTitle,
+    categoryDescription,
+    categoryLink,
+    ImageDescription,
+    isError,
+    canTrigger,
+  };
+
+  console.log('categories', categories);
+  console.log('canTrigger', canTrigger);
+  console.log('category', category);
   return (
     <CategoryWrapper>
       {user ? (
@@ -108,7 +201,7 @@ function CategoryView({ categories }) {
               <FontAwesomeIcon icon={faCirclePlus} style={{ fontSize: 50 }} />
             </CreateCategoryBtn>
           </AlignComponents>
-          <CategoryModal handleClose={handleClose} isOpen={isOpen} />
+          <CategoryModal ParentProps={ParentProps} />
         </>
       ) : (
         <ListContainer>
