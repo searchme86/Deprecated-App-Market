@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AlignComponents } from '../../../../Assets/Styles/Layout.style';
 import {
   ModalAction,
@@ -20,7 +20,6 @@ import {
 import ModalFrame from '../../../../Components/Modal/ModalFrame';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import FileBase from 'react-file-base64';
 
 import {
   FormControl,
@@ -34,23 +33,24 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 
-function CategoryModal({ handleClose, isOpen }) {
-  const initialState = {
-    categoryTitle: '',
-    categoryDescription: '',
-    categoryLink: '',
-    ImageDescription: '',
-  };
+import FileBase from 'react-file-base64';
 
-  const isError = '';
-
-  const [category, setCategory] = useState(initialState);
-
-  const [modalData, setModalData] = useState('');
-
-  const { categoryTitle, categoryDescription, categoryLink, ImageDescription } =
-    category;
-
+function CategoryModal({ ParentProps }) {
+  const {
+    handleClose,
+    isOpen,
+    category,
+    setCategory,
+    onInputChange,
+    handleClear,
+    handleSubmit,
+    categoryTitle,
+    categoryDescription,
+    categoryLink,
+    ImageDescription,
+    isError,
+    canTrigger,
+  } = ParentProps;
   return (
     <ModalFrame handleClose={handleClose} isOpen={isOpen}>
       <>
@@ -59,7 +59,7 @@ function CategoryModal({ handleClose, isOpen }) {
         </ModalHeader>
         <ModalContent>
           <ModalForm>
-            <FormControl isRequired isInvalid={isError}>
+            <FormControl isRequired isInvalid={isError} onSubmit={handleSubmit}>
               <AlignComponents mb="30" bg="#fbfbfb">
                 <ModalList>
                   <ModalItem>
@@ -75,7 +75,9 @@ function CategoryModal({ handleClose, isOpen }) {
                       id="categoryTitle"
                       type="text"
                       placeholder="카테고리 타이틀을 입력해주세요"
-                      // value={categoryTitle || ''}
+                      value={categoryTitle || ''}
+                      name="categoryTitle"
+                      onChange={onInputChange}
                       size="sm"
                       variant="flushed"
                       color="teal"
@@ -120,6 +122,8 @@ function CategoryModal({ handleClose, isOpen }) {
                     <Textarea
                       id="categoryDescription"
                       value={categoryDescription}
+                      name="categoryDescription"
+                      onChange={onInputChange}
                       placeholder="카테고리에 대해 설명해주세요"
                       size="sm"
                       fontSize="xs"
@@ -149,7 +153,9 @@ function CategoryModal({ handleClose, isOpen }) {
                         id="categoryLink"
                         type="text"
                         placeholder="해당 카테고리명 을 입력해주세요"
-                        // value={categoryLink}
+                        value={categoryLink}
+                        name="categoryLink"
+                        onChange={onInputChange}
                         size="sm"
                         p="2"
                         variant="flushed"
@@ -178,7 +184,7 @@ function CategoryModal({ handleClose, isOpen }) {
                         type="file"
                         multiple={false}
                         onDone={({ base64 }) =>
-                          setModalData({ ...modalData, imageFile: base64 })
+                          setCategory({ ...category, imageFile: base64 })
                         }
                       />
                     </div>
@@ -211,6 +217,9 @@ function CategoryModal({ handleClose, isOpen }) {
                     <Textarea
                       id="ImageDescription"
                       placeholder="카테고리 이미지에 대한 간략한 설명을 남겨주세요"
+                      value={ImageDescription}
+                      name="ImageDescription"
+                      onChange={onInputChange}
                       size="sm"
                       fontSize="xs"
                       isRequired
@@ -225,7 +234,12 @@ function CategoryModal({ handleClose, isOpen }) {
                     )}
                   </ModalItem>
                 </ModalList>
-                <ResetButton style={{ alignSelf: 'flex-end' }}>
+                <ResetButton
+                  type="button"
+                  role="button"
+                  style={{ alignSelf: 'flex-end' }}
+                  onClick={handleClear}
+                >
                   초기화
                 </ResetButton>
               </AlignComponents>
@@ -290,10 +304,20 @@ function CategoryModal({ handleClose, isOpen }) {
                 </ModalInfoList>
               </ModalInfo>
               <ModalAction>
-                <ModalSeconDaryBtn onClick={handleClose}>
+                <ModalSeconDaryBtn
+                  type="button"
+                  role="button"
+                  onClick={handleClose}
+                >
                   취소
                 </ModalSeconDaryBtn>
-                <ModalPrimaryBtn>등록</ModalPrimaryBtn>
+                <ModalPrimaryBtn
+                  // type="submit"
+                  disabled={!canTrigger}
+                  role="button"
+                >
+                  등록
+                </ModalPrimaryBtn>
               </ModalAction>
             </FormControl>
           </ModalForm>
