@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   CategoryItem,
   CategoryWrapper,
@@ -23,15 +23,38 @@ import {
   faPenToSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
-import { deleteCategory } from '../../../Store/Features/CategorySlice';
+import {
+  deleteCategory,
+  createCategory,
+  getCategoryList,
+} from '../../../Store/Features/CategorySlice';
 import CategoryModal from './CategoryModal/CategoryModal';
 
 function CategoryView({ categories }) {
-  console.log('categories', categories);
+  const initialState = {
+    categoryTitle: '',
+    categoryDescription: '',
+    categoryLink: '',
+    ImageDescription: '',
+  };
+
   const [isOpen, setIsOpen] = useState(false);
+  const [category, setCategory] = useState(initialState);
+
   const { user } = useSelector((state) => state.auth);
+  const { error } = useSelector((state) => state.category);
+  const navigate = useNavigate();
+
+  const { categoryTitle, categoryDescription, categoryLink, ImageDescription } =
+    category;
+
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
+
   const dispatch = useDispatch();
 
+  // 부모에서 사용하는
   const handleModal = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
@@ -52,6 +75,76 @@ function CategoryView({ categories }) {
     console.log('업데이트 됐습니다.');
   };
 
+  //자식에서 사용하는
+  const onInputChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setCategory({ ...category, [name]: value });
+    },
+    [category]
+  );
+
+  const handleClear = useCallback(() => {
+    setCategory({
+      categoryTitle: '',
+      categoryDescription: '',
+      categoryLink: '',
+      ImageDescription: '',
+      imageFile: '',
+    });
+  }, []);
+
+  const registerForm = useCallback(() => {
+    if (
+      categoryTitle &&
+      categoryDescription &&
+      categoryLink &&
+      ImageDescription
+    ) {
+      dispatch(createCategory({ category, toast, navigate }));
+      dispatch(getCategoryList({ toast }));
+      console.log({ category, toast, navigate });
+      handleClear();
+      handleClose();
+    }
+  }, [
+    dispatch,
+    navigate,
+    category,
+    categoryTitle,
+    categoryDescription,
+    categoryLink,
+    ImageDescription,
+    handleClear,
+    handleClose,
+  ]);
+
+  const canTrigger = [
+    categoryTitle,
+    categoryDescription,
+    categoryLink,
+    ImageDescription,
+  ].every(Boolean);
+
+  const ParentProps = {
+    handleClose,
+    isOpen,
+    category,
+    setCategory,
+    onInputChange,
+    handleClear,
+    registerForm,
+    categoryTitle,
+    categoryDescription,
+    categoryLink,
+    ImageDescription,
+
+    canTrigger,
+  };
+
+  console.log('categories', categories);
+  console.log('canTrigger', canTrigger);
+  console.log('category', category);
   return (
     <CategoryWrapper>
       {user ? (
@@ -87,7 +180,8 @@ function CategoryView({ categories }) {
                           <FontAwesomeIcon
                             icon={faPenToSquare}
                             style={{ fontSize: 30, color: '#146ebe' }}
-                            onClick={updateCategory}
+                            // onClick={updateCategory}
+                            onClick={handleModal}
                           />
                         </FunctionList>
                         <FunctionList>
@@ -107,7 +201,7 @@ function CategoryView({ categories }) {
               <FontAwesomeIcon icon={faCirclePlus} style={{ fontSize: 50 }} />
             </CreateCategoryBtn>
           </AlignComponents>
-          <CategoryModal handleClose={handleClose} isOpen={isOpen} />
+          <CategoryModal ParentProps={ParentProps} />
         </>
       ) : (
         <ListContainer>
@@ -133,7 +227,6 @@ function CategoryView({ categories }) {
                     <OffScreen>{categoryDescription}</OffScreen>
                     <CategoryTitle>{categoryTitle}</CategoryTitle>
                   </ContentDivider>
-                  {user ? <div></div> : ''}
                 </Link>
               </CategoryItem>
             )

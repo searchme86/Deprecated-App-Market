@@ -12,6 +12,8 @@ export const AlignComponents = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: ${({ mb }) => mb}px;
+  background: ${({ bg }) => bg};
 `;
 
 export const AlignList = styled.ul`

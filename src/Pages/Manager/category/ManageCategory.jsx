@@ -8,16 +8,6 @@ import { SectionDivier } from '../../../Assets/Styles/Layout.style.js';
 
 function ManageCategory() {
   const { categories } = useSelector((state) => state.category);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const listOfCategory = () => {
-      dispatch(getCategoryList({ toast }));
-    };
-
-    listOfCategory();
-  }, []);
-
   return (
     <SectionDivier>
       <SectionTitle>카테고리별 상품찾기</SectionTitle>

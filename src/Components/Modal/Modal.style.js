@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { AlignComponents } from '../../Assets/Styles/Layout.style';
 import {
   PrimaryButton,
@@ -22,8 +22,8 @@ export const ModalLayer = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  min-width: 500px;
-  max-width: 500px;
+  min-width: 540px;
+  max-width: 540px;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
@@ -64,7 +64,6 @@ export const ModalTitle = styled.h2`
 
 export const ModalContent = styled.div`
   padding: 20px 20px 20px 20px;
-  background: #fbfbfb;
 `;
 
 export const ModalForm = styled.form`
@@ -78,13 +77,50 @@ export const ModalList = styled.ul`
 `;
 
 export const ModalItem = styled.li`
-  margin: 0 0 20px 0;
+  ${({ display }) =>
+    display
+      ? css`
+          display: flex;
+          align-items: center;
+        `
+      : ''}
+  margin-bottom: ${({ mb }) => (mb ? mb : '20')}px;
   &:first-child {
     margin-top: 0;
   }
   &:last-child {
     margin-bottom: 0;
   }
+`;
+
+export const ModalInfo = styled.div`
+  background: #fbfbfb;
+  margin: 0 0 30px 0;
+  padding: 10px;
+`;
+
+export const ModalInfoTitle = styled.strong`
+  display: inline-block;
+  vertical-align: top;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 8px 0;
+`;
+
+export const ModalInfoList = styled.ul`
+  padding: 0 0 0 5px;
+`;
+
+export const ModalInfoDes = styled.p`
+  margin: 0 0 0 5px;
+  font-size: 12px;
+`;
+
+export const ModalInfoBold = styled.strong`
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 2px 0 2px;
+  font-size: 12px;
 `;
 
 export const ModalAction = styled(AlignComponents)`
@@ -95,6 +131,12 @@ export const ModalAction = styled(AlignComponents)`
 export const ModalPrimaryBtn = styled(PrimaryButton)`
   ${'' /* 10px는  버튼 간격 */}
   width: calc(100vw - 10px);
+  ${(props) =>
+    props.disabled &&
+    css`
+      cursor: not-allowed !important;
+      pointer-events: all !important;
+    `}
 `;
 
 export const ModalSeconDaryBtn = styled(SeconDaryButton)`

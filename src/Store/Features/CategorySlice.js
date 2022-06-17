@@ -4,10 +4,11 @@ import * as api from '../SendApi';
 //카테고리를 생성
 export const createCategory = createAsyncThunk(
   'category/createCategory',
-  async ({ category, toast }, { rejectWithValue }) => {
+  async ({ category, toast, navigate }, { rejectWithValue }) => {
     try {
       const response = await api.createCategory(category);
       toast.success('Category Added Successfully');
+      navigate('/');
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
