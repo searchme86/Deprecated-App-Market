@@ -26,7 +26,6 @@ import { toast } from 'react-toastify';
 import {
   deleteCategory,
   createCategory,
-  getCategoryList,
 } from '../../../Store/Features/CategorySlice';
 import CategoryModal from './CategoryModal/CategoryModal';
 
@@ -47,6 +46,8 @@ function CategoryView({ categories }) {
 
   const { categoryTitle, categoryDescription, categoryLink, ImageDescription } =
     category;
+
+  useEffect(() => {});
 
   useEffect(() => {
     error && toast.error(error);
@@ -102,8 +103,7 @@ function CategoryView({ categories }) {
       ImageDescription
     ) {
       dispatch(createCategory({ category, toast, navigate }));
-      dispatch(getCategoryList({ toast }));
-      console.log({ category, toast, navigate });
+      console.log('카테고리 생성 후', { category, toast, navigate });
       handleClear();
       handleClose();
     }
@@ -145,9 +145,10 @@ function CategoryView({ categories }) {
   console.log('categories', categories);
   console.log('canTrigger', canTrigger);
   console.log('category', category);
+
   return (
     <CategoryWrapper>
-      {user ? (
+      {user && categories ? (
         <>
           <AlignComponents>
             <ListContainer>
