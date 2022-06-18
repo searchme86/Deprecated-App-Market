@@ -10,8 +10,21 @@ export const createCategory = createAsyncThunk(
       toast.success('Category Added Successfully');
       navigate('/');
       return response.data;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+//특정 id에 해당하는 아이템을 가져옴
+export const getSingleCategory = createAsyncThunk(
+  'category/getSingleCategory',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await api.getSingleCategory(id);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -24,8 +37,23 @@ export const getCategoryList = createAsyncThunk(
       const response = await api.getCategories();
       toast.success('Category Retrieved Successfully');
       return response.data;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+//특정 id에 해당하는 아이템을 변경
+export const updateSingleCategory = createAsyncThunk(
+  'category/updateCategory',
+  async ({ _id, updateCategory, navigate, toast }, { rejectWithValue }) => {
+    try {
+      const response = await api.updateCategory(_id, updateCategory);
+      toast.success('category Updated Successfully');
+      navigate('/');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -39,8 +67,8 @@ export const deleteCategory = createAsyncThunk(
       console.log('response', response);
       toast.success('Category Deleted Successfully');
       return response.data;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -66,6 +94,18 @@ const categorySlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    [getSingleCategory.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getSingleCategory.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.category = action.payload;
+    },
+    [getSingleCategory.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
     [getCategoryList.pending]: (state, action) => {
       state.loading = true;
     },
@@ -78,6 +118,29 @@ const categorySlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+
+    [updateSingleCategory.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [updateSingleCategory.fulfilled]: (state, action) => {
+      state.loading = false;
+      const {
+        arg: { id },
+      } = action.meta;
+      if (id) {
+        state.categories = state.categories.map((item) =>
+          item._id === id ? action.payload : item
+        );
+        // state.tours = state.tours.map((item) =>
+        //   item._id === id ? action.payload : item
+        // );
+      }
+    },
+    [updateSingleCategory.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
     [deleteCategory.pending]: (state, action) => {
       state.loading = true;
     },
