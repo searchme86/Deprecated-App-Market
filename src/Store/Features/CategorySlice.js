@@ -22,7 +22,6 @@ export const getCategoryList = createAsyncThunk(
   async ({ toast }, { rejectWithValue }) => {
     try {
       const response = await api.getCategories();
-      // console.log('response', response);
       toast.success('Category Retrieved Successfully');
       return response.data;
     } catch (err) {
@@ -52,7 +51,7 @@ const categorySlice = createSlice({
     category: {},
     categories: [],
     error: '',
-    loading: false,
+    fetchingCategory: false,
   },
   extraReducers: {
     [createCategory.pending]: (state, action) => {
@@ -60,7 +59,8 @@ const categorySlice = createSlice({
     },
     [createCategory.fulfilled]: (state, action) => {
       state.loading = false;
-      state.categories = [action.payload];
+      // state.categories = [action.payload];
+      state.categories.push(action.payload);
     },
     [createCategory.rejected]: (state, action) => {
       state.loading = false;
