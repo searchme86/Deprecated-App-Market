@@ -59,7 +59,8 @@ export const uploadProduct = (uploadData) =>
 //*-------category-------*
 export const createCategory = (categoryData) =>
   API.post('/category/upload', categoryData);
-
 export const getCategories = () => API.get('/category/categories');
-
+export const getSingleCategory = (id) => API.get(`/category/${id}`);
 export const deleteCategory = (id) => API.delete(`/category/${id}`);
+export const updateCategory = (id, updateCategory) =>
+  API.patch(`/category/${id}`, updateCategory);

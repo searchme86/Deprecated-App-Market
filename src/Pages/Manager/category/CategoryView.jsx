@@ -24,11 +24,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import {
-  deleteCategory,
   createCategory,
-  getCategoryList,
+  deleteCategory,
+  // getSingleCategory,
 } from '../../../Store/Features/CategorySlice';
 import CategoryModal from './CategoryModal/CategoryModal';
+import UpdateCateory from './CategoryModal/UpdateCateory';
 
 function CategoryView({ categories }) {
   const initialState = {
@@ -39,6 +40,8 @@ function CategoryView({ categories }) {
   };
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isFmodalOpen, setIsFmodalOpen] = useState(false);
+  const [isSmodalOpen, setIsSmodalOpen] = useState(false);
   const [category, setCategory] = useState(initialState);
 
   const { user } = useSelector((state) => state.auth);
@@ -55,8 +58,11 @@ function CategoryView({ categories }) {
   const dispatch = useDispatch();
 
   // 부모에서 사용하는
-  const handleModal = useCallback(() => {
+  // 카테고리 등록하는 모달을 실행하는 핸들러
+  const handleFirstModal = useCallback(() => {
     setIsOpen((value) => !value);
+    setIsFmodalOpen(true);
+    setIsSmodalOpen(false);
   }, []);
 
   const handleClose = useCallback(() => {
@@ -70,10 +76,14 @@ function CategoryView({ categories }) {
     [dispatch]
   );
 
-  const updateCategory = (_id) => {
+  // 카테고리 업데이트하는 모달을 실행하는 핸들러
+  const handleSecondModal = useCallback((_id) => {
+    setIsOpen((value) => !value);
+    setIsFmodalOpen(false);
+    setIsSmodalOpen(true);
     console.log('_id', _id);
     console.log('업데이트 됐습니다.');
-  };
+  }, []);
 
   //자식에서 사용하는
   const onInputChange = useCallback(
@@ -102,8 +112,6 @@ function CategoryView({ categories }) {
       ImageDescription
     ) {
       dispatch(createCategory({ category, toast, navigate }));
-      dispatch(getCategoryList({ toast }));
-      console.log({ category, toast, navigate });
       handleClear();
       handleClose();
     }
@@ -138,16 +146,22 @@ function CategoryView({ categories }) {
     categoryDescription,
     categoryLink,
     ImageDescription,
-
     canTrigger,
   };
 
-  console.log('categories', categories);
-  console.log('canTrigger', canTrigger);
-  console.log('category', category);
+  const UpdateProps = {
+    handleClose,
+    isOpen,
+  };
+
+  // console.log('categories', categories);
+  // console.log('canTrigger', canTrigger);
+  // console.log('category', category);
+  console.log('user', user);
+
   return (
     <CategoryWrapper>
-      {user ? (
+      {user && categories ? (
         <>
           <AlignComponents>
             <ListContainer>
@@ -180,8 +194,7 @@ function CategoryView({ categories }) {
                           <FontAwesomeIcon
                             icon={faPenToSquare}
                             style={{ fontSize: 30, color: '#146ebe' }}
-                            // onClick={updateCategory}
-                            onClick={handleModal}
+                            onClick={() => handleSecondModal(_id)}
                           />
                         </FunctionList>
                         <FunctionList>
@@ -197,11 +210,12 @@ function CategoryView({ categories }) {
                 )
               )}
             </ListContainer>
-            <CreateCategoryBtn onClick={handleModal}>
+            <CreateCategoryBtn onClick={handleFirstModal}>
               <FontAwesomeIcon icon={faCirclePlus} style={{ fontSize: 50 }} />
             </CreateCategoryBtn>
           </AlignComponents>
-          <CategoryModal ParentProps={ParentProps} />
+          {isFmodalOpen && <CategoryModal ParentProps={ParentProps} />}
+          {isSmodalOpen && <UpdateCateory UpdateProps={UpdateProps} />}
         </>
       ) : (
         <ListContainer>

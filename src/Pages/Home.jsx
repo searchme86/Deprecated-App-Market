@@ -5,11 +5,9 @@ import { getTours, setCurrentPage } from '../Store/Features/TourSlice';
 import CardTour from '../Components/CardTour';
 import Spinner from '../Components/Spinner';
 import Pagination from '../Components/Pagination';
-
 import { useLocation } from 'react-router-dom';
+
 import ManageCategory from './Manager/category/ManageCategory';
-import { getCategoryList } from '../Store/Features/CategorySlice';
-import { toast } from 'react-toastify';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -22,6 +20,7 @@ function Home() {
       ...state.tour,
     })
   );
+
   const dispatch = useDispatch();
   const query = useQuery();
   const searchQuery = query.get('searchQuery');
@@ -35,13 +34,6 @@ function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
 
-  useEffect(() => {
-    const listOfCategory = () => {
-      dispatch(getCategoryList({ toast }));
-    };
-    listOfCategory();
-  }, [dispatch]);
-
   if (loading) {
     return <Spinner />;
   }
@@ -50,11 +42,7 @@ function Home() {
 
   return (
     <>
-      {/* 새롭게 데이터가 들어갈 공간 */}
-      <div className="">
-        <ManageCategory />
-      </div>
-      {/* 새롭게 데이터가 들어갈 공간 */}
+      <ManageCategory />
       <div
         style={{
           margin: 'auto',

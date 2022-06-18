@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { OffScreenSpan } from '../../Assets/Styles/Basic.style';
 
-function ModalFrame({ children, isOpen, handleClose }) {
+function ModalFrame({ children, isOpen, handleClose, domId }) {
   useEffect(() => {
     const closeOnEscapeKey = (e) => (e.key === 'Escape' ? handleClose() : null);
     document.body.addEventListener('keydown', closeOnEscapeKey);
@@ -23,8 +23,9 @@ function ModalFrame({ children, isOpen, handleClose }) {
 
   if (!isOpen) return null;
 
+  //<ModalPortal wrapperId="react-portal-modal-container">
   return (
-    <ModalPortal wrapperId="react-portal-modal-container">
+    <ModalPortal wrapperId={domId}>
       <ModalWrapper>
         <ModalLayer>
           <ModalLayOut>

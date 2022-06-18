@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AlignComponents } from '../../../../Assets/Styles/Layout.style';
 import {
   ModalAction,
@@ -20,7 +20,6 @@ import {
 import ModalFrame from '../../../../Components/Modal/ModalFrame';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-
 import {
   FormControl,
   FormLabel,
@@ -31,7 +30,6 @@ import {
   InputRightAddon,
   Textarea,
 } from '@chakra-ui/react';
-
 import FileBase from 'react-file-base64';
 import { useForm } from 'react-hook-form';
 
@@ -54,30 +52,34 @@ function CategoryModal({ ParentProps }) {
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm();
 
   const onSubmit = (data, e) => {
-    console.log('data', data);
-    console.log('e', e);
+    // console.log('data', data);
+    // console.log('e', e);
     registerForm();
   };
 
-  const onError = (errors, e) => {
-    console.log('errors', errors);
-    console.log('e', e);
-  };
+  // const onError = (errors, e) => {
+  //   console.log('errors', errors);
+  //   console.log('e', e);
+  // };
 
-  console.log('isSubmitting', isSubmitting);
+  // console.log('isSubmitting', isSubmitting);
 
   return (
-    <ModalFrame handleClose={handleClose} isOpen={isOpen}>
+    <ModalFrame
+      handleClose={handleClose}
+      isOpen={isOpen}
+      domId="create-category-modal"
+    >
       <>
         <ModalHeader>
           <ModalTitle>카테고리 등록하기</ModalTitle>
         </ModalHeader>
         <ModalContent>
-          <ModalForm onSubmit={handleSubmit(onSubmit, onError)}>
+          <ModalForm onSubmit={handleSubmit(onSubmit)}>
             <FormControl isInvalid={errors}>
               <AlignComponents mb="30" bg="#fbfbfb">
                 <ModalList>
