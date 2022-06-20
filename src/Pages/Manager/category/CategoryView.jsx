@@ -171,7 +171,7 @@ function CategoryView({ categories }) {
                 }) => (
                   <CategoryItem key={_id}>
                     <Link to={categoryLink}>
-                      <ImageHolder>
+                      <ImageHolder height="150px">
                         <Image
                           src={imageFile}
                           alt={ImageDescription}

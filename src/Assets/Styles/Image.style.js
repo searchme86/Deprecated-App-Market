@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const ImageHolder = styled.div`
   width: ${({ width }) => width};
-  height: 150px;
+  height: ${({ height }) => height};
   overflow: hidden;
 `;
 
