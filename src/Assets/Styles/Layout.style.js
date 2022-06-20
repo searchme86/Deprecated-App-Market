@@ -4,6 +4,20 @@ export const SectionDivier = styled.section`
   margin: 20px 0;
 `;
 
+export const SectionContainer = styled.div`
+  margin: 10px 0 0 0;
+`;
+
+export const SectionHalf = styled.div`
+  margin-right: ${({ mr }) => mr}px;
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+`;
+
 export const ContentDivider = styled.div`
   padding: 10px;
 `;
