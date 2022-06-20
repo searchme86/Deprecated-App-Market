@@ -7,7 +7,7 @@ import Spinner from '../Components/Spinner';
 import Pagination from '../Components/Pagination';
 import { useLocation } from 'react-router-dom';
 
-import MainAd from './Manager/Info/top/MainAd';
+import MainAd from './Manager/Info/MainAd';
 import ManageCategory from './Manager/category/ManageCategory';
 
 function useQuery() {
@@ -47,6 +47,7 @@ function Home() {
       <MainAd />
       {/* 현재 여기 작업중 */}
       <ManageCategory />
+
       <div
         style={{
           margin: 'auto',
