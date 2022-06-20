@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   CategoryItem,
-  CategoryWrapper,
   CategoryTitle,
   CreateCategoryBtn,
   FunctionList,
@@ -156,7 +155,7 @@ function CategoryView({ categories }) {
   };
 
   return (
-    <CategoryWrapper>
+    <>
       {user && categories ? (
         <>
           <AlignComponents>
@@ -243,7 +242,7 @@ function CategoryView({ categories }) {
           )}
         </ListContainer>
       )}
-    </CategoryWrapper>
+    </>
   );
 }
 
