@@ -12,7 +12,9 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { googleSignIn, login } from '../Store/Features/AuthSlice';
+import { login } from '../Store/Features/AuthSlice';
+import { LoginBgShapehape, LoginWrapper, LonginContainer } from './Login.style';
+import BgAnimation from '../Components/BgAnimation';
 
 const initialState = {
   email: '',
@@ -44,67 +46,73 @@ function Login() {
   // const devEnv = process.env.NODE_ENV !== 'production';
 
   return (
-    <div
-      style={{
-        margin: 'auto',
-        padding: '15px',
-        maxWidth: '450px',
-        alignContent: 'center',
-        marginTop: '120px',
-      }}
-    >
-      <MDBCard alignment="center">
-        <MDBIcon fas icon="user-circle" className="fa-2x" />
-        <h5>Sign In</h5>
-        <MDBCardBody>
-          <MDBValidation onSubmit={handleSubmit} noValidate className="row g-3">
-            <div className="col-md-12">
-              <MDBInput
-                label="Email"
-                type="email"
-                value={email}
-                name="email"
-                onChange={onInputChange}
-                required
-                invalid
-                validation="Please provide your email"
-              />
-            </div>
-            <div className="col-md-12">
-              <MDBInput
-                label="Password"
-                type="password"
-                value={password}
-                name="password"
-                onChange={onInputChange}
-                required
-                invalid
-                validation="Please provide your password"
-              />
-            </div>
-            <div className="col-12">
-              <MDBBtn style={{ width: '100%' }} className="mt-2">
-                {loading && (
-                  <MDBSpinner
-                    size="sm"
-                    role="status"
-                    tag="span"
-                    className="me-2"
-                  />
-                )}
-                Login
-              </MDBBtn>
-            </div>
-          </MDBValidation>
-          <br />
-        </MDBCardBody>
-        <MDBCardFooter>
-          <Link to="/register">
-            <p>Don't have an account ? Sign Up</p>
-          </Link>
-        </MDBCardFooter>
-      </MDBCard>
-    </div>
+    <LoginWrapper>
+      <LonginContainer
+        style={{
+          padding: '15px',
+          maxWidth: '450px',
+          alignContent: 'center',
+        }}
+      >
+        <MDBCard alignment="center">
+          <MDBIcon fas icon="user-circle" className="fa-2x" />
+          <h5>Sign In</h5>
+          <MDBCardBody>
+            <MDBValidation
+              onSubmit={handleSubmit}
+              noValidate
+              className="row g-3"
+            >
+              <div className="col-md-12">
+                <MDBInput
+                  label="Email"
+                  type="email"
+                  value={email}
+                  name="email"
+                  onChange={onInputChange}
+                  required
+                  invalid
+                  validation="Please provide your email"
+                />
+              </div>
+              <div className="col-md-12">
+                <MDBInput
+                  label="Password"
+                  type="password"
+                  value={password}
+                  name="password"
+                  onChange={onInputChange}
+                  required
+                  invalid
+                  validation="Please provide your password"
+                />
+              </div>
+              <div className="col-12">
+                <MDBBtn style={{ width: '100%' }} className="mt-2">
+                  {loading && (
+                    <MDBSpinner
+                      size="sm"
+                      role="status"
+                      tag="span"
+                      className="me-2"
+                    />
+                  )}
+                  Login
+                </MDBBtn>
+              </div>
+            </MDBValidation>
+            <br />
+          </MDBCardBody>
+          <MDBCardFooter>
+            <Link to="/register">
+              <p>Don't have an account ? Sign Up</p>
+            </Link>
+          </MDBCardFooter>
+        </MDBCard>
+        <LoginBgShapehape />
+        <BgAnimation />
+      </LonginContainer>
+    </LoginWrapper>
   );
 }
 
