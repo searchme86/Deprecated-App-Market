@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const Page = styled.div`
+  padding: 20px 20px 20px 20px;
+  margin: 0 auto;
+`;
 export const PageContainer = styled.main``;
 
 export const SectionDivier = styled.section`
@@ -11,6 +15,7 @@ export const SectionContainer = styled.div`
 `;
 
 export const SectionHalf = styled.div`
+  padding: ${({ padding }) => padding};
   margin-right: ${({ mr }) => mr}px;
   &:first-child {
     margin-left: 0;
@@ -27,7 +32,7 @@ export const ContentDivider = styled.div`
 export const AlignComponents = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  ${'' /* align-items: center; */}
   margin-bottom: ${({ mb }) => mb}px;
   background: ${({ bg }) => bg};
 `;

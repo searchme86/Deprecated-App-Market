@@ -11,7 +11,7 @@ export const Image = styled.img`
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: ${(props) => props.radius};
+  border-radius: ${({ radius }) => radius};
 `;
 
 export const ImageLink = styled(Link)`
