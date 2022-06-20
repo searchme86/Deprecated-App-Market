@@ -1,12 +1,13 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { PageContainer } from '../Assets/Styles/Layout.style';
+import { Page, PageContainer } from '../Assets/Styles/Layout.style';
 import Header from '../Components/Header';
 import { ToastContainer } from 'react-toastify';
 // import Navbar from '../Components/Header/Nav/Navbar';
 // import SearchBox from '../Components/SeachBar/SearchBox';
 // import Slider from '../Components/Slider/Slider';
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from '../Pages/Footer';
 
 function Layout() {
   return (
@@ -18,14 +19,14 @@ function Layout() {
     //     <Outlet />
     //   </main>
     // </div>
-    <>
+    <Page>
       <Header />
       <PageContainer>
         <Outlet />
       </PageContainer>
-      <footer>여기푸터</footer>
+      <Footer />
       <ToastContainer />
-    </>
+    </Page>
   );
 }
 
