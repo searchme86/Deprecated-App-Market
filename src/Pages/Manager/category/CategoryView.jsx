@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import {
@@ -32,6 +32,7 @@ import CategoryModal from './CategoryModal/CategoryModal';
 import UpdateCateory from './CategoryModal/UpdateCateory';
 
 function CategoryView({ categories }) {
+  const IdToUpdate = useRef(null);
   const initialState = {
     categoryTitle: '',
     categoryDescription: '',
@@ -81,8 +82,7 @@ function CategoryView({ categories }) {
     setIsOpen((value) => !value);
     setIsFmodalOpen(false);
     setIsSmodalOpen(true);
-    console.log('_id', _id);
-    console.log('업데이트 됐습니다.');
+    IdToUpdate.current = _id;
   }, []);
 
   //자식에서 사용하는
@@ -152,12 +152,8 @@ function CategoryView({ categories }) {
   const UpdateProps = {
     handleClose,
     isOpen,
+    IdToUpdate,
   };
-
-  // console.log('categories', categories);
-  // console.log('canTrigger', canTrigger);
-  // console.log('category', category);
-  console.log('user', user);
 
   return (
     <CategoryWrapper>
