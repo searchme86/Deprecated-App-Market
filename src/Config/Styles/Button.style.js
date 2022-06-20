@@ -54,3 +54,10 @@ export const EditButton = styled(CommonBtn)`
   background: #f4f4f4;
   color: #666;
 `;
+
+export const HotItemButton = styled(CommonBtn)`
+  padding: 10px;
+  background-color: white;
+  color: gray;
+  font-weight: 600;
+`;
