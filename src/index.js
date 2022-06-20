@@ -9,6 +9,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 
 import './index.css';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import Font from './Assets/Fonts/Font';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,6 +17,7 @@ root.render(
     <ChakraProvider>
       <Provider store={store}>
         <GlobalStyle />
+        <Font />
         <BrowserRouter>
           <App />
         </BrowserRouter>
