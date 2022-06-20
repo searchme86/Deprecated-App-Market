@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+export const PageContainer = styled.main``;
+
 export const SectionDivier = styled.section`
   margin: 20px 0;
 `;
