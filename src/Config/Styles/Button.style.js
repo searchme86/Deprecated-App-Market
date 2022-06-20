@@ -43,3 +43,14 @@ export const BasicIconBtn = styled(CommonBtn)`
   background: #fff;
   padding: 5px;
 `;
+
+export const EditButton = styled(CommonBtn)`
+  position: absolute;
+  right: 0;
+  border-radius: 15px;
+  padding: 0 20px;
+  font-size: 16px;
+  line-height: 42px;
+  background: #f4f4f4;
+  color: #666;
+`;

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const ImageHolder = styled.div`
   width: ${({ width }) => width};
-  height: 150px;
+  height: ${({ height }) => height};
   overflow: hidden;
 `;
 
@@ -11,7 +11,7 @@ export const Image = styled.img`
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: ${(props) => props.radius};
+  border-radius: ${({ radius }) => radius};
 `;
 
 export const ImageLink = styled(Link)`

@@ -46,9 +46,9 @@ export const getCategoryList = createAsyncThunk(
 //특정 id에 해당하는 아이템을 변경
 export const updateSingleCategory = createAsyncThunk(
   'category/updateCategory',
-  async ({ _id, updateCategory, navigate, toast }, { rejectWithValue }) => {
+  async ({ ItemId, updatedCategory, navigate, toast }, { rejectWithValue }) => {
     try {
-      const response = await api.updateCategory(_id, updateCategory);
+      const response = await api.updateCategory(ItemId, updatedCategory);
       toast.success('category Updated Successfully');
       navigate('/');
       return response.data;
@@ -125,15 +125,13 @@ const categorySlice = createSlice({
     [updateSingleCategory.fulfilled]: (state, action) => {
       state.loading = false;
       const {
-        arg: { id },
+        arg: { ItemId },
       } = action.meta;
-      if (id) {
+      console.log('PayloadInSlice', action.payload);
+      if (ItemId) {
         state.categories = state.categories.map((item) =>
-          item._id === id ? action.payload : item
+          item._id === ItemId ? action.payload : item
         );
-        // state.tours = state.tours.map((item) =>
-        //   item._id === id ? action.payload : item
-        // );
       }
     },
     [updateSingleCategory.rejected]: (state, action) => {

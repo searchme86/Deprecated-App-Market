@@ -81,185 +81,178 @@ function CategoryModal({ ParentProps }) {
         <ModalContent>
           <ModalForm onSubmit={handleSubmit(onSubmit)}>
             <FormControl isInvalid={errors}>
-              <AlignComponents mb="30" bg="#fbfbfb">
-                <ModalList>
-                  <ModalItem>
-                    <FormLabel
-                      htmlFor="categoryTitle"
-                      mb={0}
-                      mr={0}
-                      fontSize={18}
-                    >
-                      카테고리 타이틀
-                    </FormLabel>
+              <AlignComponents mb="30" bg="#fbfbfb"></AlignComponents>
+              <ModalList>
+                <ModalItem>
+                  <FormLabel
+                    htmlFor="categoryTitle"
+                    mb={0}
+                    mr={0}
+                    fontSize={18}
+                  >
+                    카테고리 타이틀
+                  </FormLabel>
+                  <Input
+                    id="categoryTitle"
+                    type="text"
+                    value={categoryTitle || ''}
+                    name="categoryTitle"
+                    {...register('categoryTitle', {
+                      required: '카테고리 타이틀 입력을 해주세요',
+                      minLength: {
+                        value: 5,
+                        message: '최소입력 글자는 5글자입니다.',
+                      },
+                      onChange: onInputChange,
+                      pattern: {
+                        value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
+                        message: '숫자와 특수문자, 공백은 허용하지 않습니다.',
+                      },
+                    })}
+                    size="sm"
+                    variant="flushed"
+                    color="teal"
+                    fontSize="xs"
+                    _placeholder={{ color: 'inherit' }}
+                    autoComplete="off"
+                  />
+                  <FormErrorMessage as="p">
+                    {errors.categoryTitle && errors.categoryTitle.message}
+                  </FormErrorMessage>
+                </ModalItem>
+                <ModalItem>
+                  <FormLabel
+                    htmlFor="categoryDescription"
+                    mb={0}
+                    mr={0}
+                    fontSize={16}
+                  >
+                    카테고리 설명
+                  </FormLabel>
+                  <Textarea
+                    id="categoryDescription"
+                    value={categoryDescription}
+                    name="categoryDescription"
+                    {...register('categoryDescription', {
+                      required: '카테고리에 대해 설명해주세요',
+                      minLength: {
+                        value: 10,
+                        message: '최소입력 글자는 10글자입니다.',
+                      },
+                      onChange: onInputChange,
+                      pattern: {
+                        value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
+                        message:
+                          '입력항목은 특수문자/숫자로 시작 할 수 없으며, 숫자와 특수문자를 포함할 수 없습니다.',
+                      },
+                    })}
+                    size="sm"
+                    fontSize="xs"
+                    isRequired
+                  />
+                  <FormErrorMessage as="p">
+                    {errors.categoryDescription &&
+                      errors.categoryDescription.message}
+                  </FormErrorMessage>
+                </ModalItem>
+                <ModalItem>
+                  <FormLabel htmlFor="categoryLink" mb={0} mr={0} fontSize={16}>
+                    카테고리 링크
+                  </FormLabel>
+                  <InputGroup size="sm">
+                    <InputLeftAddon children="category/" />
                     <Input
-                      id="categoryTitle"
+                      id="categoryLink"
                       type="text"
-                      value={categoryTitle || ''}
-                      name="categoryTitle"
-                      {...register('categoryTitle', {
-                        required: '카테고리 타이틀 입력을 해주세요',
+                      value={categoryLink}
+                      name="categoryLink"
+                      onChange={onInputChange}
+                      {...register('categoryLink', {
+                        required: '해당 카테고리명 을 입력해주세요',
                         minLength: {
-                          value: 5,
-                          message: '최소입력 글자는 5글자입니다.',
+                          value: 3,
+                          message: '최소입력 글자는 3글자입니다.',
+                        },
+                        pattern: {
+                          value: /^[a-zA-Z]+$/,
+                          message:
+                            '입력항목은 특수문자와 숫자, 한글, 공백은 허용하지 않습니다.',
                         },
                         onChange: onInputChange,
-                        pattern: {
-                          value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
-                          message: '숫자와 특수문자, 공백은 허용하지 않습니다.',
-                        },
                       })}
                       size="sm"
+                      p="2"
                       variant="flushed"
                       color="teal"
                       fontSize="xs"
                       _placeholder={{ color: 'inherit' }}
                       autoComplete="off"
+                      isInvalid
+                      focusBorderColor="lime"
+                      errorBorderColor="crimson"
                     />
-                    <FormErrorMessage as="p">
-                      {errors.categoryTitle && errors.categoryTitle.message}
-                    </FormErrorMessage>
-                  </ModalItem>
-                  <ModalItem>
-                    <FormLabel
-                      htmlFor="categoryDescription"
-                      mb={0}
-                      mr={0}
-                      fontSize={16}
-                    >
-                      카테고리 설명
-                    </FormLabel>
-                    <Textarea
-                      id="categoryDescription"
-                      value={categoryDescription}
-                      name="categoryDescription"
-                      {...register('categoryDescription', {
-                        required: '카테고리에 대해 설명해주세요',
-                        minLength: {
-                          value: 10,
-                          message: '최소입력 글자는 10글자입니다.',
-                        },
-                        onChange: onInputChange,
-                        pattern: {
-                          value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
-                          message:
-                            '입력항목은 특수문자/숫자로 시작 할 수 없으며, 숫자와 특수문자를 포함할 수 없습니다.',
-                        },
-                      })}
-                      size="sm"
-                      fontSize="xs"
-                      isRequired
+                    <InputRightAddon children=".com" />
+                  </InputGroup>
+                  <FormErrorMessage as="p">
+                    {errors.categoryLink && errors.categoryLink.message}
+                  </FormErrorMessage>
+                </ModalItem>
+                <ModalItem>
+                  <div className="">
+                    <FileBase
+                      type="file"
+                      multiple={false}
+                      onDone={({ base64 }) =>
+                        setCategory({ ...category, imageFile: base64 })
+                      }
                     />
-                    <FormErrorMessage as="p">
-                      {errors.categoryDescription &&
-                        errors.categoryDescription.message}
-                    </FormErrorMessage>
-                  </ModalItem>
-                  <ModalItem>
-                    <FormLabel
-                      htmlFor="categoryLink"
-                      mb={0}
-                      mr={0}
-                      fontSize={16}
-                    >
-                      카테고리 링크
-                    </FormLabel>
-                    <InputGroup size="sm">
-                      <InputLeftAddon children="category/" />
-                      <Input
-                        id="categoryLink"
-                        type="text"
-                        value={categoryLink}
-                        name="categoryLink"
-                        onChange={onInputChange}
-                        {...register('categoryLink', {
-                          required: '해당 카테고리명 을 입력해주세요',
-                          minLength: {
-                            value: 3,
-                            message: '최소입력 글자는 3글자입니다.',
-                          },
-                          pattern: {
-                            value: /^[a-zA-Z]+$/,
-                            message:
-                              '입력항목은 특수문자와 숫자, 한글, 공백은 허용하지 않습니다.',
-                          },
-                          onChange: onInputChange,
-                        })}
-                        size="sm"
-                        p="2"
-                        variant="flushed"
-                        color="teal"
-                        fontSize="xs"
-                        _placeholder={{ color: 'inherit' }}
-                        autoComplete="off"
-                        isInvalid
-                        focusBorderColor="lime"
-                        errorBorderColor="crimson"
-                      />
-                      <InputRightAddon children=".com" />
-                    </InputGroup>
-                    <FormErrorMessage as="p">
-                      {errors.categoryLink && errors.categoryLink.message}
-                    </FormErrorMessage>
-                  </ModalItem>
-                  <ModalItem>
-                    <div className="">
-                      <FileBase
-                        type="file"
-                        multiple={false}
-                        onDone={({ base64 }) =>
-                          setCategory({ ...category, imageFile: base64 })
-                        }
-                      />
-                    </div>
-                  </ModalItem>
-                  <ModalItem>
-                    <FormLabel
-                      htmlFor="ImageDescription"
-                      mb={0}
-                      mr={0}
-                      fontSize={16}
-                    >
-                      카테고리 설명
-                    </FormLabel>
+                  </div>
+                </ModalItem>
+                <ModalItem>
+                  <FormLabel
+                    htmlFor="ImageDescription"
+                    mb={0}
+                    mr={0}
+                    fontSize={16}
+                  >
+                    카테고리 설명
+                  </FormLabel>
 
-                    <Textarea
-                      id="ImageDescription"
-                      value={ImageDescription}
-                      {...register('ImageDescription', {
-                        required:
-                          '카테고리 이미지에 대한 간략한 설명을 남겨주세요',
-                        minLength: {
-                          value: 10,
-                          message: '최소입력 글자는 10글자입니다.',
-                        },
-                        onChange: onInputChange,
-                        pattern: {
-                          value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
-                          message:
-                            '입력항목은 특수문자/숫자로 시작 할 수 없으며, 숫자와 특수문자를 포함할 수 없습니다.',
-                        },
-                      })}
-                      name="ImageDescription"
-                      size="sm"
-                      fontSize="xs"
-                      isRequired
-                    />
-                    <FormErrorMessage as="p">
-                      {errors.ImageDescription &&
-                        errors.ImageDescription.message}
-                    </FormErrorMessage>
-                  </ModalItem>
-                </ModalList>
-                <ResetButton
-                  type="button"
-                  role="button"
-                  style={{ alignSelf: 'flex-end' }}
-                  onClick={handleClear}
-                >
-                  초기화
-                </ResetButton>
-              </AlignComponents>
+                  <Textarea
+                    id="ImageDescription"
+                    value={ImageDescription}
+                    {...register('ImageDescription', {
+                      required:
+                        '카테고리 이미지에 대한 간략한 설명을 남겨주세요',
+                      minLength: {
+                        value: 10,
+                        message: '최소입력 글자는 10글자입니다.',
+                      },
+                      onChange: onInputChange,
+                      pattern: {
+                        value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
+                        message:
+                          '입력항목은 특수문자/숫자로 시작 할 수 없으며, 숫자와 특수문자를 포함할 수 없습니다.',
+                      },
+                    })}
+                    name="ImageDescription"
+                    size="sm"
+                    fontSize="xs"
+                    isRequired
+                  />
+                  <FormErrorMessage as="p">
+                    {errors.ImageDescription && errors.ImageDescription.message}
+                  </FormErrorMessage>
+                </ModalItem>
+              </ModalList>
+              <ResetButton
+                type="button"
+                role="button"
+                style={{ alignSelf: 'flex-end' }}
+                onClick={handleClear}
+              >
+                초기화
+              </ResetButton>
               <ModalInfo>
                 <ModalInfoTitle>[유의사항]</ModalInfoTitle>
                 <ModalInfoList>

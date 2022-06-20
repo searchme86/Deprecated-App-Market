@@ -40,6 +40,17 @@ export const ModalLayOut = styled.div`
   position: relative;
 `;
 
+export const ModalHalf = styled.div`
+  width: 250px;
+  margin-right: ${({ mr }) => mr}px;
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+`;
+
 export const ModalCloseButton = styled(BasicIconBtn)`
   width: ${({ width }) => width};
   position: absolute;
@@ -72,8 +83,7 @@ export const ModalForm = styled.form`
 `;
 
 export const ModalList = styled.ul`
-  width: 65%;
-  margin: 0 10px 0 0;
+  margin: 0 0 10px 0;
 `;
 
 export const ModalItem = styled.li`
@@ -123,8 +133,20 @@ export const ModalInfoBold = styled.strong`
   font-size: 12px;
 `;
 
+export const ModalDesTitle = styled.strong`
+  display: block;
+  font-size: 14px;
+  font-weight: normal;
+`;
+
+export const ModalDesIndication = styled.span`
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #ff0000;
+`;
+
 export const ModalAction = styled(AlignComponents)`
-  ${'' /* background: #f8f8f8; */}
   padding: 20px 0 20px 0;
 `;
 

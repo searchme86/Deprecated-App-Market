@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-// import Layout from './Layout';
+import Layout from './Layout';
 // import Login from '../Pages/onHold/Login';
 // import Register from '../Pages/onHold/Register';
 // import Contactus from '../Pages/onHold/Contactus';
@@ -11,13 +11,7 @@ import { Route, Routes } from 'react-router-dom';
 // import Development from '../Pages/onHold/Developement';
 // import Design from '../Pages/onHold/Design';
 // import Consulting from '../Pages/onHold/Consulting';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import '../App.css';
 
-import { useDispatch } from 'react-redux';
-
-import Header from '../Components/Header';
 import PrivateRoute from '../Components/PrivateRoute';
 
 import Home from '../Pages/Home';
@@ -32,6 +26,7 @@ import TagTours from '../Pages/TagTours';
 import UserPage from '../Pages/Manager/UserPage';
 import UploadProduct from '../Pages/Manager/UploadProduct';
 import UploadCategory from '../Pages/Manager/category/UploadCategory';
+import { useDispatch } from 'react-redux';
 
 function Router() {
   const dispatch = useDispatch();
@@ -42,14 +37,12 @@ function Router() {
   }, []);
 
   return (
-    <div className="App">
-      <Header />
-      <ToastContainer />
-      <Routes>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/tours/search" element={<Home />} />
         <Route path="/tours/tag/:tag" element={<TagTours />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile">
           <Route
@@ -105,8 +98,8 @@ function Router() {
           }
         />
         <Route path="*" element={<NotFound />} />
-      </Routes>
-    </div>
+      </Route>
+    </Routes>
   );
 }
 

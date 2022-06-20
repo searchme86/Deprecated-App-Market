@@ -4,10 +4,6 @@ import { BasicLi } from '../../../Assets/Styles/Basic.style';
 import { CommonBtn } from '../../../Config/Styles/Button.style';
 import { BasicStrong } from '../../../Assets/Styles/Text.style';
 
-export const CategoryWrapper = styled.div`
-  ${'' /* background-color: #f5fbfd; */}
-`;
-
 export const CategoryItem = styled(BasicLi)`
   width: 200px;
   &:not(:last-child) {
