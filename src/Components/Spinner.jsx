@@ -1,15 +1,23 @@
 import React from 'react';
-import { MDBSpinner } from 'mdb-react-ui-kit';
+import { Spinner } from '@chakra-ui/react';
+import { OffScreen } from '../Assets/Styles/Basic.style';
+import { SpinnerContainer, SpinnerWrapper } from './Spinner.style';
 
-function Spinner() {
+function LodingSpinner() {
   return (
-    <MDBSpinner
-      className="me-2"
-      style={{ width: '3rem', height: '3rem', marginTop: '100px' }}
-    >
-      <span className="visually-hidden">Loading...</span>
-    </MDBSpinner>
+    <SpinnerWrapper>
+      <SpinnerContainer>
+        <OffScreen>Loading...</OffScreen>
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
+      </SpinnerContainer>
+    </SpinnerWrapper>
   );
 }
 
-export default Spinner;
+export default LodingSpinner;
