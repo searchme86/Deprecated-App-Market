@@ -3,7 +3,9 @@ import { MDBCol, MDBContainer, MDBRow, MDBTypography } from 'mdb-react-ui-kit';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTours, setCurrentPage } from '../Store/Features/TourSlice';
 import CardTour from '../Components/CardTour';
-import Spinner from '../Components/Spinner';
+// import Spinner from '../Components/Spinner';
+
+import LodingSpinner from '../Components/Spinner';
 import Pagination from '../Components/Pagination';
 import { useLocation } from 'react-router-dom';
 
@@ -37,7 +39,7 @@ function Home() {
   }, [currentPage]);
 
   if (loading) {
-    return <Spinner />;
+    return <LodingSpinner />;
   }
 
   console.log('tours length', tours);
