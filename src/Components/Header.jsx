@@ -92,6 +92,11 @@ function Header() {
                     <p className="header-text">Dashboard</p>
                   </MDBNavbarLink>
                 </MDBNavbarItem>
+                <MDBNavbarItem>
+                  <MDBNavbarLink href="/news">
+                    <p className="header-text">News</p>
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
               </>
             )}
             {user?.result?._id ? (
