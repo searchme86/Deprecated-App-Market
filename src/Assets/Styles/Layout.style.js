@@ -11,6 +11,10 @@ export const SectionDivier = styled.section`
   margin: 20px 0;
 `;
 
+export const SectionHeader = styled.div`
+  margin: 128px 0 26px 0;
+`;
+
 export const SectionContainer = styled.div`
   margin: 10px 0 0 0;
 `;
