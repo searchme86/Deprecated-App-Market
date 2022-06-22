@@ -5,7 +5,8 @@ import {
   SectionHeader,
 } from '../Assets/Styles/Layout.style';
 import { SectionTitle } from '../Assets/Styles/Text.style';
-import Blog from '../Components/Blog/Blog';
+import MainBlog from '../Components/Blog/MainBlog';
+import Pamphlet from '../Components/Blog/Pamphlet';
 
 function News() {
   return (
@@ -14,7 +15,8 @@ function News() {
         <SectionTitle>News</SectionTitle>
       </SectionHeader>
       <SectionContainer>
-        <Blog />
+        <MainBlog />
+        <Pamphlet />
       </SectionContainer>
     </SectionDivier>
   );

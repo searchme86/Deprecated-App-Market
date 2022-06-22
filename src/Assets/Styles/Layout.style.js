@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Page = styled.div`
   position: relative;
-  padding: 20px 20px 20px 20px;
+  ${'' /* padding: 20px 20px 20px 20px; */}
   margin: 0 auto;
 `;
 export const PageContainer = styled.main``;
@@ -12,7 +12,9 @@ export const SectionDivier = styled.section`
 `;
 
 export const SectionHeader = styled.div`
-  margin: 128px 0 26px 0;
+  width: 1300px;
+  margin: 0 auto;
+  ${'' /* margin: 128px 0 26px 0; */}
 `;
 
 export const SectionContainer = styled.div`
