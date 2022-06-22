@@ -27,6 +27,7 @@ import UserPage from '../Pages/Manager/UserPage';
 import UploadProduct from '../Pages/Manager/UploadProduct';
 import UploadCategory from '../Pages/Manager/category/UploadCategory';
 import News from '../Pages/News';
+import FashionUpload from '../Pages/Manager/fashion/FashionUpload';
 import { useDispatch } from 'react-redux';
 
 function Router() {
@@ -72,6 +73,15 @@ function Router() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/create"
+          element={
+            <PrivateRoute>
+              <FashionUpload />
+            </PrivateRoute>
+          }
+        />
+
         {/*  */}
         <Route
           path="/addTour"

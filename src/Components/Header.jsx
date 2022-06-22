@@ -93,6 +93,11 @@ function Header() {
                   </MDBNavbarLink>
                 </MDBNavbarItem>
                 <MDBNavbarItem>
+                  <MDBNavbarLink href="/create">
+                    <p className="header-text">제품등록</p>
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
+                <MDBNavbarItem>
                   <MDBNavbarLink href="/news">
                     <p className="header-text">News</p>
                   </MDBNavbarLink>
