@@ -11,6 +11,36 @@ import {
 } from '@chakra-ui/react';
 import FileBase from 'react-file-base64';
 import defaultImg from '../../../Assets/Image/default-product-upload.png';
+import {
+  SectionUnit,
+  SectionLayout,
+  SectionHeader,
+  SectionTitle,
+  SectionContent,
+  FlexContainer,
+  FlexAlignDiv,
+  PForm,
+  PFormContent,
+  PFormUnit,
+  PFormList,
+  PFormBundle,
+  PFormLi,
+  PFormBlockTitle,
+  PFormBlockTitleDes,
+  PFormLiItem,
+  PFormBlock,
+  PFormDesWrapper,
+  PFormDes,
+  PFormDesList,
+  PFormDesLi,
+} from './ProductUpload.style';
+import { PFormButton } from '../../../Config/Styles/Button.style.js';
+import {
+  FormWrapper,
+  SectionDivier,
+} from '../../../Assets/Styles/Layout.style';
+import { OffScreenSpan } from '../../../Assets/Styles/Basic.style';
+import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
 
 function FashionUpload() {
   const productSchema = {
@@ -144,235 +174,396 @@ function FashionUpload() {
   console.log('upload', upload);
 
   return (
-    <div>
-      <h1>상품 등록하기</h1>
-      <div className="" style={{ marginLeft: '40px' }}>
-        <form>
-          <FormControl>
-            <div className="" style={{ display: 'flex' }}>
-              <div className="" style={{ marginRight: '100px' }}>
-                <div className="">
-                  <FormLabel htmlFor="pdCategory">상품 카테고리</FormLabel>
-                  <div className="">
-                    <Select
-                      id="pdCategory"
-                      name="pdCategory"
-                      placeholder="상품의 카테고리를 입력해주세요"
-                      value={pdCategory}
-                      onChange={selectCategory}
-                    >
-                      {ProductCategory.map(({ id, value }) => (
-                        <option value={value} key={id}>
-                          {value}
-                        </option>
-                      ))}
-                    </Select>
-                  </div>
-                </div>
-                <legend>상품 이미지</legend>
-                <div className="">
-                  <img src={pdImage ? pdImage : defaultImg} alt="ddd" />
-                </div>
-                <div className="">
-                  <FileBase
-                    type="file"
-                    multiple={false}
-                    onDone={({ base64 }) =>
-                      setPdInfo({ ...pdInfo, pdImage: base64 })
-                    }
-                  />
-                </div>
-              </div>
-              <div className="">
-                <div className="">
-                  <fieldset>
-                    <legend>상품상세 입력</legend>
-                    <div className="">
-                      <div className="">
-                        <FormLabel htmlFor="pdTitle">상품명</FormLabel>
-                        <div className="">
-                          <Input
-                            type="text"
-                            id="pdTitle"
-                            name="pdTitle"
-                            onChange={onInputChange}
-                          />
-                          <FormErrorMessage as="p">
-                            {errors.pdTitle && errors.pdTitle.message}
-                          </FormErrorMessage>
-                        </div>
-                      </div>
-                      <div className="">
-                        <Text mb="8px" as="label" htmlFor="pdDes">
+    <SectionUnit>
+      <SectionLayout>
+        <SectionHeader>
+          <SectionTitle>상품 등록하기</SectionTitle>
+        </SectionHeader>
+        <SectionContent>
+          <PForm>
+            <FormControl>
+              <FlexContainer>
+                <FlexAlignDiv fixed>
+                  <PFormContent wd="530px">
+                    <PFormUnit>
+                      <FormLabel htmlFor="pdCategory" fontWeight="bold">
+                        상품 카테고리
+                      </FormLabel>
+                      <PFormDesWrapper>
+                        <PFormDesList>
+                          <PFormDesLi>
+                            <PFormDes>상품의 카테고리를 선택해주세요</PFormDes>
+                          </PFormDesLi>
+                        </PFormDesList>
+                      </PFormDesWrapper>
+                      <FormWrapper>
+                        <Select
+                          id="pdCategory"
+                          name="pdCategory"
+                          placeholder="상품의 카테고리를 입력해주세요"
+                          value={pdCategory}
+                          onChange={selectCategory}
+                        >
+                          {ProductCategory.map(({ id, value }) => (
+                            <option value={value} key={id}>
+                              {value}
+                            </option>
+                          ))}
+                        </Select>
+                      </FormWrapper>
+                    </PFormUnit>
+                    <PFormUnit>
+                      <FormLabel htmlFor="PFormImg" fontWeight="bold">
+                        상품 이미지
+                      </FormLabel>
+                      <PFormDesWrapper>
+                        <PFormDesList>
+                          <PFormDesLi>
+                            <PFormDes>상품의 이미지를 선택해주세요</PFormDes>
+                          </PFormDesLi>
+                        </PFormDesList>
+                      </PFormDesWrapper>
+                      <ImageHolder>
+                        <Image
+                          src={pdImage ? pdImage : defaultImg}
+                          alt="ddd"
+                          id="PFormImg"
+                        />
+                      </ImageHolder>
+                      <SectionDivier>
+                        <FileBase
+                          type="file"
+                          multiple={false}
+                          onDone={({ base64 }) =>
+                            setPdInfo({ ...pdInfo, pdImage: base64 })
+                          }
+                        />
+                      </SectionDivier>
+                    </PFormUnit>
+                    <div className="" style={{ display: 'flex' }}>
+                      <PFormButton
+                        right
+                        type="submit"
+                        style={{ marginLeft: 'auto' }}
+                      >
+                        상품 등록하기
+                      </PFormButton>
+                    </div>
+                  </PFormContent>
+                </FlexAlignDiv>
+
+                <FlexAlignDiv>
+                  <PFormContent wd="540px">
+                    <fieldset>
+                      <legend>
+                        <OffScreenSpan>상품상세 입력</OffScreenSpan>
+                      </legend>
+
+                      <PFormUnit>
+                        <FormLabel htmlFor="pdTitle" fontWeight="bold">
+                          상품명
+                        </FormLabel>
+                        <PFormDesWrapper>
+                          <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>
+                                상품의 이름을 정해주세요 (예: 히트상품 )
+                              </PFormDes>
+                            </PFormDesLi>
+                          </PFormDesList>
+                        </PFormDesWrapper>
+                        <Input
+                          type="text"
+                          id="pdTitle"
+                          name="pdTitle"
+                          onChange={onInputChange}
+                        />
+                        <FormErrorMessage as="p">
+                          {errors.pdTitle && errors.pdTitle.message}
+                        </FormErrorMessage>
+                      </PFormUnit>
+
+                      <PFormUnit>
+                        <FormLabel htmlFor="pdDes" fontWeight="bold">
                           상품소개
-                        </Text>
+                        </FormLabel>
+
+                        <PFormDesWrapper>
+                          <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>
+                                상품에 대한 소개글을 남겨주세요
+                              </PFormDes>
+                            </PFormDesLi>
+                          </PFormDesList>
+                        </PFormDesWrapper>
                         <Textarea
-                          placeholder="Here is a sample placeholder"
+                          placeholder="예 : 00에 장점이 있습니다"
+                          id="pdDes"
                           name="pdDes"
                           size="sm"
                           onChange={onInputChange}
                         />
-                      </div>
-                      <div className="">
-                        <FormLabel htmlFor="pdPrice"> 상품가격 </FormLabel>
-                        <div className="">
-                          <Input
-                            type="number"
-                            id="pdPrice"
-                            name="pdPrice"
-                            onChange={onInputChange}
-                          />
-                        </div>
-                      </div>
-                      <div
-                        className=""
-                        style={{
-                          border: '4px solid red',
-                          marginTop: '10px',
-                        }}
-                      >
-                        <span>사이즈 별 제품 가격</span>
-                        {prdSize.map((singleService, index) => (
-                          <div
-                            key={index}
-                            className="services"
-                            style={{ display: 'flex' }}
-                          >
-                            <div className="first-division">
-                              <div className="">
-                                <FormLabel htmlFor="pdSize">
-                                  상품 사이즈
-                                </FormLabel>
-                                <div className="">
-                                  <Select
-                                    id="pdSize"
-                                    name="pdSize"
-                                    placeholder="상품의 사이즈를 입력해주세요"
-                                    value={singleService.pdSize}
-                                    onChange={(e) => addSize(e, index)}
-                                    required
-                                  >
-                                    {ProductSize.map(({ id, value }) => (
-                                      <option value={value} key={id}>
-                                        {value}
-                                      </option>
-                                    ))}
-                                  </Select>
-                                </div>
-                              </div>
-                              <div className="">
-                                <FormLabel htmlFor="pdPriceBySize">
-                                  사이즈 별 제품가격
-                                </FormLabel>
-                                <div className="">
-                                  <Input
-                                    type="text"
-                                    id="pdPriceBySize"
-                                    name="pdPriceBySize"
-                                    value={singleService.pdPriceBySize}
-                                    onChange={(e) => addSize(e, index)}
-                                  />
-                                </div>
-                              </div>
-                              <div className="">
+                      </PFormUnit>
+
+                      <PFormUnit>
+                        <FormLabel htmlFor="pdPrice" fontWeight="bold">
+                          상품가격
+                        </FormLabel>
+                        <PFormDesWrapper>
+                          <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>
+                                희망하는 상품의 가격을 입력해주세요
+                              </PFormDes>
+                            </PFormDesLi>
+                            <PFormDesLi>
+                              <PFormDes>
+                                '원' 단위은 제외하고 입력해주세요 (예: 10000원
+                                <OffScreenSpan>에서</OffScreenSpan> &rarr; 10000{' '}
+                                <OffScreenSpan>
+                                  으로 화폐단위를 삭제하여 입력해주세요
+                                </OffScreenSpan>
+                                )
+                              </PFormDes>
+                            </PFormDesLi>
+                          </PFormDesList>
+                        </PFormDesWrapper>
+                        <Input
+                          type="number"
+                          id="pdPrice"
+                          name="pdPrice"
+                          onChange={onInputChange}
+                        />
+                      </PFormUnit>
+
+                      {/* 입력 선택부분, 사이즈 별 제품가격 */}
+                      <PFormBlock>
+                        <PFormBlockTitle>
+                          사이즈 별 제품 가격
+                          <PFormBlockTitleDes>
+                            (*선택입력사항)
+                          </PFormBlockTitleDes>
+                        </PFormBlockTitle>
+                        <PFormList>
+                          {prdSize.map((singleService, index) => (
+                            <PFormLi key={index}>
+                              <PFormLiItem>
+                                <PFormBundle>
+                                  <PFormUnit>
+                                    <FormLabel
+                                      htmlFor="pdSize"
+                                      mt="10px"
+                                      fontWeight="bold"
+                                    >
+                                      상품 사이즈
+                                    </FormLabel>
+                                    <PFormDesWrapper>
+                                      <PFormDesList>
+                                        <PFormDesLi>
+                                          <PFormDes>
+                                            상품의 사이즈 별 가격을 입력할 수
+                                            있습니다.
+                                          </PFormDes>
+                                        </PFormDesLi>
+                                      </PFormDesList>
+                                    </PFormDesWrapper>
+                                    <FormWrapper>
+                                      <Select
+                                        id="pdSize"
+                                        name="pdSize"
+                                        placeholder="상품의 사이즈를 입력해주세요"
+                                        value={singleService.pdSize}
+                                        onChange={(e) => addSize(e, index)}
+                                      >
+                                        {ProductSize.map(({ id, value }) => (
+                                          <option value={value} key={id}>
+                                            {value}
+                                          </option>
+                                        ))}
+                                      </Select>
+                                    </FormWrapper>
+                                  </PFormUnit>
+                                  <PFormUnit>
+                                    <FormLabel
+                                      htmlFor="pdPriceBySize"
+                                      mt="10px"
+                                      fontWeight="bold"
+                                    >
+                                      사이즈 별 제품가격
+                                    </FormLabel>
+                                    <PFormDesWrapper>
+                                      <PFormDesList>
+                                        <PFormDesLi>
+                                          <PFormDes>
+                                            해당 사이즈에 따른 가격을
+                                            입력해주세요
+                                          </PFormDes>
+                                        </PFormDesLi>
+                                        <PFormDesLi>
+                                          <PFormDes>
+                                            '원' 단위은 제외하고 입력해주세요
+                                            (예: 10000원
+                                            <OffScreenSpan>
+                                              에서
+                                            </OffScreenSpan>{' '}
+                                            &rarr; 10000{' '}
+                                            <OffScreenSpan>
+                                              으로 화폐단위를 삭제하여
+                                              입력해주세요
+                                            </OffScreenSpan>
+                                            )
+                                          </PFormDes>
+                                        </PFormDesLi>
+                                      </PFormDesList>
+                                    </PFormDesWrapper>
+                                    <FormWrapper>
+                                      <Input
+                                        type="number"
+                                        id="pdPriceBySize"
+                                        name="pdPriceBySize"
+                                        value={singleService.pdPriceBySize}
+                                        onChange={(e) => addSize(e, index)}
+                                      />
+                                    </FormWrapper>
+                                  </PFormUnit>
+                                </PFormBundle>
                                 {prdSize.length - 1 === index && (
-                                  <button
+                                  <PFormButton
                                     type="button"
                                     onClick={addSizeField}
                                     className="add-btn"
                                   >
-                                    <span>Add a Service</span>
-                                  </button>
+                                    Add a Service
+                                  </PFormButton>
                                 )}
-                              </div>
-                            </div>
-                            <div className="second-division">
+                              </PFormLiItem>
                               {prdSize.length !== 1 && (
-                                <button
+                                <PFormButton
                                   type="button"
                                   onClick={() => removeSizeField(index)}
                                   className="remove-btn"
                                 >
-                                  <span>Remove</span>
-                                </button>
+                                  Remove
+                                </PFormButton>
                               )}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      {/*  */}
-                      <div
-                        className=""
-                        style={{ border: '4px solid blue', marginTop: '10px' }}
-                      >
-                        <span>색상 별 제품 가격</span>
-                        {prdColor.map((singleService, index) => (
-                          <div key={index} className="services">
-                            <div className="first-division">
-                              <div className="">
-                                <label htmlFor="pdColor">상품 색상</label>
-                                <div className="">
-                                  <input
-                                    type="text"
-                                    id="pdColor"
-                                    name="pdColor"
-                                    value={singleService.pdColor}
-                                    onChange={(e) => addColor(e, index)}
-                                    required
-                                  />
-                                </div>
-                              </div>
-                              <div className="">
-                                <label htmlFor="pdPriceByColor">
-                                  색상 별 제품가격
-                                </label>
-                                <div className="">
-                                  <input
-                                    type="text"
-                                    id="pdPriceByColor"
-                                    name="pdPriceByColor"
-                                    value={singleService.pdPriceByColor}
-                                    onChange={(e) => addColor(e, index)}
-                                    required
-                                  />
-                                </div>
-                              </div>
-                              <div className="">
+                            </PFormLi>
+                          ))}
+                        </PFormList>
+                      </PFormBlock>
+
+                      {/* 입력 선택부분, 색상 별 제품가격 */}
+                      <PFormBlock>
+                        <PFormBlockTitle>
+                          색상 별 제품 가격
+                          <PFormBlockTitleDes>
+                            (*선택입력사항)
+                          </PFormBlockTitleDes>
+                        </PFormBlockTitle>
+                        <PFormList>
+                          {prdColor.map((singleService, index) => (
+                            <PFormLi key={index}>
+                              <PFormLiItem>
+                                <PFormBundle>
+                                  <PFormUnit>
+                                    <FormLabel
+                                      htmlFor="pdColor"
+                                      mt="10px"
+                                      fontWeight="bold"
+                                    >
+                                      상품 색상
+                                    </FormLabel>
+                                    <PFormDesWrapper>
+                                      <PFormDesList>
+                                        <PFormDesLi>
+                                          <PFormDes>
+                                            상품의 색상 별 가격을 입력할 수
+                                            있습니다.
+                                          </PFormDes>
+                                        </PFormDesLi>
+                                      </PFormDesList>
+                                    </PFormDesWrapper>
+                                    <Input
+                                      type="text"
+                                      id="pdColor"
+                                      name="pdColor"
+                                      value={singleService.pdColor}
+                                      onChange={(e) => addColor(e, index)}
+                                    />
+                                  </PFormUnit>
+                                  <PFormUnit>
+                                    <FormLabel
+                                      htmlFor="pdPriceByColor"
+                                      mt="10px"
+                                      fontWeight="bold"
+                                    >
+                                      색상 별 제품가격
+                                    </FormLabel>
+                                    <PFormDesWrapper>
+                                      <PFormDesList>
+                                        <PFormDesLi>
+                                          <PFormDes>
+                                            해당 색상에 따른 가격을 입력해주세요
+                                          </PFormDes>
+                                        </PFormDesLi>
+                                        <PFormDesLi>
+                                          <PFormDes>
+                                            '원' 단위은 제외하고 입력해주세요
+                                            (예: 10000원
+                                            <OffScreenSpan>
+                                              에서
+                                            </OffScreenSpan>{' '}
+                                            &rarr; 10000{' '}
+                                            <OffScreenSpan>
+                                              으로 화폐단위를 삭제하여
+                                              입력해주세요
+                                            </OffScreenSpan>
+                                            )
+                                          </PFormDes>
+                                        </PFormDesLi>
+                                      </PFormDesList>
+                                    </PFormDesWrapper>
+                                    <Input
+                                      type="text"
+                                      id="pdPriceByColor"
+                                      name="pdPriceByColor"
+                                      value={singleService.pdPriceByColor}
+                                      onChange={(e) => addColor(e, index)}
+                                    />
+                                  </PFormUnit>
+                                </PFormBundle>
                                 {prdColor.length - 1 === index && (
-                                  <button
+                                  <PFormButton
                                     type="button"
                                     onClick={addColorField}
                                     className="add-btn"
                                   >
-                                    <span>Add a Service</span>
-                                  </button>
+                                    Add a Service
+                                  </PFormButton>
                                 )}
-                              </div>
-                            </div>
-                            <div className="second-division">
+                              </PFormLiItem>
                               {prdColor.length !== 1 && (
-                                <button
+                                <PFormButton
                                   type="button"
                                   onClick={() => removeColorField(index)}
                                   className="remove-btn"
                                 >
-                                  <span>Remove</span>
-                                </button>
+                                  Remove
+                                </PFormButton>
                               )}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </fieldset>
-                </div>
-                <div className=""></div>
-              </div>
-            </div>
-          </FormControl>
-        </form>
-      </div>
-    </div>
+                            </PFormLi>
+                          ))}
+                        </PFormList>
+                      </PFormBlock>
+                    </fieldset>
+                  </PFormContent>
+                </FlexAlignDiv>
+              </FlexContainer>
+            </FormControl>
+          </PForm>
+        </SectionContent>
+      </SectionLayout>
+    </SectionUnit>
   );
 }
 

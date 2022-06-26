@@ -7,7 +7,7 @@ export const Page = styled.div`
 `;
 export const PageContainer = styled.main``;
 
-export const SectionDivier = styled.section`
+export const SectionDivier = styled.div`
   margin: 20px 0;
 `;
 
@@ -50,4 +50,8 @@ export const AlignList = styled.ul`
 
 export const ListContainer = styled.ul`
   display: ${({ display }) => display};
+`;
+
+export const FormWrapper = styled.div`
+  width: 100%;
 `;
