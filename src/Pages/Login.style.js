@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const LoginWrapper = styled.div`
-  position: relative;
+  ${'' /* position: relative; */}
   display: flex;
   justify-content: center;
   align-items: center;

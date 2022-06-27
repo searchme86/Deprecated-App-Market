@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Page = styled.div`
   position: relative;
-  ${'' /* padding: 20px 20px 20px 20px; */}
+  padding: 20px 20px 20px 20px;
   margin: 0 auto;
 `;
 export const PageContainer = styled.main``;
