@@ -55,6 +55,7 @@ function FashionUpload() {
     pdImage: '',
     pdPrice: '',
     pdDes: '',
+    pdWish: '',
     // pdStatus: [],
   };
 
@@ -207,7 +208,7 @@ function FashionUpload() {
     setTags(tags.filter((el, i) => i !== index));
   };
 
-  const { pdTitle, pdImage, pdPrice, pdDes, pdStatus } = pdInfo;
+  const { pdTitle, pdImage, pdPrice, pdDes, pdWish } = pdInfo;
 
   // console.log('pdCategory', pdCategory);
   // console.log('pdInfo', pdInfo);
@@ -220,13 +221,14 @@ function FashionUpload() {
     pdImage,
     pdPrice,
     pdDes,
-    pdStatus: [prdStatus, { tags: [...tags] }],
+    pdWish,
+    pdStatus: [prdStatus, ...tags],
     pdSizeInfo: { ...prdSize },
     pdColorInfo: { ...prdColor },
   };
 
-  // console.log('upload', upload);
-  // console.log('prdStatus', prdStatus);
+  console.log('upload', upload);
+  console.log('prdStatus', prdStatus);
 
   // 상품모달
   const prReport = { handleClose, isOpen, upload };
@@ -359,6 +361,38 @@ function FashionUpload() {
                         </FormErrorMessage>
                       </PFormUnit>
 
+                      {/* 상품가격 */}
+                      <PFormUnit>
+                        <FormLabel htmlFor="pdPrice" fontWeight="bold">
+                          상품가격
+                        </FormLabel>
+                        <PFormDesWrapper>
+                          <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>
+                                희망하는 상품의 가격을 입력해주세요
+                              </PFormDes>
+                            </PFormDesLi>
+                            <PFormDesLi>
+                              <PFormDes>
+                                '원' 단위은 제외하고 입력해주세요 (예: 10000원
+                                <OffScreenSpan>에서</OffScreenSpan> &rarr; 10000{' '}
+                                <OffScreenSpan>
+                                  으로 화폐단위를 삭제하여 입력해주세요
+                                </OffScreenSpan>
+                                )
+                              </PFormDes>
+                            </PFormDesLi>
+                          </PFormDesList>
+                        </PFormDesWrapper>
+                        <Input
+                          type="number"
+                          id="pdPrice"
+                          name="pdPrice"
+                          onChange={onInputChange}
+                        />
+                      </PFormUnit>
+
                       {/* 상품소개 */}
                       <PFormUnit>
                         <FormLabel htmlFor="pdDes" fontWeight="bold">
@@ -456,34 +490,25 @@ function FashionUpload() {
                         </TagWrapper>
                       </PFormUnit>
 
-                      {/* 상품가격 */}
+                      {/* 상품희망사항 */}
                       <PFormUnit>
-                        <FormLabel htmlFor="pdPrice" fontWeight="bold">
-                          상품가격
+                        <FormLabel htmlFor="pdWish" fontWeight="bold">
+                          희망사항
                         </FormLabel>
                         <PFormDesWrapper>
                           <PFormDesList>
                             <PFormDesLi>
                               <PFormDes>
-                                희망하는 상품의 가격을 입력해주세요
-                              </PFormDes>
-                            </PFormDesLi>
-                            <PFormDesLi>
-                              <PFormDes>
-                                '원' 단위은 제외하고 입력해주세요 (예: 10000원
-                                <OffScreenSpan>에서</OffScreenSpan> &rarr; 10000{' '}
-                                <OffScreenSpan>
-                                  으로 화폐단위를 삭제하여 입력해주세요
-                                </OffScreenSpan>
-                                )
+                                상품에 대해 희망사항을 입력해주세요
                               </PFormDes>
                             </PFormDesLi>
                           </PFormDesList>
                         </PFormDesWrapper>
-                        <Input
-                          type="number"
-                          id="pdPrice"
-                          name="pdPrice"
+                        <Textarea
+                          placeholder="예 : 배송 관련해서는 직접 옮기셔야 합니다."
+                          id="pdWish"
+                          name="pdWish"
+                          size="sm"
                           onChange={onInputChange}
                         />
                       </PFormUnit>
