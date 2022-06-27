@@ -7,12 +7,14 @@ export const Page = styled.div`
 `;
 export const PageContainer = styled.main``;
 
-export const SectionDivier = styled.section`
+export const SectionDivier = styled.div`
   margin: 20px 0;
 `;
 
 export const SectionHeader = styled.div`
-  margin: 128px 0 26px 0;
+  width: 1300px;
+  margin: 0 auto;
+  ${'' /* margin: 128px 0 26px 0; */}
 `;
 
 export const SectionContainer = styled.div`
@@ -48,4 +50,8 @@ export const AlignList = styled.ul`
 
 export const ListContainer = styled.ul`
   display: ${({ display }) => display};
+`;
+
+export const FormWrapper = styled.div`
+  width: 100%;
 `;

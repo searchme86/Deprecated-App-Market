@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const CommonBtn = styled.button`
   display: flex;
@@ -60,4 +60,20 @@ export const HotItemButton = styled(CommonBtn)`
   background-color: white;
   color: gray;
   font-weight: 600;
+`;
+
+export const PFormButton = styled(CommonBtn)`
+  height: 40px;
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 500;
+  padding: 11px 16px;
+  box-sizing: border-box;
+  border: 1px solid #767676;
+  margin: 57px 0 0 0;
+  ${({ right }) =>
+    right &&
+    css`
+      margin: 0 0 0 0;
+    `}
 `;

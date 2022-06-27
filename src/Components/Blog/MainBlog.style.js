@@ -1,9 +1,13 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const MainBlogWrapper = styled.div``;
+export const MainBlogWrapper = styled.div`
+  background: #f0efee;
+`;
 
 export const MainBlogContainer = styled.div`
+  width: 1300px;
+  margin: 0 auto;
   padding: 0 0 60px 0;
   background: #f0efee;
 `;

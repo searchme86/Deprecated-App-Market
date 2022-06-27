@@ -31,7 +31,7 @@ export const ModalLayer = styled.div`
   -o-transform: translate(-50%, -50%);
   background: #fff;
   border-radius: 16px;
-  z-index: 2;
+  z-index: 9999;
   overflow: hidden;
   box-sizing: border-box;
 `;
