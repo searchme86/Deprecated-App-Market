@@ -71,9 +71,16 @@ export const PFormButton = styled(CommonBtn)`
   box-sizing: border-box;
   border: 1px solid #767676;
   margin: 57px 0 0 0;
-  ${({ right }) =>
-    right &&
+  ${({ disabled }) =>
+    disabled &&
     css`
-      margin: 0 0 0 0;
+      cursor: not-allowed !important;
+      pointer-events: all !important;
+    `}
+  ${({ canSubmit }) =>
+    canSubmit &&
+    css`
+      background: #ea035c;
+      color: #fff;
     `}
 `;
