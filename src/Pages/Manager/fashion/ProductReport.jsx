@@ -120,7 +120,11 @@ function ProductReport({ prReport }) {
                       <ReportInfoLi>
                         <ReportTitle>카테고리</ReportTitle>
                         <ReportDTitle>
-                          {!isBlank ? '등록해주세요' : pdCategory}
+                          {!isBlank ? (
+                            <ReportBlank>공란</ReportBlank>
+                          ) : (
+                            pdCategory
+                          )}
                         </ReportDTitle>
                       </ReportInfoLi>
                       <ReportInfoLi>
@@ -157,7 +161,7 @@ function ProductReport({ prReport }) {
                         <ReportTitle>상품소개</ReportTitle>
                         <ReportOverflow>
                           <ReportDOpinion>
-                            {!isBlank ? '공란' : pdDes}
+                            {!isBlank ? <ReportBlank>공란</ReportBlank> : pdDes}
                           </ReportDOpinion>
                         </ReportOverflow>
                       </ReportInfoLi>
