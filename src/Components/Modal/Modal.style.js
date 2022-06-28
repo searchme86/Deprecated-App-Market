@@ -38,9 +38,11 @@ export const ModalLayer = styled.div`
 
 export const ModalLayOut = styled.div`
   position: relative;
-  min-height: 800px;
-  height: 800px;
-  overflow-y: auto;
+  ${
+    '' /* min-height: 720px;
+  height: 720px;
+  overflow-y: auto; */
+  }
 `;
 
 export const ModalHalf = styled.div`
