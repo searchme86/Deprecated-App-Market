@@ -103,6 +103,33 @@ function FashionUpload() {
       value: '식품',
     },
   ];
+  const ProductDegree = [
+    {
+      id: 0,
+      value: '최상',
+    },
+    {
+      id: 1,
+      value: '상',
+    },
+    {
+      id: 2,
+      value: '중상',
+    },
+    {
+      id: 3,
+      value: '중',
+    },
+    {
+      id: 4,
+      value: '중하',
+    },
+    {
+      id: 5,
+      value: '중하',
+    },
+  ];
+
   const [pdInfo, setPdInfo] = useState(productSchema);
   const [pdCategory, setPdCategory] = useState('');
   const [prdSize, setPrdSize] = useState([{ pdSize: '', pdPriceBySize: '' }]);
@@ -110,6 +137,7 @@ function FashionUpload() {
     { pdColor: '', pdPriceByColor: '' },
   ]);
   const [prdStatus, setPrdStatus] = useState('');
+  const [prdDegree, setPrdDegree] = useState('');
 
   const [isOpen, setIsOpen] = useState(false);
   const [isFmodalOpen, setIsFmodalOpen] = useState(false);
@@ -175,6 +203,10 @@ function FashionUpload() {
     setPrdStatus(e.target.value);
   };
 
+  const selectDegree = (e) => {
+    setPrdDegree(e.target.value);
+  };
+
   //상품 모달
   const handleClose = useCallback(() => {
     setIsOpen(false);
@@ -222,9 +254,10 @@ function FashionUpload() {
     pdPrice,
     pdDes,
     pdWish,
+    prdDegree,
     pdStatus: [prdStatus, ...tags],
-    pdSizeInfo: { ...prdSize },
-    pdColorInfo: { ...prdColor },
+    pdSizeInfo: [...prdSize],
+    pdColorInfo: [...prdColor],
   };
 
   console.log('upload', upload);
@@ -416,10 +449,39 @@ function FashionUpload() {
                         />
                       </PFormUnit>
 
-                      {/* 상품 상태 */}
+                      {/* 상품단계 */}
+                      <PFormUnit>
+                        <FormLabel htmlFor="pdDegree" fontWeight="bold">
+                          상품단계
+                        </FormLabel>
+                        <PFormDesWrapper>
+                          <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>
+                                등록하려는 상품의 상태의 단계를 선택해 주세요
+                              </PFormDes>
+                            </PFormDesLi>
+                          </PFormDesList>
+                        </PFormDesWrapper>
+                        <Select
+                          id="pdDegree"
+                          name="pdDegree"
+                          placeholder="상품의 상태를 선택해 주세요"
+                          value={prdDegree}
+                          onChange={selectDegree}
+                        >
+                          {ProductDegree.map(({ value, id }) => (
+                            <option value={value} key={id}>
+                              {value}
+                            </option>
+                          ))}
+                        </Select>
+                      </PFormUnit>
+
+                      {/* 상품상태 설명 */}
                       <PFormUnit>
                         <FormLabel htmlFor="pdStatus" fontWeight="bold">
-                          상품상태
+                          상품상태 설명
                         </FormLabel>
                         <PFormDesWrapper>
                           <PFormDesList>
