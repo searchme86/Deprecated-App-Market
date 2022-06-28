@@ -1,5 +1,47 @@
 import styled from 'styled-components';
 
+export const ReportHeader = styled.div`
+  margin: 0 0 10px 0;
+`;
+
+export const ReportIntro = styled.p``;
+
+export const ReportUser = styled.strong`
+  display: inline-block;
+  vertical-align: center;
+  line-height: 1;
+  font-size: 20px;
+  margin: 0 5px 0 0;
+`;
+
+export const ReportContent = styled.div``;
+
+export const ReportMain = styled.div`
+  display: flex;
+`;
+
+export const ReportImage = styled.div`
+  width: 370px;
+  margin: 0 20px 0 0;
+`;
+
+export const ReportInfo = styled.div``;
+
+export const ReportInfoList = styled.ul``;
+
+export const ReportInfoLi = styled.li`
+  flex: 1;
+  margin: 10px 0 10px 0;
+  text-align: left;
+
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-top: 0;
+  }
+`;
+
 export const ReportTitle = styled.strong`
   position: relative;
   display: block;
@@ -16,4 +58,61 @@ export const ReportTitle = styled.strong`
     height: 100%;
     background: #767676;
   }
+`;
+
+export const ReportDTitle = styled.span`
+  margin: 0 0 0 10px;
+  font-size: 14px;
+  font-weight: normal;
+`;
+
+export const ReportDOpinion = styled.p`
+  margin: 0 0 0 5px;
+  font-size: 14px;
+`;
+
+export const ReportInfoItem = styled.li`
+  flex: 1;
+  text-align: left;
+`;
+
+export const ReportOverflow = styled.div`
+  overflow-y: auto;
+  height: 60px;
+  padding: 5px;
+  box-sizing: border-box;
+`;
+
+export const ReportOverflowList = styled.ul``;
+
+export const ReportOverflowLi = styled.li`
+  margin: 0 2px 0 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+export const ReportMore = styled.div`
+  overflow-y: auto;
+  height: 160px;
+  padding: 5px;
+  box-sizing: border-box;
+`;
+
+export const RTableWrapper = styled.div`
+  margin: 7px 0 0 0;
+`;
+
+export const RTable = styled.table`
+  width: 100%;
+`;
+
+export const RTableTh = styled.th`
+  font-size: 14px;
+  text-align: center;
+`;
+
+export const RTableTd = styled.td`
+  font-size: 14px;
+  text-align: center;
 `;
