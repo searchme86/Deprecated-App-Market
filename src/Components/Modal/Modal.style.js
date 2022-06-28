@@ -38,6 +38,9 @@ export const ModalLayer = styled.div`
 
 export const ModalLayOut = styled.div`
   position: relative;
+  min-height: 800px;
+  height: 800px;
+  overflow-y: auto;
 `;
 
 export const ModalHalf = styled.div`
@@ -63,7 +66,7 @@ export const ModalContainer = styled.section`
 `;
 
 export const ModalHeader = styled.header`
-  padding: 25px 20px 0px 20px;
+  padding: 25px 20px 20px 20px;
 `;
 
 export const ModalTitle = styled.h2`
@@ -74,7 +77,7 @@ export const ModalTitle = styled.h2`
 `;
 
 export const ModalContent = styled.div`
-  padding: 20px 20px 20px 20px;
+  padding: 0 20px 20px 20px;
 `;
 
 export const ModalForm = styled.form`
