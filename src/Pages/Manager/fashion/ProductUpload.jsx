@@ -232,11 +232,6 @@ function FashionUpload() {
 
   const { pdTitle, pdImage, pdPrice, pdDes, pdWish } = pdInfo;
 
-  // console.log('pdCategory', pdCategory);
-  // console.log('pdInfo', pdInfo);
-  // console.log('prdSize', prdSize);
-  // console.log('prdColor', prdColor);
-
   const upload = {
     pdCategory,
     pdTitle,
@@ -249,9 +244,6 @@ function FashionUpload() {
     pdSizeInfo: [...prdSize],
     pdColorInfo: [...prdColor],
   };
-
-  // console.log('upload', upload);
-  // console.log('prdStatus', prdStatus);
 
   // 상품모달
   const prReport = { handleClose, isOpen, upload };
@@ -282,7 +274,6 @@ function FashionUpload() {
                           </PFormDesLi>
                         </PFormDesList>
                       </PFormDesWrapper>
-                      {/* 여기못함 */}
                       <Select
                         id="pdCategory"
                         name="pdCategory"
