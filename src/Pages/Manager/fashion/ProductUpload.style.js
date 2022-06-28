@@ -32,9 +32,7 @@ export const SectionTitle = styled.h1`
   }
 `;
 
-export const SectionContent = styled.div`
-  ${'' /* margin: 30px 0 20px 0; */}
-`;
+export const SectionContent = styled.div``;
 
 export const FlexContainer = styled.div`
   position: relative;
@@ -140,11 +138,11 @@ export const TagContainer = styled.div`
 export const TagItemList = styled.ul``;
 
 export const TagItem = styled.li`
-  background-color: rgb(218, 216, 216);
   display: inline-block;
   padding: 0.5em 0.75em;
-  border-radius: 20px;
   margin: 5px 5px 0 0;
+  border-radius: 20px;
+  border: 1px solid rgb(218, 216, 216);
   &:last-child {
     margin-right: 0;
   }

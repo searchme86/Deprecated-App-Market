@@ -47,7 +47,6 @@ import {
 import { OffScreenSpan } from '../../../Assets/Styles/Basic.style';
 import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
 import ProductReport from './ProductReport';
-import ProductModal from './ProductModal';
 
 function FashionUpload() {
   const productSchema = {
@@ -103,6 +102,33 @@ function FashionUpload() {
       value: '식품',
     },
   ];
+  const ProductDegree = [
+    {
+      id: 0,
+      value: '최상',
+    },
+    {
+      id: 1,
+      value: '상',
+    },
+    {
+      id: 2,
+      value: '중상',
+    },
+    {
+      id: 3,
+      value: '중',
+    },
+    {
+      id: 4,
+      value: '중하',
+    },
+    {
+      id: 5,
+      value: '중하',
+    },
+  ];
+
   const [pdInfo, setPdInfo] = useState(productSchema);
   const [pdCategory, setPdCategory] = useState('');
   const [prdSize, setPrdSize] = useState([{ pdSize: '', pdPriceBySize: '' }]);
@@ -110,10 +136,10 @@ function FashionUpload() {
     { pdColor: '', pdPriceByColor: '' },
   ]);
   const [prdStatus, setPrdStatus] = useState('');
+  const [prdDegree, setPrdDegree] = useState('');
 
   const [isOpen, setIsOpen] = useState(false);
   const [isFmodalOpen, setIsFmodalOpen] = useState(false);
-  const [isSmodalOpen, setIsSmodalOpen] = useState(false);
 
   const [tags, setTags] = useState([]);
 
@@ -175,6 +201,10 @@ function FashionUpload() {
     setPrdStatus(e.target.value);
   };
 
+  const selectDegree = (e) => {
+    setPrdDegree(e.target.value);
+  };
+
   //상품 모달
   const handleClose = useCallback(() => {
     setIsOpen(false);
@@ -185,14 +215,6 @@ function FashionUpload() {
     e.preventDefault();
     setIsOpen((value) => !value);
     setIsFmodalOpen(true);
-    setIsSmodalOpen(false);
-  }, []);
-
-  const handleSecondModal = useCallback((e) => {
-    e.preventDefault();
-    setIsOpen((value) => !value);
-    setIsFmodalOpen(false);
-    setIsSmodalOpen(true);
   }, []);
 
   // 태그
@@ -222,17 +244,20 @@ function FashionUpload() {
     pdPrice,
     pdDes,
     pdWish,
+    prdDegree,
     pdStatus: [prdStatus, ...tags],
-    pdSizeInfo: { ...prdSize },
-    pdColorInfo: { ...prdColor },
+    pdSizeInfo: [...prdSize],
+    pdColorInfo: [...prdColor],
   };
 
-  console.log('upload', upload);
-  console.log('prdStatus', prdStatus);
+  // console.log('upload', upload);
+  // console.log('prdStatus', prdStatus);
 
   // 상품모달
   const prReport = { handleClose, isOpen, upload };
   const prModal = { handleClose, isOpen };
+
+  const registerForm = () => {};
 
   return (
     <SectionUnit>
@@ -241,8 +266,8 @@ function FashionUpload() {
           <SectionTitle>상품 등록하기</SectionTitle>
         </SectionHeader>
         <SectionContent>
-          <PForm>
-            <FormControl>
+          <PForm onSubmit={handleSubmit(registerForm)}>
+            <FormControl isInvalid={errors}>
               <FlexContainer>
                 <FlexAlignDiv fixed>
                   <PFormContent wd="530px">
@@ -257,12 +282,17 @@ function FashionUpload() {
                           </PFormDesLi>
                         </PFormDesList>
                       </PFormDesWrapper>
+                      {/* 여기못함 */}
                       <Select
                         id="pdCategory"
                         name="pdCategory"
                         placeholder="상품의 카테고리를 입력해주세요"
                         value={pdCategory}
-                        onChange={selectCategory}
+                        // onChange={selectCategory}
+                        {...register('pdCategory', {
+                          required: '상품의 카테고리를 선택해 주세요',
+                          onChange: selectCategory,
+                        })}
                       >
                         {ProductCategory.map(({ id, value }) => (
                           <option value={value} key={id}>
@@ -270,6 +300,9 @@ function FashionUpload() {
                           </option>
                         ))}
                       </Select>
+                      <FormErrorMessage as="p">
+                        {errors?.pdCategory && errors?.pdCategory?.message}
+                      </FormErrorMessage>
                     </PFormUnit>
 
                     {/* 상품 이미지 */}
@@ -317,9 +350,8 @@ function FashionUpload() {
                         <li style={{ display: 'flex' }}>
                           <PFormButton
                             right
-                            type="button"
+                            type="submit"
                             style={{ marginLeft: 'auto' }}
-                            onClick={handleSecondModal}
                           >
                             상품 등록하기
                           </PFormButton>
@@ -354,7 +386,11 @@ function FashionUpload() {
                           type="text"
                           id="pdTitle"
                           name="pdTitle"
-                          onChange={onInputChange}
+                          {...register('pdTitle', {
+                            required: '상품명을 입력해주세요',
+                            onChange: onInputChange,
+                          })}
+                          // onChange={onInputChange}
                         />
                         <FormErrorMessage as="p">
                           {errors.pdTitle && errors.pdTitle.message}
@@ -389,8 +425,20 @@ function FashionUpload() {
                           type="number"
                           id="pdPrice"
                           name="pdPrice"
-                          onChange={onInputChange}
+                          // onChange={onInputChange}
+                          autoComplete="off"
+                          {...register('pdPrice', {
+                            required: '상품 가격을 입력해주세요',
+                            maxLength: {
+                              value: 7,
+                              message: '최대입력 자릿수는 7글자입니다.',
+                            },
+                            onChange: onInputChange,
+                          })}
                         />
+                        <FormErrorMessage as="p">
+                          {errors.pdPrice && errors.pdPrice.message}
+                        </FormErrorMessage>
                       </PFormUnit>
 
                       {/* 상품소개 */}
@@ -412,14 +460,58 @@ function FashionUpload() {
                           id="pdDes"
                           name="pdDes"
                           size="sm"
-                          onChange={onInputChange}
+                          resize="none"
+                          // onChange={onInputChange}
+                          {...register('pdDes', {
+                            required: '상품의 소개를 입력해주세요',
+                            onChange: onInputChange,
+                          })}
                         />
+                        <FormErrorMessage as="p">
+                          {errors?.pdDes && errors?.pdDes?.message}
+                        </FormErrorMessage>
                       </PFormUnit>
 
-                      {/* 상품 상태 */}
+                      {/* 상품단계 */}
+                      <PFormUnit>
+                        <FormLabel htmlFor="pdDegree" fontWeight="bold">
+                          상품단계
+                        </FormLabel>
+                        <PFormDesWrapper>
+                          <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>
+                                등록하려는 상품의 상태의 단계를 선택해 주세요
+                              </PFormDes>
+                            </PFormDesLi>
+                          </PFormDesList>
+                        </PFormDesWrapper>
+                        <Select
+                          id="pdDegree"
+                          name="pdDegree"
+                          placeholder="상품의 상태를 선택해 주세요"
+                          value={prdDegree}
+                          // onChange={selectDegree}
+                          {...register('pdDegree', {
+                            required: '상품의 상태를 선택해 주세요',
+                            onChange: selectDegree,
+                          })}
+                        >
+                          {ProductDegree.map(({ value, id }) => (
+                            <option value={value} key={id}>
+                              {value}
+                            </option>
+                          ))}
+                        </Select>
+                        <FormErrorMessage as="p">
+                          {errors?.pdDegree && errors?.pdDegree?.message}
+                        </FormErrorMessage>
+                      </PFormUnit>
+
+                      {/* 상품상태 설명 */}
                       <PFormUnit>
                         <FormLabel htmlFor="pdStatus" fontWeight="bold">
-                          상품상태
+                          상품상태 설명
                         </FormLabel>
                         <PFormDesWrapper>
                           <PFormDesList>
@@ -434,9 +526,13 @@ function FashionUpload() {
                         <Select
                           id="pdStatus"
                           name="pdStatus"
-                          placeholder="상품의 상태를 선택해 주세요"
+                          placeholder="상품상태의 단계를 선택해 주세요"
                           value={prdStatus}
-                          onChange={selectStatus}
+                          // onChange={selectStatus}
+                          {...register('pdStatus', {
+                            required: '상품상태의 단계를 선택해 주세요',
+                            onChange: selectStatus,
+                          })}
                         >
                           <option value="구입한지 1주일 이내 상태">
                             구입한지 1주일 이내 상태
@@ -451,6 +547,10 @@ function FashionUpload() {
                             잔기스가 많으나 성능에는 무리 없습니다.
                           </option>
                         </Select>
+                        <FormErrorMessage as="p">
+                          {errors?.pdStatus && errors?.pdStatus?.message}
+                        </FormErrorMessage>
+
                         <PFormDesWrapper style={{ marginTop: '10px' }}>
                           <PFormDesList>
                             <PFormDesLi>
@@ -509,7 +609,9 @@ function FashionUpload() {
                           id="pdWish"
                           name="pdWish"
                           size="sm"
+                          resize="none"
                           onChange={onInputChange}
+                          autoComplete="off"
                         />
                       </PFormUnit>
 
@@ -595,6 +697,7 @@ function FashionUpload() {
                                       type="number"
                                       id="pdPriceBySize"
                                       name="pdPriceBySize"
+                                      autoComplete="off"
                                       value={singleService.pdPriceBySize}
                                       onChange={(e) => addSize(e, index)}
                                     />
@@ -606,7 +709,7 @@ function FashionUpload() {
                                     onClick={addSizeField}
                                     className="add-btn"
                                   >
-                                    Add a Service
+                                    등록
                                   </PFormButton>
                                 )}
                               </PFormLiItem>
@@ -660,6 +763,7 @@ function FashionUpload() {
                                       id="pdColor"
                                       name="pdColor"
                                       value={singleService.pdColor}
+                                      autoComplete="off"
                                       onChange={(e) => addColor(e, index)}
                                     />
                                   </PFormUnit>
@@ -696,10 +800,11 @@ function FashionUpload() {
                                       </PFormDesList>
                                     </PFormDesWrapper>
                                     <Input
-                                      type="text"
+                                      type="number"
                                       id="pdPriceByColor"
                                       name="pdPriceByColor"
                                       value={singleService.pdPriceByColor}
+                                      autoComplete="off"
                                       onChange={(e) => addColor(e, index)}
                                     />
                                   </PFormUnit>
@@ -710,7 +815,7 @@ function FashionUpload() {
                                     onClick={addColorField}
                                     className="add-btn"
                                   >
-                                    Add a Service
+                                    등록
                                   </PFormButton>
                                 )}
                               </PFormLiItem>
@@ -734,7 +839,6 @@ function FashionUpload() {
             </FormControl>
           </PForm>
           {isFmodalOpen && <ProductReport prReport={prReport} />}
-          {isSmodalOpen && <ProductModal prModal={prModal} />}
         </SectionContent>
       </SectionLayout>
     </SectionUnit>

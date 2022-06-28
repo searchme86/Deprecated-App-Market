@@ -1,5 +1,4 @@
 import React from 'react';
-import { AlignComponents } from '../../../../Assets/Styles/Layout.style';
 import {
   ModalAction,
   ModalHeader,
@@ -56,17 +55,8 @@ function CategoryModal({ ParentProps }) {
   } = useForm();
 
   const onSubmit = (data, e) => {
-    // console.log('data', data);
-    // console.log('e', e);
     registerForm();
   };
-
-  // const onError = (errors, e) => {
-  //   console.log('errors', errors);
-  //   console.log('e', e);
-  // };
-
-  // console.log('isSubmitting', isSubmitting);
 
   return (
     <ModalFrame
@@ -81,7 +71,6 @@ function CategoryModal({ ParentProps }) {
         <ModalContent>
           <ModalForm onSubmit={handleSubmit(onSubmit)}>
             <FormControl isInvalid={errors}>
-              <AlignComponents mb="30" bg="#fbfbfb"></AlignComponents>
               <ModalList>
                 <ModalItem>
                   <FormLabel
