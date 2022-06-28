@@ -21,11 +21,13 @@ export const ReportMain = styled.div`
 `;
 
 export const ReportImage = styled.div`
-  width: 370px;
+  width: 50%;
   margin: 0 20px 0 0;
 `;
 
-export const ReportInfo = styled.div``;
+export const ReportInfo = styled.div`
+  width: 50%;
+`;
 
 export const ReportInfoList = styled.ul``;
 
@@ -64,6 +66,8 @@ export const ReportDTitle = styled.span`
   margin: 0 0 0 10px;
   font-size: 14px;
   font-weight: normal;
+  white-space: nowrap;
+  word-break: keep-all;
 `;
 
 export const ReportDOpinion = styled.p`

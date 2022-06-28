@@ -1,16 +1,12 @@
 import React from 'react';
 import {
-  ModalAction,
   ModalContent,
   ModalForm,
   ModalHeader,
-  ModalPrimaryBtn,
-  ModalSeconDaryBtn,
   ModalTitle,
 } from '../../../Components/Modal/Modal.style';
 import ModalFrame from '../../../Components/Modal/ModalFrame';
-import { FormControl } from '@chakra-ui/react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
 import {
   ReportContent,
@@ -37,11 +33,11 @@ import {
 } from './ProductReport.style';
 import { OffScreenSpan } from '../../../Assets/Styles/Basic.style';
 import { AlignList } from '../../../Assets/Styles/Layout.style';
+import defaultImg from '../../../Assets/Image/default-product-upload.png';
 
 function ProductReport({ prReport }) {
   const { handleClose, isOpen, upload } = prReport;
 
-  const dispatch = useDispatch();
   const {
     user: {
       result: { nickname },
@@ -63,38 +59,16 @@ function ProductReport({ prReport }) {
   const [{ pdSize, pdPriceBySize }] = pdSizeInfo;
   const [{ pdColor, pdPriceByColor }] = pdColorInfo;
 
-  console.log(
-    'pdSizeInfo',
-    // pdCategory,
-    // pdTitle,
-    // pdImage,
-    // pdPrice,
-    // pdDes,
-    // pdStatus,
-    pdSizeInfo
-    // pdSize,
-    // pdPriceBySize
-    // pdColorInfo
-  );
-
-  console.log('pdSize', pdSize);
-  console.log('pdPriceBySize', pdPriceBySize);
-
-  const insertCommas = (n) => {
-    let s1 = n.toString();
-    let d = s1.indexOf('.');
-    let s2 = d === -1 ? s1 : s1.slice(0, d);
-
-    for (let i = s2.length - 3; i > 0; i -= 3)
-      s2 = s2.slice(0, i) + ',' + s2.slice(i);
-
-    if (d !== -1) s2 += s1.slice(d);
-
-    return `${s2}원`;
-  };
-
-  let itemPrice = insertCommas(pdPrice);
-  console.log('price', itemPrice);
+  const isBlank = [
+    pdCategory,
+    pdTitle,
+    pdImage,
+    pdPrice,
+    pdDes,
+    pdWish,
+    prdDegree,
+    pdStatus,
+  ].every(Boolean);
 
   return (
     <div>
@@ -109,73 +83,103 @@ function ProductReport({ prReport }) {
           </ModalHeader>
           <ModalContent>
             <ModalForm>
-              <FormControl>
-                <ReportContent>
-                  <ReportHeader>
-                    <ReportIntro>
-                      <ReportUser>{nickname}</ReportUser>
-                      님이 등록하시는 상품 요약입니다.
-                    </ReportIntro>
-                  </ReportHeader>
-                  <ReportMain>
-                    <ReportImage>
-                      <ImageHolder>
-                        <Image src={pdImage} alt={`${pdTitle} 이미지`} />
-                      </ImageHolder>
-                    </ReportImage>
-                    <ReportInfo>
-                      <ReportInfoList>
-                        <ReportInfoLi>
-                          <ReportTitle>카테고리</ReportTitle>
-                          <ReportDTitle>{pdCategory}</ReportDTitle>
-                        </ReportInfoLi>
-                        <ReportInfoLi>
-                          <AlignList>
-                            <ReportInfoItem>
-                              <ReportTitle>상품명</ReportTitle>
-                              <ReportDTitle>{pdTitle}</ReportDTitle>
-                            </ReportInfoItem>
-                            <ReportInfoItem>
-                              <ReportTitle>상품가격</ReportTitle>
-                              <ReportDTitle>{itemPrice}원</ReportDTitle>
-                            </ReportInfoItem>
-                            <ReportInfoItem>
-                              <ReportTitle>상품단계</ReportTitle>
-                              <ReportDTitle>{prdDegree}</ReportDTitle>
-                            </ReportInfoItem>
-                          </AlignList>
-                        </ReportInfoLi>
-                        <ReportInfoLi>
-                          <ReportTitle>상품소개</ReportTitle>
-                          <ReportOverflow>
-                            <ReportDOpinion>{pdDes}</ReportDOpinion>
-                          </ReportOverflow>
-                        </ReportInfoLi>
-                        <ReportInfoLi>
-                          <ReportTitle>상품상태 설명</ReportTitle>
-                          <ReportOverflow>
-                            <ReportOverflowList>
-                              {pdStatus.map((status, index) => (
-                                <ReportOverflowLi key={index}>
-                                  <ReportDOpinion>
-                                    {' '}
-                                    &lowast; {status}
-                                  </ReportDOpinion>
-                                </ReportOverflowLi>
-                              ))}
-                            </ReportOverflowList>
-                          </ReportOverflow>
-                        </ReportInfoLi>
-                        <ReportInfoLi>
-                          <ReportTitle>희망사항</ReportTitle>
-                          <ReportOverflow>
-                            <ReportDOpinion>{pdWish}</ReportDOpinion>
-                          </ReportOverflow>
-                        </ReportInfoLi>
-                      </ReportInfoList>
-                    </ReportInfo>
-                  </ReportMain>
-                  <ReportMore>
+              <ReportContent>
+                <ReportHeader>
+                  {!isBlank && (
+                    <p style={{ marginBottom: '10px', fontSize: '17px' }}>
+                      상품을 등록 후, 입력 내용이 추가됩니다.
+                    </p>
+                  )}
+                  <ReportIntro>
+                    <ReportUser>{nickname}</ReportUser>
+                    님이 등록하시는 상품 요약입니다.
+                  </ReportIntro>
+                </ReportHeader>
+                <ReportMain>
+                  <ReportImage>
+                    <ImageHolder>
+                      <Image
+                        src={pdImage ? pdImage : defaultImg}
+                        alt={`${pdTitle} 이미지`}
+                      />
+                    </ImageHolder>
+                  </ReportImage>
+                  <ReportInfo>
+                    <ReportInfoList>
+                      <ReportInfoLi>
+                        <ReportTitle>카테고리</ReportTitle>
+                        <ReportDTitle>
+                          {!isBlank ? '등록해주세요' : pdCategory}
+                        </ReportDTitle>
+                      </ReportInfoLi>
+                      <ReportInfoLi>
+                        <AlignList>
+                          <ReportInfoItem>
+                            <ReportTitle>상품명</ReportTitle>
+                            <ReportDTitle>
+                              {!isBlank ? '공란' : pdTitle}
+                            </ReportDTitle>
+                          </ReportInfoItem>
+                          <ReportInfoItem>
+                            <ReportTitle>상품가격</ReportTitle>
+                            <ReportDTitle>{`${Number(pdPrice).toLocaleString(
+                              'ko-KR'
+                            )} 원`}</ReportDTitle>
+                          </ReportInfoItem>
+                          <ReportInfoItem>
+                            <ReportTitle>상품단계</ReportTitle>
+                            <ReportDTitle>
+                              {!isBlank ? '공란' : prdDegree}
+                            </ReportDTitle>
+                          </ReportInfoItem>
+                        </AlignList>
+                      </ReportInfoLi>
+                      <ReportInfoLi>
+                        <ReportTitle>상품소개</ReportTitle>
+                        <ReportOverflow>
+                          <ReportDOpinion>
+                            {!isBlank ? '공란' : pdDes}
+                          </ReportDOpinion>
+                        </ReportOverflow>
+                      </ReportInfoLi>
+                      <ReportInfoLi>
+                        <ReportTitle>상품상태 설명</ReportTitle>
+                        <ReportOverflow>
+                          <ReportOverflowList>
+                            {pdStatus.map((status, index) => (
+                              <ReportOverflowLi key={index}>
+                                <ReportDOpinion>
+                                  {!isBlank ? '공란' : status}
+                                </ReportDOpinion>
+                              </ReportOverflowLi>
+                            ))}
+                          </ReportOverflowList>
+                        </ReportOverflow>
+                      </ReportInfoLi>
+                      <ReportInfoLi>
+                        <ReportTitle>희망사항</ReportTitle>
+                        <ReportOverflow>
+                          <ReportDOpinion>
+                            {!isBlank ? '공란' : pdWish}
+                          </ReportDOpinion>
+                        </ReportOverflow>
+                      </ReportInfoLi>
+                    </ReportInfoList>
+                  </ReportInfo>
+                </ReportMain>
+                <ReportMore>
+                  {!isBlank ? (
+                    <AlignList>
+                      <ReportInfoLi>
+                        <ReportTitle>사이즈 별 가격</ReportTitle>
+                        <p>공란</p>
+                      </ReportInfoLi>
+                      <ReportInfoLi>
+                        <ReportTitle>색상 별 가격</ReportTitle>
+                        <p>공란</p>
+                      </ReportInfoLi>
+                    </AlignList>
+                  ) : (
                     <AlignList>
                       <ReportInfoLi>
                         {pdSize && pdPriceBySize && (
@@ -209,7 +213,11 @@ function ProductReport({ prReport }) {
                                         <RTableTh scope="row">
                                           {pdSize}
                                         </RTableTh>
-                                        <RTableTd>{pdPriceBySize}</RTableTd>
+                                        <RTableTd>
+                                          {`${Number(
+                                            pdPriceBySize
+                                          ).toLocaleString('ko-KR')} 원`}
+                                        </RTableTd>
                                       </tr>
                                     )
                                   )}
@@ -252,7 +260,11 @@ function ProductReport({ prReport }) {
                                           <RTableTh scope="row">
                                             {pdColor}
                                           </RTableTh>
-                                          <RTableTd>{pdPriceByColor}</RTableTd>
+                                          <RTableTd>
+                                            {`${Number(
+                                              pdPriceByColor
+                                            ).toLocaleString('ko-KR')} 원`}
+                                          </RTableTd>
                                         </tr>
                                       )
                                     )}
@@ -264,26 +276,9 @@ function ProductReport({ prReport }) {
                         </>
                       </ReportInfoLi>
                     </AlignList>
-                  </ReportMore>
-                </ReportContent>
-
-                <ModalAction>
-                  <ModalSeconDaryBtn
-                    type="button"
-                    role="button"
-                    onClick={handleClose}
-                  >
-                    취소
-                  </ModalSeconDaryBtn>
-                  <ModalPrimaryBtn
-                    type="submit"
-                    // disabled={!canTrigger}
-                    role="button"
-                  >
-                    등록
-                  </ModalPrimaryBtn>
-                </ModalAction>
-              </FormControl>
+                  )}
+                </ReportMore>
+              </ReportContent>
             </ModalForm>
           </ModalContent>
         </>
