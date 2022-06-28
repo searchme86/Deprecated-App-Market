@@ -130,7 +130,7 @@ export const ReportAlertList = styled.li`
 export const ReportAlertMessage = styled.p`
   font-size: 14px;
   font-weight: bold;
-  color: #db1f48;
+  color: #ea035c;
 `;
 
 export const ReportBlank = styled.span`
@@ -139,5 +139,5 @@ export const ReportBlank = styled.span`
   margin: 2px 0 0 0;
   font-size: 14px;
   font-weight: bold;
-  color: #db1f48;
+  color: #ea035c;
 `;
