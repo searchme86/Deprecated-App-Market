@@ -120,3 +120,24 @@ export const RTableTd = styled.td`
   font-size: 14px;
   text-align: center;
 `;
+
+export const ReportAlert = styled.ul``;
+
+export const ReportAlertList = styled.li`
+  margin: 0 0 10px 0;
+`;
+
+export const ReportAlertMessage = styled.p`
+  font-size: 14px;
+  font-weight: bold;
+  color: #db1f48;
+`;
+
+export const ReportBlank = styled.span`
+  display: inline-block;
+  vertical-align: center;
+  margin: 2px 0 0 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #db1f48;
+`;
