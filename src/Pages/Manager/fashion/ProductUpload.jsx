@@ -38,6 +38,9 @@ import {
   TagItemDelete,
   TagInput,
   TagItemList,
+  PButtonArea,
+  PButtonList,
+  PButtonLi,
 } from './ProductUpload.style';
 import { PFormButton } from '../../../Config/Styles/Button.style.js';
 import {
@@ -247,7 +250,18 @@ function FashionUpload() {
 
   // 상품모달
   const prReport = { handleClose, isOpen, upload };
-  const prModal = { handleClose, isOpen };
+
+  const canSubmit = [
+    pdCategory,
+    pdImage,
+    pdTitle,
+    pdPrice,
+    pdDes,
+    prdDegree,
+    prdStatus,
+  ].every(Boolean);
+
+  console.log('disabled', canSubmit);
 
   const registerForm = () => {};
 
@@ -269,6 +283,9 @@ function FashionUpload() {
                       </FormLabel>
                       <PFormDesWrapper>
                         <PFormDesList>
+                          <PFormDesLi>
+                            <PFormDes>*필수 입력사항입니다</PFormDes>
+                          </PFormDesLi>
                           <PFormDesLi>
                             <PFormDes>상품의 카테고리를 선택해주세요</PFormDes>
                           </PFormDesLi>
@@ -304,6 +321,9 @@ function FashionUpload() {
                       <PFormDesWrapper>
                         <PFormDesList>
                           <PFormDesLi>
+                            <PFormDes>*필수 입력사항입니다</PFormDes>
+                          </PFormDesLi>
+                          <PFormDesLi>
                             <PFormDes>상품의 이미지를 선택해주세요</PFormDes>
                           </PFormDesLi>
                         </PFormDesList>
@@ -326,29 +346,25 @@ function FashionUpload() {
                       </SectionDivier>
                     </PFormUnit>
 
-                    <div className="" style={{ display: 'flex' }}>
-                      <ul style={{ display: 'flex', marginLeft: 'auto' }}>
-                        <li style={{ display: 'flex' }}>
-                          <PFormButton
-                            right
-                            type="button"
-                            style={{ marginLeft: 'auto' }}
-                            onClick={handleFirstModal}
-                          >
+                    <PButtonArea>
+                      <PButtonList>
+                        <PButtonLi>
+                          <PFormButton type="button" onClick={handleFirstModal}>
                             상품페이지 미리보기
                           </PFormButton>
-                        </li>
-                        <li style={{ display: 'flex' }}>
+                        </PButtonLi>
+                        <PButtonLi>
                           <PFormButton
-                            right
                             type="submit"
-                            style={{ marginLeft: 'auto' }}
+                            disabled={!canSubmit}
+                            canSubmit={canSubmit}
                           >
                             상품 등록하기
                           </PFormButton>
-                        </li>
-                      </ul>
-                    </div>
+                        </PButtonLi>
+                      </PButtonList>
+                    </PButtonArea>
+                    <div className="" style={{ display: 'flex' }}></div>
                   </PFormContent>
                 </FlexAlignDiv>
 
@@ -366,6 +382,9 @@ function FashionUpload() {
                         </FormLabel>
                         <PFormDesWrapper>
                           <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>*필수 입력사항입니다</PFormDes>
+                            </PFormDesLi>
                             <PFormDesLi>
                               <PFormDes>
                                 상품의 이름을 정해주세요 (예: 히트상품 )
@@ -395,6 +414,9 @@ function FashionUpload() {
                         </FormLabel>
                         <PFormDesWrapper>
                           <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>*필수 입력사항입니다</PFormDes>
+                            </PFormDesLi>
                             <PFormDesLi>
                               <PFormDes>
                                 희망하는 상품의 가격을 입력해주세요
@@ -440,6 +462,9 @@ function FashionUpload() {
                         <PFormDesWrapper>
                           <PFormDesList>
                             <PFormDesLi>
+                              <PFormDes>*필수 입력사항입니다</PFormDes>
+                            </PFormDesLi>
+                            <PFormDesLi>
                               <PFormDes>
                                 상품에 대한 소개글을 남겨주세요
                               </PFormDes>
@@ -470,6 +495,9 @@ function FashionUpload() {
                         </FormLabel>
                         <PFormDesWrapper>
                           <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>*필수 입력사항입니다</PFormDes>
+                            </PFormDesLi>
                             <PFormDesLi>
                               <PFormDes>
                                 등록하려는 상품의 상태의 단계를 선택해 주세요
@@ -506,6 +534,12 @@ function FashionUpload() {
                         </FormLabel>
                         <PFormDesWrapper>
                           <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>
+                                *필수 입력사항입니다 (단, 태그 부분은
+                                제외입니다.)
+                              </PFormDes>
+                            </PFormDesLi>
                             <PFormDesLi>
                               <PFormDes>
                                 등록하려는 상품의 상태에 해당하는 내용을

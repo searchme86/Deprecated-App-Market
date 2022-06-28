@@ -169,3 +169,19 @@ export const TagInput = styled.input`
   outline: none;
   margin: 5px 0 0 0;
 `;
+
+export const PButtonArea = styled.div`
+  display: flex;
+`;
+
+export const PButtonList = styled.ul`
+  display: flex;
+  margin: 0 0 0 auto;
+`;
+
+export const PButtonLi = styled.li`
+  margin: 0 0 0 20px;
+  &:first-child {
+    margin-left: 0;
+  }
+`;
