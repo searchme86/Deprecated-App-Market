@@ -676,7 +676,7 @@ function FashionUpload() {
                           </PFormBlockTitleDes>
                         </PFormBlockTitle>
                         <PFormList>
-                          {prdSize.map((singleService, index) => (
+                          {prdSize.map(({ pdSize, pdPriceBySize }, index) => (
                             <PFormLi key={index}>
                               <PFormLiItem>
                                 <PFormBundle>
@@ -702,7 +702,7 @@ function FashionUpload() {
                                       id="pdSize"
                                       name="pdSize"
                                       placeholder="상품의 사이즈를 입력해주세요"
-                                      value={singleService.pdSize}
+                                      value={pdSize}
                                       onChange={(e) => addSize(e, index)}
                                     >
                                       {ProductSize.map(({ id, value }) => (
@@ -750,7 +750,7 @@ function FashionUpload() {
                                       id="pdPriceBySize"
                                       name="pdPriceBySize"
                                       autoComplete="off"
-                                      value={singleService.pdPriceBySize}
+                                      value={pdPriceBySize}
                                       onChange={(e) => addSize(e, index)}
                                     />
                                   </PFormUnit>
@@ -788,100 +788,103 @@ function FashionUpload() {
                           </PFormBlockTitleDes>
                         </PFormBlockTitle>
                         <PFormList>
-                          {prdColor.map((singleService, index) => (
-                            <PFormLi key={index}>
-                              <PFormLiItem>
-                                <PFormBundle>
-                                  <PFormUnit>
-                                    <FormLabel
-                                      htmlFor="pdColor"
-                                      mt="10px"
-                                      fontWeight="bold"
-                                    >
-                                      상품 색상
-                                    </FormLabel>
-                                    <PFormDesWrapper>
-                                      <PFormDesList>
-                                        <PFormDesLi>
-                                          <PFormDes>
-                                            상품의 색상 별 가격을 입력할 수
-                                            있습니다.
-                                          </PFormDes>
-                                        </PFormDesLi>
-                                      </PFormDesList>
-                                    </PFormDesWrapper>
-                                    <Input
-                                      type="text"
-                                      id="pdColor"
-                                      name="pdColor"
-                                      value={singleService.pdColor}
-                                      autoComplete="off"
-                                      onChange={(e) => addColor(e, index)}
-                                    />
-                                  </PFormUnit>
-                                  <PFormUnit>
-                                    <FormLabel
-                                      htmlFor="pdPriceByColor"
-                                      mt="10px"
-                                      fontWeight="bold"
-                                    >
-                                      색상 별 제품가격
-                                    </FormLabel>
-                                    <PFormDesWrapper>
-                                      <PFormDesList>
-                                        <PFormDesLi>
-                                          <PFormDes>
-                                            해당 색상에 따른 가격을 입력해주세요
-                                          </PFormDes>
-                                        </PFormDesLi>
-                                        <PFormDesLi>
-                                          <PFormDes>
-                                            '원' 단위은 제외하고 입력해주세요
-                                            (예: 10000원
-                                            <OffScreenSpan>
-                                              에서
-                                            </OffScreenSpan>{' '}
-                                            &rarr; 10000{' '}
-                                            <OffScreenSpan>
-                                              으로 화폐단위를 삭제하여
+                          {prdColor.map(
+                            ({ pdColor, pdPriceByColor }, index) => (
+                              <PFormLi key={index}>
+                                <PFormLiItem>
+                                  <PFormBundle>
+                                    <PFormUnit>
+                                      <FormLabel
+                                        htmlFor="pdColor"
+                                        mt="10px"
+                                        fontWeight="bold"
+                                      >
+                                        상품 색상
+                                      </FormLabel>
+                                      <PFormDesWrapper>
+                                        <PFormDesList>
+                                          <PFormDesLi>
+                                            <PFormDes>
+                                              상품의 색상 별 가격을 입력할 수
+                                              있습니다.
+                                            </PFormDes>
+                                          </PFormDesLi>
+                                        </PFormDesList>
+                                      </PFormDesWrapper>
+                                      <Input
+                                        type="text"
+                                        id="pdColor"
+                                        name="pdColor"
+                                        value={pdColor}
+                                        autoComplete="off"
+                                        onChange={(e) => addColor(e, index)}
+                                      />
+                                    </PFormUnit>
+                                    <PFormUnit>
+                                      <FormLabel
+                                        htmlFor="pdPriceByColor"
+                                        mt="10px"
+                                        fontWeight="bold"
+                                      >
+                                        색상 별 제품가격
+                                      </FormLabel>
+                                      <PFormDesWrapper>
+                                        <PFormDesList>
+                                          <PFormDesLi>
+                                            <PFormDes>
+                                              해당 색상에 따른 가격을
                                               입력해주세요
-                                            </OffScreenSpan>
-                                            )
-                                          </PFormDes>
-                                        </PFormDesLi>
-                                      </PFormDesList>
-                                    </PFormDesWrapper>
-                                    <Input
-                                      type="number"
-                                      id="pdPriceByColor"
-                                      name="pdPriceByColor"
-                                      value={singleService.pdPriceByColor}
-                                      autoComplete="off"
-                                      onChange={(e) => addColor(e, index)}
-                                    />
-                                  </PFormUnit>
-                                </PFormBundle>
-                                {prdColor.length - 1 === index && (
+                                            </PFormDes>
+                                          </PFormDesLi>
+                                          <PFormDesLi>
+                                            <PFormDes>
+                                              '원' 단위은 제외하고 입력해주세요
+                                              (예: 10000원
+                                              <OffScreenSpan>
+                                                에서
+                                              </OffScreenSpan>{' '}
+                                              &rarr; 10000{' '}
+                                              <OffScreenSpan>
+                                                으로 화폐단위를 삭제하여
+                                                입력해주세요
+                                              </OffScreenSpan>
+                                              )
+                                            </PFormDes>
+                                          </PFormDesLi>
+                                        </PFormDesList>
+                                      </PFormDesWrapper>
+                                      <Input
+                                        type="number"
+                                        id="pdPriceByColor"
+                                        name="pdPriceByColor"
+                                        value={pdPriceByColor}
+                                        autoComplete="off"
+                                        onChange={(e) => addColor(e, index)}
+                                      />
+                                    </PFormUnit>
+                                  </PFormBundle>
+                                  {prdColor.length - 1 === index && (
+                                    <PFormButton
+                                      type="button"
+                                      onClick={addColorField}
+                                      className="add-btn"
+                                    >
+                                      등록
+                                    </PFormButton>
+                                  )}
+                                </PFormLiItem>
+                                {prdColor.length !== 1 && (
                                   <PFormButton
                                     type="button"
-                                    onClick={addColorField}
-                                    className="add-btn"
+                                    onClick={() => removeColorField(index)}
+                                    className="remove-btn"
                                   >
-                                    등록
+                                    Remove
                                   </PFormButton>
                                 )}
-                              </PFormLiItem>
-                              {prdColor.length !== 1 && (
-                                <PFormButton
-                                  type="button"
-                                  onClick={() => removeColorField(index)}
-                                  className="remove-btn"
-                                >
-                                  Remove
-                                </PFormButton>
-                              )}
-                            </PFormLi>
-                          ))}
+                              </PFormLi>
+                            )
+                          )}
                         </PFormList>
                       </PFormBlock>
                     </fieldset>
