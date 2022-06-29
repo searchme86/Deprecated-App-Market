@@ -54,7 +54,7 @@ function ProductReport({ prReport }) {
     pdPrice,
     pdDes,
     pdWish,
-    prdDegree,
+    pdDegree,
     pdStatus,
     pdSizeInfo,
     pdColorInfo,
@@ -70,9 +70,23 @@ function ProductReport({ prReport }) {
     pdPrice,
     pdDes,
     pdWish,
-    prdDegree,
+    pdDegree,
     pdStatus,
   ].every(Boolean);
+
+  console.log(
+    'isBlank',
+    pdCategory,
+    pdTitle,
+    // pdImage,
+    pdPrice,
+    pdDes,
+    pdWish,
+    pdDegree,
+    pdStatus
+  );
+
+  console.log('isBlank', isBlank);
 
   return (
     <div>
@@ -151,7 +165,7 @@ function ProductReport({ prReport }) {
                               {!isBlank ? (
                                 <ReportBlank>공란</ReportBlank>
                               ) : (
-                                prdDegree
+                                pdDegree
                               )}
                             </ReportDTitle>
                           </ReportInfoItem>
