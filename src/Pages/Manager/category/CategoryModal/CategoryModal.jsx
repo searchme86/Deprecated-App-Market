@@ -16,6 +16,7 @@ import {
   ModalSeconDaryBtn,
   ResetButton,
 } from '../../../../Components/Modal/Modal.style';
+
 import ModalFrame from '../../../../Components/Modal/ModalFrame';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -54,6 +55,11 @@ function CategoryModal({ ParentProps }) {
     formState: { errors },
   } = useForm();
 
+  const closeModal = () => {
+    handleClear();
+    handleClose();
+  };
+
   const onSubmit = (data, e) => {
     registerForm();
   };
@@ -89,14 +95,10 @@ function CategoryModal({ ParentProps }) {
                     {...register('categoryTitle', {
                       required: '카테고리 타이틀 입력을 해주세요',
                       minLength: {
-                        value: 5,
-                        message: '최소입력 글자는 5글자입니다.',
+                        value: 2,
+                        message: '최소입력 글자는 2글자입니다.',
                       },
                       onChange: onInputChange,
-                      pattern: {
-                        value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
-                        message: '숫자와 특수문자, 공백은 허용하지 않습니다.',
-                      },
                     })}
                     size="sm"
                     variant="flushed"
@@ -118,6 +120,7 @@ function CategoryModal({ ParentProps }) {
                   >
                     카테고리 설명
                   </FormLabel>
+
                   <Textarea
                     id="categoryDescription"
                     value={categoryDescription}
@@ -129,15 +132,11 @@ function CategoryModal({ ParentProps }) {
                         message: '최소입력 글자는 10글자입니다.',
                       },
                       onChange: onInputChange,
-                      pattern: {
-                        value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
-                        message:
-                          '입력항목은 특수문자/숫자로 시작 할 수 없으며, 숫자와 특수문자를 포함할 수 없습니다.',
-                      },
                     })}
                     size="sm"
                     fontSize="xs"
                     isRequired
+                    resize="none"
                   />
                   <FormErrorMessage as="p">
                     {errors.categoryDescription &&
@@ -161,11 +160,6 @@ function CategoryModal({ ParentProps }) {
                         minLength: {
                           value: 3,
                           message: '최소입력 글자는 3글자입니다.',
-                        },
-                        pattern: {
-                          value: /^[a-zA-Z]+$/,
-                          message:
-                            '입력항목은 특수문자와 숫자, 한글, 공백은 허용하지 않습니다.',
                         },
                         onChange: onInputChange,
                       })}
@@ -214,21 +208,18 @@ function CategoryModal({ ParentProps }) {
                       required:
                         '카테고리 이미지에 대한 간략한 설명을 남겨주세요',
                       minLength: {
-                        value: 10,
-                        message: '최소입력 글자는 10글자입니다.',
+                        value: 5,
+                        message: '최소입력 글자는 6글자입니다.',
                       },
                       onChange: onInputChange,
-                      pattern: {
-                        value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
-                        message:
-                          '입력항목은 특수문자/숫자로 시작 할 수 없으며, 숫자와 특수문자를 포함할 수 없습니다.',
-                      },
                     })}
                     name="ImageDescription"
                     size="sm"
                     fontSize="xs"
+                    resize="none"
                     isRequired
                   />
+
                   <FormErrorMessage as="p">
                     {errors.ImageDescription && errors.ImageDescription.message}
                   </FormErrorMessage>
@@ -238,7 +229,7 @@ function CategoryModal({ ParentProps }) {
                 type="button"
                 role="button"
                 style={{ alignSelf: 'flex-end' }}
-                onClick={handleClear}
+                onClick={closeModal}
               >
                 초기화
               </ResetButton>

@@ -178,6 +178,7 @@ function CategoryView({ categories }) {
                           radius={'14px'}
                         />
                       </ImageHolder>
+
                       <ContentDivider>
                         <OffScreen>{categoryDescription}</OffScreen>
                         <CategoryTitle>{categoryTitle}</CategoryTitle>
@@ -225,7 +226,7 @@ function CategoryView({ categories }) {
             }) => (
               <CategoryItem key={_id}>
                 <Link to={categoryLink}>
-                  <ImageHolder>
+                  <ImageHolder height="150px">
                     <Image
                       src={imageFile}
                       alt={ImageDescription}

@@ -9,6 +9,9 @@ import ModalFrame from '../../../Components/Modal/ModalFrame';
 import { useSelector } from 'react-redux';
 import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
 import {
+  ReportAlert,
+  ReportAlertList,
+  ReportAlertMessage,
   ReportContent,
   ReportDOpinion,
   ReportDTitle,
@@ -26,6 +29,7 @@ import {
   ReportOverflowList,
   ReportTitle,
   ReportUser,
+  ReportBlank,
   RTable,
   RTableTd,
   RTableTh,
@@ -36,7 +40,7 @@ import { AlignList } from '../../../Assets/Styles/Layout.style';
 import defaultImg from '../../../Assets/Image/default-product-upload.png';
 
 function ProductReport({ prReport }) {
-  const { handleClose, isOpen, upload } = prReport;
+  const { handleClose, isOpen, newProduct } = prReport;
 
   const {
     user: {
@@ -50,11 +54,11 @@ function ProductReport({ prReport }) {
     pdPrice,
     pdDes,
     pdWish,
-    prdDegree,
+    pdDegree,
     pdStatus,
     pdSizeInfo,
     pdColorInfo,
-  } = upload;
+  } = newProduct;
 
   const [{ pdSize, pdPriceBySize }] = pdSizeInfo;
   const [{ pdColor, pdPriceByColor }] = pdColorInfo;
@@ -66,9 +70,23 @@ function ProductReport({ prReport }) {
     pdPrice,
     pdDes,
     pdWish,
-    prdDegree,
+    pdDegree,
     pdStatus,
   ].every(Boolean);
+
+  console.log(
+    'isBlank',
+    pdCategory,
+    pdTitle,
+    // pdImage,
+    pdPrice,
+    pdDes,
+    pdWish,
+    pdDegree,
+    pdStatus
+  );
+
+  console.log('isBlank', isBlank);
 
   return (
     <div>
@@ -86,9 +104,16 @@ function ProductReport({ prReport }) {
               <ReportContent>
                 <ReportHeader>
                   {!isBlank && (
-                    <p style={{ marginBottom: '10px', fontSize: '17px' }}>
-                      상품을 등록 후, 입력 내용이 추가됩니다.
-                    </p>
+                    <ReportAlert>
+                      <ReportAlertList>
+                        <ReportAlertMessage>
+                          * 상품 등록 후, 미리보기가 가능합니다
+                        </ReportAlertMessage>
+                        <ReportAlertMessage>
+                          * 미 등록된 항목은 "공란" 이란 텍스트로 표현됩니다.
+                        </ReportAlertMessage>
+                      </ReportAlertList>
+                    </ReportAlert>
                   )}
                   <ReportIntro>
                     <ReportUser>{nickname}</ReportUser>
@@ -109,7 +134,11 @@ function ProductReport({ prReport }) {
                       <ReportInfoLi>
                         <ReportTitle>카테고리</ReportTitle>
                         <ReportDTitle>
-                          {!isBlank ? '등록해주세요' : pdCategory}
+                          {!isBlank ? (
+                            <ReportBlank>공란</ReportBlank>
+                          ) : (
+                            pdCategory
+                          )}
                         </ReportDTitle>
                       </ReportInfoLi>
                       <ReportInfoLi>
@@ -117,7 +146,11 @@ function ProductReport({ prReport }) {
                           <ReportInfoItem>
                             <ReportTitle>상품명</ReportTitle>
                             <ReportDTitle>
-                              {!isBlank ? '공란' : pdTitle}
+                              {!isBlank ? (
+                                <ReportBlank>공란</ReportBlank>
+                              ) : (
+                                pdTitle
+                              )}
                             </ReportDTitle>
                           </ReportInfoItem>
                           <ReportInfoItem>
@@ -129,7 +162,11 @@ function ProductReport({ prReport }) {
                           <ReportInfoItem>
                             <ReportTitle>상품단계</ReportTitle>
                             <ReportDTitle>
-                              {!isBlank ? '공란' : prdDegree}
+                              {!isBlank ? (
+                                <ReportBlank>공란</ReportBlank>
+                              ) : (
+                                pdDegree
+                              )}
                             </ReportDTitle>
                           </ReportInfoItem>
                         </AlignList>
@@ -138,7 +175,7 @@ function ProductReport({ prReport }) {
                         <ReportTitle>상품소개</ReportTitle>
                         <ReportOverflow>
                           <ReportDOpinion>
-                            {!isBlank ? '공란' : pdDes}
+                            {!isBlank ? <ReportBlank>공란</ReportBlank> : pdDes}
                           </ReportDOpinion>
                         </ReportOverflow>
                       </ReportInfoLi>
@@ -149,7 +186,11 @@ function ProductReport({ prReport }) {
                             {pdStatus.map((status, index) => (
                               <ReportOverflowLi key={index}>
                                 <ReportDOpinion>
-                                  {!isBlank ? '공란' : status}
+                                  {!isBlank ? (
+                                    <ReportBlank>공란</ReportBlank>
+                                  ) : (
+                                    status
+                                  )}
                                 </ReportDOpinion>
                               </ReportOverflowLi>
                             ))}
@@ -160,7 +201,11 @@ function ProductReport({ prReport }) {
                         <ReportTitle>희망사항</ReportTitle>
                         <ReportOverflow>
                           <ReportDOpinion>
-                            {!isBlank ? '공란' : pdWish}
+                            {!isBlank ? (
+                              <ReportBlank>공란</ReportBlank>
+                            ) : (
+                              pdWish
+                            )}
                           </ReportDOpinion>
                         </ReportOverflow>
                       </ReportInfoLi>
@@ -172,11 +217,11 @@ function ProductReport({ prReport }) {
                     <AlignList>
                       <ReportInfoLi>
                         <ReportTitle>사이즈 별 가격</ReportTitle>
-                        <p>공란</p>
+                        <ReportBlank>공란</ReportBlank>
                       </ReportInfoLi>
                       <ReportInfoLi>
                         <ReportTitle>색상 별 가격</ReportTitle>
-                        <p>공란</p>
+                        <ReportBlank>공란</ReportBlank>
                       </ReportInfoLi>
                     </AlignList>
                   ) : (
