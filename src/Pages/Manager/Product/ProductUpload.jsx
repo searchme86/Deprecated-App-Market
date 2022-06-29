@@ -643,10 +643,7 @@ function FashionUpload() {
                         <PFormDesWrapper>
                           <PFormDesList>
                             <PFormDesLi>
-                              <PFormDes>
-                                *필수 입력사항입니다 (단, 태그 부분은
-                                제외입니다.)
-                              </PFormDes>
+                              <PFormDes>*필수 입력사항입니다</PFormDes>
                             </PFormDesLi>
                             <PFormDesLi>
                               <PFormDes>
