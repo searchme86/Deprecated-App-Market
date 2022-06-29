@@ -6,6 +6,7 @@ import CartReducer from './Features/CartSlice';
 import TourReducer from './Features/TourSlice';
 import ProductReducer from './Features/ProductSlice';
 import CategoryReducer from './Features/CategorySlice';
+import NProductReducer from './Features/NProductSlice';
 
 export default configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
     cart: CartReducer,
     product: ProductReducer,
     category: CategoryReducer,
+    nproduct: NProductReducer,
   },
 });

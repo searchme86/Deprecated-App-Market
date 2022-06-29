@@ -64,3 +64,8 @@ export const getSingleCategory = (id) => API.get(`/category/${id}`);
 export const deleteCategory = (id) => API.delete(`/category/${id}`);
 export const updateCategory = (id, updateCategory) =>
   API.patch(`/category/${id}`, updateCategory);
+
+//*-------nproduct-------*
+//nupload
+export const createProduct = (nuploadProduct) =>
+  API.post('/nproduct/upload', nuploadProduct);
