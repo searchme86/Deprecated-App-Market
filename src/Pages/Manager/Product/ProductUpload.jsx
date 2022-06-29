@@ -59,11 +59,6 @@ import { ncreateProduct } from '../../../Store/Features/NProductSlice';
 import { getCategoryList } from '../../../Store/Features/CategorySlice';
 
 function FashionUpload() {
-  const {
-    user: {
-      result: { _id: userId },
-    },
-  } = useSelector((state) => state.auth);
   const { categories } = useSelector((state) => state.category);
   const { ProductSize, ProductDegree, ProductStatus, error } = useSelector(
     (state) => state.nproduct
@@ -77,7 +72,7 @@ function FashionUpload() {
     }
   );
 
-  console.log(categoryValue, categoryValue);
+  // console.log(categoryValue, categoryValue);
 
   const productSchema = {
     pdTitle: '',
@@ -202,7 +197,6 @@ function FashionUpload() {
   const { pdTitle, pdImage, pdPrice, pdDes, pdWish } = pdInfo;
 
   const newProduct = {
-    // pdUploader: userId,
     pdCategory,
     pdTitle,
     pdImage,
