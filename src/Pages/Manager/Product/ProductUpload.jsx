@@ -753,6 +753,10 @@ function FashionUpload() {
                                       value={pdPriceBySize}
                                       onChange={(e) => addSize(e, index)}
                                     />
+                                    <FormErrorMessage as="p">
+                                      {errors?.pdPriceBySize &&
+                                        errors?.pdPriceBySize?.message}
+                                    </FormErrorMessage>
                                   </PFormUnit>
                                 </PFormBundle>
                                 {prdSize.length - 1 === index && (
@@ -819,6 +823,10 @@ function FashionUpload() {
                                         autoComplete="off"
                                         onChange={(e) => addColor(e, index)}
                                       />
+                                      <FormErrorMessage as="p">
+                                        {errors?.pdColor &&
+                                          errors?.pdColor?.message}
+                                      </FormErrorMessage>
                                     </PFormUnit>
                                     <PFormUnit>
                                       <FormLabel
@@ -861,6 +869,10 @@ function FashionUpload() {
                                         autoComplete="off"
                                         onChange={(e) => addColor(e, index)}
                                       />
+                                      <FormErrorMessage as="p">
+                                        {errors?.pdPriceByColor &&
+                                          errors?.pdPriceByColor?.message}
+                                      </FormErrorMessage>
                                     </PFormUnit>
                                   </PFormBundle>
                                   {prdColor.length - 1 === index && (
