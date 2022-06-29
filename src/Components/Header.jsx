@@ -80,18 +80,13 @@ function Header() {
                 <p className="header-text">Home</p>
               </MDBNavbarLink>
             </MDBNavbarItem>
+            <MDBNavbarItem>
+              <MDBNavbarLink href="/product">
+                <p className="header-text">신규 상품</p>
+              </MDBNavbarLink>
+            </MDBNavbarItem>
             {user?.result?._id && (
               <>
-                <MDBNavbarItem>
-                  <MDBNavbarLink href="/addTour">
-                    <p className="header-text">Add Tour</p>
-                  </MDBNavbarLink>
-                </MDBNavbarItem>
-                <MDBNavbarItem>
-                  <MDBNavbarLink href="/dashboard">
-                    <p className="header-text">Dashboard</p>
-                  </MDBNavbarLink>
-                </MDBNavbarItem>
                 <MDBNavbarItem>
                   <MDBNavbarLink href="/create">
                     <p className="header-text">제품등록</p>
@@ -102,17 +97,20 @@ function Header() {
                     <p className="header-text">News</p>
                   </MDBNavbarLink>
                 </MDBNavbarItem>
+                <MDBNavbarItem>
+                  <MDBNavbarLink href="/addTour">
+                    <p className="header-text">Add Tour</p>
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
+                <MDBNavbarItem>
+                  <MDBNavbarLink href="/dashboard">
+                    <p className="header-text">Dashboard</p>
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
               </>
             )}
             {user?.result?._id ? (
               <>
-                <MDBNavbarItem>
-                  <MDBNavbarLink href="/login">
-                    <p className="header-text" onClick={() => handleLogout()}>
-                      Logout
-                    </p>
-                  </MDBNavbarLink>
-                </MDBNavbarItem>
                 <MDBNavbarItem>
                   <MDBNavbarLink href="/upload">
                     <p className="header-text">상품등록</p>
@@ -121,6 +119,13 @@ function Header() {
                 <MDBNavbarItem>
                   <MDBNavbarLink href="/category">
                     <p className="header-text">카테고리 관리</p>
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
+                <MDBNavbarItem>
+                  <MDBNavbarLink href="/login">
+                    <p className="header-text" onClick={() => handleLogout()}>
+                      Logout
+                    </p>
                   </MDBNavbarLink>
                 </MDBNavbarItem>
               </>

@@ -29,6 +29,7 @@ import UploadCategory from '../Pages/Manager/category/UploadCategory';
 import News from '../Pages/News';
 import ProductUpload from '../Pages/Manager/Product/ProductUpload';
 import { useDispatch } from 'react-redux';
+import Items from '../Pages/Items';
 
 function Router() {
   const dispatch = useDispatch();
@@ -78,6 +79,14 @@ function Router() {
           element={
             <PrivateRoute>
               <ProductUpload />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/product"
+          element={
+            <PrivateRoute>
+              <Items />
             </PrivateRoute>
           }
         />
