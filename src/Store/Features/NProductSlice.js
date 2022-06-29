@@ -31,6 +31,76 @@ const NProductSlice = createSlice({
     nnumberOfPages: null,
     loading: false,
     isFetching: false,
+    ProductSize: [
+      {
+        id: 0,
+        value: 'XS(85)',
+      },
+      {
+        id: 1,
+        value: 'S(90)',
+      },
+      {
+        id: 2,
+        value: 'M(95)',
+      },
+      {
+        id: 3,
+        value: 'L(100)',
+      },
+      {
+        id: 4,
+        value: 'XL(105)',
+      },
+      {
+        id: 5,
+        value: 'XXL(110)',
+      },
+    ],
+    ProductDegree: [
+      {
+        id: 0,
+        value: '최상',
+      },
+      {
+        id: 1,
+        value: '상',
+      },
+      {
+        id: 2,
+        value: '중상',
+      },
+      {
+        id: 3,
+        value: '중',
+      },
+      {
+        id: 4,
+        value: '중하',
+      },
+      {
+        id: 5,
+        value: '중하',
+      },
+    ],
+    ProductStatus: [
+      {
+        id: 0,
+        value: '구입한지 1주일 이내 상태',
+      },
+      {
+        id: 1,
+        value: '구입한지 1년 이내 상태',
+      },
+      {
+        id: 2,
+        value: '구입 후, 변심으로 인해 포장이 되어 있는 상태',
+      },
+      {
+        id: 3,
+        value: '잔기스가 많으나 성능에는 무리 없습니다.',
+      },
+    ],
     error: '',
   },
   reducers: {
