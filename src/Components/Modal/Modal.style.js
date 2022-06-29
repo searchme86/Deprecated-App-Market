@@ -99,7 +99,7 @@ export const ModalItem = styled.li`
           align-items: center;
         `
       : ''}
-  margin-bottom: ${({ mb }) => (mb ? mb : '20')}px;
+  margin-bottom: ${({ mb }) => (mb ? mb : '10')}px;
   &:first-child {
     margin-top: 0;
   }
@@ -110,7 +110,6 @@ export const ModalItem = styled.li`
 
 export const ModalInfo = styled.div`
   background: #fbfbfb;
-  margin: 0 0 30px 0;
   padding: 10px;
 `;
 
