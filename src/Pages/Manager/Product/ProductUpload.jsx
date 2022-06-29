@@ -144,13 +144,18 @@ function FashionUpload() {
     { pdColor: '', pdPriceByColor: '' },
   ]);
   const [prdStatus, setPrdStatus] = useState('');
-  const [prdDegree, setPrdDegree] = useState('');
+  const [pdDegree, setPdDegree] = useState('');
 
   const [isOpen, setIsOpen] = useState(false);
   const [isFmodalOpen, setIsFmodalOpen] = useState(false);
 
   const [tags, setTags] = useState([]);
 
+  const {
+    user: {
+      result: { _id: userId },
+    },
+  } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.nproduct);
 
   useEffect(() => {
@@ -219,7 +224,7 @@ function FashionUpload() {
   };
 
   const selectDegree = (e) => {
-    setPrdDegree(e.target.value);
+    setPdDegree(e.target.value);
   };
 
   //상품 모달
@@ -250,13 +255,14 @@ function FashionUpload() {
   const { pdTitle, pdImage, pdPrice, pdDes, pdWish } = pdInfo;
 
   const newProduct = {
+    pdUploader: userId,
     pdCategory,
     pdTitle,
     pdImage,
     pdPrice,
     pdDes,
     pdWish,
-    prdDegree,
+    pdDegree,
     pdStatus: [prdStatus, ...tags],
     pdSizeInfo: [...prdSize],
     pdColorInfo: [...prdColor],
@@ -270,7 +276,7 @@ function FashionUpload() {
     pdTitle,
     pdImage,
     pdPrice,
-    prdDegree,
+    pdDegree,
     prdStatus,
     pdWish,
     pdDes,
@@ -278,6 +284,7 @@ function FashionUpload() {
 
   // console.log('disabled', canSubmit);
   console.log('pdInfo', newProduct);
+  // console.log('userId', userId);
 
   const registerForm = () => {
     dispatch(ncreateProduct({ newProduct, navigate, toast }));
@@ -316,7 +323,6 @@ function FashionUpload() {
                         name="pdCategory"
                         placeholder="상품의 카테고리를 입력해주세요"
                         value={pdCategory}
-                        // onChange={selectCategory}
                         {...register('pdCategory', {
                           required: '상품의 카테고리를 선택해 주세요',
                           onChange: selectCategory,
@@ -420,7 +426,6 @@ function FashionUpload() {
                             required: '상품명을 입력해주세요',
                             onChange: onInputChange,
                           })}
-                          // onChange={onInputChange}
                         />
                         <FormErrorMessage as="p">
                           {errors.pdTitle && errors.pdTitle.message}
@@ -458,7 +463,6 @@ function FashionUpload() {
                           type="number"
                           id="pdPrice"
                           name="pdPrice"
-                          // onChange={onInputChange}
                           autoComplete="off"
                           {...register('pdPrice', {
                             required: '상품 가격을 입력해주세요',
@@ -497,7 +501,6 @@ function FashionUpload() {
                           name="pdDes"
                           size="sm"
                           resize="none"
-                          // onChange={onInputChange}
                           {...register('pdDes', {
                             required: '상품의 소개를 입력해주세요',
                             onChange: onInputChange,
@@ -529,8 +532,7 @@ function FashionUpload() {
                           id="pdDegree"
                           name="pdDegree"
                           placeholder="상품의 상태를 선택해 주세요"
-                          value={prdDegree}
-                          // onChange={selectDegree}
+                          value={pdDegree}
                           {...register('pdDegree', {
                             required: '상품의 상태를 선택해 주세요',
                             onChange: selectDegree,
@@ -573,7 +575,6 @@ function FashionUpload() {
                           name="pdStatus"
                           placeholder="상품상태의 단계를 선택해 주세요"
                           value={prdStatus}
-                          // onChange={selectStatus}
                           {...register('pdStatus', {
                             required: '상품상태의 단계를 선택해 주세요',
                             onChange: selectStatus,
@@ -658,7 +659,6 @@ function FashionUpload() {
                           name="pdWish"
                           size="sm"
                           resize="none"
-                          // onChange={onInputChange}
                           autoComplete="off"
                           {...register('pdWish', {
                             required: '배송 관련해 희망사항을 입력해주세요',
