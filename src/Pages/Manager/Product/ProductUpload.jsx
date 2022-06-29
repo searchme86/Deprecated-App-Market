@@ -56,8 +56,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { ncreateProduct } from '../../../Store/Features/NProductSlice';
+import { getCategoryList } from '../../../Store/Features/CategorySlice';
 
 function FashionUpload() {
+  const {
+    user: {
+      result: { _id: userId },
+    },
+  } = useSelector((state) => state.auth);
+  const { categories } = useSelector((state) => state.category);
+  const { ProductSize, ProductDegree, ProductStatus, error } = useSelector(
+    (state) => state.nproduct
+  );
+
+  // console.log('제품등록 페이지에서 categories', categories);
+  const categoryValue = Object.values(categories).map(
+    ({ _id, categoryTitle }) => {
+      console.log('1');
+      return { id: _id, PdCategoryValue: categoryTitle };
+    }
+  );
+
+  console.log(categoryValue, categoryValue);
+
   const productSchema = {
     pdTitle: '',
     pdImage: '',
@@ -65,77 +86,6 @@ function FashionUpload() {
     pdDes: '',
     pdWish: '',
   };
-
-  const ProductSize = [
-    {
-      id: 0,
-      value: 'XS(85)',
-    },
-    {
-      id: 1,
-      value: 'S(90)',
-    },
-    {
-      id: 2,
-      value: 'M(95)',
-    },
-    {
-      id: 3,
-      value: 'L(100)',
-    },
-    {
-      id: 4,
-      value: 'XL(105)',
-    },
-    {
-      id: 5,
-      value: 'XXL(110)',
-    },
-  ];
-  const ProductCategory = [
-    {
-      id: 0,
-      value: '가전',
-    },
-    {
-      id: 1,
-      value: '가구',
-    },
-    {
-      id: 2,
-      value: '아동',
-    },
-    {
-      id: 3,
-      value: '식품',
-    },
-  ];
-  const ProductDegree = [
-    {
-      id: 0,
-      value: '최상',
-    },
-    {
-      id: 1,
-      value: '상',
-    },
-    {
-      id: 2,
-      value: '중상',
-    },
-    {
-      id: 3,
-      value: '중',
-    },
-    {
-      id: 4,
-      value: '중하',
-    },
-    {
-      id: 5,
-      value: '중하',
-    },
-  ];
 
   const [pdInfo, setPdInfo] = useState(productSchema);
   const [pdCategory, setPdCategory] = useState('');
@@ -152,17 +102,6 @@ function FashionUpload() {
   const [tags, setTags] = useState([]);
 
   const {
-    user: {
-      result: { _id: userId },
-    },
-  } = useSelector((state) => state.auth);
-  const { error } = useSelector((state) => state.nproduct);
-
-  useEffect(() => {
-    error && toast.error(error);
-  }, [error]);
-
-  const {
     handleSubmit,
     register,
     formState: { errors },
@@ -170,6 +109,14 @@ function FashionUpload() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCategoryList({ toast }));
+  }, []);
+
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
 
   const onInputChange = (e) => {
     const { name, value } = e.target;
@@ -255,7 +202,7 @@ function FashionUpload() {
   const { pdTitle, pdImage, pdPrice, pdDes, pdWish } = pdInfo;
 
   const newProduct = {
-    pdUploader: userId,
+    // pdUploader: userId,
     pdCategory,
     pdTitle,
     pdImage,
@@ -283,7 +230,7 @@ function FashionUpload() {
   ].every(Boolean);
 
   // console.log('disabled', canSubmit);
-  console.log('pdInfo', newProduct);
+  // console.log('pdInfo', newProduct);
   // console.log('userId', userId);
 
   const registerForm = () => {
@@ -328,9 +275,9 @@ function FashionUpload() {
                           onChange: selectCategory,
                         })}
                       >
-                        {ProductCategory.map(({ id, value }) => (
-                          <option value={value} key={id}>
-                            {value}
+                        {categoryValue.map(({ id, PdCategoryValue }) => (
+                          <option value={PdCategoryValue} key={id}>
+                            {PdCategoryValue}
                           </option>
                         ))}
                       </Select>
@@ -580,18 +527,11 @@ function FashionUpload() {
                             onChange: selectStatus,
                           })}
                         >
-                          <option value="구입한지 1주일 이내 상태">
-                            구입한지 1주일 이내 상태
-                          </option>
-                          <option value="구입한지 1년 이내 상태">
-                            구입한지 1년 이내 상태
-                          </option>
-                          <option value="구입 후, 변심으로 인해 포장이 되어 있는 상태">
-                            구입 후, 변심으로 인해 포장이 되어 있는 상태
-                          </option>
-                          <option value="잔기스가 많으나 성능에는 무리 없습니다.">
-                            잔기스가 많으나 성능에는 무리 없습니다.
-                          </option>
+                          {ProductStatus.map(({ id, value }) => (
+                            <option key={id} value={value}>
+                              {value}
+                            </option>
+                          ))}
                         </Select>
                         <FormErrorMessage as="p">
                           {errors?.pdStatus && errors?.pdStatus?.message}
