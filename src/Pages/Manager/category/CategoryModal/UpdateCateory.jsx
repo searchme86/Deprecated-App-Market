@@ -44,6 +44,7 @@ function UpdateCateory({ UpdateProps }) {
     title: '카테고리 타이틀',
     des: '카테고리 설명',
     link: '카테고리 링크',
+    ImageFile: '카테고리 이미지',
     linkDes: '카테고리 설명',
   };
   const { handleClose, isOpen, IdToUpdate } = UpdateProps;
@@ -57,7 +58,7 @@ function UpdateCateory({ UpdateProps }) {
   const [updatedCategory, setupdatedCategory] = useState(updateState);
 
   const { current: ItemId } = IdToUpdate;
-  const { title, des, link, linkDes } = PageText;
+  const { title, des, link, linkDes, ImageFile } = PageText;
 
   const { user } = useSelector((state) => state.auth);
   const { category, loading, error } = useSelector((state) => state.category);
@@ -119,6 +120,11 @@ function UpdateCateory({ UpdateProps }) {
     console.log('data', data);
   };
 
+  const closeModal = () => {
+    handleClear();
+    handleClose();
+  };
+
   console.log('updateCategory', updatedCategory);
 
   return (
@@ -136,6 +142,7 @@ function UpdateCateory({ UpdateProps }) {
             <ModalForm onSubmit={handleSubmit(registerForm)}>
               <FormControl isInvalid={errors}>
                 <ModalList>
+                  {/* 카테고리 타이틀 */}
                   <ModalItem>
                     <AlignComponents>
                       <ModalHalf mr="10">
@@ -155,15 +162,10 @@ function UpdateCateory({ UpdateProps }) {
                           {...register('newTitle', {
                             required: '카테고리 타이틀 입력을 해주세요',
                             minLength: {
-                              value: 5,
-                              message: '최소입력 글자는 5글자입니다.',
+                              value: 2,
+                              message: '최소입력 글자는 2글자입니다.',
                             },
                             onChange: onInputChange,
-                            pattern: {
-                              value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
-                              message:
-                                '숫자와 특수문자, 공백은 허용하지 않습니다.',
-                            },
                           })}
                           size="sm"
                           variant="flushed"
@@ -182,6 +184,8 @@ function UpdateCateory({ UpdateProps }) {
                       </ModalHalf>
                     </AlignComponents>
                   </ModalItem>
+
+                  {/* 카테고리 설명 */}
                   <ModalItem>
                     <AlignComponents>
                       <ModalHalf mr="10">
@@ -204,11 +208,6 @@ function UpdateCateory({ UpdateProps }) {
                               message: '최소입력 글자는 10글자입니다.',
                             },
                             onChange: onInputChange,
-                            pattern: {
-                              value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
-                              message:
-                                '입력항목은 특수문자/숫자로 시작 할 수 없으며, 숫자와 특수문자를 포함할 수 없습니다.',
-                            },
                           })}
                           size="sm"
                           fontSize="xs"
@@ -227,6 +226,8 @@ function UpdateCateory({ UpdateProps }) {
                       </ModalHalf>
                     </AlignComponents>
                   </ModalItem>
+
+                  {/* 카테코리 링크 */}
                   <ModalItem>
                     <AlignComponents>
                       <ModalHalf mr="10">
@@ -281,8 +282,13 @@ function UpdateCateory({ UpdateProps }) {
                       </ModalHalf>
                     </AlignComponents>
                   </ModalItem>
+
+                  {/* 카테고리 이미지 */}
                   <ModalItem>
                     <ModalHalf>
+                      <FormLabel htmlFor="newLink" mb={0} mr={0} fontSize={16}>
+                        {ImageFile}
+                      </FormLabel>
                       <FileBase
                         type="file"
                         multiple={false}
@@ -318,11 +324,6 @@ function UpdateCateory({ UpdateProps }) {
                               message: '최소입력 글자는 10글자입니다.',
                             },
                             onChange: onInputChange,
-                            pattern: {
-                              value: /^[a-zA-Z|ㄱ-ㅎㅏ-ㅣ가-힣]+$/,
-                              message:
-                                '입력항목은 특수문자/숫자로 시작 할 수 없으며, 숫자와 특수문자를 포함할 수 없습니다.',
-                            },
                           })}
                           size="sm"
                           fontSize="xs"
@@ -349,7 +350,7 @@ function UpdateCateory({ UpdateProps }) {
                   <ModalSeconDaryBtn
                     type="button"
                     role="button"
-                    onClick={handleClose}
+                    onClick={closeModal}
                   >
                     취소
                   </ModalSeconDaryBtn>
