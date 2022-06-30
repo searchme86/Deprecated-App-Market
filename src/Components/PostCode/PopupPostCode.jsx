@@ -1,7 +1,7 @@
 import React from 'react';
 import DaumPostcode from 'react-daum-postcode';
 
-function PopupPostCode(props) {
+function PopupPostCode({ handleClose, setAddress }) {
   const handlePostCode = (data) => {
     let fullAddress = data.address;
     let extraAddress = '';
@@ -16,11 +16,12 @@ function PopupPostCode(props) {
       }
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
-    console.log(data);
-    console.log(fullAddress);
-    console.log(data.zonecode);
-    // props.onClose();
-    props.handleClose();
+
+    setAddress({ data, fullAddress });
+    // console.log(data);
+    // console.log(fullAddress);
+    // console.log(data.zonecode);
+    handleClose();
   };
 
   const style = {
