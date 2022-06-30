@@ -57,6 +57,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ncreateProduct } from '../../../Store/Features/NProductSlice';
 import { getCategoryList } from '../../../Store/Features/CategorySlice';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 function FashionUpload() {
   const { categories } = useSelector((state) => state.category);
@@ -95,6 +96,7 @@ function FashionUpload() {
   const [isFmodalOpen, setIsFmodalOpen] = useState(false);
 
   const [tags, setTags] = useState([]);
+  const [pdtags, setPdtags] = useState([]);
 
   const {
     handleSubmit,
@@ -181,17 +183,32 @@ function FashionUpload() {
     setIsFmodalOpen(true);
   }, []);
 
-  // 태그
+  // 태그-1
   const handleKeyDown = (e) => {
     if (e.key !== 'Enter') return;
     const value = e.target.value;
     if (!value.trim()) return;
     setTags([...tags, value]);
     e.target.value = '';
+    e.preventDefault();
   };
 
   const removeTag = (index) => {
     setTags(tags.filter((el, i) => i !== index));
+  };
+
+  //해쉬태그
+  const handleTags = (e) => {
+    if (e.key !== 'Enter') return;
+    const value = e.target.value;
+    if (!value.trim()) return;
+    setPdtags([...pdtags, value]);
+    e.target.value = '';
+    e.preventDefault();
+  };
+
+  const removePdTag = (index) => {
+    setPdtags(pdtags.filter((el, i) => i !== index));
   };
 
   const { pdTitle, pdImage, pdPrice, pdDes, pdWish } = pdInfo;
@@ -204,6 +221,7 @@ function FashionUpload() {
     pdDes,
     pdWish,
     pdDegree,
+    pdtags,
     pdStatus: [prdStatus, ...tags],
     pdSizeInfo: [...prdSize],
     pdColorInfo: [...prdColor],
@@ -212,7 +230,7 @@ function FashionUpload() {
   // 상품모달
   const prReport = { handleClose, isOpen, newProduct };
 
-  const canSubmit = [
+  const filledIn = [
     pdCategory,
     pdTitle,
     pdImage,
@@ -223,13 +241,27 @@ function FashionUpload() {
     pdDes,
   ].every(Boolean);
 
-  // console.log('disabled', canSubmit);
+  const canSubmit = pdtags.length !== 0 && filledIn;
+
+  console.log(
+    'disabled',
+    // pdCategory,
+    // pdTitle,
+    // pdImage,
+    // pdPrice,
+    // pdDegree,
+    // prdStatus,
+    // pdWish,
+    // pdDes,
+    // pdtags
+    canSubmit
+  );
   // console.log('pdInfo', newProduct);
   // console.log('userId', userId);
+  console.log('pdtags', pdtags.length);
 
-  const registerForm = () => {
+  const registerForm = (event) => {
     dispatch(ncreateProduct({ newProduct, navigate, toast }));
-    console.log('newProduct', newProduct);
   };
 
   return (
@@ -450,6 +482,51 @@ function FashionUpload() {
                         <FormErrorMessage as="p">
                           {errors?.pdDes && errors?.pdDes?.message}
                         </FormErrorMessage>
+                      </PFormUnit>
+
+                      {/* 상품 해쉬태그 */}
+                      <PFormUnit>
+                        <FormLabel fontWeight="bold">상품 해쉬태그</FormLabel>
+                        <PFormDesWrapper>
+                          <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>*필수 입력사항입니다</PFormDes>
+                            </PFormDesLi>
+                            <PFormDesLi>
+                              <PFormDes>
+                                '#'은 제외하고 '텍스트'만 입력해주세요
+                              </PFormDes>
+                            </PFormDesLi>
+                            <PFormDesLi>
+                              <PFormDes>
+                                등록상품에 대해서 홍보랑 태그를 적어주세요
+                              </PFormDes>
+                            </PFormDesLi>
+                          </PFormDesList>
+                        </PFormDesWrapper>
+                        <TagWrapper>
+                          <TagContainer>
+                            <TagItemList>
+                              {pdtags.map((tag, index) => (
+                                <TagItem key={index}>
+                                  <span className="text">{tag}</span>
+                                  <TagItemDelete
+                                    onClick={() => removePdTag(index)}
+                                  >
+                                    &times;
+                                  </TagItemDelete>
+                                </TagItem>
+                              ))}
+                            </TagItemList>
+                            <FormWrapper>
+                              <TagInput
+                                type="text"
+                                onKeyPress={handleTags}
+                                placeholder="상품에 대한 태그를 입력해주세요 (예: 신상)"
+                              />
+                            </FormWrapper>
+                          </TagContainer>
+                        </TagWrapper>
                       </PFormUnit>
 
                       {/* 상품단계 */}
