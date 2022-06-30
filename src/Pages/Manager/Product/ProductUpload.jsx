@@ -57,13 +57,10 @@ import { useNavigate } from 'react-router-dom';
 
 import { ncreateProduct } from '../../../Store/Features/NProductSlice';
 import { getCategoryList } from '../../../Store/Features/CategorySlice';
+import { faL } from '@fortawesome/free-solid-svg-icons';
+import ProductPostCode from './ProductPostCode';
 
 function FashionUpload() {
-  const {
-    user: {
-      result: { _id: userId },
-    },
-  } = useSelector((state) => state.auth);
   const { categories } = useSelector((state) => state.category);
   const { ProductSize, ProductDegree, ProductStatus, error } = useSelector(
     (state) => state.nproduct
@@ -77,7 +74,7 @@ function FashionUpload() {
     }
   );
 
-  console.log(categoryValue, categoryValue);
+  // console.log(categoryValue, categoryValue);
 
   const productSchema = {
     pdTitle: '',
@@ -95,11 +92,14 @@ function FashionUpload() {
   ]);
   const [prdStatus, setPrdStatus] = useState('');
   const [pdDegree, setPdDegree] = useState('');
+  const [pdAddress, setAddress] = useState('');
 
   const [isOpen, setIsOpen] = useState(false);
   const [isFmodalOpen, setIsFmodalOpen] = useState(false);
+  const [postModalOpen, setPostModalOpen] = useState(false);
 
   const [tags, setTags] = useState([]);
+  const [pdtags, setPdtags] = useState([]);
 
   const {
     handleSubmit,
@@ -113,6 +113,12 @@ function FashionUpload() {
   useEffect(() => {
     dispatch(getCategoryList({ toast }));
   }, []);
+
+  useEffect(() => {
+    if (isOpen === false) {
+      setPostModalOpen(false);
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     error && toast.error(error);
@@ -184,25 +190,47 @@ function FashionUpload() {
     e.preventDefault();
     setIsOpen((value) => !value);
     setIsFmodalOpen(true);
+    setPostModalOpen(false);
   }, []);
 
-  // 태그
+  const handlePostModal = useCallback((e) => {
+    e.preventDefault();
+    setIsOpen((value) => !value);
+    setIsFmodalOpen(false);
+    setPostModalOpen(true);
+  }, []);
+
+  // 태그-1
   const handleKeyDown = (e) => {
     if (e.key !== 'Enter') return;
     const value = e.target.value;
     if (!value.trim()) return;
     setTags([...tags, value]);
     e.target.value = '';
+    e.preventDefault();
   };
 
   const removeTag = (index) => {
     setTags(tags.filter((el, i) => i !== index));
   };
 
+  //해쉬태그
+  const handleTags = (e) => {
+    if (e.key !== 'Enter') return;
+    const value = e.target.value;
+    if (!value.trim()) return;
+    setPdtags([...pdtags, value]);
+    e.target.value = '';
+    e.preventDefault();
+  };
+
+  const removePdTag = (index) => {
+    setPdtags(pdtags.filter((el, i) => i !== index));
+  };
+
   const { pdTitle, pdImage, pdPrice, pdDes, pdWish } = pdInfo;
 
   const newProduct = {
-    // pdUploader: userId,
     pdCategory,
     pdTitle,
     pdImage,
@@ -210,6 +238,7 @@ function FashionUpload() {
     pdDes,
     pdWish,
     pdDegree,
+    pdtags,
     pdStatus: [prdStatus, ...tags],
     pdSizeInfo: [...prdSize],
     pdColorInfo: [...prdColor],
@@ -217,8 +246,9 @@ function FashionUpload() {
 
   // 상품모달
   const prReport = { handleClose, isOpen, newProduct };
+  const postCode = { handleClose, isOpen, setAddress };
 
-  const canSubmit = [
+  const filledIn = [
     pdCategory,
     pdTitle,
     pdImage,
@@ -229,13 +259,28 @@ function FashionUpload() {
     pdDes,
   ].every(Boolean);
 
-  // console.log('disabled', canSubmit);
+  const canSubmit = pdtags.length !== 0 && filledIn;
+  const checked = postModalOpen;
+  // console.log(
+  //   'disabled',
+  //   // pdCategory,
+  //   // pdTitle,
+  //   // pdImage,
+  //   // pdPrice,
+  //   // pdDegree,
+  //   // prdStatus,
+  //   // pdWish,
+  //   // pdDes,
+  //   // pdtags
+  //   canSubmit
+  // );
   // console.log('pdInfo', newProduct);
   // console.log('userId', userId);
+  // console.log('pdtags', pdtags.length);
+  console.log('postModalOpen', postModalOpen);
 
-  const registerForm = () => {
+  const registerForm = (event) => {
     dispatch(ncreateProduct({ newProduct, navigate, toast }));
-    console.log('newProduct', newProduct);
   };
 
   return (
@@ -458,6 +503,51 @@ function FashionUpload() {
                         </FormErrorMessage>
                       </PFormUnit>
 
+                      {/* 상품 해쉬태그 */}
+                      <PFormUnit>
+                        <FormLabel fontWeight="bold">상품 해쉬태그</FormLabel>
+                        <PFormDesWrapper>
+                          <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>*필수 입력사항입니다</PFormDes>
+                            </PFormDesLi>
+                            <PFormDesLi>
+                              <PFormDes>
+                                '#'은 제외하고 '텍스트'만 입력해주세요
+                              </PFormDes>
+                            </PFormDesLi>
+                            <PFormDesLi>
+                              <PFormDes>
+                                등록상품에 대해서 홍보랑 태그를 적어주세요
+                              </PFormDes>
+                            </PFormDesLi>
+                          </PFormDesList>
+                        </PFormDesWrapper>
+                        <TagWrapper>
+                          <TagContainer>
+                            <TagItemList>
+                              {pdtags.map((tag, index) => (
+                                <TagItem key={index}>
+                                  <span className="text">{tag}</span>
+                                  <TagItemDelete
+                                    onClick={() => removePdTag(index)}
+                                  >
+                                    &times;
+                                  </TagItemDelete>
+                                </TagItem>
+                              ))}
+                            </TagItemList>
+                            <FormWrapper>
+                              <TagInput
+                                type="text"
+                                onKeyPress={handleTags}
+                                placeholder="상품에 대한 태그를 입력해주세요 (예: 신상)"
+                              />
+                            </FormWrapper>
+                          </TagContainer>
+                        </TagWrapper>
+                      </PFormUnit>
+
                       {/* 상품단계 */}
                       <PFormUnit>
                         <FormLabel htmlFor="pdDegree" fontWeight="bold">
@@ -579,7 +669,7 @@ function FashionUpload() {
                       {/* 상품희망사항 */}
                       <PFormUnit>
                         <FormLabel htmlFor="pdWish" fontWeight="bold">
-                          희망사항
+                          상품 희망사항
                         </FormLabel>
                         <PFormDesWrapper>
                           <PFormDesList>
@@ -605,6 +695,51 @@ function FashionUpload() {
                             onChange: onInputChange,
                           })}
                         />
+                      </PFormUnit>
+
+                      {/* 상품거래 희망주소 입력 */}
+                      <PFormUnit>
+                        <FormLabel htmlFor="pdAddress" fontWeight="bold">
+                          상품거래 희망주소
+                        </FormLabel>
+                        <PFormDesWrapper>
+                          <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>*필수 입력사항입니다</PFormDes>
+                            </PFormDesLi>
+                            <PFormDesLi>
+                              <PFormDes>
+                                상품거래를 희망하는 주소를 입력해주세요
+                              </PFormDes>
+                            </PFormDesLi>
+                            <PFormDesLi>
+                              <PFormDes>
+                                해당폼은 선택하신 주소를 확인하는 용도로 직접
+                                변경이 불가능합니다. 우편번호검색 버튼으로
+                                변경해주세요
+                              </PFormDes>
+                            </PFormDesLi>
+                          </PFormDesList>
+                        </PFormDesWrapper>
+                        <Input
+                          type="number"
+                          id="pdAddress"
+                          name="pdAddress"
+                          // value={}
+                          disabled
+                          {...register('pdAddress', {})}
+                        />
+                        <PFormButton
+                          type="button"
+                          onClick={handlePostModal}
+                          checked={checked}
+                          // className="add-btn"
+                        >
+                          우편주소 검색
+                        </PFormButton>
+                        <FormErrorMessage as="p">
+                          {errors.pdAddress && errors.pdAddress.message}
+                        </FormErrorMessage>
                       </PFormUnit>
 
                       {/* 입력 선택부분, 사이즈 별 제품가격 */}
@@ -846,6 +981,7 @@ function FashionUpload() {
             </FormControl>
           </PForm>
           {isFmodalOpen && <ProductReport prReport={prReport} />}
+          {postModalOpen && <ProductPostCode postCode={postCode} />}
         </SectionContent>
       </SectionLayout>
     </SectionUnit>

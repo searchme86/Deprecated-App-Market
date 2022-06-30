@@ -75,6 +75,13 @@ export const ReportDOpinion = styled.p`
   font-size: 14px;
 `;
 
+export const ReportHashTag = styled.span`
+  border: 1px solid #767676;
+  padding: 5px 10px 5px 10px;
+  box-sizing: border-box;
+  border-radius: 15px;
+`;
+
 export const ReportInfoItem = styled.li`
   flex: 1;
   text-align: left;
@@ -82,17 +89,25 @@ export const ReportInfoItem = styled.li`
 
 export const ReportOverflow = styled.div`
   overflow-y: auto;
-  height: 60px;
+  height: 106px;
   padding: 5px;
   box-sizing: border-box;
+  margin: 5px 0 0 0;
 `;
 
-export const ReportOverflowList = styled.ul``;
+export const ReportOverflowList = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+`;
 
 export const ReportOverflowLi = styled.li`
-  margin: 0 2px 0 0;
+  margin: 0 7px 7px 0;
+  padding: 0 0 4px 0;
+  &:first-child {
+    margin-left: 0;
+  }
   &:last-child {
-    margin-bottom: 0;
+    margin-right: 0;
   }
 `;
 

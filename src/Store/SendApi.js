@@ -66,6 +66,12 @@ export const updateCategory = (id, updateCategory) =>
   API.patch(`/category/${id}`, updateCategory);
 
 //*-------nproduct-------*
-//nupload
+//upload
 export const createProduct = (nuploadProduct) =>
   API.post('/nproduct/upload', nuploadProduct);
+
+//get Products list
+export const getProducts = (page) => API.get(`/nproduct/product?page=${page}`);
+
+//like Product
+export const likeProduct = (id) => API.patch(`/nproduct/like/${id}`);
