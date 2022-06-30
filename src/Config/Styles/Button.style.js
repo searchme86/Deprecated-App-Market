@@ -71,6 +71,11 @@ export const PFormButton = styled(CommonBtn)`
   box-sizing: border-box;
   border: 1px solid #767676;
   margin: 57px 0 0 0;
+  ${({ checked }) =>
+    checked &&
+    css`
+      border: 2px solid red;
+    `}
   ${({ disabled }) =>
     disabled &&
     css`

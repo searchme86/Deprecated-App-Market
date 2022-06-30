@@ -260,7 +260,7 @@ function FashionUpload() {
   ].every(Boolean);
 
   const canSubmit = pdtags.length !== 0 && filledIn;
-
+  const checked = postModalOpen;
   // console.log(
   //   'disabled',
   //   // pdCategory,
@@ -732,6 +732,7 @@ function FashionUpload() {
                         <PFormButton
                           type="button"
                           onClick={handlePostModal}
+                          checked={checked}
                           // className="add-btn"
                         >
                           우편주소 검색
