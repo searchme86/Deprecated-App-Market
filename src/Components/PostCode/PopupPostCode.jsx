@@ -19,33 +19,17 @@ function PopupPostCode(props) {
     console.log(data);
     console.log(fullAddress);
     console.log(data.zonecode);
-    props.onClose();
+    // props.onClose();
+    props.handleClose();
   };
 
-  const postCodeStyle = {
-    display: 'block',
-    position: 'absolute',
-    top: '10%',
-    width: '600px',
-    height: '600px',
-    padding: '7px',
+  const style = {
+    width: '100%',
+    height: '470px',
+    margintop: '28px',
   };
 
-  return (
-    <div>
-      <DaumPostcode style={postCodeStyle} onComplete={handlePostCode} />
-
-      <button
-        type="button"
-        onClick={() => {
-          props.onClose();
-        }}
-        className="postCode_btn"
-      >
-        닫기
-      </button>
-    </div>
-  );
+  return <DaumPostcode style={style} onComplete={handlePostCode} />;
 }
 
 export default PopupPostCode;
