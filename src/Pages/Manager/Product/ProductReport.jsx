@@ -34,6 +34,7 @@ import {
   RTableTd,
   RTableTh,
   RTableWrapper,
+  ReportHashTag,
 } from './ProductReport.style';
 import { OffScreenSpan } from '../../../Assets/Styles/Basic.style';
 import { AlignList } from '../../../Assets/Styles/Layout.style';
@@ -54,6 +55,7 @@ function ProductReport({ prReport }) {
     pdPrice,
     pdDes,
     pdWish,
+    pdtags,
     pdDegree,
     pdStatus,
     pdSizeInfo,
@@ -131,6 +133,7 @@ function ProductReport({ prReport }) {
                   </ReportImage>
                   <ReportInfo>
                     <ReportInfoList>
+                      {/* 카테고리 */}
                       <ReportInfoLi>
                         <ReportTitle>카테고리</ReportTitle>
                         <ReportDTitle>
@@ -141,8 +144,10 @@ function ProductReport({ prReport }) {
                           )}
                         </ReportDTitle>
                       </ReportInfoLi>
+
                       <ReportInfoLi>
                         <AlignList>
+                          {/* 상품명 */}
                           <ReportInfoItem>
                             <ReportTitle>상품명</ReportTitle>
                             <ReportDTitle>
@@ -153,12 +158,16 @@ function ProductReport({ prReport }) {
                               )}
                             </ReportDTitle>
                           </ReportInfoItem>
+
+                          {/* 상품가격 */}
                           <ReportInfoItem>
                             <ReportTitle>상품가격</ReportTitle>
                             <ReportDTitle>{`${Number(pdPrice).toLocaleString(
                               'ko-KR'
                             )} 원`}</ReportDTitle>
                           </ReportInfoItem>
+
+                          {/* 상품단계 */}
                           <ReportInfoItem>
                             <ReportTitle>상품단계</ReportTitle>
                             <ReportDTitle>
@@ -171,6 +180,8 @@ function ProductReport({ prReport }) {
                           </ReportInfoItem>
                         </AlignList>
                       </ReportInfoLi>
+
+                      {/* 상품소개 */}
                       <ReportInfoLi>
                         <ReportTitle>상품소개</ReportTitle>
                         <ReportOverflow>
@@ -179,39 +190,64 @@ function ProductReport({ prReport }) {
                           </ReportDOpinion>
                         </ReportOverflow>
                       </ReportInfoLi>
+
+                      {/* 상품해쉬태그 */}
                       <ReportInfoLi>
-                        <ReportTitle>상품상태 설명</ReportTitle>
+                        <ReportTitle>상품상태 해쉬태그</ReportTitle>
                         <ReportOverflow>
                           <ReportOverflowList>
-                            {pdStatus.map((status, index) => (
+                            {pdtags.map((tag, index) => (
                               <ReportOverflowLi key={index}>
-                                <ReportDOpinion>
+                                <ReportHashTag>
                                   {!isBlank ? (
                                     <ReportBlank>공란</ReportBlank>
                                   ) : (
-                                    status
+                                    `#${tag}`
                                   )}
-                                </ReportDOpinion>
+                                </ReportHashTag>
                               </ReportOverflowLi>
                             ))}
                           </ReportOverflowList>
                         </ReportOverflow>
                       </ReportInfoLi>
-                      <ReportInfoLi>
-                        <ReportTitle>희망사항</ReportTitle>
-                        <ReportOverflow>
-                          <ReportDOpinion>
-                            {!isBlank ? (
-                              <ReportBlank>공란</ReportBlank>
-                            ) : (
-                              pdWish
-                            )}
-                          </ReportDOpinion>
-                        </ReportOverflow>
-                      </ReportInfoLi>
                     </ReportInfoList>
                   </ReportInfo>
                 </ReportMain>
+
+                <ReportMore>
+                  <AlignList>
+                    {/* 상품상태 설명 */}
+                    <ReportInfoLi>
+                      <ReportTitle>상품상태 설명</ReportTitle>
+                      <ReportOverflow>
+                        <ReportOverflowList>
+                          {pdStatus.map((status, index) => (
+                            <ReportOverflowLi key={index}>
+                              <ReportDOpinion>
+                                {!isBlank ? (
+                                  <ReportBlank>공란</ReportBlank>
+                                ) : (
+                                  status
+                                )}
+                              </ReportDOpinion>
+                            </ReportOverflowLi>
+                          ))}
+                        </ReportOverflowList>
+                      </ReportOverflow>
+                    </ReportInfoLi>
+                    {/* 희망사항 */}
+                    <ReportInfoLi>
+                      <ReportTitle>희망사항</ReportTitle>
+                      <ReportOverflow>
+                        <ReportDOpinion>
+                          {!isBlank ? <ReportBlank>공란</ReportBlank> : pdWish}
+                        </ReportDOpinion>
+                      </ReportOverflow>
+                    </ReportInfoLi>
+                  </AlignList>
+                </ReportMore>
+
+                {/* 사이즈별 가격, 색상별 가격 */}
                 <ReportMore>
                   {!isBlank ? (
                     <AlignList>
