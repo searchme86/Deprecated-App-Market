@@ -72,3 +72,6 @@ export const createProduct = (nuploadProduct) =>
 
 //get Products list
 export const getProducts = (page) => API.get(`/nproduct/product?page=${page}`);
+
+//like Product
+export const likeProduct = (id) => API.patch(`/nproduct/like/${id}`);

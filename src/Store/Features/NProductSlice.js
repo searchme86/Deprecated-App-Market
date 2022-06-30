@@ -27,6 +27,18 @@ export const ngetProducts = createAsyncThunk(
   }
 );
 
+export const likeProduct = createAsyncThunk(
+  'tour/likeTour',
+  async ({ _id }, { rejectWithValue }) => {
+    try {
+      const response = await api.likeProduct(_id);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const NProductSlice = createSlice({
   name: 'Nproduct',
   initialState: {
@@ -144,6 +156,21 @@ const NProductSlice = createSlice({
     [ngetProducts.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
+    },
+    [likeProduct.pending]: (state, action) => {},
+    [likeProduct.fulfilled]: (state, action) => {
+      state.loading = false;
+      const {
+        arg: { _id },
+      } = action.meta;
+      if (_id) {
+        state.nproducts = state.nproducts.map((item) =>
+          item._id === _id ? action.payload : item
+        );
+      }
+    },
+    [likeProduct.rejected]: (state, action) => {
+      state.error = action.payload.message;
     },
   },
 });
