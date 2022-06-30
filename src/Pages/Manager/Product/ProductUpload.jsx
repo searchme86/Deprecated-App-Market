@@ -230,6 +230,13 @@ function FashionUpload() {
 
   const { pdTitle, pdImage, pdPrice, pdDes, pdWish } = pdInfo;
 
+  const {
+    data: { zonecode },
+    fullAddress,
+  } = pdAddress;
+
+  const refinedAddress = `${fullAddress}, ${zonecode}`;
+
   const newProduct = {
     pdCategory,
     pdTitle,
@@ -278,6 +285,10 @@ function FashionUpload() {
   // console.log('userId', userId);
   // console.log('pdtags', pdtags.length);
   console.log('postModalOpen', postModalOpen);
+  console.log('zonecode', zonecode);
+  console.log('fullAddress', fullAddress);
+  console.log('pdAddress', pdAddress);
+  console.log('refinedAddress', refinedAddress);
 
   const registerForm = (event) => {
     dispatch(ncreateProduct({ newProduct, navigate, toast }));
@@ -722,10 +733,10 @@ function FashionUpload() {
                           </PFormDesList>
                         </PFormDesWrapper>
                         <Input
-                          type="number"
+                          type="text"
                           id="pdAddress"
                           name="pdAddress"
-                          // value={}
+                          value={String(refinedAddress)}
                           disabled
                           {...register('pdAddress', {})}
                         />
@@ -733,7 +744,6 @@ function FashionUpload() {
                           type="button"
                           onClick={handlePostModal}
                           checked={checked}
-                          // className="add-btn"
                         >
                           우편주소 검색
                         </PFormButton>
