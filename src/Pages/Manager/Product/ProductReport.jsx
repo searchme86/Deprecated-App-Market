@@ -60,6 +60,7 @@ function ProductReport({ prReport }) {
     pdStatus,
     pdSizeInfo,
     pdColorInfo,
+    inputAddressValue,
   } = newProduct;
 
   const [{ pdSize, pdPriceBySize }] = pdSizeInfo;
@@ -74,6 +75,7 @@ function ProductReport({ prReport }) {
     pdWish,
     pdDegree,
     pdStatus,
+    inputAddressValue,
   ].every(Boolean);
 
   console.log(
@@ -85,7 +87,8 @@ function ProductReport({ prReport }) {
     pdDes,
     pdWish,
     pdDegree,
-    pdStatus
+    pdStatus,
+    inputAddressValue
   );
 
   console.log('isBlank', isBlank);
@@ -189,6 +192,18 @@ function ProductReport({ prReport }) {
                             {!isBlank ? <ReportBlank>공란</ReportBlank> : pdDes}
                           </ReportDOpinion>
                         </ReportOverflow>
+                      </ReportInfoLi>
+
+                      {/* 상품거래 희망주소 */}
+                      <ReportInfoLi>
+                        <ReportTitle>상품거래 희망주소</ReportTitle>
+                        <ReportDOpinion>
+                          {!isBlank ? (
+                            <ReportBlank>공란</ReportBlank>
+                          ) : (
+                            inputAddressValue
+                          )}
+                        </ReportDOpinion>
                       </ReportInfoLi>
 
                       {/* 상품해쉬태그 */}
