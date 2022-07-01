@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   FormControl,
@@ -56,12 +56,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { ncreateProduct } from '../../../Store/Features/NProductSlice';
-import { getCategoryList } from '../../../Store/Features/CategorySlice';
-import { faL } from '@fortawesome/free-solid-svg-icons';
+import {
+  getCategoryList,
+  CategorySelector,
+} from '../../../Store/Features/CategorySlice';
 import ProductPostCode from './ProductPostCode';
 
+const productSchema = {
+  pdTitle: '',
+  pdImage: '',
+  pdPrice: '',
+  pdDes: '',
+  pdWish: '',
+};
+
 function FashionUpload() {
-  const { categories } = useSelector((state) => state.category);
+  const {
+    category: { categories },
+  } = useSelector(CategorySelector);
+
   const { ProductSize, ProductDegree, ProductStatus, error } = useSelector(
     (state) => state.nproduct
   );
@@ -76,14 +89,6 @@ function FashionUpload() {
 
   // console.log(categoryValue, categoryValue);
 
-  const productSchema = {
-    pdTitle: '',
-    pdImage: '',
-    pdPrice: '',
-    pdDes: '',
-    pdWish: '',
-  };
-
   const [pdInfo, setPdInfo] = useState(productSchema);
   const [pdCategory, setPdCategory] = useState('');
   const [prdSize, setPrdSize] = useState([{ pdSize: '', pdPriceBySize: '' }]);
@@ -92,14 +97,18 @@ function FashionUpload() {
   ]);
   const [prdStatus, setPrdStatus] = useState('');
   const [pdDegree, setPdDegree] = useState('');
-  const [pdAddress, setAddress] = useState('');
 
   const [isOpen, setIsOpen] = useState(false);
   const [isFmodalOpen, setIsFmodalOpen] = useState(false);
-  const [postModalOpen, setPostModalOpen] = useState(false);
 
   const [tags, setTags] = useState([]);
   const [pdtags, setPdtags] = useState([]);
+
+  const [pdAddress, setAddress] = useState('');
+  const [inputAddressValue, setInputAddressValue] = useState(
+    '우편주소 검색의 결과가 보이는 곳입니다.'
+  );
+  const [postModalOpen, setPostModalOpen] = useState(false);
 
   const {
     handleSubmit,
@@ -121,64 +130,93 @@ function FashionUpload() {
   }, [isOpen]);
 
   useEffect(() => {
+    const changeAddressValue = () => {
+      if (!pdAddress) return;
+      if (pdAddress) {
+        const {
+          data: { zonecode },
+          fullAddress,
+        } = pdAddress;
+        setInputAddressValue(`${fullAddress}, ${zonecode}`);
+      }
+    };
+    changeAddressValue();
+  }, [pdAddress]);
+
+  useEffect(() => {
     error && toast.error(error);
   }, [error]);
 
-  const onInputChange = (e) => {
-    const { name, value } = e.target;
-    e.stopPropagation();
-    setPdInfo({ ...pdInfo, [name]: value });
-  };
+  const onInputChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      e.stopPropagation();
+      setPdInfo({ ...pdInfo, [name]: value });
+    },
+    [pdInfo]
+  );
 
-  const addSize = (e, index) => {
-    const {
-      target: { name, value },
-    } = e;
-    const list = [...prdSize];
-    list[index][name] = value;
-    setPrdSize(list);
-  };
+  const addSize = useCallback(
+    (e, index) => {
+      const {
+        target: { name, value },
+      } = e;
+      const list = [...prdSize];
+      list[index][name] = value;
+      setPrdSize(list);
+    },
+    [prdSize]
+  );
 
-  const removeSizeField = (index) => {
-    const list = [...prdSize];
-    list.splice(index, 1);
-    setPrdSize(list);
-  };
+  const removeSizeField = useCallback(
+    (index) => {
+      const list = [...prdSize];
+      list.splice(index, 1);
+      setPrdSize(list);
+    },
+    [prdSize]
+  );
 
-  const addSizeField = () => {
+  const addSizeField = useCallback(() => {
     setPrdSize([...prdSize, { pdSize: '', pdPriceBySize: '' }]);
-  };
+  }, [prdSize]);
 
-  const addColor = (e, index) => {
-    const {
-      target: { name, value },
-    } = e;
-    const list = [...prdColor];
-    list[index][name] = value;
-    setPrdColor(list);
-  };
+  const addColor = useCallback(
+    (e, index) => {
+      const {
+        target: { name, value },
+      } = e;
+      const list = [...prdColor];
+      list[index][name] = value;
+      setPrdColor(list);
+    },
+    [prdColor]
+  );
 
-  const addColorField = () => {
+  const addColorField = useCallback(() => {
     setPrdColor([...prdColor, { pdColor: '', pdPriceByColor: '' }]);
-  };
+  }, [prdColor]);
 
-  const removeColorField = (index) => {
-    const list = [...prdColor];
-    list.splice(index, 1);
-    setPrdColor(list);
-  };
+  const removeColorField = useCallback(
+    (index) => {
+      const list = [...prdColor];
+      list.splice(index, 1);
+      setPrdColor(list);
+    },
+    [prdColor]
+  );
 
-  const selectCategory = (e) => {
+  const selectCategory = useCallback((e) => {
     setPdCategory(e.target.value);
-  };
+  }, []);
 
-  const selectStatus = (e) => {
+  const selectStatus = useCallback((e) => {
     setPrdStatus(e.target.value);
-  };
+  }, []);
 
-  const selectDegree = (e) => {
+  const selectDegree = useCallback((e) => {
     setPdDegree(e.target.value);
-  };
+  }, []);
 
   //상품 모달
   const handleClose = useCallback(() => {
@@ -201,36 +239,63 @@ function FashionUpload() {
   }, []);
 
   // 태그-1
-  const handleKeyDown = (e) => {
-    if (e.key !== 'Enter') return;
-    const value = e.target.value;
-    if (!value.trim()) return;
-    setTags([...tags, value]);
-    e.target.value = '';
-    e.preventDefault();
-  };
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key !== 'Enter') return;
+      const value = e.target.value;
+      if (!value.trim()) return;
+      setTags([...tags, value]);
+      e.target.value = '';
+      e.preventDefault();
+    },
+    [tags]
+  );
 
-  const removeTag = (index) => {
-    setTags(tags.filter((el, i) => i !== index));
-  };
+  const removeTag = useCallback(
+    (index) => {
+      setTags(tags.filter((el, i) => i !== index));
+    },
+    [tags]
+  );
 
   //해쉬태그
-  const handleTags = (e) => {
-    if (e.key !== 'Enter') return;
-    const value = e.target.value;
-    if (!value.trim()) return;
-    setPdtags([...pdtags, value]);
-    e.target.value = '';
-    e.preventDefault();
-  };
+  const handleTags = useCallback(
+    (e) => {
+      if (e.key !== 'Enter') return;
+      const value = e.target.value;
+      if (!value.trim()) return;
+      setPdtags([...pdtags, value]);
+      e.target.value = '';
+      e.preventDefault();
+    },
+    [pdtags]
+  );
 
-  const removePdTag = (index) => {
-    setPdtags(pdtags.filter((el, i) => i !== index));
-  };
+  const removePdTag = useCallback(
+    (index) => {
+      setPdtags(pdtags.filter((el, i) => i !== index));
+    },
+    [pdtags]
+  );
 
   const { pdTitle, pdImage, pdPrice, pdDes, pdWish } = pdInfo;
 
-  const newProduct = {
+  const newProduct = useMemo(() => {
+    return {
+      pdCategory,
+      pdTitle,
+      pdImage,
+      pdPrice,
+      pdDes,
+      pdWish,
+      pdDegree,
+      pdtags,
+      inputAddressValue,
+      pdStatus: [prdStatus, ...tags],
+      pdSizeInfo: [...prdSize],
+      pdColorInfo: [...prdColor],
+    };
+  }, [
     pdCategory,
     pdTitle,
     pdImage,
@@ -239,10 +304,12 @@ function FashionUpload() {
     pdWish,
     pdDegree,
     pdtags,
-    pdStatus: [prdStatus, ...tags],
-    pdSizeInfo: [...prdSize],
-    pdColorInfo: [...prdColor],
-  };
+    inputAddressValue,
+    prdStatus,
+    tags,
+    prdSize,
+    prdColor,
+  ]);
 
   // 상품모달
   const prReport = { handleClose, isOpen, newProduct };
@@ -277,11 +344,21 @@ function FashionUpload() {
   // console.log('pdInfo', newProduct);
   // console.log('userId', userId);
   // console.log('pdtags', pdtags.length);
-  console.log('postModalOpen', postModalOpen);
+  // console.log('postModalOpen', postModalOpen);
+  console.log('1');
+  console.log('pdAddress', pdAddress);
+  console.log('addressRef', inputAddressValue);
 
-  const registerForm = (event) => {
-    dispatch(ncreateProduct({ newProduct, navigate, toast }));
-  };
+  // console.log('zonecode', zonecode);
+  // console.log('fullAddress', fullAddress);
+  // console.log('refinedAddress', refinedAddress);
+
+  const registerForm = useCallback(
+    (event) => {
+      dispatch(ncreateProduct({ newProduct, navigate, toast }));
+    },
+    [dispatch, navigate, newProduct]
+  );
 
   return (
     <SectionUnit>
@@ -705,9 +782,6 @@ function FashionUpload() {
                         <PFormDesWrapper>
                           <PFormDesList>
                             <PFormDesLi>
-                              <PFormDes>*필수 입력사항입니다</PFormDes>
-                            </PFormDesLi>
-                            <PFormDesLi>
                               <PFormDes>
                                 상품거래를 희망하는 주소를 입력해주세요
                               </PFormDes>
@@ -721,22 +795,25 @@ function FashionUpload() {
                             </PFormDesLi>
                           </PFormDesList>
                         </PFormDesWrapper>
-                        <Input
-                          type="number"
-                          id="pdAddress"
-                          name="pdAddress"
-                          // value={}
-                          disabled
-                          {...register('pdAddress', {})}
-                        />
-                        <PFormButton
-                          type="button"
-                          onClick={handlePostModal}
-                          checked={checked}
-                          // className="add-btn"
-                        >
-                          우편주소 검색
-                        </PFormButton>
+                        <PFormLiItem>
+                          <Input
+                            type="text"
+                            id="pdAddress"
+                            name="pdAddress"
+                            value={inputAddressValue}
+                            disabled
+                            width="400px"
+                            {...register('pdAddress', {})}
+                          />
+                          <PFormButton
+                            type="button"
+                            onClick={handlePostModal}
+                            checked={checked}
+                            style={{ marginTop: '0px', marginLeft: 'auto' }}
+                          >
+                            우편주소 검색
+                          </PFormButton>
+                        </PFormLiItem>
                         <FormErrorMessage as="p">
                           {errors.pdAddress && errors.pdAddress.message}
                         </FormErrorMessage>

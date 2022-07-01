@@ -163,7 +163,8 @@ export const TagItemDelete = styled.span`
 `;
 
 export const TagInput = styled.input`
-  flex-grow: 1;
+  ${'' /* flex-grow: 1; */}
+  width: 100%;
   padding: 0.5em 0;
   border: none;
   outline: none;

@@ -23,8 +23,18 @@ import { likeProduct } from '../../Store/Features/NProductSlice';
 import { Image, ImageHolder } from '../../Assets/Styles/Image.style';
 
 function CardProduct(item) {
-  const { _id, pdUploader, pdImage, pdPrice, pdDes, pdTitle, pdtags, pdlikes } =
-    item;
+  console.log('cardProduct 컴포넌트에서 item', item);
+  const {
+    _id,
+    pdUploader,
+    pdImage,
+    pdPrice,
+    pdDes,
+    pdTitle,
+    pdtags,
+    pdlikes,
+    pdAddress,
+  } = item;
   console.log(
     'item',
     _id
@@ -97,6 +107,7 @@ function CardProduct(item) {
           <div className="">
             <p>{pdTitle}</p>
             <p>{`${Number(pdPrice).toLocaleString('ko-KR')} 원`}</p>
+            <p>{pdAddress}</p>
             <div className="">
               <ul>
                 {pdtags.map((tag, index) => (
