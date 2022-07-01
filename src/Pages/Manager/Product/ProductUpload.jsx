@@ -57,7 +57,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { ncreateProduct } from '../../../Store/Features/NProductSlice';
 import { getCategoryList } from '../../../Store/Features/CategorySlice';
-import { faL } from '@fortawesome/free-solid-svg-icons';
 import ProductPostCode from './ProductPostCode';
 
 function FashionUpload() {
@@ -92,14 +91,18 @@ function FashionUpload() {
   ]);
   const [prdStatus, setPrdStatus] = useState('');
   const [pdDegree, setPdDegree] = useState('');
-  const [pdAddress, setAddress] = useState('');
 
   const [isOpen, setIsOpen] = useState(false);
   const [isFmodalOpen, setIsFmodalOpen] = useState(false);
-  const [postModalOpen, setPostModalOpen] = useState(false);
 
   const [tags, setTags] = useState([]);
   const [pdtags, setPdtags] = useState([]);
+
+  const [pdAddress, setAddress] = useState('');
+  const [inputAddressValue, setInputAddressValue] = useState(
+    '우편주소 검색의 결과가 보이는 곳입니다.'
+  );
+  const [postModalOpen, setPostModalOpen] = useState(false);
 
   const {
     handleSubmit,
@@ -119,6 +122,20 @@ function FashionUpload() {
       setPostModalOpen(false);
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    const changeAddressValue = () => {
+      if (!pdAddress) return;
+      if (pdAddress) {
+        const {
+          data: { zonecode },
+          fullAddress,
+        } = pdAddress;
+        setInputAddressValue(`${fullAddress}, ${zonecode}`);
+      }
+    };
+    changeAddressValue();
+  }, [pdAddress]);
 
   useEffect(() => {
     error && toast.error(error);
@@ -230,13 +247,6 @@ function FashionUpload() {
 
   const { pdTitle, pdImage, pdPrice, pdDes, pdWish } = pdInfo;
 
-  const {
-    data: { zonecode },
-    fullAddress,
-  } = pdAddress;
-
-  const refinedAddress = `${fullAddress}, ${zonecode}`;
-
   const newProduct = {
     pdCategory,
     pdTitle,
@@ -284,11 +294,13 @@ function FashionUpload() {
   // console.log('pdInfo', newProduct);
   // console.log('userId', userId);
   // console.log('pdtags', pdtags.length);
-  console.log('postModalOpen', postModalOpen);
-  console.log('zonecode', zonecode);
-  console.log('fullAddress', fullAddress);
+  // console.log('postModalOpen', postModalOpen);
   console.log('pdAddress', pdAddress);
-  console.log('refinedAddress', refinedAddress);
+  console.log('addressRef', inputAddressValue);
+
+  // console.log('zonecode', zonecode);
+  // console.log('fullAddress', fullAddress);
+  // console.log('refinedAddress', refinedAddress);
 
   const registerForm = (event) => {
     dispatch(ncreateProduct({ newProduct, navigate, toast }));
@@ -732,21 +744,25 @@ function FashionUpload() {
                             </PFormDesLi>
                           </PFormDesList>
                         </PFormDesWrapper>
-                        <Input
-                          type="text"
-                          id="pdAddress"
-                          name="pdAddress"
-                          value={String(refinedAddress)}
-                          disabled
-                          {...register('pdAddress', {})}
-                        />
-                        <PFormButton
-                          type="button"
-                          onClick={handlePostModal}
-                          checked={checked}
-                        >
-                          우편주소 검색
-                        </PFormButton>
+                        <PFormLiItem>
+                          <Input
+                            type="text"
+                            id="pdAddress"
+                            name="pdAddress"
+                            value={inputAddressValue}
+                            disabled
+                            width="400px"
+                            {...register('pdAddress', {})}
+                          />
+                          <PFormButton
+                            type="button"
+                            onClick={handlePostModal}
+                            checked={checked}
+                            style={{ marginTop: '0px', marginLeft: 'auto' }}
+                          >
+                            우편주소 검색
+                          </PFormButton>
+                        </PFormLiItem>
                         <FormErrorMessage as="p">
                           {errors.pdAddress && errors.pdAddress.message}
                         </FormErrorMessage>
