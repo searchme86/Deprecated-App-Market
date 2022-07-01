@@ -147,61 +147,76 @@ function FashionUpload() {
     error && toast.error(error);
   }, [error]);
 
-  const onInputChange = (e) => {
-    const { name, value } = e.target;
-    e.stopPropagation();
-    setPdInfo({ ...pdInfo, [name]: value });
-  };
+  const onInputChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      e.stopPropagation();
+      setPdInfo({ ...pdInfo, [name]: value });
+    },
+    [pdInfo]
+  );
 
-  const addSize = (e, index) => {
-    const {
-      target: { name, value },
-    } = e;
-    const list = [...prdSize];
-    list[index][name] = value;
-    setPrdSize(list);
-  };
+  const addSize = useCallback(
+    (e, index) => {
+      const {
+        target: { name, value },
+      } = e;
+      const list = [...prdSize];
+      list[index][name] = value;
+      setPrdSize(list);
+    },
+    [prdSize]
+  );
 
-  const removeSizeField = (index) => {
-    const list = [...prdSize];
-    list.splice(index, 1);
-    setPrdSize(list);
-  };
+  const removeSizeField = useCallback(
+    (index) => {
+      const list = [...prdSize];
+      list.splice(index, 1);
+      setPrdSize(list);
+    },
+    [prdSize]
+  );
 
-  const addSizeField = () => {
+  const addSizeField = useCallback(() => {
     setPrdSize([...prdSize, { pdSize: '', pdPriceBySize: '' }]);
-  };
+  }, [prdSize]);
 
-  const addColor = (e, index) => {
-    const {
-      target: { name, value },
-    } = e;
-    const list = [...prdColor];
-    list[index][name] = value;
-    setPrdColor(list);
-  };
+  const addColor = useCallback(
+    (e, index) => {
+      const {
+        target: { name, value },
+      } = e;
+      const list = [...prdColor];
+      list[index][name] = value;
+      setPrdColor(list);
+    },
+    [prdColor]
+  );
 
-  const addColorField = () => {
+  const addColorField = useCallback(() => {
     setPrdColor([...prdColor, { pdColor: '', pdPriceByColor: '' }]);
-  };
+  }, [prdColor]);
 
-  const removeColorField = (index) => {
-    const list = [...prdColor];
-    list.splice(index, 1);
-    setPrdColor(list);
-  };
+  const removeColorField = useCallback(
+    (index) => {
+      const list = [...prdColor];
+      list.splice(index, 1);
+      setPrdColor(list);
+    },
+    [prdColor]
+  );
 
-  const selectCategory = (e) => {
+  const selectCategory = useCallback((e) => {
     setPdCategory(e.target.value);
-  };
+  }, []);
 
-  const selectStatus = (e) => {
+  const selectStatus = useCallback((e) => {
     setPrdStatus(e.target.value);
-  };
+  }, []);
 
-  const selectDegree = (e) => {
+  const selectDegree = useCallback((e) => {
     setPdDegree(e.target.value);
-  };
+  }, []);
 
   //상품 모달
   const handleClose = useCallback(() => {
@@ -224,32 +239,44 @@ function FashionUpload() {
   }, []);
 
   // 태그-1
-  const handleKeyDown = (e) => {
-    if (e.key !== 'Enter') return;
-    const value = e.target.value;
-    if (!value.trim()) return;
-    setTags([...tags, value]);
-    e.target.value = '';
-    e.preventDefault();
-  };
+  const handleKeyDown = useCallback(
+    (e) => {
+      if (e.key !== 'Enter') return;
+      const value = e.target.value;
+      if (!value.trim()) return;
+      setTags([...tags, value]);
+      e.target.value = '';
+      e.preventDefault();
+    },
+    [tags]
+  );
 
-  const removeTag = (index) => {
-    setTags(tags.filter((el, i) => i !== index));
-  };
+  const removeTag = useCallback(
+    (index) => {
+      setTags(tags.filter((el, i) => i !== index));
+    },
+    [tags]
+  );
 
   //해쉬태그
-  const handleTags = (e) => {
-    if (e.key !== 'Enter') return;
-    const value = e.target.value;
-    if (!value.trim()) return;
-    setPdtags([...pdtags, value]);
-    e.target.value = '';
-    e.preventDefault();
-  };
+  const handleTags = useCallback(
+    (e) => {
+      if (e.key !== 'Enter') return;
+      const value = e.target.value;
+      if (!value.trim()) return;
+      setPdtags([...pdtags, value]);
+      e.target.value = '';
+      e.preventDefault();
+    },
+    [pdtags]
+  );
 
-  const removePdTag = (index) => {
-    setPdtags(pdtags.filter((el, i) => i !== index));
-  };
+  const removePdTag = useCallback(
+    (index) => {
+      setPdtags(pdtags.filter((el, i) => i !== index));
+    },
+    [pdtags]
+  );
 
   const { pdTitle, pdImage, pdPrice, pdDes, pdWish } = pdInfo;
 
@@ -309,9 +336,12 @@ function FashionUpload() {
   // console.log('fullAddress', fullAddress);
   // console.log('refinedAddress', refinedAddress);
 
-  const registerForm = (event) => {
-    dispatch(ncreateProduct({ newProduct, navigate, toast }));
-  };
+  const registerForm = useCallback(
+    (event) => {
+      dispatch(ncreateProduct({ newProduct, navigate, toast }));
+    },
+    [dispatch, navigate, newProduct]
+  );
 
   return (
     <SectionUnit>
