@@ -290,6 +290,7 @@ function FashionUpload() {
       pdWish,
       pdDegree,
       pdtags,
+      inputAddressValue,
       pdStatus: [prdStatus, ...tags],
       pdSizeInfo: [...prdSize],
       pdColorInfo: [...prdColor],
@@ -297,16 +298,17 @@ function FashionUpload() {
   }, [
     pdCategory,
     pdTitle,
-    pdDegree,
-    pdDes,
     pdImage,
     pdPrice,
+    pdDes,
     pdWish,
+    pdDegree,
     pdtags,
-    prdColor,
-    prdSize,
+    inputAddressValue,
     prdStatus,
     tags,
+    prdSize,
+    prdColor,
   ]);
 
   // 상품모달
@@ -779,9 +781,6 @@ function FashionUpload() {
                         </FormLabel>
                         <PFormDesWrapper>
                           <PFormDesList>
-                            <PFormDesLi>
-                              <PFormDes>*필수 입력사항입니다</PFormDes>
-                            </PFormDesLi>
                             <PFormDesLi>
                               <PFormDes>
                                 상품거래를 희망하는 주소를 입력해주세요
