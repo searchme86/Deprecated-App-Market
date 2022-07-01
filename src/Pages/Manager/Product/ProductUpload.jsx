@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   FormControl,
@@ -280,19 +280,34 @@ function FashionUpload() {
 
   const { pdTitle, pdImage, pdPrice, pdDes, pdWish } = pdInfo;
 
-  const newProduct = {
+  const newProduct = useMemo(() => {
+    return {
+      pdCategory,
+      pdTitle,
+      pdImage,
+      pdPrice,
+      pdDes,
+      pdWish,
+      pdDegree,
+      pdtags,
+      pdStatus: [prdStatus, ...tags],
+      pdSizeInfo: [...prdSize],
+      pdColorInfo: [...prdColor],
+    };
+  }, [
     pdCategory,
     pdTitle,
+    pdDegree,
+    pdDes,
     pdImage,
     pdPrice,
-    pdDes,
     pdWish,
-    pdDegree,
     pdtags,
-    pdStatus: [prdStatus, ...tags],
-    pdSizeInfo: [...prdSize],
-    pdColorInfo: [...prdColor],
-  };
+    prdColor,
+    prdSize,
+    prdStatus,
+    tags,
+  ]);
 
   // 상품모달
   const prReport = { handleClose, isOpen, newProduct };
