@@ -56,11 +56,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { ncreateProduct } from '../../../Store/Features/NProductSlice';
-import { getCategoryList } from '../../../Store/Features/CategorySlice';
+import {
+  getCategoryList,
+  CategorySelector,
+} from '../../../Store/Features/CategorySlice';
 import ProductPostCode from './ProductPostCode';
 
+const productSchema = {
+  pdTitle: '',
+  pdImage: '',
+  pdPrice: '',
+  pdDes: '',
+  pdWish: '',
+};
+
 function FashionUpload() {
-  const { categories } = useSelector((state) => state.category);
+  const {
+    category: { categories },
+  } = useSelector(CategorySelector);
+
   const { ProductSize, ProductDegree, ProductStatus, error } = useSelector(
     (state) => state.nproduct
   );
@@ -74,14 +88,6 @@ function FashionUpload() {
   );
 
   // console.log(categoryValue, categoryValue);
-
-  const productSchema = {
-    pdTitle: '',
-    pdImage: '',
-    pdPrice: '',
-    pdDes: '',
-    pdWish: '',
-  };
 
   const [pdInfo, setPdInfo] = useState(productSchema);
   const [pdCategory, setPdCategory] = useState('');
@@ -295,6 +301,7 @@ function FashionUpload() {
   // console.log('userId', userId);
   // console.log('pdtags', pdtags.length);
   // console.log('postModalOpen', postModalOpen);
+  console.log('1');
   console.log('pdAddress', pdAddress);
   console.log('addressRef', inputAddressValue);
 

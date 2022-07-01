@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit';
 import * as api from '../SendApi';
 
 //카테고리를 생성
@@ -162,5 +166,14 @@ const categorySlice = createSlice({
 });
 
 //export const { setCurrentPage } = tourSlice.actions;
+
+const CategoryState = createSelector(
+  (state) => state.category,
+  (category) => {
+    return { category };
+  }
+);
+
+export const CategorySelector = (state) => CategoryState(state);
 
 export default categorySlice.reducer;
