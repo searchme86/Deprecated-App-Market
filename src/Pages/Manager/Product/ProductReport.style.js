@@ -4,14 +4,21 @@ export const ReportHeader = styled.div`
   margin: 0 0 10px 0;
 `;
 
-export const ReportIntro = styled.p``;
+export const ReportIntro = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const ReportUserImage = styled.div`
+  width: 60px;
+`;
 
 export const ReportUser = styled.strong`
   display: inline-block;
   vertical-align: center;
   line-height: 1;
   font-size: 20px;
-  margin: 0 5px 0 0;
+  margin: 0 5px 0 5px;
 `;
 
 export const ReportContent = styled.div``;

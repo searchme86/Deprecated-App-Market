@@ -6,7 +6,7 @@ import {
   ModalTitle,
 } from '../../../Components/Modal/Modal.style';
 import ModalFrame from '../../../Components/Modal/ModalFrame';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
 import {
   ReportAlert,
@@ -35,6 +35,7 @@ import {
   RTableTh,
   RTableWrapper,
   ReportHashTag,
+  ReportUserImage,
 } from './ProductReport.style';
 import { OffScreenSpan } from '../../../Assets/Styles/Basic.style';
 import { AlignList } from '../../../Assets/Styles/Layout.style';
@@ -43,13 +44,15 @@ import defaultImg from '../../../Assets/Image/default-product-upload.png';
 function ProductReport({ prReport }) {
   const { handleClose, isOpen, newProduct } = prReport;
 
-  const {
-    user: {
-      result: { nickname },
-    },
-  } = useSelector((state) => state.auth);
+  // const {
+  //   user: {
+  //     result: { nickname },
+  //   },
+  // } = useSelector((state) => state.auth);
   const {
     pdCategory,
+    pdUploaderNickname,
+    pdUploaderImage,
     pdTitle,
     pdImage,
     pdPrice,
@@ -121,7 +124,12 @@ function ProductReport({ prReport }) {
                     </ReportAlert>
                   )}
                   <ReportIntro>
-                    <ReportUser>{nickname}</ReportUser>
+                    <ReportUserImage>
+                      <ImageHolder br="100%">
+                        <Image src={pdUploaderImage} alt={pdUploaderNickname} />
+                      </ImageHolder>
+                    </ReportUserImage>
+                    <ReportUser>{pdUploaderNickname}</ReportUser>
                     님이 등록하시는 상품 요약입니다.
                   </ReportIntro>
                 </ReportHeader>
