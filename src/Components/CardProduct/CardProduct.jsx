@@ -21,12 +21,14 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { likeProduct } from '../../Store/Features/NProductSlice';
 import { Image, ImageHolder } from '../../Assets/Styles/Image.style';
+import { PCardIspace, PCardItem } from './CardProduct.style';
 
 function CardProduct(item) {
   console.log('cardProduct 컴포넌트에서 item', item);
   const {
     _id,
-    pdUploader,
+    pdUploaderNickname,
+    pdUploaderImage,
     pdImage,
     pdPrice,
     pdDes,
@@ -37,7 +39,9 @@ function CardProduct(item) {
   } = item;
   console.log(
     'item',
-    _id
+    _id,
+    pdUploaderNickname,
+    pdUploaderImage
     // pdUploader,
     // pdImage,
     // pdDes,
@@ -45,8 +49,14 @@ function CardProduct(item) {
     // pdtags,
     // pdlikes
   );
+  const {
+    user: {
+      result: { nickname, imageFile },
+    },
+  } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.auth);
   const userId = user?.result?._id;
+  // const userId = _id;
 
   const dispatch = useDispatch();
   const excerpt = (str) => {
@@ -97,13 +107,31 @@ function CardProduct(item) {
 
   return (
     <>
-      <li>
-        <div className="">
-          <div className="">
-            <ImageHolder width={'200px'} height={'150px'}>
-              <Image src={pdImage} alt={pdTitle} />
-            </ImageHolder>
-          </div>
+      <PCardItem>
+        <ImageHolder
+          height="150px"
+          style={{
+            position: 'relative',
+            width: 'initial',
+            height: 'initial',
+            boxSizing: 'border-box',
+            padding: '0',
+            margin: '0',
+          }}
+        >
+          <PCardIspace />
+          <Image
+            src={pdImage}
+            alt={pdTitle}
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              top: '0',
+            }}
+          />
+        </ImageHolder>
+        <div className="" style={{ position: 'relative' }}>
           <div className="">
             <p>{pdTitle}</p>
             <p>{`${Number(pdPrice).toLocaleString('ko-KR')} 원`}</p>
@@ -134,9 +162,15 @@ function CardProduct(item) {
             <div className="">
               <p>{pdDes}</p>
             </div>
+            <div className="">
+              <div className="">
+                <img src={pdUploaderImage} alt={pdUploaderNickname} />
+              </div>
+              <span>{pdUploaderNickname}</span>
+            </div>
           </div>
         </div>
-      </li>
+      </PCardItem>
     </>
   );
 }
