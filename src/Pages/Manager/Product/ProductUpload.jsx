@@ -61,6 +61,7 @@ import {
   CategorySelector,
 } from '../../../Store/Features/CategorySlice';
 import ProductPostCode from './ProductPostCode';
+import { SatelliteAlt } from '@mui/icons-material';
 
 const productSchema = {
   pdTitle: '',
@@ -74,6 +75,13 @@ function FashionUpload() {
   const {
     category: { categories },
   } = useSelector(CategorySelector);
+
+  const {
+    user: {
+      result: { imageFile, nickname },
+    },
+  } = useSelector((state) => state.auth);
+  console.log('user', imageFile, nickname);
 
   const { ProductSize, ProductDegree, ProductStatus, error } = useSelector(
     (state) => state.nproduct
@@ -283,6 +291,8 @@ function FashionUpload() {
   const newProduct = useMemo(() => {
     return {
       pdCategory,
+      pdUploaderNickname: nickname,
+      pdUploaderImage: imageFile,
       pdTitle,
       pdImage,
       pdPrice,
@@ -297,6 +307,8 @@ function FashionUpload() {
     };
   }, [
     pdCategory,
+    nickname,
+    imageFile,
     pdTitle,
     pdImage,
     pdPrice,
