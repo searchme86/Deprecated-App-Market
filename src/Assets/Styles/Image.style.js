@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 export const ImageHolder = styled.div`
   width: ${({ width }) => width};
   height: ${({ height }) => height};
+  border-radius: ${({ br }) => br};
   overflow: hidden;
 `;
 
