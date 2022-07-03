@@ -61,7 +61,6 @@ import {
   CategorySelector,
 } from '../../../Store/Features/CategorySlice';
 import ProductPostCode from './ProductPostCode';
-import { SatelliteAlt } from '@mui/icons-material';
 
 const productSchema = {
   pdTitle: '',
@@ -69,6 +68,8 @@ const productSchema = {
   pdPrice: '',
   pdDes: '',
   pdWish: '',
+  pdType: '',
+  pdBrand: '',
 };
 
 function FashionUpload() {
@@ -286,13 +287,15 @@ function FashionUpload() {
     [pdtags]
   );
 
-  const { pdTitle, pdImage, pdPrice, pdDes, pdWish } = pdInfo;
+  const { pdTitle, pdImage, pdPrice, pdDes, pdWish, pdBrand, pdType } = pdInfo;
 
   const newProduct = useMemo(() => {
     return {
       pdCategory,
       pdUploaderNickname: nickname,
       pdUploaderImage: imageFile,
+      pdBrand,
+      pdType,
       pdTitle,
       pdImage,
       pdPrice,
@@ -310,6 +313,8 @@ function FashionUpload() {
     nickname,
     imageFile,
     pdTitle,
+    pdBrand,
+    pdType,
     pdImage,
     pdPrice,
     pdDes,
@@ -329,6 +334,7 @@ function FashionUpload() {
 
   const filledIn = [
     pdCategory,
+    pdBrand,
     pdTitle,
     pdImage,
     pdPrice,
@@ -510,6 +516,70 @@ function FashionUpload() {
                         />
                         <FormErrorMessage as="p">
                           {errors.pdTitle && errors.pdTitle.message}
+                        </FormErrorMessage>
+                      </PFormUnit>
+
+                      {/* 상품 브랜드 */}
+                      <PFormUnit>
+                        <FormLabel htmlFor="pdBrand" fontWeight="bold">
+                          상품 브랜드
+                        </FormLabel>
+                        <PFormDesWrapper>
+                          <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>*필수 입력사항입니다</PFormDes>
+                            </PFormDesLi>
+                            <PFormDesLi>
+                              <PFormDes>
+                                *상품의 브랜드명을 입력해주세요 (예:
+                                애플,삼성,LG)
+                              </PFormDes>
+                            </PFormDesLi>
+                          </PFormDesList>
+                        </PFormDesWrapper>
+                        <Input
+                          type="text"
+                          id="pdBrand"
+                          name="pdBrand"
+                          {...register('pdBrand', {
+                            required: '상품의 브랜드명을 입력해주세요',
+                            onChange: onInputChange,
+                          })}
+                        />
+                        <FormErrorMessage as="p">
+                          {errors.pdBrand && errors.pdBrand.message}
+                        </FormErrorMessage>
+                      </PFormUnit>
+
+                      {/* 상품 타입 */}
+                      <PFormUnit>
+                        <FormLabel htmlFor="pdType" fontWeight="bold">
+                          상품 타입
+                        </FormLabel>
+                        <PFormDesWrapper>
+                          <PFormDesList>
+                            <PFormDesLi>
+                              <PFormDes>*필수 입력사항입니다</PFormDes>
+                            </PFormDesLi>
+                            <PFormDesLi>
+                              <PFormDes>
+                                *상품의 타입을 입력해주세요 (예: 컴퓨터, 노트북,
+                                핸드폰, 아이폰,)
+                              </PFormDes>
+                            </PFormDesLi>
+                          </PFormDesList>
+                        </PFormDesWrapper>
+                        <Input
+                          type="text"
+                          id="pdType"
+                          name="pdType"
+                          {...register('pdType', {
+                            required: '상품의 브랜드명을 입력해주세요',
+                            onChange: onInputChange,
+                          })}
+                        />
+                        <FormErrorMessage as="p">
+                          {errors.pdType && errors.pdType.message}
                         </FormErrorMessage>
                       </PFormUnit>
 
