@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   ngetProducts,
   setCurrentPage,
+  ProductSelector,
 } from '../Store/Features/NProductSlice.js';
 
 import Pagination from '../Components/Pagination';
@@ -23,6 +24,12 @@ import CardProduct from '../Components/CardProduct/CardProduct';
 import Test from '../Components/PostCode/Test';
 
 function Items() {
+  const {
+    product: { nproducts, loading, currentPage, numberOfPages },
+  } = useSelector(ProductSelector);
+
+  // console.log('product', product);
+
   const [change, setChange] = useState('');
 
   const useQuery = () => {
@@ -32,11 +39,6 @@ function Items() {
   const searchQuery = query.get('searchQuery');
 
   const dispatch = useDispatch();
-  const { nproducts, loading, currentPage, numberOfPages } = useSelector(
-    (state) => ({
-      ...state.nproduct,
-    })
-  );
 
   console.log('currentPage', currentPage);
 
