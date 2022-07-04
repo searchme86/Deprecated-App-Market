@@ -346,19 +346,19 @@ function FashionUpload() {
 
   const canSubmit = pdtags.length !== 0 && filledIn;
   const checked = postModalOpen;
-  // console.log(
-  //   'disabled',
-  //   // pdCategory,
-  //   // pdTitle,
-  //   // pdImage,
-  //   // pdPrice,
-  //   // pdDegree,
-  //   // prdStatus,
-  //   // pdWish,
-  //   // pdDes,
-  //   // pdtags
-  //   canSubmit
-  // );
+  console.log(
+    'disabled',
+    pdCategory,
+    pdTitle,
+    pdImage,
+    pdPrice,
+    pdDegree,
+    prdStatus,
+    pdWish,
+    pdDes,
+    pdtags,
+    canSubmit
+  );
   // console.log('pdInfo', newProduct);
   // console.log('userId', userId);
   // console.log('pdtags', pdtags.length);
