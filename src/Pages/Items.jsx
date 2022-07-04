@@ -37,13 +37,8 @@ function Items() {
       ...state.nproduct,
     })
   );
-  // const {
-  //   user: {
-  //     result: { nickname },
-  //   },
-  // } = useSelector((state) => ({
-  //   ...state.auth,
-  // }));
+
+  console.log('currentPage', currentPage);
 
   useEffect(() => {
     dispatch(ngetProducts(currentPage));
@@ -69,8 +64,7 @@ function Items() {
           <SectionTitle>신규 상품 둘러보기</SectionTitle>
         </SectionHeader>
         <SectionContent>
-          <div></div>
-          <div className="">
+          <div className="" style={{ padding: '0 30px' }}>
             <form onSubmit={handleSubmit()}>
               <FormLabel htmlFor="category" fontWeight="bold">
                 상품 카테고리
@@ -88,7 +82,14 @@ function Items() {
               </Select>
             </form>
             <div className="">
-              <ul style={{ display: 'flex' }}>
+              <ul
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  width: '100%',
+                  marginTop: '10px',
+                }}
+              >
                 {nproducts &&
                   nproducts.map((item) => (
                     <CardProduct key={item._id} {...item} />
@@ -96,11 +97,6 @@ function Items() {
               </ul>
             </div>
           </div>
-          {/*  */}
-          <div className="">
-            <Test />
-          </div>
-          {/*  */}
           <div className="">
             {nproducts?.length > 0 && !searchQuery && (
               <Pagination
