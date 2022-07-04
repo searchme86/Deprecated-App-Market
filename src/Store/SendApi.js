@@ -70,8 +70,15 @@ export const updateCategory = (id, updateCategory) =>
 export const createProduct = (nuploadProduct) =>
   API.post('/nproduct/upload', nuploadProduct);
 
+// get a single Product
+export const getProduct = (id) => API.get(`/nproduct/${id}`);
+
 //get Products list
-export const getProducts = (page) => API.get(`/nproduct/product?page=${page}`);
+export const getProductlist = (page) => API.get(`/nproduct/?page=${page}`);
 
 //like Product
 export const likeProduct = (id) => API.patch(`/nproduct/like/${id}`);
+
+//related Product
+export const getRelatedItems = (PInfo) =>
+  API.post(`/nproduct/relatedProducts`, PInfo);
