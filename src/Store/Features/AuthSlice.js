@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit';
 import * as api from '../SendApi';
 
 export const login = createAsyncThunk(
@@ -164,6 +168,15 @@ const authSlice = createSlice({
     // },
   },
 });
+
+const AuthState = createSelector(
+  (state) => state.auth,
+  (auth) => {
+    return { auth };
+  }
+);
+
+export const AuthSelector = (state) => AuthState(state);
 
 export const { setUser, setLogout } = authSlice.actions;
 

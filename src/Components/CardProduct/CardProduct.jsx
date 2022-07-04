@@ -24,6 +24,8 @@ import {
   PCardTitle,
 } from './CardProduct.style';
 
+import { AuthSelector } from '../../Store/Features/AuthSlice.js';
+
 function CardProduct(item) {
   const {
     _id,
@@ -40,7 +42,11 @@ function CardProduct(item) {
     pdStatus,
     pdDegree,
   } = item;
-  const { user } = useSelector((state) => state.auth);
+
+  const {
+    auth: { user },
+  } = useSelector(AuthSelector);
+
   const userId = user?.result?._id;
 
   const dispatch = useDispatch();
