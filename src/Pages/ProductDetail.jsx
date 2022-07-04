@@ -15,14 +15,16 @@ function ProductDetail() {
   const dispatch = useDispatch();
 
   const {
-    product: { nproduct, nrelatedProducts },
+    product: {
+      nproduct,
+      nproduct: { pdBrand, pdType },
+      nrelatedProducts,
+    },
   } = useSelector(ProductSelector);
 
   console.log('1');
   console.log('id', id);
   console.log('nproduct', nproduct);
-  // console.log('pdBrand', pdBrand);
-  // console.log('pdType', pdType);
   console.log('***nrelatedProducts', nrelatedProducts);
 
   useEffect(() => {
@@ -31,10 +33,10 @@ function ProductDetail() {
     }
   }, [dispatch, id]);
 
-  // useEffect(() => {
-  //   if (!nproduct) return;
-  //   nproduct && dispatch(ngetRelatedProducts({ Brand: pdBrand, Type: pdType }));
-  // }, [dispatch, nproduct, pdBrand, pdType]);
+  useEffect(() => {
+    if (!nproduct) return;
+    nproduct && dispatch(ngetRelatedProducts({ Brand: pdBrand, Type: pdType }));
+  }, [dispatch, nproduct, pdBrand, pdType]);
 
   return (
     <div>
