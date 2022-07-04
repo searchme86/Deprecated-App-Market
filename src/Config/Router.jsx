@@ -27,9 +27,10 @@ import UserPage from '../Pages/Manager/UserPage';
 import UploadProduct from '../Pages/Manager/UploadProduct';
 import UploadCategory from '../Pages/Manager/category/UploadCategory';
 import News from '../Pages/News';
-import ProductUpload from '../Pages/Manager/Product/ProductUpload';
-import { useDispatch } from 'react-redux';
 import Items from '../Pages/Items';
+import ProductUpload from '../Pages/Manager/Product/ProductUpload';
+import ProductDetail from '../Pages/ProductDetail';
+import { useDispatch } from 'react-redux';
 
 function Router() {
   const dispatch = useDispatch();
@@ -109,6 +110,7 @@ function Router() {
           }
         />
         <Route path="/tour/:id" element={<SingleTour />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
         <Route
           path="/dashboard"
           element={
