@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from '@reduxjs/toolkit';
 import * as api from '../SendApi';
 
 export const ncreateProduct = createAsyncThunk(
@@ -15,11 +19,23 @@ export const ncreateProduct = createAsyncThunk(
   }
 );
 
+export const ngetProduct = createAsyncThunk(
+  'product/getProduct',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await api.getProduct(id);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 export const ngetProducts = createAsyncThunk(
   'nproduct/getProducts',
   async (page, { rejectWithValue }) => {
     try {
-      const response = await api.getProducts(page);
+      const response = await api.getProductlist(page);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -28,10 +44,23 @@ export const ngetProducts = createAsyncThunk(
 );
 
 export const likeProduct = createAsyncThunk(
-  'tour/likeTour',
+  'nproduct/likeProduct',
   async ({ _id }, { rejectWithValue }) => {
     try {
       const response = await api.likeProduct(_id);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const ngetRelatedProducts = createAsyncThunk(
+  'nproduct/ngetRelatedProducts',
+  async (arg, { rejectWithValue }) => {
+    console.log('**디비에전달', arg);
+    try {
+      const response = await api.getRelatedItems(arg);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -144,6 +173,19 @@ const NProductSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+
+    [ngetProduct.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [ngetProduct.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.nproduct = action.payload;
+    },
+    [ngetProduct.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
     [ngetProducts.pending]: (state, action) => {
       state.loading = true;
     },
@@ -170,10 +212,32 @@ const NProductSlice = createSlice({
       }
     },
     [likeProduct.rejected]: (state, action) => {
-      state.error = action.payload.message;
+      state.error = action.payload;
+    },
+
+    [ngetRelatedProducts.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [ngetRelatedProducts.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.nrelatedProducts = action.payload;
+    },
+    [ngetRelatedProducts.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     },
   },
 });
 
 export const { setCurrentPage } = NProductSlice.actions;
+
+const ProductState = createSelector(
+  (state) => state.nproduct,
+  (product) => {
+    return { product };
+  }
+);
+
+export const ProductSelector = (state) => ProductState(state);
+
 export default NProductSlice.reducer;

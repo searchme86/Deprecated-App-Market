@@ -4,14 +4,21 @@ export const ReportHeader = styled.div`
   margin: 0 0 10px 0;
 `;
 
-export const ReportIntro = styled.p``;
+export const ReportIntro = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const ReportUserImage = styled.div`
+  width: 60px;
+`;
 
 export const ReportUser = styled.strong`
   display: inline-block;
   vertical-align: center;
   line-height: 1;
   font-size: 20px;
-  margin: 0 5px 0 0;
+  margin: 0 5px 0 5px;
 `;
 
 export const ReportContent = styled.div``;
@@ -21,7 +28,7 @@ export const ReportMain = styled.div`
 `;
 
 export const ReportImage = styled.div`
-  width: 50%;
+  width: 46%;
   margin: 0 20px 0 0;
 `;
 
@@ -66,8 +73,6 @@ export const ReportDTitle = styled.span`
   margin: 0 0 0 10px;
   font-size: 14px;
   font-weight: normal;
-  white-space: nowrap;
-  word-break: keep-all;
 `;
 
 export const ReportDOpinion = styled.p`
@@ -114,7 +119,7 @@ export const ReportOverflowLi = styled.li`
 export const ReportMore = styled.div`
   overflow-y: auto;
   height: 160px;
-  padding: 5px;
+  padding: 10px 5px 5px 0;
   box-sizing: border-box;
 `;
 

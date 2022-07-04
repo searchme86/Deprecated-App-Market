@@ -6,27 +6,32 @@
  *  */
 
 import React from 'react';
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardImage,
-  MDBCardGroup,
-  MDBBtn,
-  MDBIcon,
-  MDBTooltip,
-} from 'mdb-react-ui-kit';
+import { MDBBtn, MDBIcon, MDBTooltip } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { likeProduct } from '../../Store/Features/NProductSlice';
 import { Image, ImageHolder } from '../../Assets/Styles/Image.style';
+import {
+  PCardIspace,
+  PCardItem,
+  PCardUser,
+  PCardCategory,
+  PUserAddress,
+  PUserImage,
+  PUserInfo,
+  PCardPrice,
+  PCardDes,
+  PCardTitle,
+} from './CardProduct.style';
+
+import { AuthSelector } from '../../Store/Features/AuthSlice.js';
 
 function CardProduct(item) {
-  console.log('cardProduct 컴포넌트에서 item', item);
   const {
     _id,
-    pdUploader,
+    pdUploaderNickname,
+    pdUploaderImage,
+    pdCategory,
     pdImage,
     pdPrice,
     pdDes,
@@ -34,18 +39,14 @@ function CardProduct(item) {
     pdtags,
     pdlikes,
     pdAddress,
+    pdStatus,
+    pdDegree,
   } = item;
-  console.log(
-    'item',
-    _id
-    // pdUploader,
-    // pdImage,
-    // pdDes,
-    // pdTitle,
-    // pdtags,
-    // pdlikes
-  );
-  const { user } = useSelector((state) => state.auth);
+
+  const {
+    auth: { user },
+  } = useSelector(AuthSelector);
+
   const userId = user?.result?._id;
 
   const dispatch = useDispatch();
@@ -92,51 +93,114 @@ function CardProduct(item) {
     dispatch(likeProduct({ _id }));
   };
 
-  console.log('user', user);
-  console.log('_id', _id);
-
   return (
     <>
-      <li>
+      <PCardItem>
         <div className="">
           <div className="">
-            <ImageHolder width={'200px'} height={'150px'}>
-              <Image src={pdImage} alt={pdTitle} />
-            </ImageHolder>
-          </div>
-          <div className="">
-            <p>{pdTitle}</p>
-            <p>{`${Number(pdPrice).toLocaleString('ko-KR')} 원`}</p>
-            <p>{pdAddress}</p>
-            <div className="">
-              <ul>
-                {pdtags.map((tag, index) => (
-                  <li>
-                    <Link to={`/products/tag/${tag}`}>#{tag}</Link>
-                  </li>
-                ))}
-              </ul>
-              <MDBBtn
-                style={{ float: 'right' }}
-                tag="a"
-                color="none"
-                onClick={!user?.result ? null : handleLike}
+            <Link to={`/product/${_id}`}>
+              <ImageHolder
+                height="150px"
+                style={{
+                  position: 'relative',
+                  width: 'initial',
+                  height: 'initial',
+                  boxSizing: 'border-box',
+                  padding: '0',
+                  margin: '0',
+                }}
               >
-                {!user?.result ? (
-                  <MDBTooltip title="Please login to like tour" tag="a">
-                    <Likes />
-                  </MDBTooltip>
-                ) : (
-                  <Likes />
-                )}
-              </MDBBtn>
-            </div>
+                <PCardIspace />
+                <Image
+                  src={pdImage}
+                  alt={pdTitle}
+                  style={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    top: '0',
+                  }}
+                />
+              </ImageHolder>
+            </Link>
+          </div>
+          <div
+            className=""
+            style={{ padding: '20px', boxSizing: 'border-box' }}
+          >
             <div className="">
-              <p>{pdDes}</p>
+              <PCardCategory>{pdCategory}</PCardCategory>
+              <PCardPrice>
+                {`${Number(pdPrice).toLocaleString('ko-KR')}`}
+              </PCardPrice>
+              <PCardTitle>
+                <Link to={`/product/${_id}`}>{pdTitle}</Link>
+              </PCardTitle>
+              <PCardDes>{pdDes}</PCardDes>
+              <div className="">
+                <ul style={{}}>
+                  {pdStatus.map((status, index) => (
+                    <li
+                      key={index}
+                      style={{
+                        display: 'inline-block',
+                        border: '1px solid red',
+                        borderRadius: '15px',
+                        marginBottom: '10px',
+                        marginRight: '5px',
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: '15px',
+                          padding: '10px',
+                          boxSizing: 'border-box',
+                        }}
+                      >
+                        #{status}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="">
+                <div
+                  className=""
+                  style={{ display: 'flex', justifyContent: 'space-between' }}
+                >
+                  <MDBBtn
+                    style={{ float: 'right' }}
+                    tag="a"
+                    color="none"
+                    onClick={!user?.result ? null : handleLike}
+                  >
+                    {!user?.result ? (
+                      <MDBTooltip title="Please login to like tour" tag="a">
+                        <Likes />
+                      </MDBTooltip>
+                    ) : (
+                      <Likes />
+                    )}
+                  </MDBBtn>
+                  <span>{pdDegree}</span>
+                </div>
+              </div>
             </div>
+
+            <PCardUser>
+              <PUserImage>
+                <ImageHolder br="100%">
+                  <Image src={pdUploaderImage} alt={pdUploaderNickname} />
+                </ImageHolder>
+              </PUserImage>
+              <PUserInfo>
+                <PUserAddress>{pdUploaderNickname}</PUserAddress>
+                <PUserAddress>{pdAddress}</PUserAddress>
+              </PUserInfo>
+            </PCardUser>
           </div>
         </div>
-      </li>
+      </PCardItem>
     </>
   );
 }
