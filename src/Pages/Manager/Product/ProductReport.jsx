@@ -37,12 +37,7 @@ import {
   ReportHashTag,
   ReportUserImage,
 } from './ProductReport.style';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-} from '@chakra-ui/react';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 
 import { OffScreenSpan } from '../../../Assets/Styles/Basic.style';
 import { AlignList } from '../../../Assets/Styles/Layout.style';
