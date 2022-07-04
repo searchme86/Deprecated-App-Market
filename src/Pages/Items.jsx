@@ -21,16 +21,12 @@ import {
 
 import Pagination from '../Components/Pagination';
 import CardProduct from '../Components/CardProduct/CardProduct';
-import Test from '../Components/PostCode/Test';
 
 function Items() {
+  const [change, setChange] = useState('');
   const {
     product: { nproducts, loading, currentPage, numberOfPages },
   } = useSelector(ProductSelector);
-
-  // console.log('product', product);
-
-  const [change, setChange] = useState('');
 
   const useQuery = () => {
     return new URLSearchParams(useLocation().search);
@@ -39,8 +35,6 @@ function Items() {
   const searchQuery = query.get('searchQuery');
 
   const dispatch = useDispatch();
-
-  console.log('currentPage', currentPage);
 
   useEffect(() => {
     dispatch(ngetProducts(currentPage));
@@ -55,9 +49,6 @@ function Items() {
   const changeCategory = (e) => {
     setChange(e.target.value);
   };
-
-  console.log('n', nproducts);
-  // console.log('user', user);
 
   return (
     <SectionUnit>
