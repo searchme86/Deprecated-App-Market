@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import ProductRelated from '../Components/ProductRelated/ProductRelated';
@@ -36,12 +36,15 @@ import {
   TableCaption,
   TableContainer,
 } from '@chakra-ui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faPlus,
+  faMinus,
+  faPenToSquare,
+} from '@fortawesome/free-solid-svg-icons';
+import { OffScreenSpan } from '../Assets/Styles/Basic.style';
 
 function ProductDetail() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const {
     product: {
       nproduct,
@@ -64,13 +67,21 @@ function ProductDetail() {
     },
   } = useSelector(ProductSelector);
 
-  console.log('1');
-  console.log('id', id);
-  console.log('nproduct', nproduct);
-  console.log('***nrelatedProducts', nrelatedProducts);
-  console.log('***nrelatedProducts.length', [nrelatedProducts].length);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  console.log('pdStatus', pdStatus);
+  const sumRef = useRef(null);
+  const [orderCount, setOrderCount] = useState(1);
+  const [orderTotal, setOrderTotal] = useState(0);
+
+  // console.log('1');
+  // console.log('id', id);
+  // console.log('nproduct', nproduct);
+  // console.log('***nrelatedProducts', nrelatedProducts);
+  // console.log('***nrelatedProducts.length', [nrelatedProducts].length);
+
+  // console.log('pdStatus', pdStatus);
 
   let relatedItems = Object.values(nrelatedProducts);
   // console.log('relatedItems', relatedItems);
@@ -86,6 +97,22 @@ function ProductDetail() {
     if (!nproduct) return;
     nproduct && dispatch(ngetRelatedProducts({ Brand: pdBrand, Type: pdType }));
   }, [dispatch, nproduct, pdBrand, pdType]);
+
+  const increaseNum = (e) => {
+    e.preventDefault();
+    setOrderCount((value) => value + 1);
+    setOrderTotal(orderCount * pdPrice);
+  };
+
+  const decreaseNum = (e) => {
+    e.preventDefault();
+    if (orderCount <= 0) return;
+    setOrderCount((value) => value - 1);
+    setOrderTotal(orderCount * pdPrice);
+  };
+
+  console.log('orderCount', orderCount);
+  console.log('orderTotal', Number(orderCount * pdPrice));
 
   return (
     <>
@@ -171,7 +198,12 @@ function ProductDetail() {
                 </div>
                 {/* 상품정보 */}
                 <div className="">
-                  <p style={{ fontSize: '28px', wordBreak: 'break-all' }}>
+                  <p
+                    style={{
+                      fontSize: '28px',
+                      wordBreak: 'break-all',
+                    }}
+                  >
                     [ {pdDes} ]
                   </p>
                   <strong
@@ -184,7 +216,13 @@ function ProductDetail() {
                     {pdTitle}
                   </strong>
                   <div className=""></div>
-                  <span style={{ fontSize: '22px', display: 'block' }}>
+                  <span
+                    style={{
+                      fontSize: '22px',
+                      display: 'block',
+                      borderBottom: '1px solid red',
+                    }}
+                  >
                     <strong
                       style={{
                         display: 'inline-block',
@@ -197,6 +235,59 @@ function ProductDetail() {
                     원
                   </span>
                 </div>
+
+                {/* 가격 계산, 클릭버튼 */}
+                <div
+                  className=""
+                  style={{
+                    padding: '20px',
+                    boxSizing: 'border-box',
+                    borderRadius: '6px',
+                    background: '#f8f8f8',
+                    marginTop: '20px',
+                    marginBottom: '20px',
+                  }}
+                >
+                  <div className="" style={{ display: 'flex' }}>
+                    <div
+                      className=""
+                      style={{ display: 'flex', flexDirection: 'row' }}
+                    >
+                      <button type="button" onClick={increaseNum}>
+                        <OffScreenSpan>수량 증가 버튼</OffScreenSpan>
+                        <FontAwesomeIcon icon={faPlus} />
+                      </button>
+                      <div className="">
+                        <input
+                          type="number"
+                          // defaultValue="1"
+                          value={orderCount}
+                          disabled
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={orderCount > 1 ? decreaseNum : ''}
+                      >
+                        <OffScreenSpan>수량 감소 버튼</OffScreenSpan>
+                        <FontAwesomeIcon icon={faMinus} />
+                      </button>
+                    </div>
+
+                    <span style={{ marginLeft: 'auto' }}>
+                      <strong>
+                        {!orderTotal
+                          ? pdPrice
+                          : Number(orderCount * pdPrice).toLocaleString(
+                              'ko-KR'
+                            )}
+                      </strong>{' '}
+                      원
+                    </span>
+                  </div>
+                </div>
+
+                {/* 탭 메뉴 */}
                 <div className="">
                   <Tabs variant="enclosed">
                     <TabList>
@@ -341,12 +432,12 @@ function ProductDetail() {
                     </TabPanels>
                   </Tabs>
                 </div>
-                <div className="">
-                  <ul>
-                    <li></li>
-                  </ul>
-                </div>
+
                 <button>장바구니 담기</button>
+                <button type="button">
+                  <OffScreenSpan>상품 업데이트 버튼</OffScreenSpan>
+                  <FontAwesomeIcon icon={faPenToSquare} />
+                </button>
               </div>
             </div>
           </SectionContent>
@@ -360,17 +451,24 @@ function ProductDetail() {
             <SectionHeader>
               <SectionTitle>관련상품 보기</SectionTitle>
             </SectionHeader>
+            <SectionContent>
+              <div className="">
+                <ul
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    width: '100%',
+                    marginTop: '10px',
+                  }}
+                >
+                  {relatedItems &&
+                    relatedItems.map((related, index) => (
+                      <ProductRelated key={index} {...related} />
+                    ))}
+                </ul>
+              </div>
+            </SectionContent>
           </SectionLayout>
-          <SectionContent>
-            <div className="">
-              <ul>
-                {relatedItems &&
-                  relatedItems.map((related, index) => (
-                    <ProductRelated key={index} {...related} />
-                  ))}
-              </ul>
-            </div>
-          </SectionContent>
         </SectionUnit>
       )}
     </>
