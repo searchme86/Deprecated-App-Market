@@ -6,17 +6,7 @@
  *  */
 
 import React from 'react';
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardImage,
-  MDBCardGroup,
-  MDBBtn,
-  MDBIcon,
-  MDBTooltip,
-} from 'mdb-react-ui-kit';
+import { MDBBtn, MDBIcon, MDBTooltip } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { likeProduct } from '../../Store/Features/NProductSlice';
@@ -35,7 +25,6 @@ import {
 } from './CardProduct.style';
 
 function CardProduct(item) {
-  // console.log('cardProduct 컴포넌트에서 item', item);
   const {
     _id,
     pdUploaderNickname,
@@ -51,26 +40,8 @@ function CardProduct(item) {
     pdStatus,
     pdDegree,
   } = item;
-  // console.log(
-  //   'item',
-  //   // _id,
-  //   // pdUploaderNickname,
-  //   // pdUploaderImage
-  //   // pdUploader,
-  //   // pdImage,
-  //   // pdDes,
-  //   // pdTitle,
-  //   // pdtags,
-  //   // pdlikes
-  // );
-  // const {
-  //   user: {
-  //     result: { nickname, imageFile },
-  //   },
-  // } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.auth);
   const userId = user?.result?._id;
-  // const userId = _id;
 
   const dispatch = useDispatch();
   const excerpt = (str) => {
@@ -115,9 +86,6 @@ function CardProduct(item) {
   const handleLike = () => {
     dispatch(likeProduct({ _id }));
   };
-
-  // console.log('user', user);
-  // console.log('_id', _id);
 
   return (
     <>
