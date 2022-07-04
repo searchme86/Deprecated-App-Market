@@ -97,31 +97,33 @@ function CardProduct(item) {
     <>
       <PCardItem>
         <div className="">
-          <Link to={`/product/${_id}`}>
-            <ImageHolder
-              height="150px"
-              style={{
-                position: 'relative',
-                width: 'initial',
-                height: 'initial',
-                boxSizing: 'border-box',
-                padding: '0',
-                margin: '0',
-              }}
-            >
-              <PCardIspace />
-              <Image
-                src={pdImage}
-                alt={pdTitle}
+          <div className="">
+            <Link to={`/product/${_id}`}>
+              <ImageHolder
+                height="150px"
                 style={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  top: '0',
+                  position: 'relative',
+                  width: 'initial',
+                  height: 'initial',
+                  boxSizing: 'border-box',
+                  padding: '0',
+                  margin: '0',
                 }}
-              />
-            </ImageHolder>
-          </Link>
+              >
+                <PCardIspace />
+                <Image
+                  src={pdImage}
+                  alt={pdTitle}
+                  style={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    top: '0',
+                  }}
+                />
+              </ImageHolder>
+            </Link>
+          </div>
           <div
             className=""
             style={{ padding: '20px', boxSizing: 'border-box' }}
@@ -135,7 +137,6 @@ function CardProduct(item) {
                 <Link to={`/product/${_id}`}>{pdTitle}</Link>
               </PCardTitle>
               <PCardDes>{pdDes}</PCardDes>
-
               <div className="">
                 <ul style={{}}>
                   {pdStatus.map((status, index) => (
