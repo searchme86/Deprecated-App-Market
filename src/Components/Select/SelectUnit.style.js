@@ -12,6 +12,7 @@ export const SelectTitle = styled.div`
   position: relative;
   display: block;
   width: 100%;
+  font-size: 14px;
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
