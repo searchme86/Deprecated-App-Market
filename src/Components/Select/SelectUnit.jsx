@@ -11,10 +11,14 @@ function SelectUnit({ data = [], handler, selected }) {
     setShowDropdown((showDropdown) => !showDropdown);
   }, []);
 
-  const updateSelectedOption = useCallback((option) => {
-    setSelectedOption(option);
-    setShowDropdown(false);
-  }, []);
+  const updateSelectedOption = useCallback(
+    (option) => {
+      // setSelectedOption(option);
+      handler(option);
+      setShowDropdown(false);
+    },
+    [handler]
+  );
 
   console.log('selectedOption', selectedOption);
 
@@ -31,7 +35,7 @@ function SelectUnit({ data = [], handler, selected }) {
       selectPlaceholder="항목을 선택해주세요"
     >
       {data.map(({ cntShow, cntValue, handler }, index) => (
-        <SelectOption changeHandler={handler} value={cntValue}>
+        <SelectOption changeHandler={updateSelectedOption} value={cntValue}>
           <div className="">
             <span style={{ display: 'block' }}> {cntShow}</span>
             <span>{cntValue}</span>

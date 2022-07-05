@@ -107,15 +107,21 @@ function ProductDetail() {
   // console.log('relatedItems.length', relatedItems.length);
 
   //
-  let something = colorItems.map((item) => {
-    const { pdColor, pdPriceByColor } = item;
-    let dd = { cntShow: pdColor, cntValue: pdPriceByColor, handler: setColor };
-    return {
-      ...dd,
-    };
-  });
+  let something =
+    colorItems &&
+    colorItems.map((item) => {
+      const { pdColor, pdPriceByColor } = item;
+      let dd = {
+        cntShow: pdColor,
+        cntValue: pdPriceByColor,
+      };
+      return {
+        ...dd,
+      };
+    });
 
   console.log('wow', something);
+  console.log('선택된 color', color);
   //
 
   useEffect(() => {
