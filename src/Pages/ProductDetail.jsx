@@ -83,17 +83,22 @@ function ProductDetail() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const sumRef = useRef(null);
+  const delayDispatch = useRef(null);
   const [orderCount, setOrderCount] = useState(1);
   const [orderTotal, setOrderTotal] = useState(0);
   const [color, setColor] = useState([]);
   const [size, setSize] = useState([]);
 
   useEffect(() => {
+    // delayDispatch.current = setTimeout(() => {});
     if (id) {
       dispatch(ngetProduct(id));
     }
-  }, [dispatch, id]);
+
+    if (!nproduct) {
+      dispatch(ngetProduct(id));
+    }
+  }, []);
 
   useEffect(() => {
     if (!nproduct) return;
@@ -155,13 +160,30 @@ function ProductDetail() {
     formState: { errors },
   } = useForm();
 
+  let relatedItems = nrelatedProducts && Object.values(nrelatedProducts);
+
+  let pdColorItems = pdColorInfo && Object.values(pdColorInfo);
+  let pdSizeItems = pdSizeInfo && Object.values(pdSizeInfo);
+
+  //셀렉트 컴포넌트를 보여주고 없애주기 위한 데이터
+  // const [{ pdColor, pdPriceByColor }] = pdColorItems;
+  // const [{ pdSize, pdPriceBySize }] = pdSizeItems;
+
+  // console.log('pdColor', pdColor);
+  // console.log('pdPriceByColor', pdPriceByColor);
+  // console.log('pdSize', pdSize);
+  // console.log('pdPriceBySize', pdPriceBySize);
+
+  // 셀렉트 컴포넌트에 전달하기 위해 정리된 데이터
   let colorData = pdColorInfo && filterObject(pdColorInfo);
   let sizeData = pdSizeInfo && filterObject(pdSizeInfo);
-  let relatedItems = nrelatedProducts && Object.values(nrelatedProducts);
 
   console.log('nproduct', nproduct);
   console.log('orderCount', orderCount);
   console.log('orderTotal', Number(orderCount * pdPrice));
+
+  console.log('pdColorItems', pdColorItems);
+  console.log('pdSizeItems', pdSizeItems);
 
   console.log('색상 데이터를 가공한 데이터', sizeData);
   console.log('사이즈 데이터를 가동한 데이터', colorData);
@@ -298,17 +320,29 @@ function ProductDetail() {
                   </div>
 
                   {/* 색상별 사이즈별 셀렉트 박스 */}
-                  <div className="" style={{ padding: '20px 0 20px 0' }}>
-                    {color.length > 0 && (
-                      <div className="">
-                        <SelectUnit data={colorData} handler={setColor} />
-                      </div>
+                  <div className="">
+                    {pdColorItems ? (
+                      pdColorItems.length > 0 ? (
+                        <div className="" style={{ marginTop: '20px' }}>
+                          <SelectUnit data={colorData} handler={setColor} />
+                        </div>
+                      ) : (
+                        ''
+                      )
+                    ) : (
+                      ''
                     )}
 
-                    {size.length > 0 && (
-                      <div className="" style={{ marginTop: '10px' }}>
-                        <SelectUnit data={sizeData} handler={setSize} />
-                      </div>
+                    {pdSizeItems ? (
+                      pdSizeItems.length > 0 ? (
+                        <div className="" style={{ marginTop: '10px' }}>
+                          <SelectUnit data={sizeData} handler={setSize} />
+                        </div>
+                      ) : (
+                        ' '
+                      )
+                    ) : (
+                      ''
                     )}
                   </div>
 
