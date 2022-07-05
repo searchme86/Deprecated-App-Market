@@ -299,13 +299,13 @@ function ProductDetail() {
 
                   {/* 색상별 사이즈별 셀렉트 박스 */}
                   <div className="" style={{ padding: '20px 0 20px 0' }}>
-                    {pdColorInfo && (
+                    {color.length > 0 && (
                       <div className="">
                         <SelectUnit data={colorData} handler={setColor} />
                       </div>
                     )}
 
-                    {pdSizeInfo && (
+                    {size.length > 0 && (
                       <div className="" style={{ marginTop: '10px' }}>
                         <SelectUnit data={sizeData} handler={setSize} />
                       </div>
