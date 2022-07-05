@@ -89,7 +89,16 @@ function ProductDetail() {
   const [color, setColor] = useState([]);
   const [size, setSize] = useState([]);
 
-  let relatedItems = nrelatedProducts && Object.values(nrelatedProducts);
+  useEffect(() => {
+    if (id) {
+      dispatch(ngetProduct(id));
+    }
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (!nproduct) return;
+    nproduct && dispatch(ngetRelatedProducts({ Brand: pdBrand, Type: pdType }));
+  }, [dispatch, nproduct, pdBrand, pdType]);
 
   const convertArray = (data) => {
     if (!data) return;
@@ -127,20 +136,6 @@ function ProductDetail() {
     }
   };
 
-  let colorData = pdColorInfo && filterObject(pdColorInfo);
-  let sizeData = pdSizeInfo && filterObject(pdSizeInfo);
-
-  useEffect(() => {
-    if (id) {
-      dispatch(ngetProduct(id));
-    }
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    if (!nproduct) return;
-    nproduct && dispatch(ngetRelatedProducts({ Brand: pdBrand, Type: pdType }));
-  }, [dispatch, nproduct, pdBrand, pdType]);
-
   const increaseNum = (e) => {
     e.preventDefault();
     setOrderCount((value) => value + 1);
@@ -159,6 +154,10 @@ function ProductDetail() {
     register,
     formState: { errors },
   } = useForm();
+
+  let colorData = pdColorInfo && filterObject(pdColorInfo);
+  let sizeData = pdSizeInfo && filterObject(pdSizeInfo);
+  let relatedItems = nrelatedProducts && Object.values(nrelatedProducts);
 
   console.log('nproduct', nproduct);
   console.log('orderCount', orderCount);
