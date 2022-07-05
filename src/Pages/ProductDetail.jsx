@@ -89,18 +89,16 @@ function ProductDetail() {
   const [color, setColor] = useState([]);
   const [size, setSize] = useState([]);
 
-  console.log('nproduct', nproduct);
-
   let relatedItems = nrelatedProducts && Object.values(nrelatedProducts);
 
-  const makeArray = (data) => {
+  const convertArray = (data) => {
     if (!data) return;
-    let yourArray = Object.values(data) || [];
-    let real = data && yourArray;
-    return real;
+    let newArray = Object.values(data) || [];
+    let result = data && newArray;
+    return result;
   };
 
-  const makeObject = (data) => {
+  const filterObject = (data) => {
     if (!data) return;
     for (let element in data) {
       if (data[element].hasOwnProperty('pdColor')) {
@@ -112,8 +110,8 @@ function ProductDetail() {
           };
           return data;
         });
-        let yourDream = makeArray(colorData);
-        return yourDream;
+        let dataNeeded = convertArray(colorData);
+        return dataNeeded;
       } else if (data[element].hasOwnProperty('pdSize')) {
         let sizeData = data.map((item) => {
           const { pdSize, pdPriceBySize } = item;
@@ -123,14 +121,14 @@ function ProductDetail() {
           };
           return data;
         });
-        let yourDream = makeArray(sizeData);
-        return yourDream;
+        let dataNeeded = convertArray(sizeData);
+        return dataNeeded;
       }
     }
   };
 
-  let colorData = pdColorInfo && makeObject(pdColorInfo);
-  let sizeData = pdSizeInfo && makeObject(pdSizeInfo);
+  let colorData = pdColorInfo && filterObject(pdColorInfo);
+  let sizeData = pdSizeInfo && filterObject(pdSizeInfo);
 
   useEffect(() => {
     if (id) {
@@ -162,6 +160,7 @@ function ProductDetail() {
     formState: { errors },
   } = useForm();
 
+  console.log('nproduct', nproduct);
   console.log('orderCount', orderCount);
   console.log('orderTotal', Number(orderCount * pdPrice));
 
