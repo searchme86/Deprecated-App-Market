@@ -98,42 +98,6 @@ function ProductDetail() {
   // console.log('pdStatus', pdStatus);
 
   let relatedItems = nrelatedProducts && Object.values(nrelatedProducts);
-  // let colorItems = pdColorInfo && Object.values(pdColorInfo);
-  // let sizeItems = pdSizeInfo && Object.values(pdSizeInfo);
-  // let sizeItems = Object.keys(pdSizeInfo);
-
-  // console.log('colorItems', colorItems);
-  // console.log('sizeItems', sizeItems);
-  // console.log('relatedItems', relatedItems);
-  // console.log('relatedItems.length', relatedItems.length);
-
-  // let colorData =
-  //   colorItems &&
-  //   colorItems.map((item) => {
-  //     const { pdColor, pdPriceByColor } = item;
-  //     let data = {
-  //       cntShow: pdColor,
-  //       cntValue: pdPriceByColor,
-  //     };
-  //     return {
-  //       ...data,
-  //     };
-  //   });
-
-  // let sizeData =
-  //   pdSizeInfo &&
-  //   pdSizeInfo.map((item) => {
-  //     const { pdSize, pdPriceBySize } = item;
-  //     let data = {
-  //       cntShow: pdSize,
-  //       cntValue: pdPriceBySize,
-  //     };
-  //     return {
-  //       ...data,
-  //     };
-  //   });
-
-  //  새로운 함수를 만드는 중
 
   const makeArray = (data) => {
     if (!data) return;
@@ -173,8 +137,6 @@ function ProductDetail() {
 
   let colorData = pdColorInfo && makeObject(pdColorInfo);
   let sizeData = pdSizeInfo && makeObject(pdSizeInfo);
-
-  // 새로운 함수를 만드는 중
 
   useEffect(() => {
     if (id) {
