@@ -8,7 +8,7 @@ export const SelectBox = styled.div`
   border-radius: 5px;
 `;
 
-export const SelectTitle = styled.span`
+export const SelectTitle = styled.div`
   position: relative;
   display: block;
   width: 400px;
