@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import SelectOptionHolder from './SelectModule/SelectOptionHolder';
 import SelectOption from './SelectModule/SelectOption';
 
-function SelectUnit() {
+function SelectUnit({ data = [], handler, selected }) {
   const [selectedOption, setSelectedOption] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -17,7 +17,10 @@ function SelectUnit() {
   }, []);
 
   console.log('selectedOption', selectedOption);
-  console.log('showDropdown', showDropdown);
+
+  console.log('data', data);
+  console.log('handler', handler);
+  console.log('selected', selected);
 
   return (
     <SelectOptionHolder
@@ -27,21 +30,14 @@ function SelectUnit() {
       showDropdownHandler={showDropdownHandler}
       selectPlaceholder="항목을 선택해주세요"
     >
-      <SelectOption changeHandler={updateSelectedOption} value="one">
-        One
-      </SelectOption>
-      <SelectOption changeHandler={updateSelectedOption} value="two">
-        two
-      </SelectOption>
-      <SelectOption changeHandler={updateSelectedOption} value="third">
-        third
-      </SelectOption>
-      <SelectOption changeHandler={updateSelectedOption} value="fourth">
-        fourth
-      </SelectOption>
-      <SelectOption changeHandler={updateSelectedOption} value="fifth">
-        fifth
-      </SelectOption>
+      {data.map(({ cntShow, cntValue, handler }, index) => (
+        <SelectOption changeHandler={handler} value={cntValue}>
+          <div className="">
+            <span style={{ display: 'block' }}> {cntShow}</span>
+            <span>{cntValue}</span>
+          </div>
+        </SelectOption>
+      ))}
     </SelectOptionHolder>
   );
 }
