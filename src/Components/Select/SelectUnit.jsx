@@ -35,7 +35,10 @@ function SelectUnit({ data = [], handler, selected }) {
       selectPlaceholder="항목을 선택해주세요"
     >
       {data.map(({ cntShow, cntValue, handler }, index) => (
-        <SelectOption changeHandler={updateSelectedOption} value={cntValue}>
+        <SelectOption
+          changeHandler={updateSelectedOption}
+          value={{ cntValue, cntShow }}
+        >
           <div className="">
             <span style={{ display: 'block' }}> {cntShow}</span>
             <span>{cntValue}</span>
