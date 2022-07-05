@@ -1,5 +1,11 @@
 import React, { useCallback, useRef } from 'react';
-import { SelectBox, SelectTitle, SelectUl } from '../SelectUnit.style';
+import {
+  SelectBox,
+  SelectTitle,
+  SelectTitleContent,
+  SelectTitleSubject,
+  SelectUl,
+} from '../SelectUnit.style';
 import useOnClickOutside from '../SelectConfig/useOnClickOutside';
 
 function SelectOptionHolder({
@@ -18,10 +24,19 @@ function SelectOptionHolder({
   );
   useOnClickOutside(selectContainerRef, clickOutsideHandler);
 
+  const { cntValue, cntShow } = selectedOption;
+
   return (
     <SelectBox ref={selectContainerRef}>
       <SelectTitle onClick={showDropdownHandler}>
-        {selectedOption.length > 0 ? selectedOption : selectPlaceholder}
+        {selectedOption ? (
+          <>
+            <SelectTitleSubject>{cntShow}</SelectTitleSubject>
+            <SelectTitleContent>{cntValue}</SelectTitleContent>
+          </>
+        ) : (
+          selectPlaceholder
+        )}
       </SelectTitle>
       <SelectUl showDropdown={showDropdown}>{children}</SelectUl>
     </SelectBox>

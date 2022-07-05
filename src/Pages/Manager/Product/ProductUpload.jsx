@@ -289,6 +289,18 @@ function FashionUpload() {
 
   const { pdTitle, pdImage, pdPrice, pdDes, pdWish, pdBrand, pdType } = pdInfo;
 
+  const filterLastItem = (data) => {
+    if (!data) return;
+    const convertArray = Object.values([...data]);
+    let deleteLastItem = convertArray.filter(
+      (item, index) => index < convertArray.length - 1
+    );
+    return deleteLastItem;
+  };
+
+  let prdSizeItem = filterLastItem(prdSize);
+  let prdColorItem = filterLastItem(prdColor);
+
   const newProduct = useMemo(() => {
     return {
       pdCategory,
@@ -305,8 +317,8 @@ function FashionUpload() {
       pdtags,
       inputAddressValue,
       pdStatus: [prdStatus, ...tags],
-      pdSizeInfo: [...prdSize],
-      pdColorInfo: [...prdColor],
+      pdSizeInfo: [...prdSizeItem],
+      pdColorInfo: [...prdColorItem],
     };
   }, [
     pdCategory,
@@ -324,9 +336,11 @@ function FashionUpload() {
     inputAddressValue,
     prdStatus,
     tags,
-    prdSize,
-    prdColor,
+    prdSizeItem,
+    prdColorItem,
   ]);
+
+  console.log('newProduct', newProduct);
 
   // 상품모달
   const prReport = { handleClose, isOpen, newProduct };
