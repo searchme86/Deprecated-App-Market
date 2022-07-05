@@ -98,31 +98,83 @@ function ProductDetail() {
   // console.log('pdStatus', pdStatus);
 
   let relatedItems = nrelatedProducts && Object.values(nrelatedProducts);
-  let colorItems = pdColorInfo && Object.values(pdColorInfo);
+  // let colorItems = pdColorInfo && Object.values(pdColorInfo);
+  // let sizeItems = pdSizeInfo && Object.values(pdSizeInfo);
   // let sizeItems = Object.keys(pdSizeInfo);
 
-  console.log('colorItems', colorItems);
+  // console.log('colorItems', colorItems);
   // console.log('sizeItems', sizeItems);
   // console.log('relatedItems', relatedItems);
   // console.log('relatedItems.length', relatedItems.length);
 
-  //
-  let something =
-    colorItems &&
-    colorItems.map((item) => {
-      const { pdColor, pdPriceByColor } = item;
-      let dd = {
-        cntShow: pdColor,
-        cntValue: pdPriceByColor,
-      };
-      return {
-        ...dd,
-      };
-    });
+  // let colorData =
+  //   colorItems &&
+  //   colorItems.map((item) => {
+  //     const { pdColor, pdPriceByColor } = item;
+  //     let data = {
+  //       cntShow: pdColor,
+  //       cntValue: pdPriceByColor,
+  //     };
+  //     return {
+  //       ...data,
+  //     };
+  //   });
 
-  console.log('wow', something);
-  console.log('선택된 color', color);
-  //
+  // let sizeData =
+  //   pdSizeInfo &&
+  //   pdSizeInfo.map((item) => {
+  //     const { pdSize, pdPriceBySize } = item;
+  //     let data = {
+  //       cntShow: pdSize,
+  //       cntValue: pdPriceBySize,
+  //     };
+  //     return {
+  //       ...data,
+  //     };
+  //   });
+
+  //  새로운 함수를 만드는 중
+
+  const makeArray = (data) => {
+    if (!data) return;
+    let yourArray = Object.values(data) || [];
+    let real = data && yourArray;
+    return real;
+  };
+
+  const makeObject = (data) => {
+    if (!data) return;
+    for (let element in data) {
+      if (data[element].hasOwnProperty('pdColor')) {
+        let colorData = data.map((item) => {
+          const { pdColor, pdPriceByColor } = item;
+          let data = {
+            cntShow: pdColor,
+            cntValue: pdPriceByColor,
+          };
+          return data;
+        });
+        let yourDream = makeArray(colorData);
+        return yourDream;
+      } else if (data[element].hasOwnProperty('pdSize')) {
+        let sizeData = data.map((item) => {
+          const { pdSize, pdPriceBySize } = item;
+          let data = {
+            cntShow: pdSize,
+            cntValue: pdPriceBySize,
+          };
+          return data;
+        });
+        let yourDream = makeArray(sizeData);
+        return yourDream;
+      }
+    }
+  };
+
+  let colorData = pdColorInfo && makeObject(pdColorInfo);
+  let sizeData = pdSizeInfo && makeObject(pdSizeInfo);
+
+  // 새로운 함수를 만드는 중
 
   useEffect(() => {
     if (id) {
@@ -156,6 +208,17 @@ function ProductDetail() {
 
   console.log('orderCount', orderCount);
   console.log('orderTotal', Number(orderCount * pdPrice));
+
+  console.log('색상 데이터를 가공한 데이터', sizeData);
+  console.log('사이즈 데이터를 가동한 데이터', colorData);
+  console.log(
+    '셀렉트박스에서 선택된, detail 컴포넌트에서 확인되는 color 값',
+    color
+  );
+  console.log(
+    '셀렉트박스에서 선택된, detail 컴포넌트에서 확인되는 size 값',
+    size
+  );
 
   return (
     <>
@@ -281,70 +344,18 @@ function ProductDetail() {
                   </div>
 
                   {/* 색상별 사이즈별 셀렉트 박스 */}
-                  <div className="">
-                    {colorItems && (
+                  <div className="" style={{ padding: '20px 0 20px 0' }}>
+                    {pdColorInfo && (
                       <div className="">
-                        <SelectUnit
-                          data={something}
-                          selected={color}
-                          handler={setColor}
-                        />
+                        <SelectUnit data={colorData} handler={setColor} />
                       </div>
                     )}
 
-                    {/* {colorItems && (
-                      <div className="">
-                        <Select
-                          id="pdCategory"
-                          name="pdCategory"
-                          placeholder="상품의 카테고리를 입력해주세요"
-                          // value={pdCategory}
-                          {...register('pdCategory', {
-                            required: '상품의 카테고리를 선택해 주세요',
-                            // onChange: selectCategory,
-                          })}
-                        >
-                          {colorItems &&
-                            colorItems.map(
-                              ({ pdColor, pdPriceByColor }, index) => (
-                                <option key={index} value={pdPriceByColor}>
-                                  <div className="">
-                                    <span>
-                                      {pdColor}-{pdPriceByColor}
-                                    </span>
-                                  </div>
-                                </option>
-                              )
-                            )}
-                        </Select>
-                      </div>
-                    )} */}
-                    {/* {sizeItems && (
+                    {pdSizeInfo && (
                       <div className="" style={{ marginTop: '10px' }}>
-                        <Select
-                          id="pdCategory"
-                          name="pdCategory"
-                          placeholder="상품의 카테고리를 입력해주세요"
-                          value={pdCategory}
-                          {...register('pdCategory', {
-                            required: '상품의 카테고리를 선택해 주세요',
-                            // onChange: selectCategory,
-                          })}
-                        >
-                          {sizeItems &&
-                            sizeItems.map(
-                              ({ pdSize, pdPriceBySize }, index) => (
-                                <option key={index} value={pdPriceBySize}>
-                                  <div className="">
-                                    <span>{pdSize}</span>
-                                    <span>{pdPriceBySize}</span>
-                                  </div>
-                                </option>
-                              )
-                            )}
-                        </Select>
+                        <SelectUnit data={sizeData} handler={setSize} />
                       </div>
-                    )} */}
+                    )}
                   </div>
 
                   {/* 가격 계산, 클릭버튼 */}
