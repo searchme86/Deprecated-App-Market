@@ -21,11 +21,6 @@ function SelectUnit({ data = [], handler }) {
     [handler]
   );
 
-  // console.log('selectedOption', selectedOption);
-  // console.log('data', data);
-  // console.log('handler', handler);
-  // console.log('selected', selected);
-
   return (
     <SelectOptionHolder
       selectedOption={selectedOption}

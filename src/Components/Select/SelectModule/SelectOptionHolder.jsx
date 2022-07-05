@@ -26,9 +26,6 @@ function SelectOptionHolder({
 
   const { cntValue, cntShow } = selectedOption;
 
-  // console.log('정리중 cntShow', cntShow);
-  // console.log('정리중 cntValue', cntValue);
-
   return (
     <SelectBox ref={selectContainerRef}>
       <SelectTitle onClick={showDropdownHandler}>
