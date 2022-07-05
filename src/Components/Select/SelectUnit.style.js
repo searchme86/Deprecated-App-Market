@@ -3,15 +3,15 @@ import styled from 'styled-components';
 export const SelectBox = styled.div`
   display: inline-block;
   position: relative;
-  width: 400px;
-  background-color: #c1c1c1;
+  width: 100%;
   border-radius: 5px;
+  border: 1px solid #ddd;
 `;
 
 export const SelectTitle = styled.div`
   position: relative;
   display: block;
-  width: 400px;
+  width: 100%;
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
@@ -21,10 +21,26 @@ export const SelectTitle = styled.div`
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    right: 10px;
+    right: 35px;
     border: 7px solid transparent;
     border-color: black transparent transparent transparent;
   }
+`;
+
+export const SelectTitleSubject = styled.strong`
+  display: block;
+  font-size: 12px;
+  color: #757575;
+  margin: 0 0 2px 0;
+`;
+
+export const SelectTitleContent = styled.span`
+  display: block;
+  font-size: 14px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: left;
 `;
 
 export const SelectUl = styled.ul`
@@ -33,6 +49,8 @@ export const SelectUl = styled.ul`
   min-height: ${({ showDropdown }) => (showDropdown ? '50px' : '0')};
   visibility: ${({ showDropdown }) => (showDropdown ? 'visible' : 'hidden')};
   opacity: ${({ showDropdown }) => (showDropdown ? '1' : '0')};
+  background: #fff;
+  margin: 2px 0 0 0;
 `;
 
 export const SelectLi = styled.li`
