@@ -18,10 +18,22 @@ function SelectOptionHolder({
   );
   useOnClickOutside(selectContainerRef, clickOutsideHandler);
 
+  const { cntValue, cntShow } = selectedOption;
+
+  // console.log('정리중 cntShow', cntShow);
+  // console.log('정리중 cntValue', cntValue);
+
   return (
     <SelectBox ref={selectContainerRef}>
       <SelectTitle onClick={showDropdownHandler}>
-        {selectedOption.length > 0 ? selectedOption : selectPlaceholder}
+        {selectedOption ? (
+          <>
+            <span>{cntShow}</span>
+            <span>{cntValue}</span>
+          </>
+        ) : (
+          selectPlaceholder
+        )}
       </SelectTitle>
       <SelectUl showDropdown={showDropdown}>{children}</SelectUl>
     </SelectBox>
