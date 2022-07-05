@@ -8,6 +8,7 @@ import {
   SectionTitle,
   SectionUnit,
   SectionContent,
+  PForm,
 } from './Manager/Product/ProductUpload.style';
 
 import {
@@ -18,6 +19,12 @@ import {
 
 import { Image, ImageHolder } from '../Assets/Styles/Image.style';
 import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Select,
+  Textarea,
+  Input,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
@@ -36,6 +43,7 @@ import {
   TableCaption,
   TableContainer,
 } from '@chakra-ui/react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlus,
@@ -43,6 +51,8 @@ import {
   faPenToSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import { OffScreenSpan } from '../Assets/Styles/Basic.style';
+import { useForm } from 'react-hook-form';
+import SelectUnit from '../Components/Select/SelectUnit';
 
 function ProductDetail() {
   const {
@@ -61,6 +71,8 @@ function ProductDetail() {
         pdStatus,
         pdDes,
         pdWish,
+        pdColorInfo,
+        pdSizeInfo,
       },
 
       nrelatedProducts,
@@ -74,18 +86,37 @@ function ProductDetail() {
   const sumRef = useRef(null);
   const [orderCount, setOrderCount] = useState(1);
   const [orderTotal, setOrderTotal] = useState(0);
+  const [color, setColor] = useState([]);
+  const [size, setSize] = useState([]);
 
   // console.log('1');
   // console.log('id', id);
-  // console.log('nproduct', nproduct);
+  console.log('nproduct', nproduct);
   // console.log('***nrelatedProducts', nrelatedProducts);
   // console.log('***nrelatedProducts.length', [nrelatedProducts].length);
 
   // console.log('pdStatus', pdStatus);
 
-  let relatedItems = Object.values(nrelatedProducts);
+  let relatedItems = nrelatedProducts && Object.values(nrelatedProducts);
+  let colorItems = pdColorInfo && Object.values(pdColorInfo);
+  // let sizeItems = Object.keys(pdSizeInfo);
+
+  console.log('colorItems', colorItems);
+  // console.log('sizeItems', sizeItems);
   // console.log('relatedItems', relatedItems);
   // console.log('relatedItems.length', relatedItems.length);
+
+  //
+  let something = colorItems.map((item) => {
+    const { pdColor, pdPriceByColor } = item;
+    let dd = { cntShow: pdColor, cntValue: pdPriceByColor, handler: setColor };
+    return {
+      ...dd,
+    };
+  });
+
+  console.log('wow', something);
+  //
 
   useEffect(() => {
     if (id) {
@@ -111,6 +142,12 @@ function ProductDetail() {
     setOrderTotal(orderCount * pdPrice);
   };
 
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+
   console.log('orderCount', orderCount);
   console.log('orderTotal', Number(orderCount * pdPrice));
 
@@ -122,324 +159,450 @@ function ProductDetail() {
             <SectionTitle>상세 페이지</SectionTitle>
           </SectionHeader>
           <SectionContent>
-            <div className="" style={{ display: 'flex' }}>
-              {/* 상품이미지 */}
-              <div className="" style={{ width: '50%' }}>
-                <ImageHolder width="590px">
-                  <Image src={pdImage} alt={`${pdTitle} 이미지`} />
-                </ImageHolder>
-              </div>
-
-              {/* 레이아웃 오른쪽 */}
-              <div className="" style={{ width: '50%' }}>
-                {/* 유저 설명 */}
-                <div
-                  className=""
-                  style={{ display: 'flex', alignItems: 'center' }}
-                >
-                  <ImageHolder width="64px" br="100%">
-                    <Image src={pdUploaderImage} alt={pdUploaderNickname} />
+            <PForm>
+              <div className="" style={{ display: 'flex' }}>
+                {/* 상품이미지 */}
+                <div className="" style={{ width: '50%' }}>
+                  <ImageHolder width="590px" br="14px">
+                    <Image src={pdImage} alt={`${pdTitle} 이미지`} />
                   </ImageHolder>
-                  <div className="">
-                    <strong style={{ fontSize: '20px', marginLeft: '12px' }}>
-                      {pdUploaderNickname}
-                    </strong>
-                    <p style={{ fontSize: '20px', marginLeft: '12px' }}>
-                      {pdAddress}
-                    </p>
+                </div>
+
+                {/* 레이아웃 오른쪽 */}
+                <div className="" style={{ width: '50%' }}>
+                  {/* 유저 설명 */}
+                  <div
+                    className=""
+                    style={{ display: 'flex', alignItems: 'center' }}
+                  >
+                    <ImageHolder width="64px" br="100%">
+                      <Image src={pdUploaderImage} alt={pdUploaderNickname} />
+                    </ImageHolder>
+                    <div className="">
+                      <strong style={{ fontSize: '20px', marginLeft: '12px' }}>
+                        {pdUploaderNickname}
+                      </strong>
+                      <p style={{ fontSize: '20px', marginLeft: '12px' }}>
+                        {pdAddress}
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                {/* 범주 */}
-                <div className="">
-                  <Breadcrumb as="div" mt="15px" mb="10px">
-                    <BreadcrumbItem>
-                      <BreadcrumbLink
-                        href="#"
-                        fontWeight="bold"
-                        fontSize="18px"
-                      >
-                        {pdCategory}
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
+                  {/* 범주 */}
+                  <div className="">
+                    <Breadcrumb as="div" mt="15px" mb="10px">
+                      <BreadcrumbItem>
+                        <BreadcrumbLink
+                          href="#"
+                          fontWeight="bold"
+                          fontSize="18px"
+                        >
+                          {pdCategory}
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
 
-                    <BreadcrumbItem>
-                      <BreadcrumbLink
-                        href="#"
-                        fontWeight="bold"
-                        fontSize="18px"
-                      >
-                        {pdBrand}
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
+                      <BreadcrumbItem>
+                        <BreadcrumbLink
+                          href="#"
+                          fontWeight="bold"
+                          fontSize="18px"
+                        >
+                          {pdBrand}
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
 
-                    <BreadcrumbItem isCurrentPage>
-                      <BreadcrumbLink
-                        href="#"
-                        fontWeight="bold"
-                        fontSize="18px"
-                      >
-                        {pdType}
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
-                  </Breadcrumb>
-                </div>
+                      <BreadcrumbItem isCurrentPage>
+                        <BreadcrumbLink
+                          href="#"
+                          fontWeight="bold"
+                          fontSize="18px"
+                        >
+                          {pdType}
+                        </BreadcrumbLink>
+                      </BreadcrumbItem>
+                    </Breadcrumb>
+                  </div>
 
-                {/* 상품상태 */}
-                <div className="" style={{ borderBottom: '1px solid red' }}>
-                  <ul style={{ display: 'flex' }}>
-                    {pdStatus &&
-                      pdStatus.map((status, index) => (
-                        <li key={index}>
-                          <span>{status}</span>
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-                {/* 상품정보 */}
-                <div className="">
-                  <p
-                    style={{
-                      fontSize: '28px',
-                      wordBreak: 'break-all',
-                    }}
-                  >
-                    [ {pdDes} ]
-                  </p>
-                  <strong
-                    style={{
-                      display: 'block',
-                      marginTop: '10px',
-                      marginBottom: '10px',
-                    }}
-                  >
-                    {pdTitle}
-                  </strong>
-                  <div className=""></div>
-                  <span
-                    style={{
-                      fontSize: '22px',
-                      display: 'block',
-                      borderBottom: '1px solid red',
-                    }}
-                  >
-                    <strong
+                  {/* 상품상태 */}
+                  <div className="" style={{ borderBottom: '1px solid red' }}>
+                    <ul style={{ display: 'flex' }}>
+                      {pdStatus &&
+                        pdStatus.map((status, index) => (
+                          <li key={index}>
+                            <span>{status}</span>
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
+                  {/* 상품정보 */}
+                  <div className="">
+                    <p
                       style={{
-                        display: 'inline-block',
                         fontSize: '28px',
-                        marginRight: '2px',
+                        wordBreak: 'break-all',
                       }}
                     >
-                      {Number(pdPrice).toLocaleString('ko-KR')}
-                    </strong>
-                    원
-                  </span>
-                </div>
-
-                {/* 가격 계산, 클릭버튼 */}
-                <div
-                  className=""
-                  style={{
-                    padding: '20px',
-                    boxSizing: 'border-box',
-                    borderRadius: '6px',
-                    background: '#f8f8f8',
-                    marginTop: '20px',
-                    marginBottom: '20px',
-                  }}
-                >
-                  <div className="" style={{ display: 'flex' }}>
-                    <div
-                      className=""
-                      style={{ display: 'flex', flexDirection: 'row' }}
+                      [ {pdDes} ]
+                    </p>
+                    <strong
+                      style={{
+                        display: 'block',
+                        marginTop: '10px',
+                        marginBottom: '10px',
+                      }}
                     >
-                      <button type="button" onClick={increaseNum}>
-                        <OffScreenSpan>수량 증가 버튼</OffScreenSpan>
-                        <FontAwesomeIcon icon={faPlus} />
-                      </button>
-                      <div className="">
-                        <input
-                          type="number"
-                          // defaultValue="1"
-                          value={orderCount}
-                          disabled
-                        />
-                      </div>
-                      <button
-                        type="button"
-                        onClick={orderCount > 1 ? decreaseNum : ''}
+                      {pdTitle}
+                    </strong>
+                    <div className=""></div>
+                    <span
+                      style={{
+                        fontSize: '22px',
+                        display: 'block',
+                        borderBottom: '1px solid red',
+                      }}
+                    >
+                      <strong
+                        style={{
+                          display: 'inline-block',
+                          fontSize: '28px',
+                          marginRight: '2px',
+                        }}
                       >
-                        <OffScreenSpan>수량 감소 버튼</OffScreenSpan>
-                        <FontAwesomeIcon icon={faMinus} />
-                      </button>
-                    </div>
-
-                    <span style={{ marginLeft: 'auto' }}>
-                      <strong>
-                        {!orderTotal
-                          ? pdPrice
-                          : Number(orderCount * pdPrice).toLocaleString(
-                              'ko-KR'
-                            )}
-                      </strong>{' '}
+                        {Number(pdPrice).toLocaleString('ko-KR')}
+                      </strong>
                       원
                     </span>
                   </div>
-                </div>
 
-                {/* 탭 메뉴 */}
-                <div className="">
-                  <Tabs variant="enclosed">
-                    <TabList>
-                      <Tab>거래 희망사항</Tab>
-                      <Tab>색상 별 가격표</Tab>
-                      <Tab>사이즈 별 가격표</Tab>
-                    </TabList>
-                    <TabPanels>
-                      <TabPanel>
-                        <div className="">
-                          <TableContainer>
-                            <p>{pdWish}</p>
-                          </TableContainer>
-                        </div>
-                      </TabPanel>
-                      <TabPanel>
-                        <div className="">
-                          <TableContainer>
-                            <Table variant="simple">
-                              <TableCaption>
-                                Imperial to metric conversion factors
-                              </TableCaption>
-                              <Thead>
-                                <Tr>
-                                  <Th>To convert</Th>
-                                  <Th>into</Th>
-                                  <Th isNumeric>multiply by</Th>
-                                </Tr>
-                              </Thead>
-                              <Tbody>
-                                <Tr>
-                                  <Td>inches</Td>
-                                  <Td>millimetres (mm)</Td>
-                                  <Td isNumeric>25.4</Td>
-                                </Tr>
-                                <Tr>
-                                  <Td>feet</Td>
-                                  <Td>centimetres (cm)</Td>
-                                  <Td isNumeric>30.48</Td>
-                                </Tr>
-                                <Tr>
-                                  <Td>yards</Td>
-                                  <Td>metres (m)</Td>
-                                  <Td isNumeric>0.91444</Td>
-                                </Tr>
-                              </Tbody>
-                              <Tfoot>
-                                <Tr>
-                                  <Th>To convert</Th>
-                                  <Th>into</Th>
-                                  <Th isNumeric>multiply by</Th>
-                                </Tr>
-                              </Tfoot>
-                            </Table>
-                          </TableContainer>
-                        </div>
-                      </TabPanel>
-                      <TabPanel>
-                        <div className="">
-                          <TableContainer>
-                            <Table variant="simple">
-                              <TableCaption>
-                                Imperial to metric conversion factors
-                              </TableCaption>
-                              <Thead>
-                                <Tr>
-                                  <Th>To convert</Th>
-                                  <Th>into</Th>
-                                  <Th isNumeric>multiply by</Th>
-                                </Tr>
-                              </Thead>
-                              <Tbody>
-                                <Tr>
-                                  <Td>inches</Td>
-                                  <Td>millimetres (mm)</Td>
-                                  <Td isNumeric>25.4</Td>
-                                </Tr>
-                                <Tr>
-                                  <Td>feet</Td>
-                                  <Td>centimetres (cm)</Td>
-                                  <Td isNumeric>30.48</Td>
-                                </Tr>
-                                <Tr>
-                                  <Td>yards</Td>
-                                  <Td>metres (m)</Td>
-                                  <Td isNumeric>0.91444</Td>
-                                </Tr>
-                              </Tbody>
-                              <Tfoot>
-                                <Tr>
-                                  <Th>To convert</Th>
-                                  <Th>into</Th>
-                                  <Th isNumeric>multiply by</Th>
-                                </Tr>
-                              </Tfoot>
-                            </Table>
-                          </TableContainer>
-                        </div>
-                      </TabPanel>
-                      <TabPanel>
-                        <div className="">
-                          <TableContainer>
-                            <Table variant="simple">
-                              <TableCaption>
-                                Imperial to metric conversion factors
-                              </TableCaption>
-                              <Thead>
-                                <Tr>
-                                  <Th>To convert</Th>
-                                  <Th>into</Th>
-                                  <Th isNumeric>multiply by</Th>
-                                </Tr>
-                              </Thead>
-                              <Tbody>
-                                <Tr>
-                                  <Td>inches</Td>
-                                  <Td>millimetres (mm)</Td>
-                                  <Td isNumeric>25.4</Td>
-                                </Tr>
-                                <Tr>
-                                  <Td>feet</Td>
-                                  <Td>centimetres (cm)</Td>
-                                  <Td isNumeric>30.48</Td>
-                                </Tr>
-                                <Tr>
-                                  <Td>yards</Td>
-                                  <Td>metres (m)</Td>
-                                  <Td isNumeric>0.91444</Td>
-                                </Tr>
-                              </Tbody>
-                              <Tfoot>
-                                <Tr>
-                                  <Th>To convert</Th>
-                                  <Th>into</Th>
-                                  <Th isNumeric>multiply by</Th>
-                                </Tr>
-                              </Tfoot>
-                            </Table>
-                          </TableContainer>
-                        </div>
-                      </TabPanel>
-                    </TabPanels>
-                  </Tabs>
-                </div>
+                  {/* 색상별 사이즈별 셀렉트 박스 */}
+                  <div className="">
+                    {colorItems && (
+                      <div className="">
+                        <SelectUnit
+                          data={something}
+                          selected={color}
+                          handler={setColor}
+                        />
+                      </div>
+                    )}
 
-                <button>장바구니 담기</button>
-                <button type="button">
-                  <OffScreenSpan>상품 업데이트 버튼</OffScreenSpan>
-                  <FontAwesomeIcon icon={faPenToSquare} />
-                </button>
+                    {/* {colorItems && (
+                      <div className="">
+                        <Select
+                          id="pdCategory"
+                          name="pdCategory"
+                          placeholder="상품의 카테고리를 입력해주세요"
+                          // value={pdCategory}
+                          {...register('pdCategory', {
+                            required: '상품의 카테고리를 선택해 주세요',
+                            // onChange: selectCategory,
+                          })}
+                        >
+                          {colorItems &&
+                            colorItems.map(
+                              ({ pdColor, pdPriceByColor }, index) => (
+                                <option key={index} value={pdPriceByColor}>
+                                  <div className="">
+                                    <span>
+                                      {pdColor}-{pdPriceByColor}
+                                    </span>
+                                  </div>
+                                </option>
+                              )
+                            )}
+                        </Select>
+                      </div>
+                    )} */}
+                    {/* {sizeItems && (
+                      <div className="" style={{ marginTop: '10px' }}>
+                        <Select
+                          id="pdCategory"
+                          name="pdCategory"
+                          placeholder="상품의 카테고리를 입력해주세요"
+                          value={pdCategory}
+                          {...register('pdCategory', {
+                            required: '상품의 카테고리를 선택해 주세요',
+                            // onChange: selectCategory,
+                          })}
+                        >
+                          {sizeItems &&
+                            sizeItems.map(
+                              ({ pdSize, pdPriceBySize }, index) => (
+                                <option key={index} value={pdPriceBySize}>
+                                  <div className="">
+                                    <span>{pdSize}</span>
+                                    <span>{pdPriceBySize}</span>
+                                  </div>
+                                </option>
+                              )
+                            )}
+                        </Select>
+                      </div>
+                    )} */}
+                  </div>
+
+                  {/* 가격 계산, 클릭버튼 */}
+                  <div
+                    className=""
+                    style={{
+                      padding: '20px',
+                      boxSizing: 'border-box',
+                      borderRadius: '6px',
+                      background: '#f8f8f8',
+                      marginTop: '20px',
+                      marginBottom: '20px',
+                    }}
+                  >
+                    <div className="" style={{ display: 'flex' }}>
+                      <div
+                        className=""
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          width: '110px',
+                          height: '32px',
+                          borderRadius: '6px',
+                          border: '1px solid red',
+                          background: '#fff',
+                        }}
+                      >
+                        <button
+                          type="button"
+                          onClick={increaseNum}
+                          style={{
+                            width: '30px',
+                            height: '30px',
+                            background: '#fff',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          <OffScreenSpan>수량 증가 버튼</OffScreenSpan>
+                          <FontAwesomeIcon icon={faPlus} />
+                        </button>
+                        <div
+                          className=""
+                          style={{
+                            width: '42px',
+                            fontSize: '13px',
+                            borderLeft: '1px solid #ddd',
+                            borderRight: '1px solid #ddd',
+                            textAlign: 'center',
+                            lineHeight: '30px',
+                          }}
+                        >
+                          <input
+                            type="number"
+                            // defaultValue="1"
+                            value={orderCount}
+                            disabled
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          style={{
+                            width: '30px',
+                            height: '30px',
+                            background: '#fff',
+                            cursor: 'pointer',
+                          }}
+                          onClick={orderCount > 1 ? decreaseNum : ''}
+                        >
+                          <OffScreenSpan>수량 감소 버튼</OffScreenSpan>
+                          <FontAwesomeIcon icon={faMinus} />
+                        </button>
+                      </div>
+
+                      <span style={{ marginLeft: 'auto', fontSize: '15px' }}>
+                        <strong
+                          style={{
+                            fontSize: '22px',
+                            fontWeight: '700',
+                            lineHeight: '22px',
+                            letterSpacing: '0px',
+                            wordBreak: 'keep-all',
+                            wordWrap: 'nowrap',
+                          }}
+                        >
+                          {!orderTotal
+                            ? pdPrice
+                            : Number(orderCount * pdPrice).toLocaleString(
+                                'ko-KR'
+                              )}
+                        </strong>{' '}
+                        원
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* 탭 메뉴 */}
+                  <div className="">
+                    <Tabs variant="enclosed">
+                      <TabList>
+                        <Tab>거래 희망사항</Tab>
+                        <Tab>색상 별 가격표</Tab>
+                        <Tab>사이즈 별 가격표</Tab>
+                      </TabList>
+                      <TabPanels>
+                        <TabPanel>
+                          <div className="">
+                            <TableContainer>
+                              <p>{pdWish}</p>
+                            </TableContainer>
+                          </div>
+                        </TabPanel>
+                        <TabPanel>
+                          <div className="">
+                            <TableContainer>
+                              <Table variant="simple">
+                                <TableCaption>
+                                  Imperial to metric conversion factors
+                                </TableCaption>
+                                <Thead>
+                                  <Tr>
+                                    <Th>To convert</Th>
+                                    <Th>into</Th>
+                                    <Th isNumeric>multiply by</Th>
+                                  </Tr>
+                                </Thead>
+                                <Tbody>
+                                  <Tr>
+                                    <Td>inches</Td>
+                                    <Td>millimetres (mm)</Td>
+                                    <Td isNumeric>25.4</Td>
+                                  </Tr>
+                                  <Tr>
+                                    <Td>feet</Td>
+                                    <Td>centimetres (cm)</Td>
+                                    <Td isNumeric>30.48</Td>
+                                  </Tr>
+                                  <Tr>
+                                    <Td>yards</Td>
+                                    <Td>metres (m)</Td>
+                                    <Td isNumeric>0.91444</Td>
+                                  </Tr>
+                                </Tbody>
+                                <Tfoot>
+                                  <Tr>
+                                    <Th>To convert</Th>
+                                    <Th>into</Th>
+                                    <Th isNumeric>multiply by</Th>
+                                  </Tr>
+                                </Tfoot>
+                              </Table>
+                            </TableContainer>
+                          </div>
+                        </TabPanel>
+                        <TabPanel>
+                          <div className="">
+                            <TableContainer>
+                              <Table variant="simple">
+                                <TableCaption>
+                                  Imperial to metric conversion factors
+                                </TableCaption>
+                                <Thead>
+                                  <Tr>
+                                    <Th>To convert</Th>
+                                    <Th>into</Th>
+                                    <Th isNumeric>multiply by</Th>
+                                  </Tr>
+                                </Thead>
+                                <Tbody>
+                                  <Tr>
+                                    <Td>inches</Td>
+                                    <Td>millimetres (mm)</Td>
+                                    <Td isNumeric>25.4</Td>
+                                  </Tr>
+                                  <Tr>
+                                    <Td>feet</Td>
+                                    <Td>centimetres (cm)</Td>
+                                    <Td isNumeric>30.48</Td>
+                                  </Tr>
+                                  <Tr>
+                                    <Td>yards</Td>
+                                    <Td>metres (m)</Td>
+                                    <Td isNumeric>0.91444</Td>
+                                  </Tr>
+                                </Tbody>
+                                <Tfoot>
+                                  <Tr>
+                                    <Th>To convert</Th>
+                                    <Th>into</Th>
+                                    <Th isNumeric>multiply by</Th>
+                                  </Tr>
+                                </Tfoot>
+                              </Table>
+                            </TableContainer>
+                          </div>
+                        </TabPanel>
+                        <TabPanel>
+                          <div className="">
+                            <TableContainer>
+                              <Table variant="simple">
+                                <TableCaption>
+                                  Imperial to metric conversion factors
+                                </TableCaption>
+                                <Thead>
+                                  <Tr>
+                                    <Th>To convert</Th>
+                                    <Th>into</Th>
+                                    <Th isNumeric>multiply by</Th>
+                                  </Tr>
+                                </Thead>
+                                <Tbody>
+                                  <Tr>
+                                    <Td>inches</Td>
+                                    <Td>millimetres (mm)</Td>
+                                    <Td isNumeric>25.4</Td>
+                                  </Tr>
+                                  <Tr>
+                                    <Td>feet</Td>
+                                    <Td>centimetres (cm)</Td>
+                                    <Td isNumeric>30.48</Td>
+                                  </Tr>
+                                  <Tr>
+                                    <Td>yards</Td>
+                                    <Td>metres (m)</Td>
+                                    <Td isNumeric>0.91444</Td>
+                                  </Tr>
+                                </Tbody>
+                                <Tfoot>
+                                  <Tr>
+                                    <Th>To convert</Th>
+                                    <Th>into</Th>
+                                    <Th isNumeric>multiply by</Th>
+                                  </Tr>
+                                </Tfoot>
+                              </Table>
+                            </TableContainer>
+                          </div>
+                        </TabPanel>
+                      </TabPanels>
+                    </Tabs>
+                  </div>
+
+                  <button
+                    type="submit"
+                    style={{
+                      width: '130px',
+                      height: '54px',
+                      lineHeight: '51px',
+                      border: '1px solid #ff3c50',
+                      fontSize: '16px',
+                      textAlign: 'center',
+                      cursor: 'pointer',
+                      background: '#ff3c50',
+                      color: '#fff',
+                    }}
+                  >
+                    장바구니 담기
+                  </button>
+                  <button type="button">
+                    <OffScreenSpan>상품 업데이트 버튼</OffScreenSpan>
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </button>
+                </div>
               </div>
-            </div>
+            </PForm>
           </SectionContent>
         </SectionLayout>
       </SectionUnit>
