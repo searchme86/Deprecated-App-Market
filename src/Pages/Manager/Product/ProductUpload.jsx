@@ -289,15 +289,17 @@ function FashionUpload() {
 
   const { pdTitle, pdImage, pdPrice, pdDes, pdWish, pdBrand, pdType } = pdInfo;
 
-  // 새롭게 수정
+  const filterLastItem = (data) => {
+    if (!data) return;
+    const convertArray = Object.values([...data]);
+    let deleteLastItem = convertArray.filter(
+      (item, index) => index < convertArray.length - 1
+    );
+    return deleteLastItem;
+  };
 
-  const prdSizeArray = Object.values([...prdSize]);
-  let prdSizeItem = prdSizeArray.filter(
-    (item, index) => index < prdSizeArray.length - 1
-  );
-  console.log('prdSizeItem', prdSizeItem);
-
-  // 새롭게 수정
+  let prdSizeItem = filterLastItem(prdSize);
+  let prdColorItem = filterLastItem(prdColor);
 
   const newProduct = useMemo(() => {
     return {
@@ -316,7 +318,7 @@ function FashionUpload() {
       inputAddressValue,
       pdStatus: [prdStatus, ...tags],
       pdSizeInfo: [...prdSizeItem],
-      pdColorInfo: [...prdColor],
+      pdColorInfo: [...prdColorItem],
     };
   }, [
     pdCategory,
@@ -335,7 +337,7 @@ function FashionUpload() {
     prdStatus,
     tags,
     prdSizeItem,
-    prdColor,
+    prdColorItem,
   ]);
 
   console.log('newProduct', newProduct);
