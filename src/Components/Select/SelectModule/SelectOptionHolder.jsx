@@ -1,5 +1,11 @@
 import React, { useCallback, useRef } from 'react';
-import { SelectBox, SelectTitle, SelectUl } from '../SelectUnit.style';
+import {
+  SelectBox,
+  SelectTitle,
+  SelectTitleContent,
+  SelectTitleSubject,
+  SelectUl,
+} from '../SelectUnit.style';
 import useOnClickOutside from '../SelectConfig/useOnClickOutside';
 
 function SelectOptionHolder({
@@ -28,8 +34,8 @@ function SelectOptionHolder({
       <SelectTitle onClick={showDropdownHandler}>
         {selectedOption ? (
           <>
-            <span>{cntShow}</span>
-            <span>{cntValue}</span>
+            <SelectTitleSubject>{cntShow}</SelectTitleSubject>
+            <SelectTitleContent>{cntValue}</SelectTitleContent>
           </>
         ) : (
           selectPlaceholder

@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import SelectOptionHolder from './SelectModule/SelectOptionHolder';
 import SelectOption from './SelectModule/SelectOption';
+import { SelectTitleContent, SelectTitleSubject } from './SelectUnit.style';
 
 function SelectUnit({ data = [], handler, selected }) {
   const [selectedOption, setSelectedOption] = useState('');
@@ -39,10 +40,8 @@ function SelectUnit({ data = [], handler, selected }) {
           changeHandler={updateSelectedOption}
           value={{ cntValue, cntShow }}
         >
-          <div className="">
-            <span style={{ display: 'block' }}> {cntShow}</span>
-            <span>{cntValue}</span>
-          </div>
+          <SelectTitleSubject>{cntShow}</SelectTitleSubject>
+          <SelectTitleContent>{cntValue}</SelectTitleContent>
         </SelectOption>
       ))}
     </SelectOptionHolder>
