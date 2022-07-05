@@ -3,7 +3,7 @@ import SelectOptionHolder from './SelectModule/SelectOptionHolder';
 import SelectOption from './SelectModule/SelectOption';
 import { SelectTitleContent, SelectTitleSubject } from './SelectUnit.style';
 
-function SelectUnit({ data = [], handler, selected }) {
+function SelectUnit({ data = [], handler }) {
   const [selectedOption, setSelectedOption] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -21,11 +21,10 @@ function SelectUnit({ data = [], handler, selected }) {
     [handler]
   );
 
-  console.log('selectedOption', selectedOption);
-
-  console.log('data', data);
-  console.log('handler', handler);
-  console.log('selected', selected);
+  // console.log('selectedOption', selectedOption);
+  // console.log('data', data);
+  // console.log('handler', handler);
+  // console.log('selected', selected);
 
   return (
     <SelectOptionHolder
