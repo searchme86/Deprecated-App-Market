@@ -52,6 +52,7 @@ export const SelectUl = styled.ul`
   opacity: ${({ showDropdown }) => (showDropdown ? '1' : '0')};
   background: #fff;
   margin: 2px 0 0 0;
+  z-index: 2;
 `;
 
 export const SelectLi = styled.li`
