@@ -13,7 +13,7 @@ function SelectUnit({ data = [], handler, selected }) {
 
   const updateSelectedOption = useCallback(
     (option) => {
-      // setSelectedOption(option);
+      setSelectedOption(option);
       handler(option);
       setShowDropdown(false);
     },
