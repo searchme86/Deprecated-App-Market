@@ -289,6 +289,16 @@ function FashionUpload() {
 
   const { pdTitle, pdImage, pdPrice, pdDes, pdWish, pdBrand, pdType } = pdInfo;
 
+  // 새롭게 수정
+
+  const prdSizeArray = Object.values([...prdSize]);
+  let prdSizeItem = prdSizeArray.filter(
+    (item, index) => index < prdSizeArray.length - 1
+  );
+  console.log('prdSizeItem', prdSizeItem);
+
+  // 새롭게 수정
+
   const newProduct = useMemo(() => {
     return {
       pdCategory,
@@ -305,7 +315,7 @@ function FashionUpload() {
       pdtags,
       inputAddressValue,
       pdStatus: [prdStatus, ...tags],
-      pdSizeInfo: [...prdSize],
+      pdSizeInfo: [...prdSizeItem],
       pdColorInfo: [...prdColor],
     };
   }, [
@@ -324,9 +334,11 @@ function FashionUpload() {
     inputAddressValue,
     prdStatus,
     tags,
-    prdSize,
+    prdSizeItem,
     prdColor,
   ]);
+
+  console.log('newProduct', newProduct);
 
   // 상품모달
   const prReport = { handleClose, isOpen, newProduct };
