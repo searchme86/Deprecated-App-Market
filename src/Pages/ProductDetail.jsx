@@ -89,13 +89,7 @@ function ProductDetail() {
   const [color, setColor] = useState([]);
   const [size, setSize] = useState([]);
 
-  // console.log('1');
-  // console.log('id', id);
   console.log('nproduct', nproduct);
-  // console.log('***nrelatedProducts', nrelatedProducts);
-  // console.log('***nrelatedProducts.length', [nrelatedProducts].length);
-
-  // console.log('pdStatus', pdStatus);
 
   let relatedItems = nrelatedProducts && Object.values(nrelatedProducts);
 
