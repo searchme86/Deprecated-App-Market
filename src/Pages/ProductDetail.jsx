@@ -165,15 +165,6 @@ function ProductDetail() {
   let pdColorItems = pdColorInfo && Object.values(pdColorInfo);
   let pdSizeItems = pdSizeInfo && Object.values(pdSizeInfo);
 
-  //셀렉트 컴포넌트를 보여주고 없애주기 위한 데이터
-  // const [{ pdColor, pdPriceByColor }] = pdColorItems;
-  // const [{ pdSize, pdPriceBySize }] = pdSizeItems;
-
-  // console.log('pdColor', pdColor);
-  // console.log('pdPriceByColor', pdPriceByColor);
-  // console.log('pdSize', pdSize);
-  // console.log('pdPriceBySize', pdPriceBySize);
-
   // 셀렉트 컴포넌트에 전달하기 위해 정리된 데이터
   let colorData = pdColorInfo && filterObject(pdColorInfo);
   let sizeData = pdSizeInfo && filterObject(pdSizeInfo);
@@ -321,18 +312,6 @@ function ProductDetail() {
 
                   {/* 색상별 사이즈별 셀렉트 박스 */}
                   <div className="">
-                    {pdColorItems ? (
-                      pdColorItems.length > 0 ? (
-                        <div className="" style={{ marginTop: '20px' }}>
-                          <SelectUnit data={colorData} handler={setColor} />
-                        </div>
-                      ) : (
-                        ''
-                      )
-                    ) : (
-                      ''
-                    )}
-
                     {pdSizeItems ? (
                       pdSizeItems.length > 0 ? (
                         <div className="" style={{ marginTop: '10px' }}>
@@ -340,6 +319,18 @@ function ProductDetail() {
                         </div>
                       ) : (
                         ' '
+                      )
+                    ) : (
+                      ''
+                    )}
+
+                    {pdColorItems ? (
+                      pdColorItems.length > 0 ? (
+                        <div className="" style={{ marginTop: '20px' }}>
+                          <SelectUnit data={colorData} handler={setColor} />
+                        </div>
+                      ) : (
+                        ''
                       )
                     ) : (
                       ''

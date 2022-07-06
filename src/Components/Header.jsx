@@ -112,6 +112,11 @@ function Header() {
             {user?.result?._id ? (
               <>
                 <MDBNavbarItem>
+                  <MDBNavbarLink href="/userProduct">
+                    <p className="header-text">나의상품</p>
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
+                <MDBNavbarItem>
                   <MDBNavbarLink href="/upload">
                     <p className="header-text">상품등록</p>
                   </MDBNavbarLink>

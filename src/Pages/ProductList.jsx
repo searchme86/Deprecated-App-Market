@@ -22,7 +22,7 @@ import {
 import Pagination from '../Components/Pagination';
 import CardProduct from '../Components/CardProduct/CardProduct';
 
-function Items() {
+function ProductList() {
   const [change, setChange] = useState('');
   const {
     product: { nproducts, loading, currentPage, numberOfPages },
@@ -57,38 +57,20 @@ function Items() {
           <SectionTitle>신규 상품 둘러보기</SectionTitle>
         </SectionHeader>
         <SectionContent>
-          <div className="" style={{ padding: '0 30px' }}>
-            <form onSubmit={handleSubmit()}>
-              <FormLabel htmlFor="category" fontWeight="bold">
-                상품 카테고리
-              </FormLabel>
-              <Select
-                id="category"
-                name="category"
-                placeholder="상품의 카테고리를 입력해주세요"
-                {...register('category', {
-                  required: '상품의 카테고리를 선택해 주세요',
-                  onChange: changeCategory,
-                })}
-              >
-                <option value="1">1</option>
-              </Select>
-            </form>
-            <div className="">
-              <ul
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  width: '100%',
-                  marginTop: '10px',
-                }}
-              >
-                {nproducts &&
-                  nproducts.map((item) => (
-                    <CardProduct key={item._id} {...item} />
-                  ))}
-              </ul>
-            </div>
+          <div className="">
+            <ul
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                width: '100%',
+                marginTop: '10px',
+              }}
+            >
+              {nproducts &&
+                nproducts.map((item) => (
+                  <CardProduct key={item._id} {...item} />
+                ))}
+            </ul>
           </div>
           <div className="">
             {nproducts?.length > 0 && !searchQuery && (
@@ -106,4 +88,4 @@ function Items() {
   );
 }
 
-export default Items;
+export default ProductList;

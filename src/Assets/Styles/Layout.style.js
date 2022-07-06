@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+export const CenterLayout = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translage(-50%, -50%);
+`;
+
 export const Page = styled.div`
   position: relative;
   padding: 20px 20px 20px 20px;
