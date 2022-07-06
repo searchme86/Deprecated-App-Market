@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import {
   SectionHeader,
@@ -13,7 +13,6 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthSelector } from '../../../Store/Features/AuthSlice';
 import {
-  deleteProduct,
   getProductsByUser,
   ProductSelector,
 } from '../../../Store/Features/NProductSlice';
@@ -23,6 +22,12 @@ import { ImageHolder, Image } from '../../../Assets/Styles/Image.style';
 import './productOfUser.css';
 import Masonry from 'react-masonry-css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { OffScreenSpan } from '../../../Assets/Styles/Basic.style';
+import { CenterLayout } from '../../../Assets/Styles/Layout.style';
+import ProductDelete from './ProductDelete';
+
 const Columns = {
   default: 3,
   1100: 2,
@@ -30,6 +35,10 @@ const Columns = {
 };
 
 function ProductOfUser() {
+  const [itemInfo, setItemInfo] = useState({});
+  const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const {
     auth: {
       user,
@@ -38,25 +47,43 @@ function ProductOfUser() {
       },
     },
   } = useSelector(AuthSelector);
+  const dispatch = useDispatch();
 
   const {
     product: { loading, userUploaded },
   } = useSelector(ProductSelector);
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     if (userId) {
       dispatch(getProductsByUser(userId));
     }
-  }, [dispatch, userId]);
+  }, []);
+
+  //상품 모달
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  //상품 모달
+  const handleDeleteModal = useCallback((name) => {
+    setIsOpen((value) => !value);
+    setIsModalOpen(true);
+    setItemInfo({ ...name });
+  }, []);
 
   if (loading) {
-    return <Spinner />;
+    return (
+      <CenterLayout>
+        <Spinner />
+      </CenterLayout>
+    );
   }
 
-  console.log('user', user);
-  console.log('userUploaded', userUploaded);
+  console.log('itemInfo', itemInfo);
+  const modalProps = { handleClose, isOpen, itemInfo };
+
+  // console.log('user', user);
+  // console.log('userUploaded', userUploaded);
 
   return (
     <SectionUnit>
@@ -132,29 +159,64 @@ function ProductOfUser() {
                           display: 'flex',
                           flexDirection: 'column',
                           background: '#ddd',
-                          padding: '10px',
+                          padding: '15px',
                           boxSizing: 'border-box',
                         }}
                       >
-                        <strong style={{ fontSize: '20px', lineHeight: '1' }}>
+                        <strong
+                          style={{
+                            fontSize: '20px',
+                            lineHeight: '1',
+                            width: '200px',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                          }}
+                        >
                           {pdTitle}
                         </strong>
-                        <span style={{ marginTop: '5px' }}>{pdPrice}원</span>
+                        <span style={{ marginTop: '15px' }}>
+                          <strong style={{ fontSize: '20px' }}>
+                            {Number(pdPrice).toLocaleString('ko-KR')}
+                          </strong>
+                          원
+                        </span>
                         <span
                           style={{
                             marginLeft: 'auto',
                             position: 'absolute',
-                            top: '6px',
+                            top: '11px',
                             right: '16px',
+                            fontSize: '17px',
                           }}
                         >
                           좋아요 {pdlikes?.length} 개
                         </span>
+                        <button
+                          type="button"
+                          style={{
+                            position: 'absolute',
+                            bottom: '14px',
+                            right: '16px',
+                            display: 'inline-block',
+                            verticalAlign: 'top',
+                          }}
+                          onClick={() =>
+                            handleDeleteModal({ name: pdTitle, id: _id })
+                          }
+                        >
+                          <OffScreenSpan>상품삭제 버튼</OffScreenSpan>
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            style={{ fontSize: '28px', color: 'red' }}
+                          />
+                        </button>
                       </div>
                     </div>
                   )
                 )}
             </Masonry>
+            {isModalOpen && <ProductDelete deleteModal={modalProps} />}
           </div>
         </SectionContent>
       </SectionLayout>
