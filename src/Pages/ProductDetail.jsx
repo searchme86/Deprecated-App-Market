@@ -165,15 +165,6 @@ function ProductDetail() {
   let pdColorItems = pdColorInfo && Object.values(pdColorInfo);
   let pdSizeItems = pdSizeInfo && Object.values(pdSizeInfo);
 
-  //셀렉트 컴포넌트를 보여주고 없애주기 위한 데이터
-  // const [{ pdColor, pdPriceByColor }] = pdColorItems;
-  // const [{ pdSize, pdPriceBySize }] = pdSizeItems;
-
-  // console.log('pdColor', pdColor);
-  // console.log('pdPriceByColor', pdPriceByColor);
-  // console.log('pdSize', pdSize);
-  // console.log('pdPriceBySize', pdPriceBySize);
-
   // 셀렉트 컴포넌트에 전달하기 위해 정리된 데이터
   let colorData = pdColorInfo && filterObject(pdColorInfo);
   let sizeData = pdSizeInfo && filterObject(pdSizeInfo);
