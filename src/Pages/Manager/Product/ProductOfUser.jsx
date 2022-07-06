@@ -76,7 +76,6 @@ function ProductOfUser() {
 
   const {
     auth: {
-      user,
       user: {
         result: { _id: userId, imageFile, nickname },
       },
@@ -119,8 +118,6 @@ function ProductOfUser() {
       </CenterLayout>
     );
   }
-
-  console.log('user', user);
 
   return (
     <SectionUnit>
