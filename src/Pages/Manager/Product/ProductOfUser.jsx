@@ -133,8 +133,10 @@ function ProductOfUser() {
               </ImageHolder>
               <div className="">
                 <p style={{ marginLeft: '10px' }}>
-                  <strong style={{ fontSize: '25px' }}>{nickname}</strong>님이
-                  등록하신 상품입니다.
+                  <strong style={{ fontSize: '25px', marginRight: '5px' }}>
+                    {nickname ? nickname : '유저'}
+                  </strong>
+                  님이 등록하신 상품입니다.
                 </p>
               </div>
             </div>
