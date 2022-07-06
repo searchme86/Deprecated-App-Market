@@ -31,6 +31,7 @@ import Items from '../Pages/Items';
 import ProductUpload from '../Pages/Manager/Product/ProductUpload';
 import ProductDetail from '../Pages/ProductDetail';
 import { useDispatch } from 'react-redux';
+import ProductOfUser from '../Pages/Manager/Product/ProductOfUser';
 
 function Router() {
   const dispatch = useDispatch();
@@ -59,6 +60,14 @@ function Router() {
           />
         </Route>
         {/*  */}
+        <Route
+          path="/userProduct"
+          element={
+            <PrivateRoute>
+              <ProductOfUser />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/upload"
           element={
