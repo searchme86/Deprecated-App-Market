@@ -22,6 +22,8 @@ import { Spinner } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
+import defautImage from '../../../Assets/Image/default-product-upload.png';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthSelector } from '../../../Store/Features/AuthSlice';
 import {
@@ -86,6 +88,8 @@ function ProductOfUser() {
 
   const modalProps = { handleClose, isOpen, itemInfo };
 
+  console.log('user', user);
+
   return (
     <SectionUnit>
       <SectionLayout>
@@ -108,7 +112,10 @@ function ProductOfUser() {
               }}
             >
               <ImageHolder width="66px" br="100%">
-                <Image src={imageFile} alt={`${nickname} 프로필 이미지`} />
+                <Image
+                  src={imageFile ? imageFile : defautImage}
+                  alt={nickname ? `${nickname} 프로필 이미지` : '디폴트 이미지'}
+                />
               </ImageHolder>
               <div className="">
                 <p style={{ marginLeft: '10px' }}>
