@@ -312,18 +312,6 @@ function ProductDetail() {
 
                   {/* 색상별 사이즈별 셀렉트 박스 */}
                   <div className="">
-                    {pdColorItems ? (
-                      pdColorItems.length > 0 ? (
-                        <div className="" style={{ marginTop: '20px' }}>
-                          <SelectUnit data={colorData} handler={setColor} />
-                        </div>
-                      ) : (
-                        ''
-                      )
-                    ) : (
-                      ''
-                    )}
-
                     {pdSizeItems ? (
                       pdSizeItems.length > 0 ? (
                         <div className="" style={{ marginTop: '10px' }}>
@@ -331,6 +319,18 @@ function ProductDetail() {
                         </div>
                       ) : (
                         ' '
+                      )
+                    ) : (
+                      ''
+                    )}
+
+                    {pdColorItems ? (
+                      pdColorItems.length > 0 ? (
+                        <div className="" style={{ marginTop: '20px' }}>
+                          <SelectUnit data={colorData} handler={setColor} />
+                        </div>
+                      ) : (
+                        ''
                       )
                     ) : (
                       ''
