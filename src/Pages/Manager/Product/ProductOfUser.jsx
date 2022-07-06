@@ -7,7 +7,7 @@
  *
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   SectionHeader,
   SectionLayout,
@@ -78,6 +78,14 @@ function ProductOfUser() {
     setItemInfo({ ...name });
   }, []);
 
+  const modalProps = useMemo(() => {
+    return {
+      handleClose,
+      isOpen,
+      itemInfo,
+    };
+  }, [handleClose, isOpen, itemInfo]);
+
   if (loading) {
     return (
       <CenterLayout>
@@ -85,8 +93,6 @@ function ProductOfUser() {
       </CenterLayout>
     );
   }
-
-  const modalProps = { handleClose, isOpen, itemInfo };
 
   console.log('user', user);
 
