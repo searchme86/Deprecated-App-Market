@@ -66,12 +66,10 @@ function ProductOfUser() {
     }
   }, []);
 
-  //상품 모달
   const handleClose = useCallback(() => {
     setIsOpen(false);
   }, []);
 
-  //상품 모달
   const handleDeleteModal = useCallback((name) => {
     setIsOpen((value) => !value);
     setIsModalOpen(true);
