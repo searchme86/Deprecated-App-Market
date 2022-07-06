@@ -5,7 +5,7 @@
  *
  * 변수명
  * deleteModal
- * : 부모 컴포넌트(ProductDelete.jsx)에서 제공하는 prop
+ * : 부모 컴포넌트(ProductOfUser.jsx)에서 제공하는 prop
  * : 커스텀 모달 컴포넌트(<ModalFrame/>)에 필요한 prop을 의미하기도함
  * handleClose : 모달을 보이고/보이지 않게 하는 함수
  * isOpen :  모달의 상태(보이고/보이지않는)를 담는 변수
