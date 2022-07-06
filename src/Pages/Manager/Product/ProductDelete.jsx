@@ -73,7 +73,7 @@ function ProductDelete({ deleteModal }) {
               </p>
             ) : (
               <p style={{ fontSize: '21px' }}>
-                유저의 상품이 없거나 이미 삭제된 상품입니다.
+                현재 유저의 상품이 없거나 이미 삭제된 상품입니다.
               </p>
             )}
           </div>
