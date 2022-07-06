@@ -21,13 +21,10 @@ function ProductDelete({ deleteModal }) {
 
   const handleDelete = (id) => {
     if (!id) return;
-    console.log('itemNum', id);
+
     id && dispatch(deleteProduct(id));
     handleClose();
   };
-
-  console.log('name', name);
-  console.log('id', id);
 
   return (
     <div>
