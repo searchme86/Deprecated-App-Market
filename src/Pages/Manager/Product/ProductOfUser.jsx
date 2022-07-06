@@ -15,24 +15,24 @@ import {
   SectionUnit,
   SectionContent,
 } from './ProductUpload.style';
+import { CenterLayout } from '../../../Assets/Styles/Layout.style';
+import { ImageHolder, Image } from '../../../Assets/Styles/Image.style';
+import { OffScreenSpan } from '../../../Assets/Styles/Basic.style';
+import { Spinner } from '@chakra-ui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthSelector } from '../../../Store/Features/AuthSlice';
 import {
   getProductsByUser,
   ProductSelector,
 } from '../../../Store/Features/NProductSlice';
-import { Spinner } from '@chakra-ui/react';
-import { ImageHolder, Image } from '../../../Assets/Styles/Image.style';
 
-import './productOfUser.css';
 import Masonry from 'react-masonry-css';
+import './productOfUser.css';
+import { Link } from 'react-router-dom';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { OffScreenSpan } from '../../../Assets/Styles/Basic.style';
-import { CenterLayout } from '../../../Assets/Styles/Layout.style';
 import ProductDelete from './ProductDelete';
 
 const Columns = {
