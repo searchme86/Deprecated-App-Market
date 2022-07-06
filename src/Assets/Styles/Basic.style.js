@@ -22,7 +22,7 @@ export const OffScreenSpan = styled.span`
   clip-path: inset(50%);
 `;
 
-export const OffScreenSection = styled.section`
+export const OffScreenTitle = styled.h1`
   display: inline-block;
   position: absolute;
   overflow: hidden;
