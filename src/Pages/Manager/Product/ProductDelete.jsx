@@ -63,13 +63,19 @@ function ProductDelete({ deleteModal }) {
               marginBottom: '10px',
             }}
           >
-            <p style={{ fontSize: '21px' }}>
-              {' '}
-              상품, <strong style={{ fontSize: '21px' }}>
-                {name}
-              </strong> 을/를 <br />
-              삭제하시겠습니까?
-            </p>
+            {name ? (
+              <p style={{ fontSize: '21px' }}>
+                {' '}
+                상품, <strong style={{ fontSize: '21px' }}>
+                  {name}
+                </strong> 을/를 <br />
+                삭제하시겠습니까?
+              </p>
+            ) : (
+              <p style={{ fontSize: '21px' }}>
+                유저의 상품이 없거나 이미 삭제된 상품입니다.
+              </p>
+            )}
           </div>
           <ModalAction>
             <ModalSeconDaryBtn type="button" onClick={handleClose}>
