@@ -1,5 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+/**
+ * 역할 :  페이지(page)
+ *
+ *
+ *
+ *
+ *
+ */
 
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   SectionHeader,
   SectionLayout,
@@ -9,7 +17,6 @@ import {
 } from './ProductUpload.style';
 
 import { Link } from 'react-router-dom';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthSelector } from '../../../Store/Features/AuthSlice';
 import {
@@ -79,11 +86,7 @@ function ProductOfUser() {
     );
   }
 
-  console.log('itemInfo', itemInfo);
   const modalProps = { handleClose, isOpen, itemInfo };
-
-  // console.log('user', user);
-  // console.log('userUploaded', userUploaded);
 
   return (
     <SectionUnit>
