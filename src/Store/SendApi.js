@@ -82,3 +82,9 @@ export const likeProduct = (id) => API.patch(`/nproduct/like/${id}`);
 //related Product
 export const getRelatedItems = (PInfo) =>
   API.post(`/nproduct/relatedProducts`, PInfo);
+
+//product user uploaded
+export const userProducts = (userId) => API.get(`/nproduct/user/${userId}`);
+
+//delete a product
+export const deleteProduct = (id) => API.delete(`/nproduct/user/${id}`);

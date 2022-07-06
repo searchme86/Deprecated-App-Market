@@ -68,6 +68,31 @@ export const ngetRelatedProducts = createAsyncThunk(
   }
 );
 
+export const getProductsByUser = createAsyncThunk(
+  'nproduct/getProductByUser',
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await api.userProducts(userId);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const deleteProduct = createAsyncThunk(
+  'nproduct/deleteProduct',
+  async ({ id, toast }, { rejectWithValue }) => {
+    try {
+      const response = await api.deleteProduct(id);
+      toast.success('Product Deleted Successfully');
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const NProductSlice = createSlice({
   name: 'Nproduct',
   initialState: {
@@ -75,6 +100,7 @@ const NProductSlice = createSlice({
     nproduct: {},
     //상품들을 모두 모을 빈 배열
     nproducts: [],
+    userUploaded: [],
     //상품에 대한 태그
     nproductHasTags: [],
     //해당 상품과 관련된 상품들
@@ -223,6 +249,37 @@ const NProductSlice = createSlice({
       state.nrelatedProducts = action.payload;
     },
     [ngetRelatedProducts.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [getProductsByUser.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getProductsByUser.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.userUploaded = action.payload;
+    },
+    [getProductsByUser.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [deleteProduct.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [deleteProduct.fulfilled]: (state, action) => {
+      state.loading = false;
+      console.log(action);
+      const {
+        arg: { id },
+      } = action.meta;
+      if (id) {
+        state.userUploaded = state.userUploaded.filter(
+          (item) => item._id !== id
+        );
+        state.nproducts = state.nproducts.filter((item) => item._id !== id);
+      }
+    },
+    [deleteProduct.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
