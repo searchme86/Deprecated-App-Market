@@ -82,10 +82,11 @@ export const getProductsByUser = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
   'nproduct/deleteProduct',
-  async ({ id, toast }, { rejectWithValue }) => {
+  async (id, { rejectWithValue }) => {
+    console.log('지우려는 id,', id);
     try {
       const response = await api.deleteProduct(id);
-      toast.success('Product Deleted Successfully');
+      // toast.success('Product Deleted Successfully');
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -269,14 +270,12 @@ const NProductSlice = createSlice({
     [deleteProduct.fulfilled]: (state, action) => {
       state.loading = false;
       console.log(action);
-      const {
-        arg: { id },
-      } = action.meta;
-      if (id) {
+      const { arg } = action.meta;
+      if (arg) {
         state.userUploaded = state.userUploaded.filter(
-          (item) => item._id !== id
+          (item) => item._id !== arg
         );
-        state.nproducts = state.nproducts.filter((item) => item._id !== id);
+        state.nproducts = state.nproducts.filter((item) => item._id !== arg);
       }
     },
     [deleteProduct.rejected]: (state, action) => {
