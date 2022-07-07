@@ -67,14 +67,14 @@ function Router() {
         </Route>
 
         {/*  */}
-        <Route
+        {/* <Route
           path="/userProduct"
           element={
             <PrivateRoute>
               <ProductOfUser />
             </PrivateRoute>
           }
-        />
+        /> */}
         {/* <Route
           path="/upload"
           element={
