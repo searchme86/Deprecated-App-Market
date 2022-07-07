@@ -42,7 +42,7 @@ function SectionProduct() {
   let shuffledItems = savedProducts && shuffle(Object.values(savedProducts));
 
   return (
-    <SectionUnit>
+    <SectionUnit color="#FBE8A6">
       <SectionLayout>
         <SectionHeader>
           <SectionTitle>신규 등록 상품</SectionTitle>
