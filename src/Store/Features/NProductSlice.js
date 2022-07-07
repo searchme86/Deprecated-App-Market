@@ -241,20 +241,20 @@ const NProductSlice = createSlice({
       state.error = action.payload;
     },
 
-    //
+    // 현재 작업중
     [fetchAllProducts.pending]: (state, action) => {
       state.loading = true;
     },
     [fetchAllProducts.fulfilled]: (state, action) => {
       state.loading = false;
-      state.savedProducts = action.payload;
+      state.savedProducts = action.payload.data;
     },
     [fetchAllProducts.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
-
     //
+
     [likeProduct.pending]: (state, action) => {},
     [likeProduct.fulfilled]: (state, action) => {
       state.loading = false;
