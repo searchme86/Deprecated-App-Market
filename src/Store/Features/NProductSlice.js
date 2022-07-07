@@ -31,6 +31,18 @@ export const ngetProduct = createAsyncThunk(
   }
 );
 
+export const fetchAllProducts = createAsyncThunk(
+  'nproduct/getProducts',
+  async ({ rejectWithValue }) => {
+    try {
+      const response = await api.pullProducts();
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 export const ngetProducts = createAsyncThunk(
   'nproduct/getProducts',
   async (page, { rejectWithValue }) => {
@@ -97,6 +109,8 @@ export const deleteProduct = createAsyncThunk(
 const NProductSlice = createSlice({
   name: 'Nproduct',
   initialState: {
+    //디비에 저장된 모든 아이템들
+    savedProducts: [],
     //상품 단일을 넣을
     nproduct: {},
     //상품들을 모두 모을 빈 배열
@@ -226,6 +240,21 @@ const NProductSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+
+    //
+    [fetchAllProducts.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [fetchAllProducts.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.savedProducts = action.payload;
+    },
+    [fetchAllProducts.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    //
     [likeProduct.pending]: (state, action) => {},
     [likeProduct.fulfilled]: (state, action) => {
       state.loading = false;
