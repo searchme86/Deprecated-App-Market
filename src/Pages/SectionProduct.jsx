@@ -3,7 +3,6 @@ import {
   SectionContent,
   SectionHeader,
   SectionLayout,
-  SectionTitle,
   SectionUnit,
 } from './Manager/Product/ProductUpload.style';
 
@@ -14,6 +13,7 @@ import {
   ProductSelector,
 } from '../Store/Features/NProductSlice';
 import CardProduct from '../Components/CardProduct/CardProduct';
+import { OffScreenTitle } from '../Assets/Styles/Basic.style';
 
 const shuffle = (arr) => {
   if (!arr && !arr.length > 0) return;
@@ -45,7 +45,7 @@ function SectionProduct() {
     <SectionUnit color="#FBE8A6">
       <SectionLayout>
         <SectionHeader>
-          <SectionTitle>신규 등록 상품</SectionTitle>
+          <OffScreenTitle>신규 등록 상품</OffScreenTitle>
         </SectionHeader>
         <SectionContent>
           <div className="">
