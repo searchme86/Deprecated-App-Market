@@ -124,10 +124,7 @@ function CardProduct(item) {
               </ImageHolder>
             </Link>
           </div>
-          <div
-            className=""
-            style={{ padding: '20px', boxSizing: 'border-box' }}
-          >
+          <div className="" style={{ padding: '5px', boxSizing: 'border-box' }}>
             <div className="">
               <PCardCategory>{pdCategory}</PCardCategory>
               <PCardPrice>
@@ -136,7 +133,7 @@ function CardProduct(item) {
               <PCardTitle>
                 <Link to={`/product/${_id}`}>{pdTitle}</Link>
               </PCardTitle>
-              <PCardDes>{pdDes}</PCardDes>
+              {/* <PCardDes>{pdDes}</PCardDes>
               <div className="">
                 <ul style={{}}>
                   {pdStatus.map((status, index) => (
@@ -162,7 +159,7 @@ function CardProduct(item) {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
               <div className="">
                 <div
                   className=""
