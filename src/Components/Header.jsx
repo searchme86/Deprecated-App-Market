@@ -80,11 +80,6 @@ function Header() {
                 <p className="header-text">Home</p>
               </MDBNavbarLink>
             </MDBNavbarItem>
-            <MDBNavbarItem>
-              <MDBNavbarLink href="/product">
-                <p className="header-text">신규 상품</p>
-              </MDBNavbarLink>
-            </MDBNavbarItem>
             {user?.result?._id && (
               <>
                 <MDBNavbarItem>

@@ -12,6 +12,7 @@ import { useLocation } from 'react-router-dom';
 import MainAd from './Manager/Info/MainAd';
 import ManageCategory from './Manager/category/ManageCategory';
 import SalesList from '../Components/Sales/SalesList';
+import ProductList from './ProductList';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -49,6 +50,10 @@ function Home() {
       <MainAd />
 
       <ManageCategory />
+
+      {/* 현재 진행중 7,7 */}
+      {/* 상품리스트  */}
+      <ProductList />
 
       <SalesList />
 
