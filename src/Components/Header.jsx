@@ -88,11 +88,6 @@ function Header() {
                   </MDBNavbarLink>
                 </MDBNavbarItem>
                 <MDBNavbarItem>
-                  <MDBNavbarLink href="/news">
-                    <p className="header-text">News</p>
-                  </MDBNavbarLink>
-                </MDBNavbarItem>
-                <MDBNavbarItem>
                   <MDBNavbarLink href="/addTour">
                     <p className="header-text">Add Tour</p>
                   </MDBNavbarLink>

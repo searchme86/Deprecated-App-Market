@@ -26,7 +26,6 @@ import TagTours from '../Pages/TagTours';
 import UserPage from '../Pages/Manager/UserPage';
 import UploadProduct from '../Pages/Manager/UploadProduct';
 import UploadCategory from '../Pages/Manager/category/UploadCategory';
-import News from '../Pages/News';
 import ProductUpload from '../Pages/Manager/Product/ProductUpload';
 import ProductDetail from '../Pages/ProductDetail';
 import { useDispatch } from 'react-redux';
@@ -119,7 +118,6 @@ function Router() {
             </PrivateRoute>
           }
         />
-        <Route path="/news" element={<News />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
