@@ -32,7 +32,7 @@ export const ngetProduct = createAsyncThunk(
 );
 
 export const fetchAllProducts = createAsyncThunk(
-  'nproduct/getProducts',
+  'nproduct/fetchAllProducts',
   async ({ rejectWithValue }) => {
     try {
       const response = await api.pullProducts();
@@ -247,7 +247,7 @@ const NProductSlice = createSlice({
     },
     [fetchAllProducts.fulfilled]: (state, action) => {
       state.loading = false;
-      state.savedProducts = action.payload.data;
+      state.savedProducts = action.payload;
     },
     [fetchAllProducts.rejected]: (state, action) => {
       state.loading = false;
