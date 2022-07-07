@@ -46,14 +46,11 @@ function Home() {
 
   return (
     <>
-      {/* 현재 여기 작업중 */}
       <MainAd />
-      {/* 현재 여기 작업중 */}
+
       <ManageCategory />
 
-      {/* 현재 여기 작업중 */}
       <SalesList />
-      {/* 현재 여기 작업중 */}
 
       <div
         style={{
