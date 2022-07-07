@@ -87,7 +87,7 @@ function Header() {
                     <p className="header-text">제품등록</p>
                   </MDBNavbarLink>
                 </MDBNavbarItem>
-                <MDBNavbarItem>
+                {/* <MDBNavbarItem>
                   <MDBNavbarLink href="/addTour">
                     <p className="header-text">Add Tour</p>
                   </MDBNavbarLink>
@@ -96,7 +96,7 @@ function Header() {
                   <MDBNavbarLink href="/dashboard">
                     <p className="header-text">Dashboard</p>
                   </MDBNavbarLink>
-                </MDBNavbarItem>
+                </MDBNavbarItem> */}
               </>
             )}
             {user?.result?._id ? (
@@ -106,11 +106,12 @@ function Header() {
                     <p className="header-text">나의상품</p>
                   </MDBNavbarLink>
                 </MDBNavbarItem>
-                <MDBNavbarItem>
+
+                {/* <MDBNavbarItem>
                   <MDBNavbarLink href="/upload">
                     <p className="header-text">상품등록</p>
                   </MDBNavbarLink>
-                </MDBNavbarItem>
+                </MDBNavbarItem> */}
                 <MDBNavbarItem>
                   <MDBNavbarLink href="/category">
                     <p className="header-text">카테고리 관리</p>
