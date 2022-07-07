@@ -1,15 +1,22 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
-
-import { changeProfile, checkPwd } from '../../../Store/Features/AuthSlice';
-import FileBase from 'react-file-base64';
-
 /*
  *
 pwd : 변경할 비밀번호의 값을 갖고 있는 state
 */
+
+import React, { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
+import { changeProfile, checkPwd } from '../../../Store/Features/AuthSlice';
+
+import FileBase from 'react-file-base64';
+import {
+  SectionHeader,
+  SectionLayout,
+  SectionTitle,
+  SectionUnit,
+  SectionContent,
+} from '../Product/ProductUpload.style';
 
 function UserPage() {
   const initialState = {
@@ -139,93 +146,102 @@ function UserPage() {
   console.log('match', pwd === confirmValue);
 
   return (
-    <div className="settings">
-      <h1 className="settingsUpdateTitle">Update Your Account</h1>
-      <div>
-        <form className="">
-          <ul>
-            <li>
-              <div className="" style={{ position: 'relative' }}>
-                <label htmlFor="userImg">유저 프로필 사진</label>
-                <div
-                  style={{
-                    width: '100%',
-                    borderRadius: '100%',
-                    overflow: 'hidden',
-                  }}
-                >
-                  <img
-                    src={!imageFile ? ImgSrc : imageFile}
-                    alt={UserName}
-                    style={{ display: 'block', width: '100%' }}
-                  />
+    <SectionUnit>
+      <SectionLayout>
+        <SectionHeader>
+          <SectionTitle>유저 정보 변경</SectionTitle>
+        </SectionHeader>
+        <SectionContent>
+          <form className="">
+            <ul>
+              <li>
+                <div className="" style={{ position: 'relative' }}>
+                  <label htmlFor="userImg">유저 프로필 사진</label>
+                  <div
+                    style={{
+                      width: '100%',
+                      borderRadius: '100%',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <img
+                      src={!imageFile ? ImgSrc : imageFile}
+                      alt={UserName}
+                      style={{ display: 'block', width: '100%' }}
+                    />
+                  </div>
+                  <div
+                    className=""
+                    style={{ position: 'absolute', bottom: '0' }}
+                  >
+                    <FileBase
+                      type="file"
+                      multiple={false}
+                      onDone={({ base64 }) =>
+                        setNewProfile({ ...newProfile, imageFile: base64 })
+                      }
+                    />
+                  </div>
                 </div>
-                <div className="" style={{ position: 'absolute', bottom: '0' }}>
-                  <FileBase
-                    type="file"
-                    multiple={false}
-                    onDone={({ base64 }) =>
-                      setNewProfile({ ...newProfile, imageFile: base64 })
-                    }
-                  />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="">
-                <label htmlFor="changePwd">변경할 비밀번호</label>
+              </li>
+              <li>
                 <div className="">
-                  <input
-                    ref={pwdRef}
-                    type="text"
-                    id="changePwd"
-                    autoComplete="off"
-                    onChange={isChangable}
-                    onKeyUp={handleMatch}
-                    // aria-invalid={validPwd ? 'false' : 'true'}
-                    aria-describedby="변경 비밀번호"
-                  />
+                  <label htmlFor="changePwd">변경할 비밀번호</label>
+                  <div className="">
+                    <input
+                      ref={pwdRef}
+                      type="text"
+                      id="changePwd"
+                      autoComplete="off"
+                      onChange={isChangable}
+                      onKeyUp={handleMatch}
+                      // aria-invalid={validPwd ? 'false' : 'true'}
+                      aria-describedby="변경 비밀번호"
+                    />
+                  </div>
+                  <button type="button" onClick={checkMatch}>
+                    비밀번호 중복확인
+                  </button>
+                  {changable ? <p>{message}</p> : ''}
+                  {changable ? '' : <p>{message}</p>}
                 </div>
-                <button type="button" onClick={checkMatch}>
-                  비밀번호 중복확인
-                </button>
-                {changable ? <p>{message}</p> : ''}
-                {changable ? '' : <p>{message}</p>}
-              </div>
-            </li>
-            <li>
-              <div className="">
-                <label htmlFor="confirmPwd">비밀번호 확인</label>
+              </li>
+              <li>
                 <div className="">
-                  <input
-                    type="text"
-                    id="confirmPwd"
-                    name="confirmPassword"
-                    autoComplete="off"
-                    onChange={handleConfirm}
-                    onKeyUp={handleMatch}
-                    // aria-invalid={confirmValid ? 'false' : 'true'}
-                    aria-describedby="변경 비밀번호 확인"
-                  />
+                  <label htmlFor="confirmPwd">비밀번호 확인</label>
+                  <div className="">
+                    <input
+                      type="text"
+                      id="confirmPwd"
+                      name="confirmPassword"
+                      autoComplete="off"
+                      onChange={handleConfirm}
+                      onKeyUp={handleMatch}
+                      // aria-invalid={confirmValid ? 'false' : 'true'}
+                      aria-describedby="변경 비밀번호 확인"
+                    />
+                  </div>
+                  {alert}
                 </div>
-                {alert}
-              </div>
-            </li>
-          </ul>
-          <button type="submit" onClick={handleChange} disabled={!isMatch}>
-            변경하기
-          </button>
-        </form>
-        {success && (
-          <p style={{ color: 'green', textAlign: 'center', marginTop: '20px' }}>
-            Profile has been updated...
-          </p>
-        )}
-        <h1>Logged in as: {user?.result?.name}</h1>
+              </li>
+            </ul>
+            <button type="submit" onClick={handleChange} disabled={!isMatch}>
+              변경하기
+            </button>
+          </form>
+          {success && (
+            <p
+              style={{ color: 'green', textAlign: 'center', marginTop: '20px' }}
+            >
+              Profile has been updated...
+            </p>
+          )}
+          <h1>Logged in as: {user?.result?.name}</h1>
 
-        {console.log(user)}
-      </div>
-    </div>
+          {console.log(user)}
+        </SectionContent>
+      </SectionLayout>
+    </SectionUnit>
   );
 }
 
