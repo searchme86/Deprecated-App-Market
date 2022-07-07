@@ -9,8 +9,10 @@ export const CenterLayout = styled.div`
 
 export const Page = styled.div`
   position: relative;
-  padding: 20px 20px 20px 20px;
-  margin: 0 auto;
+  ${
+    '' /* padding: 20px 20px 20px 20px;
+  margin: 0 auto; */
+  }
 `;
 export const PageContainer = styled.main``;
 
