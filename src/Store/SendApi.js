@@ -70,6 +70,9 @@ export const updateCategory = (id, updateCategory) =>
 export const createProduct = (nuploadProduct) =>
   API.post('/nproduct/upload', nuploadProduct);
 
+// (normal) bring product lists
+export const pullProducts = () => API.get(`/nproduct/list`);
+
 // get a single Product
 export const getProduct = (id) => API.get(`/nproduct/${id}`);
 

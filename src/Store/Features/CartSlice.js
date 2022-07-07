@@ -1,6 +1,48 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const untitled = createAsyncThunk();
+export const addCart = createAsyncThunk(
+  'cart/addCart',
+  async ({}, { rejectWithValue }) => {
+    try {
+    } catch (error) {
+      console.log('error', error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getCart = createAsyncThunk(
+  'cart/getCart',
+  async ({}, { rejectWithValue }) => {
+    try {
+    } catch (error) {
+      console.log('error', error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const delelteCart = createAsyncThunk(
+  'cart/delelteCart',
+  async ({}, { rejectWithValue }) => {
+    try {
+    } catch (error) {
+      console.log('error', error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const editCart = createAsyncThunk(
+  'cart/delelteCart',
+  async ({}, { rejectWithValue }) => {
+    try {
+    } catch (error) {
+      console.log('error', error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const cartSlice = createSlice({
   name: 'cart',

@@ -23,15 +23,14 @@ import SingleTour from '../Pages/SingleTour';
 import Dashboard from '../Pages/Dashboard';
 import NotFound from '../Pages/NotFound';
 import TagTours from '../Pages/TagTours';
-import UserPage from '../Pages/Manager/UserPage';
-import UploadProduct from '../Pages/Manager/UploadProduct';
+import UserPage from '../Pages/Manager/User/UserPage';
 import UploadCategory from '../Pages/Manager/category/UploadCategory';
-import News from '../Pages/News';
-import ProductList from '../Pages/ProductList';
 import ProductUpload from '../Pages/Manager/Product/ProductUpload';
 import ProductDetail from '../Pages/ProductDetail';
-import { useDispatch } from 'react-redux';
 import ProductOfUser from '../Pages/Manager/Product/ProductOfUser';
+import { useDispatch } from 'react-redux';
+// import UploadProduct from '../Pages/Manager/UploadProduct';
+import UserMain from '../Pages/Manager/User/UserMain';
 
 function Router() {
   const dispatch = useDispatch();
@@ -49,7 +48,14 @@ function Router() {
         <Route path="/tours/search" element={<Home />} />
         <Route path="/tours/tag/:tag" element={<TagTours />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile">
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <UserMain />
+            </PrivateRoute>
+          }
+        >
           <Route
             path=":nickname"
             element={
@@ -59,6 +65,7 @@ function Router() {
             }
           />
         </Route>
+
         {/*  */}
         <Route
           path="/userProduct"
@@ -68,14 +75,14 @@ function Router() {
             </PrivateRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/upload"
           element={
             <PrivateRoute>
               <UploadProduct />
             </PrivateRoute>
           }
-        />
+        /> */}
         <Route
           path="/category"
           element={
@@ -89,14 +96,6 @@ function Router() {
           element={
             <PrivateRoute>
               <ProductUpload />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/product"
-          element={
-            <PrivateRoute>
-              <ProductList />
             </PrivateRoute>
           }
         />
@@ -128,7 +127,6 @@ function Router() {
             </PrivateRoute>
           }
         />
-        <Route path="/news" element={<News />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

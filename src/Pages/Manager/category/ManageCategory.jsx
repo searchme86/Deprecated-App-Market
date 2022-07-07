@@ -8,6 +8,13 @@ import {
 } from '../../../Assets/Styles/Layout.style.js';
 import { getCategoryList } from '../../../Store/Features/CategorySlice';
 import { toast } from 'react-toastify';
+import {
+  SectionContent,
+  SectionHeader,
+  SectionLayout,
+  SectionUnit,
+} from '../Product/ProductUpload.style';
+import { OffScreenTitle } from '../../../Assets/Styles/Basic.style';
 
 function ManageCategory() {
   const { categories } = useSelector((state) => state.category);
@@ -19,12 +26,16 @@ function ManageCategory() {
   }, []);
 
   return (
-    <SectionDivier>
-      <SectionTitle>카테고리별 상품찾기</SectionTitle>
-      <SectionContainer>
-        <CategoryView categories={categories} />
-      </SectionContainer>
-    </SectionDivier>
+    <SectionUnit>
+      <SectionLayout>
+        <SectionHeader>
+          <OffScreenTitle>카테고리별 상품찾기</OffScreenTitle>
+          <SectionContent>
+            <CategoryView categories={categories} />
+          </SectionContent>
+        </SectionHeader>
+      </SectionLayout>
+    </SectionUnit>
   );
 }
 

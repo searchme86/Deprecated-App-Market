@@ -2,13 +2,13 @@ import styled, { css } from 'styled-components';
 
 export const SectionUnit = styled.section`
   width: 100%;
-  padding: 20px 0 20px 0;
+  padding: 60px 0 60px 0;
   margin: 0 0 30px 0;
   background: ${({ color }) => (color ? `${color}` : '#fff')};
 `;
 
 export const SectionLayout = styled.div`
-  width: 1300px;
+  width: 1280px;
   margin: 0 auto;
 `;
 
@@ -32,7 +32,9 @@ export const SectionTitle = styled.h1`
   }
 `;
 
-export const SectionContent = styled.div``;
+export const SectionContent = styled.div`
+  margin: 20px 0 20px 0;
+`;
 
 export const FlexContainer = styled.div`
   position: relative;
