@@ -22,7 +22,10 @@ import {
   PCardPrice,
   PCardDes,
   PCardTitle,
+  PUserNickname,
 } from './CardProduct.style';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFaceSmileWink } from '@fortawesome/free-solid-svg-icons';
 
 import { AuthSelector } from '../../Store/Features/AuthSlice.js';
 
@@ -97,105 +100,104 @@ function CardProduct(item) {
     <>
       <PCardItem>
         <div className="">
-          <div className="">
-            <Link to={`/product/${_id}`}>
-              <ImageHolder
-                height="150px"
+          <Link to={`/product/${_id}`}>
+            <ImageHolder
+              height="150px"
+              style={{
+                position: 'relative',
+                width: 'initial',
+                height: 'initial',
+                boxSizing: 'border-box',
+                padding: '0',
+                margin: '0',
+              }}
+            >
+              <PCardIspace />
+              <Image
+                src={pdImage}
+                alt={pdTitle}
                 style={{
-                  position: 'relative',
-                  width: 'initial',
-                  height: 'initial',
-                  boxSizing: 'border-box',
-                  padding: '0',
-                  margin: '0',
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  top: '0',
+                }}
+              />
+            </ImageHolder>
+          </Link>
+        </div>
+        <div className="" style={{ padding: '5px', boxSizing: 'border-box' }}>
+          <div className="">
+            <PCardCategory>{pdCategory}</PCardCategory>
+            <PCardPrice>
+              {`${Number(pdPrice).toLocaleString('ko-KR')}`}
+            </PCardPrice>
+            <PCardTitle>
+              <Link to={`/product/${_id}`}>{pdTitle}</Link>
+            </PCardTitle>
+            <div
+              className=""
+              style={{ display: 'flex', justifyContent: 'space-between' }}
+            >
+              <MDBBtn
+                style={{ float: 'right' }}
+                tag="a"
+                color="none"
+                onClick={!user?.result ? null : handleLike}
+              >
+                {!user?.result ? (
+                  <MDBTooltip title="Please login to like tour" tag="a">
+                    <Likes />
+                  </MDBTooltip>
+                ) : (
+                  <Likes />
+                )}
+              </MDBBtn>
+              <div
+                className=""
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
                 }}
               >
-                <PCardIspace />
-                <Image
-                  src={pdImage}
-                  alt={pdTitle}
+                <span
                   style={{
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    top: '0',
+                    marginRight: '2px',
+                    lineHeight: '1',
+                    display: 'inline-block',
+                    verticalAlign: 'middle',
                   }}
-                />
-              </ImageHolder>
-            </Link>
-          </div>
-          <div className="" style={{ padding: '5px', boxSizing: 'border-box' }}>
-            <div className="">
-              <PCardCategory>{pdCategory}</PCardCategory>
-              <PCardPrice>
-                {`${Number(pdPrice).toLocaleString('ko-KR')}`}
-              </PCardPrice>
-              <PCardTitle>
-                <Link to={`/product/${_id}`}>{pdTitle}</Link>
-              </PCardTitle>
-              {/* <PCardDes>{pdDes}</PCardDes>
-              <div className="">
-                <ul style={{}}>
-                  {pdStatus.map((status, index) => (
-                    <li
-                      key={index}
-                      style={{
-                        display: 'inline-block',
-                        border: '1px solid red',
-                        borderRadius: '15px',
-                        marginBottom: '10px',
-                        marginRight: '5px',
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontSize: '15px',
-                          padding: '10px',
-                          boxSizing: 'border-box',
-                        }}
-                      >
-                        #{status}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div> */}
-              <div className="">
-                <div
-                  className=""
-                  style={{ display: 'flex', justifyContent: 'space-between' }}
                 >
-                  <MDBBtn
-                    style={{ float: 'right' }}
-                    tag="a"
-                    color="none"
-                    onClick={!user?.result ? null : handleLike}
-                  >
-                    {!user?.result ? (
-                      <MDBTooltip title="Please login to like tour" tag="a">
-                        <Likes />
-                      </MDBTooltip>
-                    ) : (
-                      <Likes />
-                    )}
-                  </MDBBtn>
-                  <span>{pdDegree}</span>
-                </div>
+                  {pdDegree}
+                </span>
+                <span
+                  style={{
+                    lineHeight: '1',
+                    display: 'inline-block',
+                    verticalAlign: 'middle',
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faFaceSmileWink}
+                    style={{ fontSize: '20px', color: '#303C6C' }}
+                  />
+                </span>
               </div>
             </div>
-
-            <PCardUser>
-              <PUserImage>
-                <ImageHolder br="100%">
-                  <Image src={pdUploaderImage} alt={pdUploaderNickname} />
-                </ImageHolder>
-              </PUserImage>
-              <PUserInfo>
-                <PUserAddress>{pdUploaderNickname}</PUserAddress>
-                <PUserAddress>{pdAddress}</PUserAddress>
-              </PUserInfo>
-            </PCardUser>
           </div>
+
+          <PCardUser>
+            <PUserImage>
+              <ImageHolder br="100%">
+                <Image src={pdUploaderImage} alt={pdUploaderNickname} />
+              </ImageHolder>
+            </PUserImage>
+            <PUserInfo>
+              <PUserNickname>{pdUploaderNickname}</PUserNickname>
+              <PUserAddress>{pdAddress}</PUserAddress>
+            </PUserInfo>
+          </PCardUser>
         </div>
       </PCardItem>
     </>
