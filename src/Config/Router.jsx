@@ -23,13 +23,13 @@ import SingleTour from '../Pages/SingleTour';
 import Dashboard from '../Pages/Dashboard';
 import NotFound from '../Pages/NotFound';
 import TagTours from '../Pages/TagTours';
-import UserPage from '../Pages/Manager/UserPage';
-// import UploadProduct from '../Pages/Manager/UploadProduct';
+import UserPage from '../Pages/Manager/User/UserPage';
 import UploadCategory from '../Pages/Manager/category/UploadCategory';
 import ProductUpload from '../Pages/Manager/Product/ProductUpload';
 import ProductDetail from '../Pages/ProductDetail';
-import { useDispatch } from 'react-redux';
 import ProductOfUser from '../Pages/Manager/Product/ProductOfUser';
+import { useDispatch } from 'react-redux';
+// import UploadProduct from '../Pages/Manager/UploadProduct';
 
 function Router() {
   const dispatch = useDispatch();
