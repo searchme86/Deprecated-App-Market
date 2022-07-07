@@ -51,9 +51,12 @@ export const PCardTitle = styled.span`
   margin: 0 0 5px 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
+  white-space: nowrap;
+  ${
+    '' /* display: -webkit-box;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: vertical; */
+  }
 `;
 
 export const PCardDes = styled.p`
