@@ -49,7 +49,7 @@ function Router() {
         <Route path="/tours/tag/:tag" element={<TagTours />} />
         <Route path="/register" element={<Register />} />
         <Route
-          path="/profile"
+          path="/profile/:nickname"
           element={
             <PrivateRoute>
               <UserMain />

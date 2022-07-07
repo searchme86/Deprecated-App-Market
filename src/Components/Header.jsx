@@ -135,7 +135,7 @@ function Header() {
             {user?.result?.imageFile ? (
               <MDBNavbarItem>
                 {/* <MDBNavbarLink href={`/profile/${user.result.nickname}`}> */}
-                <MDBNavbarLink href={`/profile`}>
+                <MDBNavbarLink href={`/profile/${user.result.nickname}`}>
                   <div className="">
                     <img
                       src={user?.result?.imageFile}
