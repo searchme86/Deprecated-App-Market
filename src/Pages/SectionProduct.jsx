@@ -34,26 +34,18 @@ function SectionProduct() {
   } = useSelector(ProductSelector);
 
   const dispatch = useDispatch();
-  // console.log('dispatch', dispatch());
 
   useEffect(() => {
     dispatch(fetchAllProducts({}));
-    // if(!savedProducts.length > 0){
-    //   dispatch(fetchAllProducts({}));
-    // }
   }, []);
 
-  console.log('savedProducts', savedProducts);
-
   let shuffledItems = savedProducts && shuffle(Object.values(savedProducts));
-
-  console.log('shuffled', shuffledItems);
 
   return (
     <SectionUnit>
       <SectionLayout>
         <SectionHeader>
-          <SectionTitle>신규 등록 상품d</SectionTitle>
+          <SectionTitle>신규 등록 상품</SectionTitle>
         </SectionHeader>
         <SectionContent>
           <div className="">
