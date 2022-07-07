@@ -26,7 +26,7 @@ export const PCardIspace = styled.span`
 export const PCardCategory = styled.span`
   display: block;
   width: 49px;
-  background: red;
+  background: #f4976c;
   font-size: 15px;
   color: #fff;
   text-align: center;
@@ -70,15 +70,23 @@ export const PCardDes = styled.p`
 
 export const PCardUser = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px 0 0 0;
 `;
 
 export const PUserImage = styled.div`
-  width: 55px;
+  flex: 0 0 22%;
 `;
 
-export const PUserInfo = styled.div``;
+export const PUserInfo = styled.div`
+  flex: 0 0 70%;
+`;
 
-export const PUserNickname = styled.span`
+export const PUserNickname = styled.strong`
   display: block;
+  font-size: 19px;
 `;
-export const PUserAddress = styled.p``;
+export const PUserAddress = styled.p`
+  font-size: 15px;
+`;

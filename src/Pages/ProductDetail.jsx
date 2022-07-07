@@ -205,7 +205,10 @@ function ProductDetail() {
                 </div>
 
                 {/* 레이아웃 오른쪽 */}
-                <div className="" style={{ width: '50%' }}>
+                <div
+                  className=""
+                  style={{ width: '50%', position: 'relative' }}
+                >
                   {/* 유저 설명 */}
                   <div
                     className=""
@@ -592,9 +595,18 @@ function ProductDetail() {
                   >
                     장바구니 담기
                   </button>
-                  <button type="button">
+                  <button
+                    type="button"
+                    style={{ position: 'absolute', top: '0px', right: '0px' }}
+                  >
                     <OffScreenSpan>상품 업데이트 버튼</OffScreenSpan>
-                    <FontAwesomeIcon icon={faPenToSquare} />
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      style={{
+                        fontSize: 50,
+                        color: '#000',
+                      }}
+                    />
                   </button>
                 </div>
               </div>
