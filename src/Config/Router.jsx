@@ -30,6 +30,7 @@ import ProductDetail from '../Pages/ProductDetail';
 import ProductOfUser from '../Pages/Manager/Product/ProductOfUser';
 import { useDispatch } from 'react-redux';
 // import UploadProduct from '../Pages/Manager/UploadProduct';
+import UserMain from '../Pages/Manager/User/UserMain';
 
 function Router() {
   const dispatch = useDispatch();
@@ -47,7 +48,14 @@ function Router() {
         <Route path="/tours/search" element={<Home />} />
         <Route path="/tours/tag/:tag" element={<TagTours />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile">
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <UserMain />
+            </PrivateRoute>
+          }
+        >
           <Route
             path=":nickname"
             element={
@@ -57,6 +65,7 @@ function Router() {
             }
           />
         </Route>
+
         {/*  */}
         <Route
           path="/userProduct"
