@@ -27,6 +27,8 @@ import {
   FormErrorMessage,
   Select,
   Textarea,
+  InputGroup,
+  InputRightElement,
   Input,
   Button,
 } from '@chakra-ui/react';
@@ -44,7 +46,6 @@ function UserPage() {
       pwdChangable,
     },
   } = useSelector(AuthSelector);
-
   const dispatch = useDispatch();
 
   /**
@@ -55,13 +56,27 @@ function UserPage() {
     changedPwd: '',
     imageFile: '',
   };
+  const { message, changable } = pwdChangable;
 
-  //폼에 입력하는 비밀번호를 저장하는 로컬 스테이트
-  const [pwd, setPwd] = useState('');
+  //1. 변경할 비밀번호의 값을 저장할 로컬 스테이트
+  const [newProfile, setNewProfile] = useState(initialState);
+
+  const [visible, setVisible] = useState(false);
+
+  const [current, setCurrent] = useState('');
+  const [renew, setRenew] = useState('');
+
+  const [alert, setAlert] = useState('');
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debounceTyping = useCallback(
-    useDebounce((value) => setPwd(value), 500),
+  const savePrevious = useCallback(
+    useDebounce((value) => setCurrent(value), 500),
+    []
+  );
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const saveCurrent = useCallback(
+    useDebounce((value) => setRenew(value), 500),
     []
   );
 
@@ -70,20 +85,56 @@ function UserPage() {
       const {
         target: { value },
       } = e;
-      debounceTyping(value);
-
-      // handleMatch();
-      // console.log('pwd', pwd);
-      // console.log({ nickname, password: pwd });
+      savePrevious(value);
     },
-    [debounceTyping]
+    [savePrevious]
   );
 
-  console.log('pwd', pwd);
+  const updatePwd = useCallback(
+    (e) => {
+      const {
+        target: { value },
+      } = e;
+
+      const isCurrent = () => {
+        if (!current) {
+          setAlert('이전 비밀번호를 체크해주세요');
+        }
+      };
+
+      saveCurrent(value);
+      isCurrent();
+    },
+    [saveCurrent, current]
+  );
+
+  //  변경할 수 있는 체크 핸들러 함수
+  const checkMatch = (e) => {
+    e.preventDefault();
+    dispatch(checkPwd({ nickname, password: { password: current } }));
+  };
+
+  //인풋의 값을 보이고/않보이게 하는 토글 함수
+  const showText = () => {
+    setVisible((value) => !value);
+  };
+
+  /***
+   *
+   * renew는 새로운 비빌번호를 저장한 변수
+   * renew와 current의 관계를 정리해야함
+   *renew가 입력되면
+   *1. current가 값이 있는지를 확인한다=>
+   미리 확인을 해봤는지를 체크해볼 수 있다.
+   값이 없으면 이전 값을 비교해보라고 한다. 동시에 실행버튼이 비활성이 된다.
+
+   *2. current와 값이 일치하는지를 파악한다 => 일치하면 새로운 비밀번호로 하라고 함, 다르면 값이 다르다고 표시한다.
+   *
+   *  */
+
+  console.log('renew', renew);
 
   // <------------------------여기까지 완성------------------------>
-
-  const [newProfile, setNewProfile] = useState(initialState);
 
   //[-비밀번호 확인-]
   //비밀번호 확인 폼에 입력하는 값이 저장하는 로컬 스테이트
@@ -91,8 +142,6 @@ function UserPage() {
 
   // //[-비밀번호 확인-]
   // //비밀번호 확인 값과 비밀번호 확인의 값이 일치하는 검사 로컬 스테이트
-
-  const [alert, setAlert] = useState('');
 
   //[-버튼, 변경하기-]
   //모든 작업을 하고 성공했는지를 확인하는 로컬 스테이트
@@ -103,66 +152,43 @@ function UserPage() {
   //폼에 포커스를 두기 위한 ref
   const pwdRef = useRef(null);
 
-  const isMatch = [pwd, confirmValue].every(Boolean) && pwd === confirmValue;
-  const allBlank = !pwd && !confirmValue;
-  const confirmBlank = pwd && !confirmValue;
-  const pwdBlank = !pwd && confirmValue;
+  const isMatch =
+    [current, confirmValue].every(Boolean) && current === confirmValue;
+  const allBlank = !current && !confirmValue;
+  const confirmBlank = current && !confirmValue;
+  const pwdBlank = !current && confirmValue;
 
   // useEffect(() => {
   //   pwdRef.current.focus();
   //   setAlert('');
   // }, []);
 
+  const defaultValue = useRef(null);
   useEffect(() => {
-    if (!pwd || !confirmValue) {
+    if (!pwdChangable) {
+      defaultValue.current = {
+        message: '디비에 값이 존재하지 않습니다.',
+      };
+    }
+  }, [pwdChangable]);
+
+  useEffect(() => {
+    if (!current || !confirmValue) {
       setAlert(null);
       // console.log('ddd');
     }
-  }, [pwd, confirmValue]);
+  }, [current, confirmValue]);
 
   useEffect(() => {
     error && toast.error(error);
   }, [error]);
 
-  // 비밀번호 중복확인에 대한 변수 추출
-  // 리덕스와 관련있음
-  const { message, changable } = pwdChangable;
-
   //초기화된 값을 사용하기 위한
   const { password, imageFile } = newProfile;
 
-  //[-변경할 비밀번호-], 리덕스
-  //변경하려는 비밀번호의 중복확인 핸들러
-  //버튼 비밀번호 중복확인을 위한 dispatch
-  const checkMatch = (e) => {
-    e.preventDefault();
-
-    dispatch(checkPwd({ nickname, password: { password: pwd } }));
-  };
-
-  // <--------비밀번호 확인-------->
-
-  //[-비밀번호 확인-]
-  // 비밀번호 확인 폼에 값을 저장하는 핸들러
-  const handleConfirm = (e) => {
-    setConfirmValue(e.target.value);
-
-    handleMatch();
-  };
-
-  //[-비밀번호 확인-]
-  // 변경할 비밀번호와 비밀번호 확인에 입력한 값이 일치하는지 파악
-
-  //[-변경하기 버튼-]
-  //변경하기 버튼을 클릭시, 활성화 되는 핸들러
-  //버튼의 핸들러
   const handleChange = (e) => {
     e.preventDefault();
   };
-
-  // console.log('allBlank', allBlank);
-  // console.log('confirmBlank', confirmBlank);
-  // console.log('pwdBlank', pwdBlank);
 
   const handleMatch = () => {
     if (isMatch) {
@@ -172,22 +198,13 @@ function UserPage() {
     }
   };
 
-  // 1. 만약 하나 폼이 있으면,
-  // console.log(
-  //   'pwdChangable , message, changable',
-  //   pwdChangable,
-  //   message,
-  //   changable
-  // );
-
-  // console.log('imageFile', imageFile);
-  // console.log('match', pwd === confirmValue);
-
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
+
+  const registerForm = () => {};
 
   return (
     <>
@@ -231,7 +248,7 @@ function UserPage() {
             >
               유저 정보를 변경해주세요
             </strong>
-            <PForm>
+            <PForm onSubmit={handleSubmit(registerForm)}>
               <FormControl>
                 <ul>
                   <li style={{ marginBottom: '15px' }}>
@@ -275,16 +292,20 @@ function UserPage() {
                   <li>
                     {/* 변경할 비밀번호 영역 */}
                     <PFormUnit>
-                      <FormLabel htmlFor="password">변경할 비밀번호</FormLabel>
+                      <FormLabel htmlFor="password">
+                        이전 비밀번호 확인
+                      </FormLabel>
                       <PFormDesWrapper>
                         <PFormDesList>
                           <PFormDesLi>
-                            <PFormDes>변경할 비밀번호를 입력해주세요</PFormDes>
+                            <PFormDes>
+                              이전의 비밀번호와 일치여부를 확인합니다.
+                            </PFormDes>
                           </PFormDesLi>
                           <PFormDesLi>
                             <PFormDes>
-                              변경할 비밀번호가 이미 사용중인지 중복버튼을
-                              눌러주세요
+                              이전의 비밀번호와 일치여부 상관없이
+                              변경가능합니다.
                             </PFormDes>
                           </PFormDesLi>
                         </PFormDesList>
@@ -294,9 +315,7 @@ function UserPage() {
                         id="password"
                         name="password"
                         ref={pwdRef}
-                        // onKeyUp={handleMatch}
                         {...register('password', {
-                          required: '변경할 비밀번호가 입력되지 않았습니다.',
                           onChange: isChangable,
                         })}
                       />
@@ -317,8 +336,8 @@ function UserPage() {
 
                     <div className="" style={{ margin: '10px 0 10px 0' }}>
                       {changable ? <p>{message}</p> : ''}
-
                       {changable ? '' : <p>{message}</p>}
+                      {!pwdChangable && <p>{defaultValue?.current?.message}</p>}
                     </div>
 
                     <PFormUnit>
@@ -327,22 +346,39 @@ function UserPage() {
                         <PFormDesList>
                           <PFormDesLi>
                             <PFormDes>
-                              변경한 비밀번호를 다시 입력해주세요
+                              변경하려는 비밀번호를 입력해주세요
+                            </PFormDes>
+                          </PFormDesLi>
+                          <PFormDesLi>
+                            <PFormDes>
+                              비밀번호는 최소 8자에서 24자로 소문자 대문자
+                              그리고 숫자 특수문자(!@#$%)를 포함해야합니다.
                             </PFormDes>
                           </PFormDesLi>
                         </PFormDesList>
                       </PFormDesWrapper>
-                      <Input
-                        type="text"
-                        id="confirmPwd"
-                        name="confirmPassword"
-                        onChange={handleConfirm}
-                        onKeyUp={handleMatch}
-                        {...register('confirmPassword', {
-                          required: '',
-                          // onChange: onInputChange,
-                        })}
-                      />
+                      <InputGroup size="md">
+                        <Input
+                          id="confirmPwd"
+                          name="confirmPassword"
+                          onKeyUp={handleMatch}
+                          pr="4.5rem"
+                          type={visible ? 'text' : 'password'}
+                          placeholder="변경하려는 비밀번호를 입력해주세요"
+                          {...register('confirmPassword', {
+                            required:
+                              '소문자 대문자 그리고 숫자 특수문자(!@#$%)를 포함한 총 8자에서 24자로 작성해주세요',
+                            pattern:
+                              /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/,
+                            onChange: updatePwd,
+                          })}
+                        />
+                        <InputRightElement width="4.5rem">
+                          <Button h="1.75rem" size="sm" onClick={showText}>
+                            {visible ? 'Hide' : 'Show'}
+                          </Button>
+                        </InputRightElement>
+                      </InputGroup>
                       {alert}
                       <FormErrorMessage as="p">
                         {errors.confirmPassword &&
