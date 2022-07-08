@@ -1,6 +1,6 @@
 export const useDebounce = (callback, delay) => {
   let timer;
-  return (...args) => {
+  return (args) => {
     clearTimeout(timer);
     timer = setTimeout(() => callback(args), delay);
   };
