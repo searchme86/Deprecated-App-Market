@@ -23,10 +23,12 @@ import {
   TabPanels,
   Tab,
   TabPanel,
+  Skeleton,
 } from '@chakra-ui/react';
 
 import defaultImg from '../../../Assets/Image/cat01.jpeg';
 import UserPage from './UserPage';
+import ProductOfUser from '../Product/ProductOfUser';
 
 function UserMain() {
   return (
@@ -124,14 +126,18 @@ function UserMain() {
               <Tabs isFitted variant="enclosed">
                 <TabList mb="1em">
                   <Tab>비밀번호 변경</Tab>
-                  <Tab>상품요청사항</Tab>
+                  <Tab>등록상품</Tab>
+                  <Tab>요청사항</Tab>
                 </TabList>
                 <TabPanels>
                   <TabPanel>
                     <UserPage />
                   </TabPanel>
                   <TabPanel>
-                    <p>two!</p>
+                    <ProductOfUser />
+                  </TabPanel>
+                  <TabPanel>
+                    <p>추후 제작예정</p>
                   </TabPanel>
                 </TabPanels>
               </Tabs>
