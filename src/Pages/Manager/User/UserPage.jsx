@@ -65,25 +65,12 @@ function UserPage() {
   //
   //
   //
-  // <--------테스트중-------->
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debounceSearch = useCallback(
     useDebounce((value) => setPwd(value), 5000),
     []
   );
-
-  // <--------테스트중-------->
-  //
-  //[-변경할 비밀번호-]
-  //폼에 연결된 onChange 핸들러
-  // 비밀번호를 입력할때 이것을 pwd에 저장하는 핸들러
-  // const isChangable = (e) => {
-  //   setPwd(e.target.value);
-  //   // handleMatch();
-  //   // console.log('pwd', pwd);
-  //   // console.log({ nickname, password: pwd });
-  // };
 
   const isChangable = useCallback(
     (e) => {
@@ -96,11 +83,7 @@ function UserPage() {
   );
 
   console.log('pwd', pwd);
-  //
-  //
-  //
-  //
-  //
+
   // <--------여기까지 완성-------->
 
   const [newProfile, setNewProfile] = useState(initialState);
@@ -313,7 +296,6 @@ function UserPage() {
                         id="password"
                         name="password"
                         ref={pwdRef}
-                        // value={pwd}
                         // onKeyUp={handleMatch}
                         {...register('password', {
                           required: '변경할 비밀번호가 입력되지 않았습니다.',
