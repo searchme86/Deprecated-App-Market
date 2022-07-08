@@ -2,19 +2,55 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
-import { changeProfile, checkPwd } from '../../../Store/Features/AuthSlice';
-
-import FileBase from 'react-file-base64';
 import {
-  SectionHeader,
-  SectionLayout,
-  SectionTitle,
-  SectionUnit,
-  SectionContent,
-} from '../Product/ProductUpload.style';
+  changeProfile,
+  checkPwd,
+  AuthSelector,
+} from '../../../Store/Features/AuthSlice';
 
+import {
+  PForm,
+  PFormUnit,
+  PFormDesWrapper,
+  PFormDesList,
+  PFormDesLi,
+  PFormDes,
+} from '../Product/ProductUpload.style';
 import { OffScreenStrong } from '../../../Assets/Styles/Basic.style';
+import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
+
+import defaultImg from '../../../Assets/Image/default_user_page.svg';
+
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Select,
+  Textarea,
+  Input,
+  Button,
+} from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
+import FileBase from 'react-file-base64';
+
 function UserPage() {
+  const {
+    auth: {
+      user,
+      user: {
+        result: { imageFile: ImgSrc, name: UserName },
+      },
+      error,
+      pwdChangable,
+    },
+  } = useSelector(AuthSelector);
+
+  const dispatch = useDispatch();
+
+  /**
+   * 비밀번호와 프로필 이미지를 변경하기 위해서,
+   * changedPwd와 imageFile이라는 빈 값의 변수를 정의합니다,
+   */
   const initialState = {
     changedPwd: '',
     imageFile: '',
@@ -44,21 +80,15 @@ function UserPage() {
   //폼에 포커스를 두기 위한 ref
   const pwdRef = useRef(null);
 
-  const { user, error, pwdChangable } = useSelector((state) => state.auth);
-  const {
-    result: { imageFile: ImgSrc, name: UserName },
-  } = user;
-  const dispatch = useDispatch();
-
   const isMatch = [pwd, confirmValue].every(Boolean) && pwd === confirmValue;
   const allBlank = !pwd && !confirmValue;
   const confirmBlank = pwd && !confirmValue;
   const pwdBlank = !pwd && confirmValue;
 
-  useEffect(() => {
-    pwdRef.current.focus();
-    setAlert('');
-  }, []);
+  // useEffect(() => {
+  //   pwdRef.current.focus();
+  //   setAlert('');
+  // }, []);
 
   useEffect(() => {
     if (!pwd || !confirmValue) {
@@ -141,84 +171,187 @@ function UserPage() {
   console.log('imageFile', imageFile);
   console.log('match', pwd === confirmValue);
 
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+
   return (
     <>
       <OffScreenStrong>유저 정보 변경</OffScreenStrong>
-      <div className="">
-        <form className="">
-          <ul>
-            <li>
-              <div className="" style={{ position: 'relative' }}>
-                <label htmlFor="userImg">유저 프로필 사진</label>
-                <div
-                  style={{
-                    width: '100%',
-                    borderRadius: '100%',
-                    overflow: 'hidden',
-                  }}
+      <div
+        className=""
+        style={{
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <div
+          className=""
+          style={{
+            display: 'flex',
+            padding: '50px',
+            boxSizing: 'border-box',
+            border: '1px solid',
+          }}
+        >
+          <ImageHolder style={{ width: '50%' }}>
+            <Image src={defaultImg} alt="이미지" />
+          </ImageHolder>
+
+          <div
+            className=""
+            style={{
+              width: '50%',
+              padding: '54px 50px 54px 50px',
+              boxSizing: 'border-box',
+            }}
+          >
+            <strong
+              style={{
+                display: 'block',
+                fontSize: '20px',
+                marginBottom: '10px',
+                lineHeight: '1',
+              }}
+            >
+              유저 정보를 변경해주세요
+            </strong>
+            <PForm>
+              <FormControl>
+                <ul>
+                  <li style={{ marginBottom: '15px' }}>
+                    <div
+                      style={{
+                        display: 'flex',
+
+                        alignItems: 'center',
+                      }}
+                    >
+                      <ImageHolder width="80px" height="80px" br="100%">
+                        <Image
+                          src={!imageFile ? ImgSrc : imageFile}
+                          alt={UserName}
+                          style={{ display: 'block', width: '100%' }}
+                        />
+                      </ImageHolder>
+                      <div className="" style={{ marginLeft: '20px' }}>
+                        <strong
+                          style={{
+                            display: 'block',
+                            lineHeight: '1',
+                            marginBottom: '10px',
+                          }}
+                        >
+                          변경할 이미지를 선택해주세요
+                        </strong>
+                        <FileBase
+                          type="file"
+                          multiple={false}
+                          onDone={({ base64 }) =>
+                            setNewProfile({
+                              ...newProfile,
+                              imageFile: base64,
+                            })
+                          }
+                        />
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <PFormUnit>
+                      <FormLabel htmlFor="changePwd">변경할 비밀번호</FormLabel>
+                      <PFormDesWrapper>
+                        <PFormDesList>
+                          <PFormDesLi>
+                            <PFormDes>변경할 비밀번호를 입력해주세요</PFormDes>
+                          </PFormDesLi>
+                          <PFormDesLi>
+                            <PFormDes>
+                              변경할 비밀번호가 이미 사용중인지 중복버튼을
+                              눌러주세요
+                            </PFormDes>
+                          </PFormDesLi>
+                        </PFormDesList>
+                      </PFormDesWrapper>
+                      <Input
+                        type="text"
+                        id="changePwd"
+                        name="changePwd"
+                        ref={pwdRef}
+                        onChange={isChangable}
+                        onKeyUp={handleMatch}
+                        {...register('changePwd', {
+                          required: '변경할 비밀번호가 입력되지 않았습니다.',
+                          // onChange: onInputChange,
+                        })}
+                      />
+                      <FormErrorMessage as="p">
+                        {errors.changePwd && errors.changePwd.message}
+                      </FormErrorMessage>
+                      <Button
+                        type="button"
+                        onClick={checkMatch}
+                        style={{
+                          margin: '10px 0 10px 0',
+                          border: '1px solid red',
+                        }}
+                      >
+                        비밀번호 중복확인
+                      </Button>
+                    </PFormUnit>
+
+                    <div className="" style={{ margin: '10px 0 10px 0' }}>
+                      {changable ? <p>{message}</p> : ''}
+
+                      {changable ? '' : <p>{message}</p>}
+                    </div>
+
+                    <PFormUnit>
+                      <FormLabel htmlFor="confirmPwd">비밀번호 확인</FormLabel>
+                      <PFormDesWrapper>
+                        <PFormDesList>
+                          <PFormDesLi>
+                            <PFormDes>
+                              변경한 비밀번호를 다시 입력해주세요
+                            </PFormDes>
+                          </PFormDesLi>
+                        </PFormDesList>
+                      </PFormDesWrapper>
+                      <Input
+                        type="text"
+                        id="confirmPwd"
+                        name="confirmPassword"
+                        onChange={handleConfirm}
+                        onKeyUp={handleMatch}
+                        {...register('confirmPassword', {
+                          required: '',
+                          // onChange: onInputChange,
+                        })}
+                      />
+                      {alert}
+                      <FormErrorMessage as="p">
+                        {errors.confirmPassword &&
+                          errors.confirmPassword.message}
+                      </FormErrorMessage>
+                    </PFormUnit>
+                  </li>
+                </ul>
+
+                <Button
+                  type="submit"
+                  onClick={handleChange}
+                  disabled={!isMatch}
+                  mt="20px"
                 >
-                  <img
-                    src={!imageFile ? ImgSrc : imageFile}
-                    alt={UserName}
-                    style={{ display: 'block', width: '100%' }}
-                  />
-                </div>
-                <div className="" style={{ position: 'absolute', bottom: '0' }}>
-                  <FileBase
-                    type="file"
-                    multiple={false}
-                    onDone={({ base64 }) =>
-                      setNewProfile({ ...newProfile, imageFile: base64 })
-                    }
-                  />
-                </div>
-              </div>
-            </li>
-            <li>
-              <div className="">
-                <label htmlFor="changePwd">변경할 비밀번호</label>
-                <div className="">
-                  <input
-                    ref={pwdRef}
-                    type="text"
-                    id="changePwd"
-                    autoComplete="off"
-                    onChange={isChangable}
-                    onKeyUp={handleMatch}
-                    // aria-invalid={validPwd ? 'false' : 'true'}
-                    aria-describedby="변경 비밀번호"
-                  />
-                </div>
-                <button type="button" onClick={checkMatch}>
-                  비밀번호 중복확인
-                </button>
-                {changable ? <p>{message}</p> : ''}
-                {changable ? '' : <p>{message}</p>}
-              </div>
-            </li>
-            <li>
-              <div className="">
-                <label htmlFor="confirmPwd">비밀번호 확인</label>
-                <div className="">
-                  <input
-                    type="text"
-                    id="confirmPwd"
-                    name="confirmPassword"
-                    autoComplete="off"
-                    onChange={handleConfirm}
-                    onKeyUp={handleMatch}
-                    // aria-invalid={confirmValid ? 'false' : 'true'}
-                    aria-describedby="변경 비밀번호 확인"
-                  />
-                </div>
-                {alert}
-              </div>
-            </li>
-          </ul>
-          <button type="submit" onClick={handleChange} disabled={!isMatch}>
-            변경하기
-          </button>
-        </form>
+                  변경하기
+                </Button>
+              </FormControl>
+            </PForm>
+          </div>
+        </div>
         {success && (
           <p
             style={{
@@ -230,9 +363,8 @@ function UserPage() {
             Profile has been updated...
           </p>
         )}
-        <h1>Logged in as: {user?.result?.name}</h1>
-
-        {console.log(user)}
+        {/* <h1>Logged in as: {user?.result?.name}</h1> */}
+        {/* {console.log(user)} */}
       </div>
     </>
   );
