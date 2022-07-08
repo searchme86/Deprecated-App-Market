@@ -58,33 +58,30 @@ function UserPage() {
 
   //폼에 입력하는 비밀번호를 저장하는 로컬 스테이트
   const [pwd, setPwd] = useState('');
-  //
-  //
-  //
-  //
-  //
-  //
-  //
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debounceSearch = useCallback(
-    useDebounce((value) => setPwd(value), 5000),
+  const debounceTyping = useCallback(
+    useDebounce((value) => setPwd(value), 500),
     []
   );
 
   const isChangable = useCallback(
     (e) => {
-      debounceSearch(e.target.value);
+      const {
+        target: { value },
+      } = e;
+      debounceTyping(value);
+
       // handleMatch();
       // console.log('pwd', pwd);
       // console.log({ nickname, password: pwd });
     },
-    [debounceSearch]
+    [debounceTyping]
   );
 
   console.log('pwd', pwd);
 
-  // <--------여기까지 완성-------->
+  // <------------------------여기까지 완성------------------------>
 
   const [newProfile, setNewProfile] = useState(initialState);
 
@@ -139,6 +136,7 @@ function UserPage() {
   //버튼 비밀번호 중복확인을 위한 dispatch
   const checkMatch = (e) => {
     e.preventDefault();
+
     dispatch(checkPwd({ nickname, password: { password: pwd } }));
   };
 
