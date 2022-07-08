@@ -75,20 +75,6 @@ export const checkPwd = createAsyncThunk(
   }
 );
 
-// export const googleSignIn = createAsyncThunk(
-//   'auth/googleSignIn',
-//   async ({ result, navigate, toast }, { rejectWithValue }) => {
-//     try {
-//       const response = await api.googleSignIn(result);
-//       toast.success('Google Sign-in Successfully');
-//       navigate('/');
-//       return response.data;
-//     } catch (err) {
-//       return rejectWithValue(err.response.data);
-//     }
-//   }
-// );
-
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
