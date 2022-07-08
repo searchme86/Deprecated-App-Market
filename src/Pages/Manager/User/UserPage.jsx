@@ -16,7 +16,7 @@ import {
   PFormDesLi,
   PFormDes,
 } from '../Product/ProductUpload.style';
-import { OffScreenStrong } from '../../../Assets/Styles/Basic.style';
+import { OffScreen, OffScreenStrong } from '../../../Assets/Styles/Basic.style';
 import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
 
 import defaultImg from '../../../Assets/Image/default_user_page.svg';
@@ -62,11 +62,20 @@ function UserPage() {
   const [newProfile, setNewProfile] = useState(initialState);
 
   const [visible, setVisible] = useState(false);
+  // 버튼
+  const [avail, setAvail] = useState(true);
 
+  // 이전 비밀번호
   const [current, setCurrent] = useState('');
+  // 새로운 비밀번호
   const [renew, setRenew] = useState('');
 
+  // 얼럿
   const [alert, setAlert] = useState('');
+
+  let isEqual = current === renew;
+
+  console.log('isEqual', isEqual);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const savePrevious = useCallback(
@@ -99,6 +108,7 @@ function UserPage() {
       const isCurrent = () => {
         if (!current) {
           setAlert('이전 비밀번호를 체크해주세요');
+          setAvail(false);
         }
       };
 
@@ -119,6 +129,8 @@ function UserPage() {
     setVisible((value) => !value);
   };
 
+  const canSubmit = [current, renew].every(Boolean);
+
   /***
    *
    * renew는 새로운 비빌번호를 저장한 변수
@@ -130,6 +142,9 @@ function UserPage() {
 
    *2. current와 값이 일치하는지를 파악한다 => 일치하면 새로운 비밀번호로 하라고 함, 다르면 값이 다르다고 표시한다.
    *
+   *
+   *avail 버튼의 활성화 flag
+   *canSubmit는 버튼의 활성화 여부를 보여주는 flag
    *  */
 
   console.log('renew', renew);
@@ -138,25 +153,25 @@ function UserPage() {
 
   //[-비밀번호 확인-]
   //비밀번호 확인 폼에 입력하는 값이 저장하는 로컬 스테이트
-  const [confirmValue, setConfirmValue] = useState('');
+  // const [confirmValue, setConfirmValue] = useState('');
 
   // //[-비밀번호 확인-]
   // //비밀번호 확인 값과 비밀번호 확인의 값이 일치하는 검사 로컬 스테이트
 
   //[-버튼, 변경하기-]
   //모든 작업을 하고 성공했는지를 확인하는 로컬 스테이트
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
 
   //url의 아이디를 가져오기 위한 useParam
   const { nickname } = useParams();
   //폼에 포커스를 두기 위한 ref
-  const pwdRef = useRef(null);
+  // const pwdRef = useRef(null);
 
-  const isMatch =
-    [current, confirmValue].every(Boolean) && current === confirmValue;
-  const allBlank = !current && !confirmValue;
-  const confirmBlank = current && !confirmValue;
-  const pwdBlank = !current && confirmValue;
+  // const isMatch =
+  //   [current, confirmValue].every(Boolean) && current === confirmValue;
+  // const allBlank = !current && !confirmValue;
+  // const confirmBlank = current && !confirmValue;
+  // const pwdBlank = !current && confirmValue;
 
   // useEffect(() => {
   //   pwdRef.current.focus();
@@ -164,6 +179,7 @@ function UserPage() {
   // }, []);
 
   const defaultValue = useRef(null);
+
   useEffect(() => {
     if (!pwdChangable) {
       defaultValue.current = {
@@ -173,11 +189,10 @@ function UserPage() {
   }, [pwdChangable]);
 
   useEffect(() => {
-    if (!current || !confirmValue) {
-      setAlert(null);
-      // console.log('ddd');
+    if (!renew) {
+      setAlert('');
     }
-  }, [current, confirmValue]);
+  }, [renew]);
 
   useEffect(() => {
     error && toast.error(error);
@@ -185,18 +200,6 @@ function UserPage() {
 
   //초기화된 값을 사용하기 위한
   const { password, imageFile } = newProfile;
-
-  const handleChange = (e) => {
-    e.preventDefault();
-  };
-
-  const handleMatch = () => {
-    if (isMatch) {
-      setAlert('비밀번호가 일치합니다.');
-    } else {
-      setAlert('비밀번호가 일치하지 않습니다.');
-    }
-  };
 
   const {
     handleSubmit,
@@ -314,7 +317,7 @@ function UserPage() {
                         type="text"
                         id="password"
                         name="password"
-                        ref={pwdRef}
+                        // ref={pwdRef}
                         {...register('password', {
                           onChange: isChangable,
                         })}
@@ -337,7 +340,9 @@ function UserPage() {
                     <div className="" style={{ margin: '10px 0 10px 0' }}>
                       {changable ? <p>{message}</p> : ''}
                       {changable ? '' : <p>{message}</p>}
-                      {!pwdChangable && <p>{defaultValue?.current?.message}</p>}
+                      {!pwdChangable && (
+                        <OffScreen> {defaultValue?.current?.message}</OffScreen>
+                      )}
                     </div>
 
                     <PFormUnit>
@@ -361,7 +366,7 @@ function UserPage() {
                         <Input
                           id="confirmPwd"
                           name="confirmPassword"
-                          onKeyUp={handleMatch}
+                          // onKeyUp={handleMatch}
                           pr="4.5rem"
                           type={visible ? 'text' : 'password'}
                           placeholder="변경하려는 비밀번호를 입력해주세요"
@@ -379,7 +384,11 @@ function UserPage() {
                           </Button>
                         </InputRightElement>
                       </InputGroup>
-                      {alert}
+
+                      <div>
+                        <p>{alert}</p>
+                      </div>
+
                       <FormErrorMessage as="p">
                         {errors.confirmPassword &&
                           errors.confirmPassword.message}
@@ -390,8 +399,8 @@ function UserPage() {
 
                 <Button
                   type="submit"
-                  onClick={handleChange}
-                  disabled={!isMatch}
+                  // onClick={handleChange}
+                  // disabled={!isMatch}
                   mt="20px"
                 >
                   변경하기
@@ -400,7 +409,7 @@ function UserPage() {
             </PForm>
           </div>
         </div>
-        {success && (
+        {/* {success && (
           <p
             style={{
               color: 'green',
@@ -410,7 +419,7 @@ function UserPage() {
           >
             Profile has been updated...
           </p>
-        )}
+        )} */}
         {/* <h1>Logged in as: {user?.result?.name}</h1> */}
         {/* {console.log(user)} */}
       </div>
