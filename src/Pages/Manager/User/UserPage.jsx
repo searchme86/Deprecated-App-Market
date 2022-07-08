@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
@@ -32,11 +32,11 @@ import {
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import FileBase from 'react-file-base64';
+import { useDebounce } from '../../../Components/useDebounce';
 
 function UserPage() {
   const {
     auth: {
-      user,
       user: {
         result: { imageFile: ImgSrc, name: UserName },
       },
@@ -56,11 +56,54 @@ function UserPage() {
     imageFile: '',
   };
 
-  const [newProfile, setNewProfile] = useState(initialState);
-
-  //[완료][-변경할 비밀번호-]
   //폼에 입력하는 비밀번호를 저장하는 로컬 스테이트
   const [pwd, setPwd] = useState('');
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  // <--------테스트중-------->
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debounceSearch = useCallback(
+    useDebounce((value) => setPwd(value), 5000),
+    []
+  );
+
+  // <--------테스트중-------->
+  //
+  //[-변경할 비밀번호-]
+  //폼에 연결된 onChange 핸들러
+  // 비밀번호를 입력할때 이것을 pwd에 저장하는 핸들러
+  // const isChangable = (e) => {
+  //   setPwd(e.target.value);
+  //   // handleMatch();
+  //   // console.log('pwd', pwd);
+  //   // console.log({ nickname, password: pwd });
+  // };
+
+  const isChangable = useCallback(
+    (e) => {
+      debounceSearch(e.target.value);
+      // handleMatch();
+      // console.log('pwd', pwd);
+      // console.log({ nickname, password: pwd });
+    },
+    [debounceSearch]
+  );
+
+  console.log('pwd', pwd);
+  //
+  //
+  //
+  //
+  //
+  // <--------여기까지 완성-------->
+
+  const [newProfile, setNewProfile] = useState(initialState);
 
   //[-비밀번호 확인-]
   //비밀번호 확인 폼에 입력하는 값이 저장하는 로컬 스테이트
@@ -93,7 +136,7 @@ function UserPage() {
   useEffect(() => {
     if (!pwd || !confirmValue) {
       setAlert(null);
-      console.log('ddd');
+      // console.log('ddd');
     }
   }, [pwd, confirmValue]);
 
@@ -107,18 +150,6 @@ function UserPage() {
 
   //초기화된 값을 사용하기 위한
   const { password, imageFile } = newProfile;
-
-  // <--------변경할 비밀번호-------->
-
-  //[-변경할 비밀번호-]
-  //폼에 연결된 onChange 핸들러
-  // 비밀번호를 입력할때 이것을 pwd에 저장하는 핸들러
-  const isChangable = (e) => {
-    setPwd(e.target.value);
-    handleMatch();
-    console.log('pwd', pwd);
-    console.log({ nickname, password: pwd });
-  };
 
   //[-변경할 비밀번호-], 리덕스
   //변경하려는 비밀번호의 중복확인 핸들러
@@ -148,9 +179,9 @@ function UserPage() {
     e.preventDefault();
   };
 
-  console.log('allBlank', allBlank);
-  console.log('confirmBlank', confirmBlank);
-  console.log('pwdBlank', pwdBlank);
+  // console.log('allBlank', allBlank);
+  // console.log('confirmBlank', confirmBlank);
+  // console.log('pwdBlank', pwdBlank);
 
   const handleMatch = () => {
     if (isMatch) {
@@ -160,16 +191,16 @@ function UserPage() {
     }
   };
 
-  //1. 만약 하나 폼이 있으면,
-  console.log(
-    'pwdChangable , message, changable',
-    pwdChangable,
-    message,
-    changable
-  );
+  // 1. 만약 하나 폼이 있으면,
+  // console.log(
+  //   'pwdChangable , message, changable',
+  //   pwdChangable,
+  //   message,
+  //   changable
+  // );
 
-  console.log('imageFile', imageFile);
-  console.log('match', pwd === confirmValue);
+  // console.log('imageFile', imageFile);
+  // console.log('match', pwd === confirmValue);
 
   const {
     handleSubmit,
@@ -261,8 +292,9 @@ function UserPage() {
                     </div>
                   </li>
                   <li>
+                    {/* 변경할 비밀번호 영역 */}
                     <PFormUnit>
-                      <FormLabel htmlFor="changePwd">변경할 비밀번호</FormLabel>
+                      <FormLabel htmlFor="password">변경할 비밀번호</FormLabel>
                       <PFormDesWrapper>
                         <PFormDesList>
                           <PFormDesLi>
@@ -278,18 +310,18 @@ function UserPage() {
                       </PFormDesWrapper>
                       <Input
                         type="text"
-                        id="changePwd"
-                        name="changePwd"
+                        id="password"
+                        name="password"
                         ref={pwdRef}
-                        onChange={isChangable}
-                        onKeyUp={handleMatch}
-                        {...register('changePwd', {
+                        // value={pwd}
+                        // onKeyUp={handleMatch}
+                        {...register('password', {
                           required: '변경할 비밀번호가 입력되지 않았습니다.',
-                          // onChange: onInputChange,
+                          onChange: isChangable,
                         })}
                       />
                       <FormErrorMessage as="p">
-                        {errors.changePwd && errors.changePwd.message}
+                        {errors.password && errors.password.message}
                       </FormErrorMessage>
                       <Button
                         type="button"
