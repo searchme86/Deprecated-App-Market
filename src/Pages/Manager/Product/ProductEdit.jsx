@@ -52,15 +52,18 @@ import { OffScreenSpan } from '../../../Assets/Styles/Basic.style';
 import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import {
+  ngetProduct,
+  ncreateProduct,
+} from '../../../Store/Features/NProductSlice';
 
-import { ncreateProduct } from '../../../Store/Features/NProductSlice';
 import {
   getCategoryList,
   CategorySelector,
 } from '../../../Store/Features/CategorySlice';
+
+import { useNavigate, useParams } from 'react-router-dom';
 import ProductPostCode from './ProductPostCode';
-import { ngetProduct } from '../../../Store/Features/NProductSlice';
 
 function ProductEdit() {
   const {
@@ -76,7 +79,6 @@ function ProductEdit() {
   const { ProductSize, ProductDegree, ProductStatus, nproduct, error } =
     useSelector((state) => state.nproduct);
 
-  // console.log('제품등록 페이지에서 categories', categories);
   const categoryValue = Object.values(categories).map(
     ({ _id, categoryTitle }) => {
       return { id: _id, PdCategoryValue: categoryTitle };
@@ -150,6 +152,7 @@ function ProductEdit() {
     error && toast.error(error);
   }, [error]);
 
+  // 폼 입력 공통 핸들러
   const onInputChange = useCallback(
     (e) => {
       const { name, value } = e.target;
@@ -159,6 +162,7 @@ function ProductEdit() {
     [pdInfo]
   );
 
+  //  사이즈 별 등록 핸들러
   const addSize = useCallback(
     (e, index) => {
       const {
@@ -184,6 +188,7 @@ function ProductEdit() {
     setPrdSize([...prdSize, { pdSize: '', pdPriceBySize: '' }]);
   }, [prdSize]);
 
+  //  색상 별 등록 핸들러
   const addColor = useCallback(
     (e, index) => {
       const {
@@ -221,20 +226,19 @@ function ProductEdit() {
     setPdDegree(e.target.value);
   }, []);
 
-  //상품 모달
+  // 상품 요약 모달
   const handleClose = useCallback(() => {
     setIsOpen(false);
   }, []);
 
-  //상품 모달
-
+  // 상품 요약 모달
   const handlePostModal = useCallback((e) => {
     e.preventDefault();
     setIsOpen((value) => !value);
     setPostModalOpen(true);
   }, []);
 
-  // 태그-1
+  // 상품 상태 태그
   const handleKeyDown = useCallback(
     (e) => {
       if (e.key !== 'Enter') return;
@@ -247,6 +251,7 @@ function ProductEdit() {
     [tags]
   );
 
+  // 상품 상태 태그
   const removeTag = useCallback(
     (index) => {
       setTags(tags.filter((el, i) => i !== index));
@@ -254,7 +259,7 @@ function ProductEdit() {
     [tags]
   );
 
-  //해쉬태그
+  // 상품 해쉬 태그
   const handleTags = useCallback(
     (e) => {
       if (e.key !== 'Enter') return;
@@ -267,6 +272,7 @@ function ProductEdit() {
     [pdNewtags]
   );
 
+  // 상품 해쉬 태그
   const removePdTag = useCallback(
     (index) => {
       setPdNewtags(pdNewtags.filter((el, i) => i !== index));
@@ -274,6 +280,7 @@ function ProductEdit() {
     [pdNewtags]
   );
 
+  // 사이즈별, 색상별 제품가격 등록 시, 마지막 데이터 삭제 핸들러
   const filterLastItem = (data) => {
     if (!data) return;
     const convertArray = Object.values([...data]);
@@ -286,6 +293,7 @@ function ProductEdit() {
   let prdSizeItem = filterLastItem(prdSize);
   let prdColorItem = filterLastItem(prdColor);
 
+  //최종 데이터 생성
   const newProduct = useMemo(() => {
     return {
       pdCategory,
@@ -325,9 +333,10 @@ function ProductEdit() {
     prdColorItem,
   ]);
 
-  // 상품모달
+  // 카카오 우편모달 관련 속성 전달
   const postCode = { handleClose, isOpen, setAddress };
 
+  // 버튼 submit 되는 조건 검사
   const filledIn = [
     pdCategory,
     pdBrand,
@@ -343,6 +352,7 @@ function ProductEdit() {
   const canSubmit = pdNewtags.length !== 0 && filledIn;
   const checked = postModalOpen;
 
+  // react-hook-form
   const {
     handleSubmit,
     register,
