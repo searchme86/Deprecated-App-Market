@@ -50,7 +50,6 @@ import {
 } from '../../../Assets/Styles/Layout.style';
 import { OffScreenSpan } from '../../../Assets/Styles/Basic.style';
 import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
-import ProductReport from './ProductReport';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -63,7 +62,7 @@ import {
 import ProductPostCode from './ProductPostCode';
 import { ngetProduct } from '../../../Store/Features/NProductSlice';
 
-function FashionUpload() {
+function ProductEdit() {
   const {
     category: { categories },
   } = useSelector(CategorySelector);
@@ -73,7 +72,6 @@ function FashionUpload() {
       result: { imageFile, nickname },
     },
   } = useSelector((state) => state.auth);
-  // console.log('user', imageFile, nickname);
 
   const { ProductSize, ProductDegree, ProductStatus, nproduct, error } =
     useSelector((state) => state.nproduct);
@@ -81,24 +79,11 @@ function FashionUpload() {
   // console.log('제품등록 페이지에서 categories', categories);
   const categoryValue = Object.values(categories).map(
     ({ _id, categoryTitle }) => {
-      // console.log('1');
       return { id: _id, PdCategoryValue: categoryTitle };
     }
   );
 
-  // const productSchema = {
-  //   pdBrand: '',
-  //   pdDes: '',
-  //   pdImage: '',
-  //   pdTitle: '',
-  //   pdPrice: '',
-  //   pdWish: '',
-  //   pdType: '',
-  // };
-
   const [pdInfo, setPdInfo] = useState(nproduct);
-
-  //
   const {
     pdTitle,
     pdImage,
@@ -113,15 +98,6 @@ function FashionUpload() {
     pdColorInfo,
   } = pdInfo;
 
-  console.log('pdTitle', pdTitle);
-  console.log('pdImage', pdImage);
-  console.log('pdPrice', pdPrice);
-  console.log('pdDes', pdDes);
-  console.log('pdWish', pdWish);
-  console.log('pdBrand', pdBrand);
-  console.log('pdType', pdType);
-  //
-
   const [pdCategory, setPdCategory] = useState('');
   const [prdSize, setPrdSize] = useState(pdSizeInfo);
   const [prdColor, setPrdColor] = useState(pdColorInfo);
@@ -129,7 +105,6 @@ function FashionUpload() {
   const [pdDegree, setPdDegree] = useState('');
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isFmodalOpen, setIsFmodalOpen] = useState(false);
 
   const [tags, setTags] = useState(pdStatus);
   const [pdNewtags, setPdNewtags] = useState(pdtags);
@@ -141,16 +116,12 @@ function FashionUpload() {
   const [postModalOpen, setPostModalOpen] = useState(false);
 
   const { id } = useParams();
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {}, []);
 
   useEffect(() => {
     dispatch(getCategoryList({ toast }));
     if (id) {
-      console.log('id', id);
       dispatch(ngetProduct(id));
     }
   }, []);
@@ -256,17 +227,10 @@ function FashionUpload() {
   }, []);
 
   //상품 모달
-  const handleFirstModal = useCallback((e) => {
-    e.preventDefault();
-    setIsOpen((value) => !value);
-    setIsFmodalOpen(true);
-    setPostModalOpen(false);
-  }, []);
 
   const handlePostModal = useCallback((e) => {
     e.preventDefault();
     setIsOpen((value) => !value);
-    setIsFmodalOpen(false);
     setPostModalOpen(true);
   }, []);
 
@@ -309,8 +273,6 @@ function FashionUpload() {
     },
     [pdNewtags]
   );
-
-  // const { pdTitle, pdImage, pdPrice, pdDes, pdWish, pdBrand, pdType } = pdInfo;
 
   const filterLastItem = (data) => {
     if (!data) return;
@@ -363,10 +325,7 @@ function FashionUpload() {
     prdColorItem,
   ]);
 
-  // console.log('newProduct', newProduct);
-
   // 상품모달
-  const prReport = { handleClose, isOpen, newProduct };
   const postCode = { handleClose, isOpen, setAddress };
 
   const filledIn = [
@@ -383,30 +342,6 @@ function FashionUpload() {
 
   const canSubmit = pdNewtags.length !== 0 && filledIn;
   const checked = postModalOpen;
-  // console.log(
-  //   'disabled',
-  //   pdCategory,
-  //   pdTitle,
-  //   pdImage,
-  //   pdPrice,
-  //   pdDegree,
-  //   prdNewStatus,
-  //   pdWish,
-  //   pdDes,
-  //   pdNewtags,
-  //   canSubmit
-  // );
-  // console.log('pdInfo', newProduct);
-  // console.log('userId', userId);
-  // console.log('pdNewtags', pdNewtags.length);
-  // console.log('postModalOpen', postModalOpen);
-  // console.log('1');
-  // console.log('pdAddress', pdAddress);
-  // console.log('addressRef', inputAddressValue);
-
-  // console.log('zonecode', zonecode);
-  // console.log('fullAddress', fullAddress);
-  // console.log('refinedAddress', refinedAddress);
 
   const {
     handleSubmit,
@@ -421,7 +356,6 @@ function FashionUpload() {
     [dispatch, navigate, newProduct]
   );
 
-  console.log('nproduct', nproduct);
   return (
     <SectionUnit>
       <SectionLayout>
@@ -505,11 +439,6 @@ function FashionUpload() {
 
                     <PButtonArea>
                       <PButtonList>
-                        <PButtonLi>
-                          <PFormButton type="button" onClick={handleFirstModal}>
-                            상품페이지 미리보기
-                          </PFormButton>
-                        </PButtonLi>
                         <PButtonLi>
                           <PFormButton
                             type="submit"
@@ -1188,7 +1117,7 @@ function FashionUpload() {
               </FlexContainer>
             </FormControl>
           </PForm>
-          {isFmodalOpen && <ProductReport prReport={prReport} />}
+
           {postModalOpen && <ProductPostCode postCode={postCode} />}
         </SectionContent>
       </SectionLayout>
@@ -1196,4 +1125,4 @@ function FashionUpload() {
   );
 }
 
-export default FashionUpload;
+export default ProductEdit;
