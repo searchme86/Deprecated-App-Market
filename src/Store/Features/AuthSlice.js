@@ -66,6 +66,7 @@ export const checkPwd = createAsyncThunk(
     try {
       const response = await api.checkIfPwd(nickname, password);
       // toast.success('변경가능한 비밀번호 입니다.');
+      console.log('changable response', response);
       return response.data;
     } catch (err) {
       console.log('error', err.response);
@@ -115,7 +116,7 @@ const authSlice = createSlice({
     },
     [register.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload.message;
+      state.error = action.payload;
     },
     [checkPwd.pending]: (state, action) => {
       state.loading = true;
@@ -137,7 +138,7 @@ const authSlice = createSlice({
     },
     [changeProfile.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload.message;
+      state.error = action.payload;
     },
 
     // [googleSignIn.pending]: (state, action) => {
