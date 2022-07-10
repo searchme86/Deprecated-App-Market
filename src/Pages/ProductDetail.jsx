@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import ProductRelated from '../Components/ProductRelated/ProductRelated';
 import {
   SectionHeader,
@@ -80,17 +80,14 @@ function ProductDetail() {
   } = useSelector(ProductSelector);
 
   const { id } = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const delayDispatch = useRef(null);
   const [orderCount, setOrderCount] = useState(1);
   const [orderTotal, setOrderTotal] = useState(0);
   const [color, setColor] = useState([]);
   const [size, setSize] = useState([]);
 
   useEffect(() => {
-    // delayDispatch.current = setTimeout(() => {});
     if (id) {
       dispatch(ngetProduct(id));
     }
@@ -226,7 +223,6 @@ function ProductDetail() {
                       </p>
                     </div>
                   </div>
-
                   {/* 범주 */}
                   <div className="">
                     <Breadcrumb as="div" mt="15px" mb="10px">
@@ -261,7 +257,6 @@ function ProductDetail() {
                       </BreadcrumbItem>
                     </Breadcrumb>
                   </div>
-
                   {/* 상품상태 */}
                   <div className="" style={{ borderBottom: '1px solid red' }}>
                     <ul style={{ display: 'flex' }}>
@@ -312,7 +307,6 @@ function ProductDetail() {
                       원
                     </span>
                   </div>
-
                   {/* 색상별 사이즈별 셀렉트 박스 */}
                   <div className="">
                     {pdSizeItems ? (
@@ -339,7 +333,6 @@ function ProductDetail() {
                       ''
                     )}
                   </div>
-
                   {/* 가격 계산, 클릭버튼 */}
                   <div
                     className=""
@@ -432,7 +425,6 @@ function ProductDetail() {
                       </span>
                     </div>
                   </div>
-
                   {/* 탭 메뉴 */}
                   <div className="">
                     <Tabs variant="enclosed">
@@ -578,7 +570,6 @@ function ProductDetail() {
                       </TabPanels>
                     </Tabs>
                   </div>
-
                   <button
                     type="submit"
                     style={{
@@ -595,19 +586,26 @@ function ProductDetail() {
                   >
                     장바구니 담기
                   </button>
-                  <button
-                    type="button"
-                    style={{ position: 'absolute', top: '0px', right: '0px' }}
-                  >
-                    <OffScreenSpan>상품 업데이트 버튼</OffScreenSpan>
-                    <FontAwesomeIcon
-                      icon={faPenToSquare}
+                  {/*  */}.
+                  <Link to={'/update/'}>
+                    <button
+                      type="button"
                       style={{
-                        fontSize: 50,
-                        color: '#000',
+                        position: 'absolute',
+                        bottom: '0px',
+                        right: '0px',
                       }}
-                    />
-                  </button>
+                    >
+                      <OffScreenSpan>상품 업데이트 버튼</OffScreenSpan>
+                      <FontAwesomeIcon
+                        icon={faPenToSquare}
+                        style={{
+                          fontSize: 50,
+                          color: '#000',
+                        }}
+                      />
+                    </button>
+                  </Link>
                 </div>
               </div>
             </PForm>
