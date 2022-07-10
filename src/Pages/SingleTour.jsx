@@ -24,7 +24,6 @@ function SingleTour() {
   const { id } = useParams();
   const navigate = useNavigate();
   const tags = tour?.tags;
-
   //tag에 해당하는 관련된 tour를 처리하는 useEffect
   //getRelatedTours 관련한 로직
   useEffect(() => {

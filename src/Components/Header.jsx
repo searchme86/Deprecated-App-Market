@@ -101,11 +101,11 @@ function Header() {
             )}
             {user?.result?._id ? (
               <>
-                <MDBNavbarItem>
+                {/* <MDBNavbarItem>
                   <MDBNavbarLink href="/userProduct">
                     <p className="header-text">나의상품</p>
                   </MDBNavbarLink>
-                </MDBNavbarItem>
+                </MDBNavbarItem> */}
 
                 {/* <MDBNavbarItem>
                   <MDBNavbarLink href="/upload">
@@ -134,8 +134,7 @@ function Header() {
             )}
             {user?.result?.imageFile ? (
               <MDBNavbarItem>
-                {/* <MDBNavbarLink href={`/profile/${user.result.nickname}`}> */}
-                <MDBNavbarLink href={`/profile`}>
+                <MDBNavbarLink href={`/profile/${user.result.nickname}`}>
                   <div className="">
                     <img
                       src={user?.result?.imageFile}

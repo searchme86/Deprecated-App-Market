@@ -50,29 +50,22 @@ import {
 } from '../../../Assets/Styles/Layout.style';
 import { OffScreenSpan } from '../../../Assets/Styles/Basic.style';
 import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
-import ProductReport from './ProductReport';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import {
+  ngetProduct,
+  ncreateProduct,
+} from '../../../Store/Features/NProductSlice';
 
-import { ncreateProduct } from '../../../Store/Features/NProductSlice';
 import {
   getCategoryList,
   CategorySelector,
 } from '../../../Store/Features/CategorySlice';
+
+import { useNavigate, useParams } from 'react-router-dom';
 import ProductPostCode from './ProductPostCode';
 
-const productSchema = {
-  pdTitle: '',
-  pdImage: '',
-  pdPrice: '',
-  pdDes: '',
-  pdWish: '',
-  pdType: '',
-  pdBrand: '',
-};
-
-function FashionUpload() {
+function ProductEdit() {
   const {
     category: { categories },
   } = useSelector(CategorySelector);
@@ -82,36 +75,41 @@ function FashionUpload() {
       result: { imageFile, nickname },
     },
   } = useSelector((state) => state.auth);
-  // console.log('user', imageFile, nickname);
 
-  const { ProductSize, ProductDegree, ProductStatus, error } = useSelector(
-    (state) => state.nproduct
-  );
+  const { ProductSize, ProductDegree, ProductStatus, nproduct, error } =
+    useSelector((state) => state.nproduct);
 
-  // console.log('제품등록 페이지에서 categories', categories);
   const categoryValue = Object.values(categories).map(
     ({ _id, categoryTitle }) => {
-      // console.log('1');
       return { id: _id, PdCategoryValue: categoryTitle };
     }
   );
 
-  // console.log(categoryValue, categoryValue);
+  const [pdInfo, setPdInfo] = useState(nproduct);
+  const {
+    pdTitle,
+    pdImage,
+    pdPrice,
+    pdDes,
+    pdWish,
+    pdBrand,
+    pdType,
+    pdtags,
+    pdStatus,
+    pdSizeInfo,
+    pdColorInfo,
+  } = pdInfo;
 
-  const [pdInfo, setPdInfo] = useState(productSchema);
   const [pdCategory, setPdCategory] = useState('');
-  const [prdSize, setPrdSize] = useState([{ pdSize: '', pdPriceBySize: '' }]);
-  const [prdColor, setPrdColor] = useState([
-    { pdColor: '', pdPriceByColor: '' },
-  ]);
-  const [prdStatus, setPrdStatus] = useState('');
+  const [prdSize, setPrdSize] = useState(pdSizeInfo);
+  const [prdColor, setPrdColor] = useState(pdColorInfo);
+  const [prdNewStatus, setPrdStatus] = useState('');
   const [pdDegree, setPdDegree] = useState('');
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isFmodalOpen, setIsFmodalOpen] = useState(false);
 
-  const [tags, setTags] = useState([]);
-  const [pdtags, setPdtags] = useState([]);
+  const [tags, setTags] = useState(pdStatus);
+  const [pdNewtags, setPdNewtags] = useState(pdtags);
 
   const [pdAddress, setAddress] = useState('');
   const [inputAddressValue, setInputAddressValue] = useState(
@@ -119,17 +117,15 @@ function FashionUpload() {
   );
   const [postModalOpen, setPostModalOpen] = useState(false);
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm();
-
+  const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCategoryList({ toast }));
+    if (id) {
+      dispatch(ngetProduct(id));
+    }
   }, []);
 
   useEffect(() => {
@@ -156,6 +152,7 @@ function FashionUpload() {
     error && toast.error(error);
   }, [error]);
 
+  // 폼 입력 공통 핸들러
   const onInputChange = useCallback(
     (e) => {
       const { name, value } = e.target;
@@ -165,6 +162,7 @@ function FashionUpload() {
     [pdInfo]
   );
 
+  //  사이즈 별 등록 핸들러
   const addSize = useCallback(
     (e, index) => {
       const {
@@ -190,6 +188,7 @@ function FashionUpload() {
     setPrdSize([...prdSize, { pdSize: '', pdPriceBySize: '' }]);
   }, [prdSize]);
 
+  //  색상 별 등록 핸들러
   const addColor = useCallback(
     (e, index) => {
       const {
@@ -227,27 +226,19 @@ function FashionUpload() {
     setPdDegree(e.target.value);
   }, []);
 
-  //상품 모달
+  // 상품 요약 모달
   const handleClose = useCallback(() => {
     setIsOpen(false);
   }, []);
 
-  //상품 모달
-  const handleFirstModal = useCallback((e) => {
-    e.preventDefault();
-    setIsOpen((value) => !value);
-    setIsFmodalOpen(true);
-    setPostModalOpen(false);
-  }, []);
-
+  // 상품 요약 모달
   const handlePostModal = useCallback((e) => {
     e.preventDefault();
     setIsOpen((value) => !value);
-    setIsFmodalOpen(false);
     setPostModalOpen(true);
   }, []);
 
-  // 태그-1
+  // 상품 상태 태그
   const handleKeyDown = useCallback(
     (e) => {
       if (e.key !== 'Enter') return;
@@ -260,6 +251,7 @@ function FashionUpload() {
     [tags]
   );
 
+  // 상품 상태 태그
   const removeTag = useCallback(
     (index) => {
       setTags(tags.filter((el, i) => i !== index));
@@ -267,28 +259,28 @@ function FashionUpload() {
     [tags]
   );
 
-  //해쉬태그
+  // 상품 해쉬 태그
   const handleTags = useCallback(
     (e) => {
       if (e.key !== 'Enter') return;
       const value = e.target.value;
       if (!value.trim()) return;
-      setPdtags([...pdtags, value]);
+      setPdNewtags([...pdNewtags, value]);
       e.target.value = '';
       e.preventDefault();
     },
-    [pdtags]
+    [pdNewtags]
   );
 
+  // 상품 해쉬 태그
   const removePdTag = useCallback(
     (index) => {
-      setPdtags(pdtags.filter((el, i) => i !== index));
+      setPdNewtags(pdNewtags.filter((el, i) => i !== index));
     },
-    [pdtags]
+    [pdNewtags]
   );
 
-  const { pdTitle, pdImage, pdPrice, pdDes, pdWish, pdBrand, pdType } = pdInfo;
-
+  // 사이즈별, 색상별 제품가격 등록 시, 마지막 데이터 삭제 핸들러
   const filterLastItem = (data) => {
     if (!data) return;
     const convertArray = Object.values([...data]);
@@ -301,6 +293,7 @@ function FashionUpload() {
   let prdSizeItem = filterLastItem(prdSize);
   let prdColorItem = filterLastItem(prdColor);
 
+  //최종 데이터 생성
   const newProduct = useMemo(() => {
     return {
       pdCategory,
@@ -314,11 +307,11 @@ function FashionUpload() {
       pdDes,
       pdWish,
       pdDegree,
-      pdtags,
+      pdNewtags,
       inputAddressValue,
-      pdStatus: [prdStatus, ...tags],
-      pdSizeInfo: [...prdSizeItem],
-      pdColorInfo: [...prdColorItem],
+      pdStatus: [prdNewStatus, ...tags],
+      newPdSizeInfo: [...prdSizeItem],
+      newPdColorInfo: [...prdColorItem],
     };
   }, [
     pdCategory,
@@ -332,20 +325,18 @@ function FashionUpload() {
     pdDes,
     pdWish,
     pdDegree,
-    pdtags,
+    pdNewtags,
     inputAddressValue,
-    prdStatus,
+    prdNewStatus,
     tags,
     prdSizeItem,
     prdColorItem,
   ]);
 
-  // console.log('newProduct', newProduct);
-
-  // 상품모달
-  const prReport = { handleClose, isOpen, newProduct };
+  // 카카오 우편모달 관련 속성 전달
   const postCode = { handleClose, isOpen, setAddress };
 
+  // 버튼 submit 되는 조건 검사
   const filledIn = [
     pdCategory,
     pdBrand,
@@ -353,37 +344,20 @@ function FashionUpload() {
     pdImage,
     pdPrice,
     pdDegree,
-    prdStatus,
+    prdNewStatus,
     pdWish,
     pdDes,
   ].every(Boolean);
 
-  const canSubmit = pdtags.length !== 0 && filledIn;
+  const canSubmit = pdNewtags.length !== 0 && filledIn;
   const checked = postModalOpen;
-  // console.log(
-  //   'disabled',
-  //   pdCategory,
-  //   pdTitle,
-  //   pdImage,
-  //   pdPrice,
-  //   pdDegree,
-  //   prdStatus,
-  //   pdWish,
-  //   pdDes,
-  //   pdtags,
-  //   canSubmit
-  // );
-  // console.log('pdInfo', newProduct);
-  // console.log('userId', userId);
-  // console.log('pdtags', pdtags.length);
-  // console.log('postModalOpen', postModalOpen);
-  // console.log('1');
-  // console.log('pdAddress', pdAddress);
-  // console.log('addressRef', inputAddressValue);
 
-  // console.log('zonecode', zonecode);
-  // console.log('fullAddress', fullAddress);
-  // console.log('refinedAddress', refinedAddress);
+  // react-hook-form
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
 
   const registerForm = useCallback(
     (event) => {
@@ -476,11 +450,6 @@ function FashionUpload() {
                     <PButtonArea>
                       <PButtonList>
                         <PButtonLi>
-                          <PFormButton type="button" onClick={handleFirstModal}>
-                            상품페이지 미리보기
-                          </PFormButton>
-                        </PButtonLi>
-                        <PButtonLi>
                           <PFormButton
                             type="submit"
                             disabled={!canSubmit}
@@ -523,10 +492,7 @@ function FashionUpload() {
                           type="text"
                           id="pdTitle"
                           name="pdTitle"
-                          //
-                          // value={}
-                          //
-
+                          value={pdTitle}
                           {...register('pdTitle', {
                             required: '상품명을 입력해주세요',
                             onChange: onInputChange,
@@ -559,6 +525,7 @@ function FashionUpload() {
                           type="text"
                           id="pdBrand"
                           name="pdBrand"
+                          value={pdBrand}
                           {...register('pdBrand', {
                             required: '상품의 브랜드명을 입력해주세요',
                             onChange: onInputChange,
@@ -591,6 +558,7 @@ function FashionUpload() {
                           type="text"
                           id="pdType"
                           name="pdType"
+                          value={pdType}
                           {...register('pdType', {
                             required: '상품의 브랜드명을 입력해주세요',
                             onChange: onInputChange,
@@ -632,6 +600,7 @@ function FashionUpload() {
                           type="number"
                           id="pdPrice"
                           name="pdPrice"
+                          value={pdPrice}
                           autoComplete="off"
                           {...register('pdPrice', {
                             required: '상품 가격을 입력해주세요',
@@ -665,9 +634,10 @@ function FashionUpload() {
                           </PFormDesList>
                         </PFormDesWrapper>
                         <Textarea
-                          placeholder="예 : 00에 장점이 있습니다"
                           id="pdDes"
                           name="pdDes"
+                          value={pdDes}
+                          placeholder={pdDes}
                           size="sm"
                           resize="none"
                           {...register('pdDes', {
@@ -703,7 +673,7 @@ function FashionUpload() {
                         <TagWrapper>
                           <TagContainer>
                             <TagItemList>
-                              {pdtags.map((tag, index) => (
+                              {pdNewtags.map((tag, index) => (
                                 <TagItem key={index}>
                                   <span className="text">{tag}</span>
                                   <TagItemDelete
@@ -788,7 +758,7 @@ function FashionUpload() {
                           id="pdStatus"
                           name="pdStatus"
                           placeholder="상품상태의 단계를 선택해 주세요"
-                          value={prdStatus}
+                          value={prdNewStatus}
                           {...register('pdStatus', {
                             required: '상품상태의 단계를 선택해 주세요',
                             onChange: selectStatus,
@@ -1157,7 +1127,7 @@ function FashionUpload() {
               </FlexContainer>
             </FormControl>
           </PForm>
-          {isFmodalOpen && <ProductReport prReport={prReport} />}
+
           {postModalOpen && <ProductPostCode postCode={postCode} />}
         </SectionContent>
       </SectionLayout>
@@ -1165,4 +1135,4 @@ function FashionUpload() {
   );
 }
 
-export default FashionUpload;
+export default ProductEdit;

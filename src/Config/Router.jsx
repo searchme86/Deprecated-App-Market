@@ -49,7 +49,7 @@ function Router() {
         <Route path="/tours/tag/:tag" element={<TagTours />} />
         <Route path="/register" element={<Register />} />
         <Route
-          path="/profile"
+          path="/profile/:nickname"
           element={
             <PrivateRoute>
               <UserMain />
@@ -67,14 +67,14 @@ function Router() {
         </Route>
 
         {/*  */}
-        <Route
+        {/* <Route
           path="/userProduct"
           element={
             <PrivateRoute>
               <ProductOfUser />
             </PrivateRoute>
           }
-        />
+        /> */}
         {/* <Route
           path="/upload"
           element={
@@ -99,8 +99,17 @@ function Router() {
             </PrivateRoute>
           }
         />
+        {/* 업데이트  */}
+        <Route
+          path="/edit/:id"
+          element={
+            <PrivateRoute>
+              <ProductUpload />
+            </PrivateRoute>
+          }
+        />
+        {/* 업데이트  */}
 
-        {/*  */}
         <Route
           path="/addTour"
           element={

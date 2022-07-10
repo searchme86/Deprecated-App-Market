@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import ProductRelated from '../Components/ProductRelated/ProductRelated';
 import {
   SectionHeader,
@@ -19,12 +19,6 @@ import {
 
 import { Image, ImageHolder } from '../Assets/Styles/Image.style';
 import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Select,
-  Textarea,
-  Input,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
@@ -51,7 +45,6 @@ import {
   faPenToSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import { OffScreenSpan } from '../Assets/Styles/Basic.style';
-import { useForm } from 'react-hook-form';
 import SelectUnit from '../Components/Select/SelectUnit';
 
 function ProductDetail() {
@@ -59,6 +52,7 @@ function ProductDetail() {
     product: {
       nproduct,
       nproduct: {
+        _id,
         pdUploaderImage,
         pdUploaderNickname,
         pdAddress,
@@ -80,17 +74,14 @@ function ProductDetail() {
   } = useSelector(ProductSelector);
 
   const { id } = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const delayDispatch = useRef(null);
   const [orderCount, setOrderCount] = useState(1);
   const [orderTotal, setOrderTotal] = useState(0);
   const [color, setColor] = useState([]);
   const [size, setSize] = useState([]);
 
   useEffect(() => {
-    // delayDispatch.current = setTimeout(() => {});
     if (id) {
       dispatch(ngetProduct(id));
     }
@@ -154,12 +145,6 @@ function ProductDetail() {
     setOrderTotal(orderCount * pdPrice);
   };
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm();
-
   let relatedItems = nrelatedProducts && Object.values(nrelatedProducts);
 
   let pdColorItems = pdColorInfo && Object.values(pdColorInfo);
@@ -169,23 +154,23 @@ function ProductDetail() {
   let colorData = pdColorInfo && filterObject(pdColorInfo);
   let sizeData = pdSizeInfo && filterObject(pdSizeInfo);
 
-  console.log('nproduct', nproduct);
-  console.log('orderCount', orderCount);
-  console.log('orderTotal', Number(orderCount * pdPrice));
+  // console.log('nproduct', nproduct);
+  // console.log('orderCount', orderCount);
+  // console.log('orderTotal', Number(orderCount * pdPrice));
 
-  console.log('pdColorItems', pdColorItems);
-  console.log('pdSizeItems', pdSizeItems);
+  // console.log('pdColorItems', pdColorItems);
+  // console.log('pdSizeItems', pdSizeItems);
 
-  console.log('색상 데이터를 가공한 데이터', sizeData);
-  console.log('사이즈 데이터를 가동한 데이터', colorData);
-  console.log(
-    '셀렉트박스에서 선택된, detail 컴포넌트에서 확인되는 color 값',
-    color
-  );
-  console.log(
-    '셀렉트박스에서 선택된, detail 컴포넌트에서 확인되는 size 값',
-    size
-  );
+  // console.log('색상 데이터를 가공한 데이터', sizeData);
+  // console.log('사이즈 데이터를 가동한 데이터', colorData);
+  // console.log(
+  //   '셀렉트박스에서 선택된, detail 컴포넌트에서 확인되는 color 값',
+  //   color
+  // );
+  // console.log(
+  //   '셀렉트박스에서 선택된, detail 컴포넌트에서 확인되는 size 값',
+  //   size
+  // );
 
   return (
     <>
@@ -226,7 +211,6 @@ function ProductDetail() {
                       </p>
                     </div>
                   </div>
-
                   {/* 범주 */}
                   <div className="">
                     <Breadcrumb as="div" mt="15px" mb="10px">
@@ -261,7 +245,6 @@ function ProductDetail() {
                       </BreadcrumbItem>
                     </Breadcrumb>
                   </div>
-
                   {/* 상품상태 */}
                   <div className="" style={{ borderBottom: '1px solid red' }}>
                     <ul style={{ display: 'flex' }}>
@@ -312,7 +295,6 @@ function ProductDetail() {
                       원
                     </span>
                   </div>
-
                   {/* 색상별 사이즈별 셀렉트 박스 */}
                   <div className="">
                     {pdSizeItems ? (
@@ -339,7 +321,6 @@ function ProductDetail() {
                       ''
                     )}
                   </div>
-
                   {/* 가격 계산, 클릭버튼 */}
                   <div
                     className=""
@@ -432,7 +413,6 @@ function ProductDetail() {
                       </span>
                     </div>
                   </div>
-
                   {/* 탭 메뉴 */}
                   <div className="">
                     <Tabs variant="enclosed">
@@ -578,7 +558,6 @@ function ProductDetail() {
                       </TabPanels>
                     </Tabs>
                   </div>
-
                   <button
                     type="submit"
                     style={{
@@ -595,19 +574,26 @@ function ProductDetail() {
                   >
                     장바구니 담기
                   </button>
-                  <button
-                    type="button"
-                    style={{ position: 'absolute', top: '0px', right: '0px' }}
-                  >
-                    <OffScreenSpan>상품 업데이트 버튼</OffScreenSpan>
-                    <FontAwesomeIcon
-                      icon={faPenToSquare}
+                  {/*  */}.
+                  <Link to={`/edit/${_id}`}>
+                    <button
+                      type="button"
                       style={{
-                        fontSize: 50,
-                        color: '#000',
+                        position: 'absolute',
+                        bottom: '0px',
+                        right: '0px',
                       }}
-                    />
-                  </button>
+                    >
+                      <OffScreenSpan>상품 업데이트 버튼</OffScreenSpan>
+                      <FontAwesomeIcon
+                        icon={faPenToSquare}
+                        style={{
+                          fontSize: 50,
+                          color: '#000',
+                        }}
+                      />
+                    </button>
+                  </Link>
                 </div>
               </div>
             </PForm>
