@@ -52,6 +52,7 @@ function ProductDetail() {
     product: {
       nproduct,
       nproduct: {
+        _id,
         pdUploaderImage,
         pdUploaderNickname,
         pdAddress,
@@ -153,23 +154,23 @@ function ProductDetail() {
   let colorData = pdColorInfo && filterObject(pdColorInfo);
   let sizeData = pdSizeInfo && filterObject(pdSizeInfo);
 
-  console.log('nproduct', nproduct);
-  console.log('orderCount', orderCount);
-  console.log('orderTotal', Number(orderCount * pdPrice));
+  // console.log('nproduct', nproduct);
+  // console.log('orderCount', orderCount);
+  // console.log('orderTotal', Number(orderCount * pdPrice));
 
-  console.log('pdColorItems', pdColorItems);
-  console.log('pdSizeItems', pdSizeItems);
+  // console.log('pdColorItems', pdColorItems);
+  // console.log('pdSizeItems', pdSizeItems);
 
-  console.log('색상 데이터를 가공한 데이터', sizeData);
-  console.log('사이즈 데이터를 가동한 데이터', colorData);
-  console.log(
-    '셀렉트박스에서 선택된, detail 컴포넌트에서 확인되는 color 값',
-    color
-  );
-  console.log(
-    '셀렉트박스에서 선택된, detail 컴포넌트에서 확인되는 size 값',
-    size
-  );
+  // console.log('색상 데이터를 가공한 데이터', sizeData);
+  // console.log('사이즈 데이터를 가동한 데이터', colorData);
+  // console.log(
+  //   '셀렉트박스에서 선택된, detail 컴포넌트에서 확인되는 color 값',
+  //   color
+  // );
+  // console.log(
+  //   '셀렉트박스에서 선택된, detail 컴포넌트에서 확인되는 size 값',
+  //   size
+  // );
 
   return (
     <>
@@ -574,7 +575,7 @@ function ProductDetail() {
                     장바구니 담기
                   </button>
                   {/*  */}.
-                  <Link to={'/update/'}>
+                  <Link to={`/edit/${_id}`}>
                     <button
                       type="button"
                       style={{
