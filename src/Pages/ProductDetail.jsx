@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import ProductRelated from '../Components/ProductRelated/ProductRelated';
@@ -19,12 +19,6 @@ import {
 
 import { Image, ImageHolder } from '../Assets/Styles/Image.style';
 import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Select,
-  Textarea,
-  Input,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
