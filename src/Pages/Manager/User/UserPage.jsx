@@ -22,6 +22,10 @@ import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
 import defaultImg from '../../../Assets/Image/default_user_page.svg';
 
 import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
   FormControl,
   FormLabel,
   FormErrorMessage,
@@ -48,10 +52,9 @@ function UserPage() {
   } = useSelector(AuthSelector);
   const dispatch = useDispatch();
 
-  /**
-   * 비밀번호와 프로필 이미지를 변경하기 위해서,
-   * changedPwd와 imageFile이라는 빈 값의 변수를 정의합니다,
-   */
+  //url의 아이디를 가져오기 위한 useParam
+  const { nickname } = useParams();
+
   const initialState = {
     changedPwd: '',
     imageFile: '',
@@ -61,21 +64,27 @@ function UserPage() {
   //1. 변경할 비밀번호의 값을 저장할 로컬 스테이트
   const [newProfile, setNewProfile] = useState(initialState);
 
-  const [visible, setVisible] = useState(false);
-  // 버튼
-  const [avail, setAvail] = useState(true);
-
   // 이전 비밀번호
   const [current, setCurrent] = useState('');
+  // 비밀번호 중복여부를 보여주는 텍스트 상태 flag
+  const [messageAlert, setMessageAlert] = useState(true);
+
   // 새로운 비밀번호
   const [renew, setRenew] = useState('');
+  const [visible, setVisible] = useState(false);
+  // 얼럿이 있으면 글자가 보임
+  const [flag, setFlag] = useState(false);
 
-  // 얼럿
-  const [alert, setAlert] = useState('');
+  const { password, imageFile } = newProfile;
 
-  let isEqual = current === renew;
+  //디비값 없을 경우, 디폴트 값을 설정
+  const defaultValue = useRef(null);
+  // 비밀번호 중복여부 버튼 클릭 횟수
+  const isBtnClicked = useRef(0);
+  const btnDisabled = useRef(false);
+  // 여기부터 새로 추가
 
-  console.log('isEqual', isEqual);
+  //  여기까지 새로 추가
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const savePrevious = useCallback(
@@ -89,39 +98,45 @@ function UserPage() {
     []
   );
 
-  const isChangable = useCallback(
+  //비밀번호 중복확인 핸들러
+  const checkDuplicated = useCallback(
     (e) => {
       const {
         target: { value },
       } = e;
       savePrevious(value);
+      btnDisabled.current = false;
     },
     [savePrevious]
   );
 
+  //실제 변경 폼 핸들러
   const updatePwd = useCallback(
     (e) => {
       const {
         target: { value },
       } = e;
 
-      const isCurrent = () => {
-        if (!current) {
-          setAlert('이전 비밀번호를 체크해주세요');
-          setAvail(false);
-        }
-      };
-
       saveCurrent(value);
-      isCurrent();
+
+      if (!isBtnClicked.current > 0) {
+        setFlag(true);
+        return;
+      }
     },
-    [saveCurrent, current]
+    [saveCurrent]
   );
 
   //  변경할 수 있는 체크 핸들러 함수
   const checkMatch = (e) => {
     e.preventDefault();
-    dispatch(checkPwd({ nickname, password: { password: current } }));
+    setFlag(false);
+
+    setMessageAlert(true);
+    isBtnClicked.current++;
+    console.log('isBtnClicked.current', isBtnClicked.current);
+    current &&
+      dispatch(checkPwd({ nickname, password: { password: current } }));
   };
 
   //인풋의 값을 보이고/않보이게 하는 토글 함수
@@ -145,40 +160,13 @@ function UserPage() {
    *
    *avail 버튼의 활성화 flag
    *canSubmit는 버튼의 활성화 여부를 보여주는 flag
+
+
+
+   버튼의 클릭 가능 조건
+   : 1. 중복확인 버튼을 클릭한 횟수 0보다 큼
+
    *  */
-
-  console.log('renew', renew);
-
-  // <------------------------여기까지 완성------------------------>
-
-  //[-비밀번호 확인-]
-  //비밀번호 확인 폼에 입력하는 값이 저장하는 로컬 스테이트
-  // const [confirmValue, setConfirmValue] = useState('');
-
-  // //[-비밀번호 확인-]
-  // //비밀번호 확인 값과 비밀번호 확인의 값이 일치하는 검사 로컬 스테이트
-
-  //[-버튼, 변경하기-]
-  //모든 작업을 하고 성공했는지를 확인하는 로컬 스테이트
-  // const [success, setSuccess] = useState(false);
-
-  //url의 아이디를 가져오기 위한 useParam
-  const { nickname } = useParams();
-  //폼에 포커스를 두기 위한 ref
-  // const pwdRef = useRef(null);
-
-  // const isMatch =
-  //   [current, confirmValue].every(Boolean) && current === confirmValue;
-  // const allBlank = !current && !confirmValue;
-  // const confirmBlank = current && !confirmValue;
-  // const pwdBlank = !current && confirmValue;
-
-  // useEffect(() => {
-  //   pwdRef.current.focus();
-  //   setAlert('');
-  // }, []);
-
-  const defaultValue = useRef(null);
 
   useEffect(() => {
     if (!pwdChangable) {
@@ -189,17 +177,21 @@ function UserPage() {
   }, [pwdChangable]);
 
   useEffect(() => {
-    if (!renew) {
-      setAlert('');
+    setCurrent('');
+    setRenew('');
+    setMessageAlert(false);
+    // setDisabled(true);
+  }, []);
+
+  useEffect(() => {
+    if (!current) {
+      btnDisabled.current = true;
     }
-  }, [renew]);
+  }, [current]);
 
   useEffect(() => {
     error && toast.error(error);
   }, [error]);
-
-  //초기화된 값을 사용하기 위한
-  const { password, imageFile } = newProfile;
 
   const {
     handleSubmit,
@@ -208,6 +200,13 @@ function UserPage() {
   } = useForm();
 
   const registerForm = () => {};
+
+  console.log('flag', flag);
+  // console.log('current', current);
+  // console.log('messageAlert', messageAlert);
+  console.log('renew', renew);
+  console.log('renew.length', renew.length);
+  console.log('isBtnClicked.current', isBtnClicked.current);
 
   return (
     <>
@@ -305,12 +304,6 @@ function UserPage() {
                               이전의 비밀번호와 일치여부를 확인합니다.
                             </PFormDes>
                           </PFormDesLi>
-                          <PFormDesLi>
-                            <PFormDes>
-                              이전의 비밀번호와 일치여부 상관없이
-                              변경가능합니다.
-                            </PFormDes>
-                          </PFormDesLi>
                         </PFormDesList>
                       </PFormDesWrapper>
                       <Input
@@ -319,7 +312,7 @@ function UserPage() {
                         name="password"
                         // ref={pwdRef}
                         {...register('password', {
-                          onChange: isChangable,
+                          onChange: checkDuplicated,
                         })}
                       />
                       <FormErrorMessage as="p">
@@ -336,14 +329,19 @@ function UserPage() {
                         비밀번호 중복확인
                       </Button>
                     </PFormUnit>
-
-                    <div className="" style={{ margin: '10px 0 10px 0' }}>
-                      {changable ? <p>{message}</p> : ''}
-                      {changable ? '' : <p>{message}</p>}
-                      {!pwdChangable && (
-                        <OffScreen> {defaultValue?.current?.message}</OffScreen>
-                      )}
-                    </div>
+                    {messageAlert && (
+                      <div className="" style={{ margin: '10px 0 10px 0' }}>
+                        {!current && <p>비밀번호가 입력되지 않았습니다.</p>}
+                        {current ? changable ? <p>{message}</p> : '' : ''}
+                        {current ? changable ? '' : <p>{message}</p> : ''}
+                        {!pwdChangable && (
+                          <OffScreen>
+                            {' '}
+                            {defaultValue?.current?.message}
+                          </OffScreen>
+                        )}
+                      </div>
+                    )}
 
                     <PFormUnit>
                       <FormLabel htmlFor="confirmPwd">비밀번호 확인</FormLabel>
@@ -364,11 +362,11 @@ function UserPage() {
                       </PFormDesWrapper>
                       <InputGroup size="md">
                         <Input
+                          type={visible ? 'text' : 'password'}
                           id="confirmPwd"
                           name="confirmPassword"
-                          // onKeyUp={handleMatch}
                           pr="4.5rem"
-                          type={visible ? 'text' : 'password'}
+                          disabled={btnDisabled.current}
                           placeholder="변경하려는 비밀번호를 입력해주세요"
                           {...register('confirmPassword', {
                             required:
@@ -385,9 +383,15 @@ function UserPage() {
                         </InputRightElement>
                       </InputGroup>
 
-                      <div>
-                        <p>{alert}</p>
-                      </div>
+                      {flag && (
+                        <div>
+                          <Alert status="warning">
+                            <AlertIcon />
+                            이전 비밀번호와 중복여부를 확인 후, 다시
+                            시도해주세요
+                          </Alert>
+                        </div>
+                      )}
 
                       <FormErrorMessage as="p">
                         {errors.confirmPassword &&
@@ -399,8 +403,9 @@ function UserPage() {
 
                 <Button
                   type="submit"
+                  display={btnDisabled.current}
                   // onClick={handleChange}
-                  // disabled={!isMatch}
+
                   mt="20px"
                 >
                   변경하기
