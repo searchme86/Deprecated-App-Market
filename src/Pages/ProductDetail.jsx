@@ -45,7 +45,6 @@ import {
   faPenToSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import { OffScreenSpan } from '../Assets/Styles/Basic.style';
-import { useForm } from 'react-hook-form';
 import SelectUnit from '../Components/Select/SelectUnit';
 
 function ProductDetail() {
@@ -144,12 +143,6 @@ function ProductDetail() {
     setOrderCount((value) => value - 1);
     setOrderTotal(orderCount * pdPrice);
   };
-
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm();
 
   let relatedItems = nrelatedProducts && Object.values(nrelatedProducts);
 
