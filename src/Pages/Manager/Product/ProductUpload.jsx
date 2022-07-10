@@ -53,7 +53,7 @@ import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
 import ProductReport from './ProductReport';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { ncreateProduct } from '../../../Store/Features/NProductSlice';
 import {
@@ -61,6 +61,8 @@ import {
   CategorySelector,
 } from '../../../Store/Features/CategorySlice';
 import ProductPostCode from './ProductPostCode';
+
+import { fetchAllProducts } from '../../../Store/Features/NProductSlice';
 
 const productSchema = {
   pdTitle: '',
@@ -84,9 +86,8 @@ function FashionUpload() {
   } = useSelector((state) => state.auth);
   console.log('user', imageFile, nickname);
 
-  const { ProductSize, ProductDegree, ProductStatus, error } = useSelector(
-    (state) => state.nproduct
-  );
+  const { ProductSize, ProductDegree, ProductStatus, savedProducts, error } =
+    useSelector((state) => state.nproduct);
 
   // console.log('제품등록 페이지에서 categories', categories);
   const categoryValue = Object.values(categories).map(
@@ -125,11 +126,24 @@ function FashionUpload() {
     formState: { errors },
   } = useForm();
 
+  const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCategoryList({ toast }));
+  }, []);
+
+  useEffect(() => {
+    if (id) {
+      console.log('id', id);
+      dispatch(fetchAllProducts({}));
+      console.log('savedProducts', savedProducts);
+
+      const singleProduct = savedProducts.find((product) => product._id === id);
+
+      console.log('singleProduct', singleProduct);
+    }
   }, []);
 
   useEffect(() => {
