@@ -62,8 +62,6 @@ import {
 } from '../../../Store/Features/CategorySlice';
 import ProductPostCode from './ProductPostCode';
 
-import { fetchAllProducts } from '../../../Store/Features/NProductSlice';
-
 const productSchema = {
   pdTitle: '',
   pdImage: '',
@@ -84,15 +82,16 @@ function FashionUpload() {
       result: { imageFile, nickname },
     },
   } = useSelector((state) => state.auth);
-  console.log('user', imageFile, nickname);
+  // console.log('user', imageFile, nickname);
 
-  const { ProductSize, ProductDegree, ProductStatus, savedProducts, error } =
-    useSelector((state) => state.nproduct);
+  const { ProductSize, ProductDegree, ProductStatus, error } = useSelector(
+    (state) => state.nproduct
+  );
 
   // console.log('제품등록 페이지에서 categories', categories);
   const categoryValue = Object.values(categories).map(
     ({ _id, categoryTitle }) => {
-      console.log('1');
+      // console.log('1');
       return { id: _id, PdCategoryValue: categoryTitle };
     }
   );
@@ -126,24 +125,11 @@ function FashionUpload() {
     formState: { errors },
   } = useForm();
 
-  const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCategoryList({ toast }));
-  }, []);
-
-  useEffect(() => {
-    if (id) {
-      console.log('id', id);
-      dispatch(fetchAllProducts({}));
-      console.log('savedProducts', savedProducts);
-
-      const singleProduct = savedProducts.find((product) => product._id === id);
-
-      console.log('singleProduct', singleProduct);
-    }
   }, []);
 
   useEffect(() => {
@@ -354,7 +340,7 @@ function FashionUpload() {
     prdColorItem,
   ]);
 
-  console.log('newProduct', newProduct);
+  // console.log('newProduct', newProduct);
 
   // 상품모달
   const prReport = { handleClose, isOpen, newProduct };
@@ -374,26 +360,26 @@ function FashionUpload() {
 
   const canSubmit = pdtags.length !== 0 && filledIn;
   const checked = postModalOpen;
-  console.log(
-    'disabled',
-    pdCategory,
-    pdTitle,
-    pdImage,
-    pdPrice,
-    pdDegree,
-    prdStatus,
-    pdWish,
-    pdDes,
-    pdtags,
-    canSubmit
-  );
+  // console.log(
+  //   'disabled',
+  //   pdCategory,
+  //   pdTitle,
+  //   pdImage,
+  //   pdPrice,
+  //   pdDegree,
+  //   prdStatus,
+  //   pdWish,
+  //   pdDes,
+  //   pdtags,
+  //   canSubmit
+  // );
   // console.log('pdInfo', newProduct);
   // console.log('userId', userId);
   // console.log('pdtags', pdtags.length);
   // console.log('postModalOpen', postModalOpen);
-  console.log('1');
-  console.log('pdAddress', pdAddress);
-  console.log('addressRef', inputAddressValue);
+  // console.log('1');
+  // console.log('pdAddress', pdAddress);
+  // console.log('addressRef', inputAddressValue);
 
   // console.log('zonecode', zonecode);
   // console.log('fullAddress', fullAddress);
@@ -537,6 +523,10 @@ function FashionUpload() {
                           type="text"
                           id="pdTitle"
                           name="pdTitle"
+                          //
+                          // value={}
+                          //
+
                           {...register('pdTitle', {
                             required: '상품명을 입력해주세요',
                             onChange: onInputChange,
