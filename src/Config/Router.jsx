@@ -99,8 +99,17 @@ function Router() {
             </PrivateRoute>
           }
         />
+        {/* 업데이트  */}
+        <Route
+          path="/edit/:id"
+          element={
+            <PrivateRoute>
+              <ProductUpload />
+            </PrivateRoute>
+          }
+        />
+        {/* 업데이트  */}
 
-        {/*  */}
         <Route
           path="/addTour"
           element={
