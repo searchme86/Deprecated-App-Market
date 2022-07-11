@@ -25,12 +25,15 @@ import NotFound from '../Pages/NotFound';
 import TagTours from '../Pages/TagTours';
 import UserPage from '../Pages/Manager/User/UserPage';
 import UploadCategory from '../Pages/Manager/category/UploadCategory';
-import ProductUpload from '../Pages/Manager/Product/ProductUpload';
-import ProductDetail from '../Pages/ProductDetail';
 import ProductOfUser from '../Pages/Manager/Product/ProductOfUser';
 import { useDispatch } from 'react-redux';
 // import UploadProduct from '../Pages/Manager/UploadProduct';
 import UserMain from '../Pages/Manager/User/UserMain';
+import ProductUpload from '../Pages/Manager/Product/ProductUpload';
+import ProductEdit from '../Pages/Manager/Product/ProductEdit';
+import ProductDetail from '../Pages/ProductDetail';
+// import UserEnter from '../Pages/Manager/User/Register/UserEnter';
+import UserEnter from '../Pages/Manager/User/Enter/UserEnter';
 
 function Router() {
   const dispatch = useDispatch();
@@ -43,11 +46,12 @@ function Router() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<UserEnter />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/tours/search" element={<Home />} />
         <Route path="/tours/tag/:tag" element={<TagTours />} />
-        <Route path="/register" element={<Register />} />
+        {/* <Route path="/register" element={<Register />} /> */}
         <Route
           path="/profile/:nickname"
           element={
@@ -104,7 +108,7 @@ function Router() {
           path="/edit/:id"
           element={
             <PrivateRoute>
-              <ProductUpload />
+              <ProductEdit />
             </PrivateRoute>
           }
         />
