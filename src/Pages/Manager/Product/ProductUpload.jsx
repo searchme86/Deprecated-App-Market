@@ -523,10 +523,6 @@ function FashionUpload() {
                           type="text"
                           id="pdTitle"
                           name="pdTitle"
-                          //
-                          // value={}
-                          //
-
                           {...register('pdTitle', {
                             required: '상품명을 입력해주세요',
                             onChange: onInputChange,
