@@ -89,3 +89,11 @@ export const PFormButton = styled(CommonBtn)`
       color: #fff;
     `}
 `;
+
+export const RegisterButton = styled(CommonBtn)`
+  background: ${({ background }) => background};
+  width: 100%;
+  padding: 15px 0 15px;
+  color: #fff;
+  font-size: 17px;
+`;
