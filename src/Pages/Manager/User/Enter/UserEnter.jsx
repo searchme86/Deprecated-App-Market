@@ -101,14 +101,9 @@ function UserEnter() {
     formState: { errors },
   } = useForm();
 
-  console.log('nickname', nickname);
-  console.log('emailId', emailId);
-  console.log('emailCompany', emailCompany);
-  console.log('password', password);
-  console.log('passwordCheck', passwordCheck);
-  console.log('imageFile', imageFile);
-
-  const canSubmit = [
+  // * 폼값
+  // 버튼 disabled을 처리함
+  const isValueAll = [
     nickname,
     emailId,
     emailCompany,
@@ -117,9 +112,48 @@ function UserEnter() {
     imageFile,
   ].every(Boolean);
 
+  // *비밀번호
+  // 비밀번호 폼에 값이 있는지 확인(공백, 널값도 있는 것으로 인식하기 때문)
+  let isPwdhas = [password, passwordCheck].every((item) => item.length > 0);
+  // 비밀번호가 서로 일치한다.
+  let pwdMatch = password === passwordCheck;
+
+  // 아래 조건을 모두 일치하는지를 체크함
+  // 비밀번호의 값들이 있는지 여부
+  // 비밀번호의 값들이 서로 일치하는지 여부
+  let isPwd = isPwdhas && pwdMatch;
+
+  // 버튼을 실제 submit 할 수 있는지를 체크함
+  let canSubmit = isValueAll && isPwd;
+
+  let disabled = isValueAll && !isPwd;
+
+  console.log('nickname', nickname);
+  console.log('emailId', emailId);
+  console.log('emailCompany', emailCompany);
+  console.log('password', password);
+  console.log('passwordCheck', passwordCheck);
+  console.log('imageFile', imageFile);
+
+  //
+  console.log('-------------------------');
+  console.log('패스워드 폼의 값이 서로 일치하다', pwdMatch);
+  console.log('패스워드 폼에 값이 둘다 있다.', isPwdhas);
+  console.log('패스워드의 값이 있고, 패스워드가 서로 일치하다', isPwd);
+
+  //
+  console.log('-------------------------');
+  console.log('폼에 모두 값이 있다.', isValueAll);
+
+  //
+
+  console.log('disabled', disabled);
   console.log('canSubmit', canSubmit);
+
   const registerForm = () => {
-    canSubmit && dispatch(UserRegister({ formValue, navigate, toast }));
+    if (isValueAll) {
+    }
+    isValueAll && dispatch(UserRegister({ formValue, navigate, toast }));
   };
 
   console.log('formValue', formValue);
@@ -139,11 +173,11 @@ function UserEnter() {
           <RegisterInfo>
             <PForm onSubmit={handleSubmit(registerForm)}>
               <FormControl isInvalid={errors}>
-                <RegisterInput mb="20px">
+                <RegisterInput mb="35px">
                   <FormLabel htmlFor="nickname">
                     <OffScreenSpan>닉네임 입력폼</OffScreenSpan>
                   </FormLabel>
-                  <FormEnclose width="100%" height="50px">
+                  <FormEnclose width="100%" height="40px">
                     <Input
                       id="nickname"
                       name="nickname"
@@ -164,7 +198,7 @@ function UserEnter() {
                           message: '아이디는 최대 20자 까지 작성가능합니다.',
                         },
                         pattern: {
-                          value: '/[a-zA-Z0-9]/g',
+                          value: /^[a-zA-Z0-9]*$/,
                           message: '영어와 숫자만 입력가능합니다.',
                         },
                         onChange: onInputChange,
@@ -176,8 +210,11 @@ function UserEnter() {
                   </FormEnclose>
                 </RegisterInput>
                 <FormLayout display="flex" align="center" mb="20px">
-                  <ImageHolder width="140px" mr="20px">
-                    <Image src={defaultImg} alt="default" />
+                  <ImageHolder width="140px" height="150px" mr="20px">
+                    <Image
+                      src={imageFile ? imageFile : defaultImg}
+                      alt="default"
+                    />
                   </ImageHolder>
                   <FileBase
                     type="file"
@@ -195,7 +232,7 @@ function UserEnter() {
                         <FormLabel htmlFor="emailId">
                           <OffScreenSpan>이메일 아이디</OffScreenSpan>
                         </FormLabel>
-                        <FormEnclose width="100%" height="50px">
+                        <FormEnclose width="100%" height="40px">
                           <Input
                             type="text"
                             id="emailId"
@@ -207,7 +244,20 @@ function UserEnter() {
                             autoComplete="off"
                             pl="20px"
                             {...register('emailId', {
-                              required: '이메일 아이디를 입력해주세요',
+                              required: '영어와 숫자만 입력가능합니다.',
+                              min: {
+                                value: 3,
+                                message: '아이디는 최소 3자 입니다.',
+                              },
+                              maxLength: {
+                                value: 10,
+                                message:
+                                  '아이디는 최대 10자 까지 작성가능합니다.',
+                              },
+                              pattern: {
+                                value: /^[a-zA-Z0-9]*$/,
+                                message: '영어와 숫자만 입력가능합니다.',
+                              },
                               onChange: onInputChange,
                             })}
                           />
@@ -225,7 +275,7 @@ function UserEnter() {
                         <FormLabel htmlFor="emailCompany">
                           <OffScreenSpan>이메일 회사</OffScreenSpan>
                         </FormLabel>
-                        <FormEnclose width="100%" height="50px">
+                        <FormEnclose width="100%" height="40px">
                           <Input
                             type="text"
                             id="emailCompany"
@@ -237,7 +287,11 @@ function UserEnter() {
                             autoComplete="off"
                             pl="20px"
                             {...register('emailCompany', {
-                              required: '이메일 아이디를 입력해주세요',
+                              required: '이메일 회사 주소를 입력해주세요',
+                              pattern: {
+                                value: /[^0-9]/,
+                                message: '숫자는 입력불가 입니다.',
+                              },
                               onChange: onInputChange,
                             })}
                           />
@@ -256,7 +310,7 @@ function UserEnter() {
                     <OffScreenSpan>비밀번호 입력</OffScreenSpan>
                   </FormLabel>
                   <InputGroup>
-                    <FormEnclose width="100%" height="50px">
+                    <FormEnclose width="100%" height="40px">
                       <Input
                         type={show ? 'text' : 'password'}
                         id="password"
@@ -271,7 +325,7 @@ function UserEnter() {
                           required: '비밀번호를 입력해주세요',
                           pattern: {
                             value:
-                              ' /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/ ',
+                              /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/,
                             message:
                               '최소 8자리에서 24자로 대문자 혹은 소문자의 문자로 시작해야합니다. 숫자와 특수문자(!@#$%)를 포함해야합니다.',
                           },
@@ -303,7 +357,7 @@ function UserEnter() {
                   <FormLabel htmlFor="passwordCheck">
                     <OffScreenSpan>비밀번호 확인</OffScreenSpan>
                   </FormLabel>
-                  <FormEnclose width="100%" height="50px">
+                  <FormEnclose width="100%" height="40px">
                     <Input
                       type="password"
                       id="passwordCheck"
@@ -318,7 +372,7 @@ function UserEnter() {
                         required: '비밀번호를 입력해주세요',
                         pattern: {
                           value:
-                            ' /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/ ',
+                            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/,
                           message:
                             '최소 8자리에서 24자로 대문자 혹은 소문자의 문자로 시작해야합니다. 숫자와 특수문자(!@#$%)를 포함해야합니다.',
                         },
@@ -329,10 +383,20 @@ function UserEnter() {
                   <FormErrorMessage as="p">
                     {errors?.passwordCheck && errors?.passwordCheck?.message}
                   </FormErrorMessage>
+                  {/*  */}
+                  {/*  */}
                 </RegisterInput>
+
                 <RegisterAction>
-                  <RegisterButton type="submit" background="#303C6C">
-                    등록하기
+                  <RegisterButton
+                    type="submit"
+                    // 버튼 disabled
+                    disabled={disabled}
+                    // 버튼 실제 유효성
+                    canSubmit={canSubmit}
+                    background="#303C6C"
+                  >
+                    {isValueAll ? '등록하기' : ' 입력하기'}
                   </RegisterButton>
                 </RegisterAction>
               </FormControl>
