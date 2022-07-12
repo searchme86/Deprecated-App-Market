@@ -96,4 +96,14 @@ export const RegisterButton = styled(CommonBtn)`
   padding: 15px 0 15px;
   color: #fff;
   font-size: 17px;
+  ${({ canSubmit }) =>
+    canSubmit
+      ? css`
+          background: #ea035c;
+          color: #fff;
+        `
+      : css`
+          cursor: not-allowed !important;
+          pointer-events: all !important;
+        `}
 `;
