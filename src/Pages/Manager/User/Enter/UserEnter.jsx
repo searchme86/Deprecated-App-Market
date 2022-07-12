@@ -89,8 +89,7 @@ function UserEnter() {
 
   const { nickname, email, password, passwordCheck, imageFile } = formValue;
 
-  // * 폼값
-  // 버튼 disabled을 처리함
+  // 폼에 모두 값이 있다.
   const isValueAll = [
     nickname,
     email,
@@ -100,54 +99,31 @@ function UserEnter() {
   ].every(Boolean);
 
   // *비밀번호
+  // 패스워드 폼에 값이 둘다 있다.
   // 비밀번호 폼에 값이 있는지 확인(공백, 널값도 있는 것으로 인식하기 때문)
   let isPwdhas = [password, passwordCheck].every((item) => item.length > 0);
-  // 비밀번호가 서로 일치한다.
+  // 패스워드 폼의 값이 서로 일치하다
   let pwdMatch = password === passwordCheck;
 
-  // 아래 조건을 모두 일치하는지를 체크함
-  // 비밀번호의 값들이 있는지 여부
-  // 비밀번호의 값들이 서로 일치하는지 여부
+  // 패스워드의 값이 있고, 패스워드가 서로 일치하다
   let isPwd = isPwdhas && pwdMatch;
+
+  // 버튼의 disabled 되는 조건,
+  // 폼의 모든 값이 있으면서, isPwd가 false일 경우
+  let disabled = isValueAll && !isPwd;
 
   // 버튼을 실제 submit 할 수 있는지를 체크함
   let canSubmit = isValueAll && isPwd;
 
-  let disabled = isValueAll && !isPwd;
-
-  console.log('nickname', nickname);
-  console.log('email', email);
-  console.log('password', password);
-  console.log('passwordCheck', passwordCheck);
-  console.log('imageFile', imageFile);
-
-  //
-  console.log('-------------------------');
-  console.log('패스워드 폼의 값이 서로 일치하다', pwdMatch);
-  console.log('패스워드 폼에 값이 둘다 있다.', isPwdhas);
-  console.log('패스워드의 값이 있고, 패스워드가 서로 일치하다', isPwd);
-
-  //
-  console.log('-------------------------');
-  console.log('폼에 모두 값이 있다.', isValueAll);
-
-  //
-
-  console.log('disabled', disabled);
-  console.log('canSubmit', canSubmit);
-
-  const registerForm = () => {
-    if (isValueAll) {
-    }
-    isValueAll && dispatch(UserRegister({ formValue, navigate, toast }));
-  };
-
-  console.log('formValue', formValue);
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
+
+  const registerForm = () => {
+    isValueAll && dispatch(UserRegister({ formValue, navigate, toast }));
+  };
 
   return (
     <RegisterArea>
