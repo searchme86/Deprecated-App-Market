@@ -66,13 +66,19 @@ export const FormEnclose = styled.div`
   height: ${({ height }) => height};
 `;
 
-export const FormDivided = styled.div`
-  width: calc((100% - 26px) / 2);
-`;
-
 export const RegisterInput = styled.div`
   width: 100%;
   margin-bottom: ${({ mb }) => mb};
+`;
+
+export const RegisterAlert = styled.div`
+  margin: 10px 0 10px 0;
+`;
+
+export const RegisterAlertMsg = styled.p`
+  line-height: 1;
+  text-align: center;
+  padding: 0 0 5px 0;
 `;
 
 export const RegisterAction = styled.div``;

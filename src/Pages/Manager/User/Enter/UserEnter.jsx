@@ -17,6 +17,8 @@ import {
   LoginTitle,
   LinkLogin,
   RegisterAction,
+  RegisterAlert,
+  RegisterAlertMsg,
 } from './UserEnter.style';
 
 import {
@@ -322,9 +324,17 @@ function UserEnter() {
 
                 {isPwdhas ? (
                   isPwd ? (
-                    <p>입력한 비밀번호가 일치합니다.</p>
+                    <RegisterAlert>
+                      <RegisterAlertMsg>
+                        입력한 비밀번호가 일치합니다.
+                      </RegisterAlertMsg>
+                    </RegisterAlert>
                   ) : (
-                    <p>입력한 비밀번호가 다릅니다.</p>
+                    <RegisterAlert>
+                      <RegisterAlertMsg>
+                        입력한 비밀번호가 다릅니다.
+                      </RegisterAlertMsg>
+                    </RegisterAlert>
                   )
                 ) : (
                   ''
