@@ -53,12 +53,6 @@ function CardProduct(item) {
   let userId = user?.newUser?._id;
 
   const dispatch = useDispatch();
-  const excerpt = (str) => {
-    if (str.length > 45) {
-      str = str.substring(0, 45) + ' ...';
-    }
-    return str;
-  };
 
   const Likes = () => {
     if (pdlikes.length > 0) {
@@ -142,12 +136,15 @@ function CardProduct(item) {
             >
               <MDBBtn
                 style={{ float: 'right' }}
-                tag="a"
+                tag="button"
                 color="none"
                 onClick={!user?.newUser ? null : handleLike}
               >
                 {!user?.newUser ? (
-                  <MDBTooltip title="Please login to like tour" tag="a">
+                  <MDBTooltip
+                    title="좋아요는 로그인 후에 가능합니다."
+                    tag="span"
+                  >
                     <Likes />
                   </MDBTooltip>
                 ) : (
