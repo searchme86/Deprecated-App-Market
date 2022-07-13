@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { IoClose, IoSearch } from 'react-icons/io5';
 import { AnimatePresence } from 'framer-motion';
-import { useClickOutside } from 'react-click-outside-hook';
 import MoonLoader from 'react-spinners/MoonLoader';
 import axios from 'axios';
 import SearchResult from './SearchResult';
@@ -46,7 +45,6 @@ function SearchBox() {
   const [searched, setSearched] = useState(false);
   const [query, setQuery] = useState('');
   const [products, setProducts] = useState([]);
-  const [parentRef, isClickedOutside] = useClickOutside();
 
   const dataEmpty = !products || products.length === 0;
 
@@ -89,10 +87,6 @@ function SearchBox() {
     }
   }, [query.length]);
 
-  useEffect(() => {
-    if (isClickedOutside) hideBoxDown();
-  }, [isClickedOutside, hideBoxDown]);
-
   const sendQuery = useCallback((query) => {
     const url = `http://api.tvmaze.com/search/shows?q=${query}`;
     return encodeURI(url);
@@ -130,7 +124,6 @@ function SearchBox() {
         animate={Expand ? 'expanded' : 'collapsed'}
         variants={containerVariants}
         transition={containerTransition}
-        ref={parentRef}
         style={{ position: 'relative' }}
       >
         <SearchInputContainer>
