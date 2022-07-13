@@ -21,20 +21,14 @@ import { Image, ImageHolder } from '../Assets/Styles/Image.style';
 
 function Hheader() {
   const {
-    auth: {
-      user: {
-        newUser,
-        newUser: { imageFile, nickname },
-        token,
-      },
-    },
+    auth: { user },
   } = useSelector(AuthSelector);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  if (token) {
-    const decodedToken = decode(token);
+  if (user?.newUser?.token) {
+    const decodedToken = decode(user?.newUser?.token);
     if (decodedToken.exp * 1000 < new Date().getTime()) {
       //토큰이 만료된다면,
       dispatch(setLogout());
@@ -45,8 +39,8 @@ function Hheader() {
     dispatch(setLogout());
   };
 
-  console.log('newUser', newUser);
-  console.log('token', token);
+  // console.log('새로 컴포넌트에서 newUser', newUser);
+  // console.log('새로 컴포넌트에서 token', token);
 
   return (
     <HeaderSection>
@@ -65,17 +59,29 @@ function Hheader() {
                   <NavText>Home</NavText>
                 </HeaderLink>
               </HeaderNavLi>
-              <HeaderNavLi>
-                <HeaderLink to={'/create'}>
-                  <NavText>제품등록</NavText>
-                </HeaderLink>
-              </HeaderNavLi>
-              <HeaderNavLi>
-                <NavText onClick={() => handleLogout()}>LogOut</NavText>
-              </HeaderNavLi>
-              {imageFile ? (
+              {user?.newUser?._id ? (
+                <>
+                  <HeaderNavLi>
+                    <HeaderLink to={'/create'}>
+                      <NavText>제품등록</NavText>
+                    </HeaderLink>
+                  </HeaderNavLi>
+                  <HeaderNavLi>
+                    <NavText onClick={() => handleLogout()}>LogOut</NavText>
+                  </HeaderNavLi>
+                </>
+              ) : (
+                <>
+                  <HeaderNavLi>
+                    <HeaderLink to={'/login'}>
+                      <NavText>LogIn</NavText>
+                    </HeaderLink>
+                  </HeaderNavLi>
+                </>
+              )}
+              {user?.newUser?.imageFile ? (
                 <HeaderNavLi>
-                  <HeaderLink to={`/profile/${nickname}`}>
+                  <HeaderLink to={`/profile/${user?.newUser?.nickname}`}>
                     <ImageHolder
                       width="50px"
                       height="50px"
@@ -84,8 +90,8 @@ function Hheader() {
                       br="100%"
                     >
                       <Image
-                        src={imageFile}
-                        alt={`${nickname}님 프로필 이미지 `}
+                        src={user?.newUser?.imageFile}
+                        alt={`${user?.newUser?.nickname}님 프로필 이미지 `}
                       />
                     </ImageHolder>
                   </HeaderLink>

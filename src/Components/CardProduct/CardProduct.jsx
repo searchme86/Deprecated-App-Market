@@ -50,7 +50,7 @@ function CardProduct(item) {
     auth: { user },
   } = useSelector(AuthSelector);
 
-  const userId = user?.result?._id;
+  let userId = user?.newUser?._id;
 
   const dispatch = useDispatch();
   const excerpt = (str) => {
@@ -65,7 +65,7 @@ function CardProduct(item) {
       return pdlikes.find((like) => like === userId) ? (
         <>
           <MDBIcon fas icon="thumbs-up" />
-          &nbsp;
+
           {pdlikes.length > 2 ? (
             <MDBTooltip
               tag="a"
@@ -80,14 +80,15 @@ function CardProduct(item) {
       ) : (
         <>
           <MDBIcon far icon="thumbs-up" />
-          &nbsp;{pdlikes.length} {pdlikes.length === 1 ? 'Like' : 'Likes'}
+          {pdlikes.length} {pdlikes.length === 1 ? 'Like' : 'Likes'}
         </>
       );
     }
+
     return (
       <>
         <MDBIcon far icon="thumbs-up" />
-        &nbsp;Like
+        Like
       </>
     );
   };
@@ -143,9 +144,9 @@ function CardProduct(item) {
                 style={{ float: 'right' }}
                 tag="a"
                 color="none"
-                onClick={!user?.result ? null : handleLike}
+                onClick={!user?.newUser ? null : handleLike}
               >
-                {!user?.result ? (
+                {!user?.newUser ? (
                   <MDBTooltip title="Please login to like tour" tag="a">
                     <Likes />
                   </MDBTooltip>
