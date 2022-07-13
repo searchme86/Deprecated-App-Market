@@ -25,6 +25,7 @@ export const HeaderText = styled.span`
   font-size: 22px;
   color: rgb(96, 96, 128);
   font-weight: bold;
+  padding: 20px 0 20px 0;
 `;
 
 export const HeaderFunction = styled.div`
@@ -33,7 +34,7 @@ export const HeaderFunction = styled.div`
 `;
 
 export const HeaderNav = styled.nav`
-  width: 230px;
+  width: 300px;
 `;
 
 export const HeaderNavList = styled.ul`
@@ -51,7 +52,6 @@ export const HeaderNavLi = styled.li`
 
 export const HeaderLink = styled(Link)`
   display: block;
-  padding: 20px 0 20px 0;
 `;
 
 export const NavText = styled.span`
@@ -59,4 +59,5 @@ export const NavText = styled.span`
   font-size: 17px;
   color: #606080;
   font-weight: bold;
+  padding: 20px 0 20px 0;
 `;
