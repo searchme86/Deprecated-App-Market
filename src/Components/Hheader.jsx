@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   HeaderCenter,
   HeaderLink,
   HeaderLogo,
-  HeaderNav,
+  HeaderOnNav,
+  HeaderOffNav,
   HeaderNavLi,
   HeaderNavList,
   HeaderSection,
@@ -39,9 +40,6 @@ function Hheader() {
     dispatch(setLogout());
   };
 
-  // console.log('새로 컴포넌트에서 newUser', newUser);
-  // console.log('새로 컴포넌트에서 token', token);
-
   return (
     <HeaderSection>
       <HeaderCenter>
@@ -51,35 +49,22 @@ function Hheader() {
           </HeaderLink>
         </HeaderLogo>
         <HeaderFunction>
-          <HeaderNav role="navigation">
-            {/* 유저가 있을 경우 */}
-            <HeaderNavList>
-              <HeaderNavLi>
-                <HeaderLink to={'/'}>
-                  <NavText>Home</NavText>
-                </HeaderLink>
-              </HeaderNavLi>
-              {user?.newUser?._id ? (
-                <>
-                  <HeaderNavLi>
-                    <HeaderLink to={'/create'}>
-                      <NavText>제품등록</NavText>
-                    </HeaderLink>
-                  </HeaderNavLi>
-                  <HeaderNavLi>
-                    <NavText onClick={() => handleLogout()}>LogOut</NavText>
-                  </HeaderNavLi>
-                </>
-              ) : (
-                <>
-                  <HeaderNavLi>
-                    <HeaderLink to={'/login'}>
-                      <NavText>LogIn</NavText>
-                    </HeaderLink>
-                  </HeaderNavLi>
-                </>
-              )}
-              {user?.newUser?.imageFile ? (
+          {user?.newUser?._id ? (
+            <HeaderOnNav role="navigation">
+              <HeaderNavList>
+                <HeaderNavLi>
+                  <HeaderLink to={'/'}>
+                    <NavText>Home</NavText>
+                  </HeaderLink>
+                </HeaderNavLi>
+                <HeaderNavLi>
+                  <HeaderLink to={'/create'}>
+                    <NavText>제품등록</NavText>
+                  </HeaderLink>
+                </HeaderNavLi>
+                <HeaderNavLi>
+                  <NavText onClick={() => handleLogout()}>LogOut</NavText>
+                </HeaderNavLi>
                 <HeaderNavLi>
                   <HeaderLink to={`/profile/${user?.newUser?.nickname}`}>
                     <ImageHolder
@@ -96,11 +81,24 @@ function Hheader() {
                     </ImageHolder>
                   </HeaderLink>
                 </HeaderNavLi>
-              ) : (
-                '..'
-              )}
-            </HeaderNavList>
-          </HeaderNav>
+              </HeaderNavList>
+            </HeaderOnNav>
+          ) : (
+            <HeaderOffNav>
+              <HeaderNavList>
+                <HeaderNavLi>
+                  <HeaderLink to={'/'}>
+                    <NavText>Home</NavText>
+                  </HeaderLink>
+                </HeaderNavLi>
+                <HeaderNavLi>
+                  <HeaderLink to={'/login'}>
+                    <NavText>LogIn</NavText>
+                  </HeaderLink>
+                </HeaderNavLi>
+              </HeaderNavList>
+            </HeaderOffNav>
+          )}
           <SearchBox />
         </HeaderFunction>
       </HeaderCenter>

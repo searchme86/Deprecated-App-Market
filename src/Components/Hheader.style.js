@@ -33,13 +33,16 @@ export const HeaderFunction = styled.div`
   align-items: center;
 `;
 
-export const HeaderNav = styled.nav`
-  width: 300px;
+export const HeaderOnNav = styled.nav`
+  width: 310px;
+`;
+
+export const HeaderOffNav = styled.nav`
+  width: 100;
 `;
 
 export const HeaderNavList = styled.ul`
   display: flex;
-  justify-content: space-between;
 `;
 
 export const HeaderNavLi = styled.li`
