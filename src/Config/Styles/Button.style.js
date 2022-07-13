@@ -107,3 +107,8 @@ export const RegisterButton = styled(CommonBtn)`
           pointer-events: all !important;
         `}
 `;
+
+export const HeaderSearchBtn = styled(CommonBtn)`
+  width: 50px;
+  margin: 0 0 0 10px;
+`;
