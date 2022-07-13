@@ -72,7 +72,7 @@ function ProductEdit() {
 
   const {
     user: {
-      result: { imageFile, nickname },
+      newUser: { imageFile, nickname },
     },
   } = useSelector((state) => state.auth);
 
