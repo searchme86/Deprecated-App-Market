@@ -34,11 +34,11 @@ export const HeaderFunction = styled.div`
 `;
 
 export const HeaderOnNav = styled.nav`
-  width: 310px;
+  width: 350px;
 `;
 
 export const HeaderOffNav = styled.nav`
-  width: 100;
+  width: 300px;
 `;
 
 export const HeaderNavList = styled.ul`
@@ -46,21 +46,41 @@ export const HeaderNavList = styled.ul`
 `;
 
 export const HeaderNavLi = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px 0 0;
   &:last-child {
-    margin-right: 10px;
+    margin-right: 0px;
   }
   text-align: center;
-  padding: 0 10px 0 10px;
 `;
 
 export const HeaderLink = styled(Link)`
   display: block;
+  width: 88px;
 `;
 
 export const NavText = styled.span`
   display: block;
-  font-size: 17px;
-  color: #606080;
+  font-size: 16px;
+  color: rgb(38, 38, 39);
   font-weight: bold;
-  padding: 20px 0 20px 0;
+  padding: 8px 16px;
+  border-color: rgb(38, 38, 39);
+  cursor: pointer;
+  border-radius: 4px;
+`;
+
+export const HeaderTextHome = styled(NavText)`
+  background: #b4dfe5;
+  color: #fff;
+`;
+export const HeaderTextLogin = styled(NavText)`
+  background: #f4976c;
+  color: #fff;
+`;
+export const HeaderTextSignup = styled(NavText)`
+  background: #303c6c;
+  color: #fff;
 `;

@@ -10,6 +10,9 @@ import {
   HeaderSection,
   HeaderFunction,
   HeaderText,
+  HeaderTextHome,
+  HeaderTextLogin,
+  HeaderTextSignup,
   NavText,
 } from './Hheader.style';
 import { useSelector, useDispatch } from 'react-redux';
@@ -54,16 +57,18 @@ function Hheader() {
               <HeaderNavList>
                 <HeaderNavLi>
                   <HeaderLink to={'/'}>
-                    <NavText>Home</NavText>
+                    <HeaderTextHome>Home</HeaderTextHome>
                   </HeaderLink>
                 </HeaderNavLi>
                 <HeaderNavLi>
                   <HeaderLink to={'/create'}>
-                    <NavText>제품등록</NavText>
+                    <HeaderTextLogin>Upload</HeaderTextLogin>
                   </HeaderLink>
                 </HeaderNavLi>
                 <HeaderNavLi>
-                  <NavText onClick={() => handleLogout()}>LogOut</NavText>
+                  <HeaderTextSignup onClick={() => handleLogout()}>
+                    LogOut
+                  </HeaderTextSignup>
                 </HeaderNavLi>
                 <HeaderNavLi>
                   <HeaderLink to={`/profile/${user?.newUser?.nickname}`}>
@@ -88,12 +93,17 @@ function Hheader() {
               <HeaderNavList>
                 <HeaderNavLi>
                   <HeaderLink to={'/'}>
-                    <NavText>Home</NavText>
+                    <HeaderTextHome>Home</HeaderTextHome>
                   </HeaderLink>
                 </HeaderNavLi>
                 <HeaderNavLi>
                   <HeaderLink to={'/login'}>
-                    <NavText>LogIn</NavText>
+                    <HeaderTextLogin>Login</HeaderTextLogin>
+                  </HeaderLink>
+                </HeaderNavLi>
+                <HeaderNavLi>
+                  <HeaderLink to={'/register'}>
+                    <HeaderTextSignup>SignUp</HeaderTextSignup>
                   </HeaderLink>
                 </HeaderNavLi>
               </HeaderNavList>
