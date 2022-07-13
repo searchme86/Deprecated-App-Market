@@ -34,7 +34,6 @@ export const HeaderFunction = styled.div`
 
 export const HeaderNav = styled.nav`
   width: 230px;
-  margin: 0 10px 0 0;
 `;
 
 export const HeaderNavList = styled.ul`
@@ -43,13 +42,10 @@ export const HeaderNavList = styled.ul`
 `;
 
 export const HeaderNavLi = styled.li`
-  ${
-    '' /* margin: 0 30px 0 0;
   &:last-child {
-    margin-right: 0;
-  } */
+    margin-right: 10px;
   }
-  text-align:center;
+  text-align: center;
   padding: 0 10px 0 10px;
 `;
 

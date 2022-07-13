@@ -10,7 +10,7 @@ export const SearchBarContainer = styled(motion.div)`
 `;
 
 export const SearchInputContainer = styled.div`
-  width: calc(100% - 44px);
+  width: 100%;
   display: flex;
   align-items: center;
   position: relative;
@@ -73,7 +73,7 @@ export const LineSeperator = styled.span`
 export const SearchContent = styled.div`
   position: absolute;
   top: 26px;
-  width: calc(100% - 44px);
+  width: 100%;
   height: 300px;
   background: #fff;
   z-index: 1;
@@ -87,7 +87,7 @@ export const LoadingWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100px;
+  height: 100%;
 `;
 
 export const WarningMessage = styled.span`

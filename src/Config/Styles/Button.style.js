@@ -110,5 +110,4 @@ export const RegisterButton = styled(CommonBtn)`
 
 export const HeaderSearchBtn = styled(CommonBtn)`
   width: 50px;
-  margin: 0 0 0 10px;
 `;
