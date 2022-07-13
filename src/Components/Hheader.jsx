@@ -84,7 +84,7 @@ function Hheader() {
               </HeaderNavList>
             </HeaderOnNav>
           ) : (
-            <HeaderOffNav>
+            <HeaderOffNav role="navigation">
               <HeaderNavList>
                 <HeaderNavLi>
                   <HeaderLink to={'/'}>
