@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 // import Slider from '../Components/Slider/Slider';
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from '../Pages/Footer';
+import Hheader from '../Components/Hheader';
 
 function Layout() {
   return (
@@ -21,6 +22,7 @@ function Layout() {
     // </div>
     <Page>
       <Header />
+      <Hheader />
       <PageContainer>
         <Outlet />
       </PageContainer>
