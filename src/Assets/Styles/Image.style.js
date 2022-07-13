@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 export const ImageHolder = styled.div`
   width: ${({ width }) => width};
   height: ${({ height }) => height};
+  margin-top: ${({ mt }) => mt};
   margin-right: ${({ mr }) => mr};
+  margin-bottom: ${({ mb }) => mb};
   border-radius: ${({ br }) => br};
   overflow: hidden;
 `;
