@@ -22,7 +22,7 @@ export const HeaderLogo = styled.h1`
 
 export const HeaderText = styled.span`
   display: block;
-  font-size: 22px;
+  font-size: 32px;
   color: rgb(96, 96, 128);
   font-weight: bold;
   padding: 20px 0 20px 0;
