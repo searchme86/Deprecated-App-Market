@@ -89,6 +89,7 @@ const authSlice = createSlice({
     },
     [login.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       console.log('action.payload', action.payload);
       state.user = action.payload;
       localStorage.setItem('profile', JSON.stringify({ ...action.payload }));
@@ -102,6 +103,7 @@ const authSlice = createSlice({
     },
     [UserRegister.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       localStorage.setItem('profile', JSON.stringify({ ...action.payload }));
       state.user = action.payload;
     },
@@ -114,6 +116,7 @@ const authSlice = createSlice({
     },
     [checkPwd.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       state.pwdChangable = action.payload;
     },
     [checkPwd.rejected]: (state, action) => {
@@ -125,6 +128,7 @@ const authSlice = createSlice({
     },
     [changeProfile.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       state.user = action.payload;
     },
     [changeProfile.rejected]: (state, action) => {

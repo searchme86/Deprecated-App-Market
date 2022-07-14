@@ -91,6 +91,7 @@ const categorySlice = createSlice({
     },
     [createCategory.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       // state.categories = [action.payload];
       state.categories.push(action.payload);
     },
@@ -103,6 +104,7 @@ const categorySlice = createSlice({
     },
     [getSingleCategory.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       state.category = action.payload;
     },
     [getSingleCategory.rejected]: (state, action) => {
@@ -115,6 +117,7 @@ const categorySlice = createSlice({
     },
     [getCategoryList.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       // state.categories.concat(action.payload);
       state.categories = action.payload;
     },
@@ -128,6 +131,7 @@ const categorySlice = createSlice({
     },
     [updateSingleCategory.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       const {
         arg: { ItemId },
       } = action.meta;
@@ -148,6 +152,7 @@ const categorySlice = createSlice({
     },
     [deleteCategory.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       console.log('action', action);
       console.log('action.payload', action.payload);
       const {

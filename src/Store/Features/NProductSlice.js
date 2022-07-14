@@ -106,9 +106,23 @@ export const deleteProduct = createAsyncThunk(
   }
 );
 
+export const lookForProducts = createAsyncThunk(
+  'tour/searchProducts',
+  async (searchQuery, { rejectWithValue }) => {
+    try {
+      const response = await api.searchProducts(searchQuery);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const NProductSlice = createSlice({
   name: 'Nproduct',
   initialState: {
+    //검색
+    search: [],
     //디비에 저장된 모든 아이템들
     savedProducts: [],
     //상품 단일을 넣을
@@ -208,6 +222,7 @@ const NProductSlice = createSlice({
     },
     [ncreateProduct.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       state.nproducts = [action.payload];
     },
     [ncreateProduct.rejected]: (state, action) => {
@@ -220,6 +235,7 @@ const NProductSlice = createSlice({
     },
     [ngetProduct.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       state.nproduct = action.payload;
     },
     [ngetProduct.rejected]: (state, action) => {
@@ -232,6 +248,7 @@ const NProductSlice = createSlice({
     },
     [ngetProducts.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       state.nproducts = action.payload.data;
       state.numberOfPages = action.payload.numberOfPages;
       state.currentPage = action.payload.currentPage;
@@ -247,6 +264,7 @@ const NProductSlice = createSlice({
     },
     [fetchAllProducts.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       state.savedProducts = action.payload;
     },
     [fetchAllProducts.rejected]: (state, action) => {
@@ -258,11 +276,12 @@ const NProductSlice = createSlice({
     [likeProduct.pending]: (state, action) => {},
     [likeProduct.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       const {
         arg: { _id },
       } = action.meta;
       if (_id) {
-        state.nproducts = state.nproducts.map((item) =>
+        state.savedProducts = state.savedProducts.map((item) =>
           item._id === _id ? action.payload : item
         );
       }
@@ -276,6 +295,7 @@ const NProductSlice = createSlice({
     },
     [ngetRelatedProducts.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       state.nrelatedProducts = action.payload;
     },
     [ngetRelatedProducts.rejected]: (state, action) => {
@@ -287,6 +307,7 @@ const NProductSlice = createSlice({
     },
     [getProductsByUser.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       state.userUploaded = action.payload;
     },
     [getProductsByUser.rejected]: (state, action) => {
@@ -298,6 +319,7 @@ const NProductSlice = createSlice({
     },
     [deleteProduct.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       console.log(action);
       const { arg } = action.meta;
       if (arg) {
@@ -308,6 +330,18 @@ const NProductSlice = createSlice({
       }
     },
     [deleteProduct.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [lookForProducts.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [lookForProducts.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.error = '';
+      state.search = action.payload;
+    },
+    [lookForProducts.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
