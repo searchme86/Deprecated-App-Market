@@ -34,16 +34,25 @@ export const RegisterForm = styled.div`
 `;
 
 export const RegisterHeader = styled.div`
-  margin: 0 0 50px 0;
+  margin: 0 0 27px 0;
 `;
 export const RegisterIntro = styled.p`
   margin: 0 0 10px 0;
+  font-size: 19px;
+`;
+
+export const SiteBrandTitle = styled.strong`
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 0 0 5px;
+  font-size: 24px;
+  color: rgb(96, 96, 128);
+  font-weight: bold;
 `;
 
 export const RegisterTitle = styled.strong`
   display: block;
   font-size: 30px;
-  font-weight: bold;
 `;
 
 export const RegisterInfo = styled.div`
@@ -85,9 +94,12 @@ export const RegisterAction = styled.div``;
 
 export const LoginSection = styled.div`
   position: absolute;
-  top: 20px;
+  top: 40px;
   right: 20px;
   font-size: 18px;
 `;
-export const LoginTitle = styled.p``;
+export const LoginTitle = styled.p`
+  font-size: 17px;
+  cursor: pointer;
+`;
 export const LinkLogin = styled(Link)``;

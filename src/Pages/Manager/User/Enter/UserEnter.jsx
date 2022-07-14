@@ -18,6 +18,7 @@ import {
   RegisterAction,
   RegisterAlert,
   RegisterAlertMsg,
+  SiteBrandTitle,
 } from './UserEnter.style';
 
 import {
@@ -125,13 +126,14 @@ function UserEnter() {
 
   return (
     <RegisterArea>
-      <OffScreenTitle>회원등록하기</OffScreenTitle>
+      <OffScreenTitle>회원 등록하기</OffScreenTitle>
       <RegisterBackground />
       <RegisterBox>
         <RegisterForm>
           <RegisterHeader>
             <RegisterIntro>
-              Welcome to <strong style={{ fontSize: '18px' }}>멍미마켓</strong>
+              Welcome to
+              <SiteBrandTitle>Agora</SiteBrandTitle>
             </RegisterIntro>
             <RegisterTitle>회원 등록하기</RegisterTitle>
           </RegisterHeader>
@@ -330,8 +332,12 @@ function UserEnter() {
             </PForm>
           </RegisterInfo>
           <LoginSection>
-            <LoginTitle>이미 계정이 있으신가요??</LoginTitle>
-            <LinkLogin to={'/'}>로그인</LinkLogin>
+            <LinkLogin to={'/login'}>
+              <LoginTitle>
+                이미 계정이 있으신가요?
+                <br /> 로그인
+              </LoginTitle>
+            </LinkLogin>
           </LoginSection>
         </RegisterForm>
       </RegisterBox>
