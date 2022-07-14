@@ -111,3 +111,7 @@ export const RegisterButton = styled(CommonBtn)`
 export const HeaderSearchBtn = styled(CommonBtn)`
   width: 50px;
 `;
+
+export const LoginBtn = styled(RegisterButton)`
+  padding: 7px 0;
+`;
