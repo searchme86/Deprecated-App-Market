@@ -41,9 +41,8 @@ export const RegisterIntro = styled.p`
   font-size: 19px;
 `;
 
-export const SiteBrandTitle = styled.strong`
+export const SiteBrandTitle = styled(Link)`
   display: inline-block;
-  vertical-align: middle;
   margin: 0 0 0 5px;
   font-size: 24px;
   color: rgb(96, 96, 128);

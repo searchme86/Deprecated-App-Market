@@ -133,7 +133,7 @@ function UserEnter() {
           <RegisterHeader>
             <RegisterIntro>
               Welcome to
-              <SiteBrandTitle>Agora</SiteBrandTitle>
+              <SiteBrandTitle to={'/'}>Agora</SiteBrandTitle>
             </RegisterIntro>
             <RegisterTitle>회원 등록하기</RegisterTitle>
           </RegisterHeader>

@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, AuthSelector } from '../Store/Features/AuthSlice';
 import {
   LoginTitle,
+  LoginToHome,
   LoginBgShapehape,
   LoginHeader,
   LoginImage,
@@ -123,10 +124,13 @@ function Login() {
         <LoginBox>
           <LoginHeader>
             <LoginImage>
-              <FontAwesomeIcon
-                icon={faHouseChimneyWindow}
-                style={{ fontSize: '30px', color: '#303C6C' }}
-              />
+              <LoginToHome to={'/'}>
+                <OffScreenSpan>홈으로 이동</OffScreenSpan>
+                <FontAwesomeIcon
+                  icon={faHouseChimneyWindow}
+                  style={{ fontSize: '30px', color: '#303C6C' }}
+                />
+              </LoginToHome>
             </LoginImage>
             <LoginTitle>LogIn</LoginTitle>
           </LoginHeader>

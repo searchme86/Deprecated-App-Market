@@ -31,7 +31,12 @@ export const LoginHeader = styled.div`
   justify-content: center;
   align-items: center;
 `;
-export const LoginImage = styled.span``;
+export const LoginImage = styled.div``;
+
+export const LoginToHome = styled(Link)`
+  display: block;
+  width: 100%;
+`;
 
 export const LoginTitle = styled.h1`
   font-size: 20px;
