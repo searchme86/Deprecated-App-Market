@@ -30,7 +30,6 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-import { AtSignIcon } from '@chakra-ui/icons';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { PForm } from '../../Product/ProductUpload.style';
@@ -48,7 +47,7 @@ import { ImageHolder, Image } from '../../../../Assets/Styles/Image.style';
 import defaultImg from '../../../../Assets/Image/default-product-upload.png';
 import { RegisterButton } from '../../../../Config/Styles/Button.style';
 import BgAnimation from '../../../../Components/BgAnimation';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { UserRegister } from '../../../../Store/Features/AuthSlice.js';
 
