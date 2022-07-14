@@ -1,20 +1,12 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
-import styled from 'styled-components';
 import SliderContent from './SliderContent';
 import Slide from './Slide';
 import Arrow from './Arrow';
 import Dots from './Dots';
-import { sliderItems } from './SsliderContent';
 import SliderPlay from './SliderPlay';
 import SliderStop from './SliderStop';
-
-const Wrapper = styled.div`
-  position: relative;
-  height: 100vh;
-  width: 100vw;
-  margin: 0 auto;
-  overflow: hidden;
-`;
+import { Wrapper } from './Slider.style.js';
+import { sliderItems } from './SsliderContent';
 
 function Slider({ autoPlay }) {
   const autoPlayRef = useRef(null);

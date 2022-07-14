@@ -1,13 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const SContent = styled.div`
-  transform: translateX(-${(props) => props.translate}px);
-  transition: transform ease-out ${(props) => props.transition}s;
-  height: 100%;
-  width: ${({ width }) => width}px;
-  display: flex;
-`;
+import { SContent } from './Slider.style';
 
 function SliderContent(props) {
   const { translate, transition, width, children } = props;
