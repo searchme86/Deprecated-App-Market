@@ -119,7 +119,15 @@ function Login() {
   console.log('error', error);
   console.log('errorMsg', errMsg);
   return (
-    <LoginWrapper>
+    <LoginWrapper
+      initial={{ width: 0 }}
+      animate={{ width: '100%' }}
+      // transition={{ ease: 'easeIn', duration: 0.5 }}
+      exit={{
+        x: window.innerWidth,
+        transition: { ease: 'easeIn', duration: 1 },
+      }}
+    >
       <LonginContainer>
         <LoginBox>
           <LoginHeader>
