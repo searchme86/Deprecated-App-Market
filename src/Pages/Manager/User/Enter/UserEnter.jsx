@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import {
   RegisterArea,
@@ -8,7 +8,6 @@ import {
   RegisterInput,
   FormEnclose,
   FormLayout,
-  FormDivided,
   RegisterHeader,
   RegisterIntro,
   RegisterTitle,
@@ -25,7 +24,6 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  FormHelperText,
   InputGroup,
   InputRightElement,
   Input,
