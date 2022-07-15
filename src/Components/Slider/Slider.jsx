@@ -9,33 +9,18 @@ import { Wrapper } from './Slider.style.js';
 import { sliderItems } from './SsliderContent';
 
 function Slider({ autoPlay }) {
-  const autoPlayRef = useRef(null);
-  let interval = useRef(null);
-
-  const getWidth = () => window.innerWidth;
-
   const [state, setState] = useState({
     activeIndex: 0,
     translate: 0,
     transition: 0.45,
   });
 
+  const autoPlayRef = useRef(null);
+  let interval = useRef(null);
+
+  const getWidth = () => window.innerWidth;
+
   const { translate, transition, activeIndex } = state;
-
-  useEffect(() => {
-    autoPlayRef.current = nextSlide;
-    return () => clearInterval(interval);
-  });
-
-  // useEffect(() => {
-  //   const play = () => {
-  //     autoPlayRef.current();
-  //   };
-
-  //   const interval = setInterval(play, autoPlay * 1000);
-
-  //   return () => clearInterval(interval);
-  // });
 
   const nextSlide = useCallback(() => {
     if (activeIndex === sliderItems.length - 1) {
@@ -73,22 +58,29 @@ function Slider({ autoPlay }) {
   //   e.preventDefault();
   // }, []);
 
-  const sliderStart = useCallback(() => {
+  const sliderStart = () => {
     console.log('start');
     const play = () => {
       autoPlayRef.current();
     };
     interval.current = setInterval(play, autoPlay * 1000);
-  }, [autoPlay]);
+  };
 
-  const sliderStop = useCallback((e) => {
+  const sliderStop = () => {
     if (interval.current === null) {
       return;
     }
     console.log('stop');
-    e.preventDefault();
     clearInterval(interval.current);
-  }, []);
+  };
+
+  useEffect(() => {
+    autoPlayRef.current = nextSlide;
+    return () => clearInterval(autoPlayRef);
+  });
+
+  console.log('autoPlayRef', autoPlayRef.current);
+  console.log('interval', interval.current);
 
   return (
     <Wrapper>
@@ -105,9 +97,12 @@ function Slider({ autoPlay }) {
       <Arrow direction="left" handleClick={prevSlide} />
       <Arrow direction="right" handleClick={nextSlide} />
 
-      <Dots slides={sliderItems} activeIndex={activeIndex} />
-      <SliderPlay handlePlay={sliderStart} />
-      <SliderStop handleStop={sliderStop} />
+      <Dots
+        slides={sliderItems}
+        activeIndex={activeIndex}
+        handlePlay={sliderStart}
+        handleStop={sliderStop}
+      />
     </Wrapper>
   );
 }
