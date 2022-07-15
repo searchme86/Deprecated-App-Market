@@ -3,8 +3,6 @@ import SliderContent from './SliderContent';
 import Slide from './Slide';
 import Arrow from './Arrow';
 import Dots from './Dots';
-import SliderPlay from './SliderPlay';
-import SliderStop from './SliderStop';
 import { Wrapper } from './Slider.style.js';
 import { sliderItems } from './SsliderContent';
 
@@ -58,21 +56,19 @@ function Slider({ autoPlay }) {
   //   e.preventDefault();
   // }, []);
 
-  const sliderStart = () => {
-    console.log('start');
+  const sliderStart = useCallback(() => {
     const play = () => {
       autoPlayRef.current();
     };
     interval.current = setInterval(play, autoPlay * 1000);
-  };
+  }, [autoPlay]);
 
-  const sliderStop = () => {
+  const sliderStop = useCallback(() => {
     if (interval.current === null) {
       return;
     }
-    console.log('stop');
     clearInterval(interval.current);
-  };
+  }, []);
 
   useEffect(() => {
     autoPlayRef.current = nextSlide;
