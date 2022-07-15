@@ -1,15 +1,26 @@
+import { OffScreenStrong } from '../../../Assets/Styles/Basic.style';
 import leftArrow from '../sources/left-arrow.png';
 import rightArrow from '../sources/right-arrow.png';
 import { ButtonArrow } from '../sources/Slider.style';
+import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
 
-function Arrow(props) {
-  const { direction, handleClick } = props;
+function Arrow({ direction, handleClick }) {
   return (
     <ButtonArrow direction={direction} onClick={handleClick}>
       {direction === 'right' ? (
-        <img src={rightArrow} alt={'오른쪽 화살표'} />
+        <>
+          <OffScreenStrong>오른쪽 화살표</OffScreenStrong>
+          <ImageHolder>
+            <Image src={rightArrow} alt={'오른쪽 화살표'} />
+          </ImageHolder>
+        </>
       ) : (
-        <img src={leftArrow} alt={'왼쪽 화살표'} />
+        <>
+          <OffScreenStrong>왼쪽 화살표</OffScreenStrong>
+          <ImageHolder>
+            <Image src={leftArrow} alt={'왼쪽 화살표'} />
+          </ImageHolder>
+        </>
       )}
     </ButtonArrow>
   );
