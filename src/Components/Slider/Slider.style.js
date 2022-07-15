@@ -91,10 +91,12 @@ export const Play = styled.div`
 export const Stop = styled.div`
   position: absolute;
   bottom: 10px;
-  width: 20px;
-  height: 20px;
+  ${
+    '' /* width: 20px;
+  height: 20px; */
+  }
   left: 30%;
-  border-radius: 50%;
+  ${'' /* border-radius: 50%; */}
 `;
 
 // const Stop = styled.div`
