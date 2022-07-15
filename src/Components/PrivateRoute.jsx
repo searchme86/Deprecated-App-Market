@@ -1,9 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { AuthSelector } from '../Store/Features/AuthSlice';
 import LoadingToRedirect from './LoadingToRedirect';
 
 function PrivateRoute({ children }) {
-  const { user } = useSelector((state) => ({ ...state.auth }));
+  const {
+    auth: { user },
+  } = useSelector(AuthSelector);
+
   return user ? children : <LoadingToRedirect />;
 }
 
