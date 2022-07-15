@@ -10,7 +10,7 @@ function Dots(props) {
       <SliderStop handleStop={handleStop} />
       <ol>
         {slides.map((slide, i) => (
-          <li key={i}>
+          <li key={slide.id}>
             <Dot key={slide.id} active={activeIndex === i} />
           </li>
         ))}
