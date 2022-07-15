@@ -44,8 +44,9 @@ export const MainBlogContent = styled.div`
   align-self: center;
 `;
 
-export const MainBlogTitle = styled.h3`
+export const MainBlogTitle = styled.strong`
   position: relative;
+  display: block;
   font-size: 28px;
   font-weight: bold;
   padding: 0 0 30px 0;
