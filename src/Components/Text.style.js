@@ -65,7 +65,13 @@ export const MainBlogTitle = styled.strong`
 
 export const MainBlogDes = styled.p`
   margin: 19px 0 19px 0;
-  line-height: 1.2;
+  line-height: 1.6;
 `;
 
-export const MainBlogCreated = styled.span``;
+export const MainBlogCreated = styled.span`
+  display: block;
+  font-size: 20px;
+  font-style: italic;
+  text-align: right;
+  margin: 28px 0 0 0;
+`;

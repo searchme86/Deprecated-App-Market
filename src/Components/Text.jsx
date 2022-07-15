@@ -18,10 +18,7 @@ function Text() {
         eos, qui necessitatibus excepturi, ad eius. Quam, aut!Lorem ipsum dolor
         sit amet consectetur adipisicing elit. Odio nostrum laboriosam ducimus
         quo rem nisi a nemo, dignissimos maxime id vero nobis eos, qui
-        necessitatibus excepturi, ad eius. Quam, aut!Lorem ipsum dolor sit amet
-        consectetur adipisicing elit. Odio nostrum laboriosam ducimus quo rem
-        nisi a nemo, dignissimos maxime id vero nobis eos, qui necessitatibus
-        excepturi, ad eius. Quam, aut!
+        necessitatibus excepturi, ad eius. Quam, aut!
       </MainBlogDes>
       <MainBlogCreated>June 22, 2022</MainBlogCreated>
     </MainBlogContent>
