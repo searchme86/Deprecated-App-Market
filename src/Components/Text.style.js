@@ -20,8 +20,9 @@ export const MainBlogHref = styled(Link)`
 `;
 
 export const MainBlogImgHolder = styled.div`
-  flex: 0 1 54.5454545455%;
-  max-width: 54.5454545455%;
+ flex: 0 1 54.5454545455%;
+  max-width: 54.5454545455%; */
+
 
   margin-right: auto;
   padding: 0;
@@ -39,13 +40,13 @@ export const MainBlogImg = styled.img`
 
 export const MainBlogContent = styled.div`
   flex: 0 1 40.3636363636%;
-  max-width: 40.3636363636%;
   padding: 0 80px;
   align-self: center;
 `;
 
-export const MainBlogTitle = styled.h3`
+export const MainBlogTitle = styled.strong`
   position: relative;
+  display: block;
   font-size: 28px;
   font-weight: bold;
   padding: 0 0 30px 0;
@@ -64,7 +65,13 @@ export const MainBlogTitle = styled.h3`
 
 export const MainBlogDes = styled.p`
   margin: 19px 0 19px 0;
-  line-height: 1.2;
+  line-height: 1.6;
 `;
 
-export const MainBlogCreated = styled.span``;
+export const MainBlogCreated = styled.span`
+  display: block;
+  font-size: 20px;
+  font-style: italic;
+  text-align: right;
+  margin: 28px 0 0 0;
+`;

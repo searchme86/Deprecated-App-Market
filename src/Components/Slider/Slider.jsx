@@ -1,12 +1,11 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
-import SliderContent from './SliderContent';
-import Slide from './Slide';
-import Arrow from './Arrow';
-import Dots from './Dots';
-import SliderPlay from './SliderPlay';
-import SliderStop from './SliderStop';
-import { Wrapper } from './Slider.style.js';
-import { sliderItems } from './SsliderContent';
+import SliderContent from './module/SliderContent';
+import { Wrapper } from './sources/Slider.style.js';
+import { sliderItems } from './sources/SsliderContent';
+import Slide from './module/Slide';
+import Arrow from './module/Arrow';
+import Dots from './module/Dots';
+import { OffScreenStrong } from '../../Assets/Styles/Basic.style';
 
 function Slider({ autoPlay }) {
   const [state, setState] = useState({
@@ -54,36 +53,38 @@ function Slider({ autoPlay }) {
     });
   }, [activeIndex, state]);
 
-  // const moveToDot = useCallback((e) => {
-  //   e.preventDefault();
-  // }, []);
+  const clickDot = useCallback((index) => {
+    setState({
+      ...state,
 
-  const sliderStart = () => {
-    console.log('start');
+      translate:
+        sliderItems.length * activeIndex - sliderItems.length * getWidth(),
+      activeIndex: index,
+    });
+  }, []);
+
+  const sliderStart = useCallback(() => {
     const play = () => {
       autoPlayRef.current();
     };
     interval.current = setInterval(play, autoPlay * 1000);
-  };
+  }, [autoPlay]);
 
-  const sliderStop = () => {
+  const sliderStop = useCallback(() => {
     if (interval.current === null) {
       return;
     }
-    console.log('stop');
     clearInterval(interval.current);
-  };
+  }, []);
 
   useEffect(() => {
     autoPlayRef.current = nextSlide;
     return () => clearInterval(autoPlayRef);
   });
 
-  console.log('autoPlayRef', autoPlayRef.current);
-  console.log('interval', interval.current);
-
   return (
     <Wrapper>
+      <OffScreenStrong>이미지 슬라이드</OffScreenStrong>
       <SliderContent
         translate={translate}
         transition={transition}
@@ -102,6 +103,7 @@ function Slider({ autoPlay }) {
         activeIndex={activeIndex}
         handlePlay={sliderStart}
         handleStop={sliderStop}
+        clickDot={clickDot}
       />
     </Wrapper>
   );

@@ -16,7 +16,7 @@ export const PamphletContent = styled.div`
   margin-left: auto;
   padding: 60px;
   box-sizing: border-box;
-  background: #f0efee;
+  background: #7aa25d;
 `;
 export const PamphletList = styled.ul`
   display: flex;
@@ -24,7 +24,7 @@ export const PamphletList = styled.ul`
   margin: -60px -10px 0 -10px;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: stretch;
+  align-items: center;
 `;
 
 export const PamphletItem = styled.li`
@@ -57,7 +57,7 @@ export const PamphletTag = styled.span`
   bottom: 0;
   display: inline-block;
   vertical-align: top;
-  background: #1d4668;
+  background: #62a3d2;
   color: #fff;
   text-align: center;
   padding: 10px 20px 10px 20px;
@@ -95,7 +95,7 @@ export const PamphletInfo = styled.div`
     display: block;
     width: 50px;
     height: calc(100% - 180px);
-    background: #f0efee;
+    background: #7aa25d;
   }
 `;
 
@@ -117,7 +117,7 @@ export const TypeBPamphletInfo = styled.div`
     display: block;
     width: 40px;
     height: calc(100% - 180px);
-    background: #f0efee;
+    background: #7aa25d;
   }
 `;
 
@@ -128,5 +128,5 @@ export const TypeBPamphletContent = styled.div`
   margin-right: auto;
   padding: 60px;
   box-sizing: border-box;
-  background: #f0efee;
+  background: #7aa25d;
 `;

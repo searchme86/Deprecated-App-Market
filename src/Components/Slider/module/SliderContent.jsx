@@ -1,9 +1,7 @@
 import React from 'react';
-import { SContent } from './Slider.style';
+import { SContent } from '../sources/Slider.style.js';
 
-function SliderContent(props) {
-  const { translate, transition, width, children } = props;
-
+function SliderContent({ translate, transition, width, children }) {
   return (
     <SContent width={width} translate={translate} transition={transition}>
       {children}
