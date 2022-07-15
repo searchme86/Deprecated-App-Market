@@ -5,6 +5,7 @@ import { sliderItems } from './sources/SsliderContent';
 import Slide from './module/Slide';
 import Arrow from './module/Arrow';
 import Dots from './module/Dots';
+import { OffScreenStrong } from '../../Assets/Styles/Basic.style';
 
 function Slider({ autoPlay }) {
   const [state, setState] = useState({
@@ -83,6 +84,7 @@ function Slider({ autoPlay }) {
 
   return (
     <Wrapper>
+      <OffScreenStrong>이미지 슬라이드</OffScreenStrong>
       <SliderContent
         translate={translate}
         transition={transition}
