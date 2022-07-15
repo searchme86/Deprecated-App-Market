@@ -30,6 +30,7 @@ import ProductUpload from '../Pages/Manager/Product/ProductUpload';
 import ProductEdit from '../Pages/Manager/Product/ProductEdit';
 import ProductDetail from '../Pages/ProductDetail';
 import UserEnter from '../Pages/Manager/User/Enter/UserEnter';
+import AnimatedRoutes from './AnimatedRoutes';
 
 function Router() {
   const dispatch = useDispatch();
