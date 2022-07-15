@@ -25,7 +25,7 @@ function ProTypeA() {
             <PamphletImageHolder>
               <PamphletImage src={defaultImg} alt="고양이" />
             </PamphletImageHolder>
-            <PamphletTag>Press Release</PamphletTag>
+            <PamphletTag>Hot ISSUE</PamphletTag>
           </PamphletInfo>
         </PamphletInfoHref>
         <PamphletContent>
