@@ -1,10 +1,10 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
-import SliderContent from './SliderContent';
-import Slide from './Slide';
-import Arrow from './Arrow';
-import Dots from './Dots';
-import { Wrapper } from './Slider.style.js';
-import { sliderItems } from './SsliderContent';
+import SliderContent from './module/SliderContent';
+import { Wrapper } from './sources/Slider.style.js';
+import { sliderItems } from './sources/SsliderContent';
+import Slide from './module/Slide';
+import Arrow from './module/Arrow';
+import Dots from './module/Dots';
 
 function Slider({ autoPlay }) {
   const [state, setState] = useState({
@@ -52,9 +52,15 @@ function Slider({ autoPlay }) {
     });
   }, [activeIndex, state]);
 
-  // const moveToDot = useCallback((e) => {
-  //   e.preventDefault();
-  // }, []);
+  const clickDot = useCallback((index) => {
+    setState({
+      ...state,
+
+      translate:
+        sliderItems.length * activeIndex - sliderItems.length * getWidth(),
+      activeIndex: index,
+    });
+  }, []);
 
   const sliderStart = useCallback(() => {
     const play = () => {
@@ -74,9 +80,6 @@ function Slider({ autoPlay }) {
     autoPlayRef.current = nextSlide;
     return () => clearInterval(autoPlayRef);
   });
-
-  console.log('autoPlayRef', autoPlayRef.current);
-  console.log('interval', interval.current);
 
   return (
     <Wrapper>
@@ -98,6 +101,7 @@ function Slider({ autoPlay }) {
         activeIndex={activeIndex}
         handlePlay={sliderStart}
         handleStop={sliderStop}
+        clickDot={clickDot}
       />
     </Wrapper>
   );
