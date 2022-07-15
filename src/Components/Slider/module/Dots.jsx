@@ -3,8 +3,7 @@ import { DotWrapper, Dot, DotLi, DotList } from '../sources/Slider.style.js';
 import SliderStop from '../play/SliderStop';
 import SliderPlay from '../play/SliderPlay';
 
-function Dots(props) {
-  const { slides, activeIndex, handlePlay, handleStop } = props;
+function Dots({ slides, activeIndex, handlePlay, handleStop }) {
   return (
     <DotWrapper>
       <SliderStop handleStop={handleStop} />
