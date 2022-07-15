@@ -10,7 +10,7 @@ function SliderPlay({ handlePlay }) {
       <OffScreenSpan>슬라이드 자동재생</OffScreenSpan>
       <FontAwesomeIcon
         icon={faCirclePlay}
-        style={{ fontSize: '30px', color: '#303C6C' }}
+        style={{ fontSize: '30px', color: '#d6de00' }}
       />
     </Play>
   );

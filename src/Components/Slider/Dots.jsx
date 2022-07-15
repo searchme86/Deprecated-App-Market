@@ -1,20 +1,24 @@
 import React from 'react';
-import { DotWrapper, Dot } from './Slider.style.js';
+import { DotWrapper, Dot, DotLi, DotList } from './Slider.style.js';
 import SliderStop from './SliderStop';
 import SliderPlay from './SliderPlay';
 
 function Dots(props) {
-  const { slides, activeIndex, handlePlay, handleStop } = props;
+  const { slides, activeIndex, handlePlay, handleStop, clickDot } = props;
   return (
     <DotWrapper>
       <SliderStop handleStop={handleStop} />
-      <ol>
+      <DotList>
         {slides.map((slide, i) => (
-          <li key={slide.id}>
-            <Dot key={slide.id} active={activeIndex === i} />
-          </li>
+          <DotLi key={slide.id}>
+            <Dot
+              key={slide.id}
+              active={activeIndex === i}
+              onClick={() => clickDot(i)}
+            />
+          </DotLi>
         ))}
-      </ol>
+      </DotList>
       <SliderPlay handlePlay={handlePlay} />
     </DotWrapper>
   );

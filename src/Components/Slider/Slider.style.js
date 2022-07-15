@@ -54,12 +54,26 @@ export const DotWrapper = styled.div`
   justify-content: center;
 `;
 
+export const DotList = styled.ol`
+  display: flex;
+  margin: 0 15px 0 15px;
+`;
+
+export const DotLi = styled.li`
+  display: flex;
+  justify-content: 'center';
+  align-items: center;
+  margin: 0 10px 0 0;
+  &:last-child {
+    margin-right: 0;
+  }
+`;
+
 export const Dot = styled.span`
   padding: 10px;
-  margin-right: 5px;
   cursor: pointer;
   border-radius: 50%;
-  background: ${({ active }) => (active ? 'black' : 'white')};
+  background: ${({ active }) => (active ? '#3072ab' : '#c7bed9')};
 `;
 
 export const SContent = styled.div`
@@ -80,23 +94,20 @@ export const Sslide = styled.div`
 `;
 
 export const Play = styled.div`
-  position: absolute;
-  bottom: 10px;
+  ${'' /* position: absolute; */}
+  ${
+    '' /* bottom: 10px;
+  height: 20px; */
+  }
   width: 20px;
-  height: 20px;
   left: 50%;
   border-radius: 50%;
 `;
 
 export const Stop = styled.div`
-  position: absolute;
+  ${'' /* position: absolute; */}
   bottom: 10px;
-  ${
-    '' /* width: 20px;
-  height: 20px; */
-  }
   left: 30%;
-  ${'' /* border-radius: 50%; */}
 `;
 
 // const Stop = styled.div`

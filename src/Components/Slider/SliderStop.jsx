@@ -10,7 +10,7 @@ function SliderStop({ handleStop }) {
       <OffScreenSpan>슬라이드 자동재생 중지</OffScreenSpan>
       <FontAwesomeIcon
         icon={faCirclePause}
-        style={{ fontSize: '30px', color: '#303C6C' }}
+        style={{ fontSize: '30px', color: '#d6de00' }}
       />
     </Stop>
   );

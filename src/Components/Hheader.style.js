@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const HeaderSection = styled.header`
   width: 100%;
-  background: #d2fdff;
+  background: #f6f5ef;
 `;
 
 export const HeaderCenter = styled.div`
@@ -23,7 +23,7 @@ export const HeaderLogo = styled.h1`
 export const HeaderText = styled.span`
   display: block;
   font-size: 32px;
-  color: rgb(96, 96, 128);
+  color: #2c2a29;
   font-weight: bold;
   padding: 20px 0 20px 0;
 `;
@@ -73,14 +73,14 @@ export const NavText = styled.span`
 `;
 
 export const HeaderTextHome = styled(NavText)`
-  background: #b4dfe5;
+  background: #7aa25d;
   color: #fff;
 `;
 export const HeaderTextLogin = styled(NavText)`
-  background: #f4976c;
+  background: #62a3d2;
   color: #fff;
 `;
 export const HeaderTextSignup = styled(NavText)`
-  background: #303c6c;
+  background: #3072ab;
   color: #fff;
 `;
