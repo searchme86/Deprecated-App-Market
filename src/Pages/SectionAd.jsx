@@ -32,7 +32,7 @@ import { OffScreenTitle } from '../Assets/Styles/Basic.style';
 function SectionAd() {
   return (
     <>
-      <SectionUnit>
+      <SectionUnit color="#FBE8A6">
         <SectionLayout>
           <SectionHeader>
             <OffScreenTitle>섹션 제목</OffScreenTitle>
@@ -74,7 +74,7 @@ function SectionAd() {
         </SectionLayout>
       </SectionUnit>
 
-      <SectionUnit color="#FBE8A6">
+      <SectionUnit>
         <SectionLayout>
           <SectionHeader>
             <OffScreenTitle>섹션 제목</OffScreenTitle>

@@ -20,7 +20,7 @@ import {
 import MainImg from '../Assets/Image/cat01.jpeg';
 function SectionMain() {
   return (
-    <SectionUnit color="#FBE8A6">
+    <SectionUnit>
       <SectionLayout>
         <SectionHeader>
           <OffScreenTitle>메인 홈</OffScreenTitle>
