@@ -50,22 +50,16 @@ function CardProduct(item) {
     auth: { user },
   } = useSelector(AuthSelector);
 
-  const userId = user?.result?._id;
+  let userId = user?.newUser?._id;
 
   const dispatch = useDispatch();
-  const excerpt = (str) => {
-    if (str.length > 45) {
-      str = str.substring(0, 45) + ' ...';
-    }
-    return str;
-  };
 
   const Likes = () => {
     if (pdlikes.length > 0) {
       return pdlikes.find((like) => like === userId) ? (
         <>
           <MDBIcon fas icon="thumbs-up" />
-          &nbsp;
+
           {pdlikes.length > 2 ? (
             <MDBTooltip
               tag="a"
@@ -80,14 +74,15 @@ function CardProduct(item) {
       ) : (
         <>
           <MDBIcon far icon="thumbs-up" />
-          &nbsp;{pdlikes.length} {pdlikes.length === 1 ? 'Like' : 'Likes'}
+          {pdlikes.length} {pdlikes.length === 1 ? 'Like' : 'Likes'}
         </>
       );
     }
+
     return (
       <>
         <MDBIcon far icon="thumbs-up" />
-        &nbsp;Like
+        Like
       </>
     );
   };
@@ -141,12 +136,15 @@ function CardProduct(item) {
             >
               <MDBBtn
                 style={{ float: 'right' }}
-                tag="a"
+                tag="button"
                 color="none"
-                onClick={!user?.result ? null : handleLike}
+                onClick={!user?.newUser ? null : handleLike}
               >
-                {!user?.result ? (
-                  <MDBTooltip title="Please login to like tour" tag="a">
+                {!user?.newUser ? (
+                  <MDBTooltip
+                    title="좋아요는 로그인 후에 가능합니다."
+                    tag="span"
+                  >
                     <Likes />
                   </MDBTooltip>
                 ) : (

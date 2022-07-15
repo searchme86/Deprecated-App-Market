@@ -16,7 +16,6 @@ import PrivateRoute from '../Components/PrivateRoute';
 
 import Home from '../Pages/Home';
 import Login from '../Pages/Login';
-import Register from '../Pages/Register';
 import { setUser } from '../Store/Features/AuthSlice';
 import AddEditTour from '../Pages/AddEditTour';
 import SingleTour from '../Pages/SingleTour';
@@ -25,19 +24,18 @@ import NotFound from '../Pages/NotFound';
 import TagTours from '../Pages/TagTours';
 import UserPage from '../Pages/Manager/User/UserPage';
 import UploadCategory from '../Pages/Manager/category/UploadCategory';
-import ProductOfUser from '../Pages/Manager/Product/ProductOfUser';
 import { useDispatch } from 'react-redux';
-// import UploadProduct from '../Pages/Manager/UploadProduct';
 import UserMain from '../Pages/Manager/User/UserMain';
 import ProductUpload from '../Pages/Manager/Product/ProductUpload';
 import ProductEdit from '../Pages/Manager/Product/ProductEdit';
 import ProductDetail from '../Pages/ProductDetail';
-// import UserEnter from '../Pages/Manager/User/Register/UserEnter';
 import UserEnter from '../Pages/Manager/User/Enter/UserEnter';
 
 function Router() {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('profile'));
+
+  console.log('--****--router에서 user--****--', user);
   useEffect(() => {
     dispatch(setUser(user));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,7 +49,6 @@ function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/tours/search" element={<Home />} />
         <Route path="/tours/tag/:tag" element={<TagTours />} />
-        {/* <Route path="/register" element={<Register />} /> */}
         <Route
           path="/profile/:nickname"
           element={
@@ -69,24 +66,6 @@ function Router() {
             }
           />
         </Route>
-
-        {/*  */}
-        {/* <Route
-          path="/userProduct"
-          element={
-            <PrivateRoute>
-              <ProductOfUser />
-            </PrivateRoute>
-          }
-        /> */}
-        {/* <Route
-          path="/upload"
-          element={
-            <PrivateRoute>
-              <UploadProduct />
-            </PrivateRoute>
-          }
-        /> */}
         <Route
           path="/category"
           element={
@@ -103,7 +82,6 @@ function Router() {
             </PrivateRoute>
           }
         />
-        {/* 업데이트  */}
         <Route
           path="/edit/:id"
           element={
@@ -112,8 +90,6 @@ function Router() {
             </PrivateRoute>
           }
         />
-        {/* 업데이트  */}
-
         <Route
           path="/addTour"
           element={

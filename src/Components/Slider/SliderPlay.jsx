@@ -1,30 +1,18 @@
 import React from 'react';
-import styled from 'styled-components';
+import { Play } from './Slider.style.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCirclePlay } from '@fortawesome/free-solid-svg-icons';
+import { OffScreenSpan } from '../../Assets/Styles/Basic.style.js';
 
-const Play = styled.div`
-  position: absolute;
-  bottom: 10px;
-  width: 20px;
-  height: 20px;
-  left: 50%;
-  border-radius: 50%;
-`;
-
-const Stop = styled.div`
-  position: absolute;
-  bottom: 10px;
-  width: 20px;
-  height: 20px;
-  left: 30%;
-  border-radius: 50%;
-`;
-
-function SliderPlay({ handlePlay, handleStop }) {
+function SliderPlay({ handlePlay }) {
   return (
-    <>
-      <Play onClick={handlePlay}>play</Play>
-      {/* <Stop onClick={handleStop}>stop</Stop> */}
-    </>
+    <Play onClick={handlePlay}>
+      <OffScreenSpan>슬라이드 자동재생</OffScreenSpan>
+      <FontAwesomeIcon
+        icon={faCirclePlay}
+        style={{ fontSize: '30px', color: '#303C6C' }}
+      />
+    </Play>
   );
 }
 

@@ -1,35 +1,33 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 export const SearchBarContainer = styled(motion.div)`
+  position: relative;
   display: flex;
-  flex-direction: column;
-  width: 34em;
-  height: 3.8em;
-  background-color: #fff;
-  border-radius: 6px;
-  box-shadow: 0px 2px 12px 3px rgba(0, 0, 0, 0.14);
+  align-items: center;
+  width: 0px;
 `;
 
 export const SearchInputContainer = styled.div`
   width: 100%;
-  min-height: 4em;
   display: flex;
   align-items: center;
   position: relative;
-  padding: 2px 15px;
 `;
 
 export const SearchInput = styled.input`
+  display: block;
   width: 100%;
   height: 100%;
   outline: none;
   border: none;
-  font-size: 21px;
+  font-size: 15px;
   color: #12112e;
   font-weight: 500;
   border-radius: 6px;
-  background-color: transparent;
+  padding: 10px 10px 10px 34px;
+
   &:focus {
     outline: none;
     &::placeholder {
@@ -43,17 +41,24 @@ export const SearchInput = styled.input`
 `;
 
 export const SearchIcon = styled.span`
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+
   color: #bebebe;
   font-size: 27px;
-  margin-right: 10px;
-  margin-top: 6px;
   vertical-align: middle;
 `;
 
 export const CloseIcon = styled(motion.span)`
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 22px;
+  transform: translateY(-50%);
   color: #bebebe;
   font-size: 23px;
-  vertical-align: middle;
   transition: all 200ms ease-in-out;
   cursor: pointer;
   &:hover {
@@ -62,49 +67,62 @@ export const CloseIcon = styled(motion.span)`
 `;
 
 export const LineSeperator = styled.span`
-  display: flex;
-  min-width: 100%;
-  min-height: 2px;
   background-color: #d8d8d878;
 `;
 
 export const SearchContent = styled.div`
+  position: absolute;
+  top: 26px;
   width: 100%;
-  height: 100%;
+  height: 300px;
+  background: #fff;
+  z-index: 1;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  padding: 1em;
   overflow-y: auto;
 `;
 
 export const LoadingWrapper = styled.div`
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100%;
 `;
 
 export const WarningMessage = styled.span`
+  display: block;
+  width: 100%;
   color: #a1a1a1;
   font-size: 14px;
-  display: flex;
-  align-self: center;
-  justify-self: center;
+  text-align: center;
 `;
 
-export const TvShowContainer = styled.div`
-  width: 100%;
-  min-height: 6em;
-  display: flex;
+export const TvShowContainer = styled.ul`
   border-bottom: 2px solid #d8d8d852;
   padding: 6px 8px;
   align-items: center;
 `;
 
+export const SearchItem = styled.li`
+  width: 100%;
+  margin: 0 0 10px 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+export const SearchItemLink = styled(Link)`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const SearchItemInfo = styled.div`
+  width: 100%;
+`;
+
 export const Thumbnail = styled.div`
-  width: auto;
-  height: 100%;
   display: flex;
   flex: 0.4;
   img {

@@ -44,7 +44,7 @@ function UserPage() {
   const {
     auth: {
       user: {
-        result: { imageFile: ImgSrc, name: UserName },
+        newUser: { imageFile: ImgSrc, name: UserName },
       },
       error,
       pwdChangable,
@@ -425,7 +425,7 @@ function UserPage() {
             Profile has been updated...
           </p>
         )} */}
-        {/* <h1>Logged in as: {user?.result?.name}</h1> */}
+        {/* <h1>Logged in as: {user?.newUser?.name}</h1> */}
         {/* {console.log(user)} */}
       </div>
     </>

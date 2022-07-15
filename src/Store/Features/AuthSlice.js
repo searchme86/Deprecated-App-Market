@@ -7,34 +7,24 @@ import * as api from '../SendApi';
 
 export const login = createAsyncThunk(
   'auth/login',
-  async ({ formValue, navigate, toast }, { rejectWithValue }) => {
+  async ({ formValue, navigate }, { rejectWithValue }) => {
     try {
       const response = await api.signIn(formValue);
-      toast.success('로그인에 성공했습니다');
+      console.log('response', response);
       navigate('/');
       return response.data;
     } catch (error) {
       console.log('error', error.response);
       return rejectWithValue(error.response.data);
-
-      // if (error.response) {
-      //   console.log(error.response.data);
-      //   console.log(error.response.status);
-      //   console.log(error.response.headers);
-      // } else if (error.request) {
-      //   console.log(error.request);
-      // } else {
-      //   console.log('Error', error.message);
-      //   return rejectWithValue(error.response.data);
-      // }
     }
   }
 );
 
-export const register = createAsyncThunk(
+export const UserRegister = createAsyncThunk(
   'auth/register',
   async ({ formValue, navigate, toast }, { rejectWithValue }) => {
     try {
+      console.log('formValue', formValue);
       const response = await api.signUp(formValue);
       toast.success('회원가입이 성공적으로 완료됐습니다');
       navigate('/');
@@ -99,22 +89,25 @@ const authSlice = createSlice({
     },
     [login.fulfilled]: (state, action) => {
       state.loading = false;
-      localStorage.setItem('profile', JSON.stringify({ ...action.payload }));
+      state.error = '';
+      console.log('action.payload', action.payload);
       state.user = action.payload;
+      localStorage.setItem('profile', JSON.stringify({ ...action.payload }));
     },
     [login.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     },
-    [register.pending]: (state, action) => {
+    [UserRegister.pending]: (state, action) => {
       state.loading = true;
     },
-    [register.fulfilled]: (state, action) => {
+    [UserRegister.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       localStorage.setItem('profile', JSON.stringify({ ...action.payload }));
       state.user = action.payload;
     },
-    [register.rejected]: (state, action) => {
+    [UserRegister.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
@@ -123,6 +116,7 @@ const authSlice = createSlice({
     },
     [checkPwd.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       state.pwdChangable = action.payload;
     },
     [checkPwd.rejected]: (state, action) => {
@@ -134,25 +128,13 @@ const authSlice = createSlice({
     },
     [changeProfile.fulfilled]: (state, action) => {
       state.loading = false;
+      state.error = '';
       state.user = action.payload;
     },
     [changeProfile.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
-
-    // [googleSignIn.pending]: (state, action) => {
-    //   state.loading = true;
-    // },
-    // [googleSignIn.fulfilled]: (state, action) => {
-    //   state.loading = false;
-    //   localStorage.setItem('profile', JSON.stringify({ ...action.payload }));
-    //   state.user = action.payload;
-    // },
-    // [googleSignIn.rejected]: (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.payload.message;
-    // },
   },
 });
 

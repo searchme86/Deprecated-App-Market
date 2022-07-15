@@ -1,31 +1,21 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const DotWrapper = styled.div`
-  position: absolute;
-  bottom: 25px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Dot = styled.span`
-  padding: 10px;
-  margin-right: 5px;
-  cursor: pointer;
-  border-radius: 50%;
-  background: ${({ active }) => (active ? 'black' : 'white')};
-`;
+import { DotWrapper, Dot } from './Slider.style.js';
+import SliderStop from './SliderStop';
+import SliderPlay from './SliderPlay';
 
 function Dots(props) {
-  const { slides, activeIndex } = props;
-
+  const { slides, activeIndex, handlePlay, handleStop } = props;
   return (
     <DotWrapper>
-      {slides.map((slide, i) => (
-        <Dot key={slide.id} active={activeIndex === i} />
-      ))}
+      <SliderStop handleStop={handleStop} />
+      <ol>
+        {slides.map((slide, i) => (
+          <li key={i}>
+            <Dot key={slide.id} active={activeIndex === i} />
+          </li>
+        ))}
+      </ol>
+      <SliderPlay handlePlay={handlePlay} />
     </DotWrapper>
   );
 }

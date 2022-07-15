@@ -62,10 +62,17 @@ function ProductOfUser() {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // const {
+  //   auth: {
+  //     user: {
+  //       result: { _id: userId },
+  //     },
+  //   },
+  // } = useSelector(AuthSelector);
   const {
     auth: {
       user: {
-        result: { _id: userId },
+        newUser: { _id: userId },
       },
     },
   } = useSelector(AuthSelector);
