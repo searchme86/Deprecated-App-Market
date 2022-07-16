@@ -61,7 +61,7 @@ import {
   CategorySelector,
 } from '../../../Store/Features/CategorySlice';
 import ProductPostCode from './ProductPostCode';
-import Introduction from '../../../Components/Introduction';
+import Notification from '../../../Components/Notification';
 
 const productSchema = {
   pdTitle: '',
@@ -89,7 +89,7 @@ function FashionUpload() {
     (state) => state.nproduct
   );
 
-  // console.log('제품등록 페이지에서 categories', categories);
+  // console.log('상품등록 페이지에서 categories', categories);
   const categoryValue = Object.values(categories).map(
     ({ _id, categoryTitle }) => {
       // console.log('1');
@@ -393,26 +393,83 @@ function FashionUpload() {
     [dispatch, navigate, newProduct]
   );
 
+  const NotiContent = [
+    {
+      id: '0',
+      catA: '(필수입력)상품 카테고리',
+      catB: '(필수입력)상품 이미지',
+      cntA: '상품이 속한 카테고리',
+      cntB: '상품을 표현하는 이미지',
+    },
+    {
+      id: '1',
+      catA: '(필수입력)상품명',
+      catB: '(필수입력)상품 브랜드',
+      cntA: '상품의 이름',
+      cntB: '연관된 상품을 보여주는데 사용',
+    },
+    {
+      id: '2',
+      catA: '(필수입력)상품 타입',
+      catB: '(필수입력)상품 가격',
+      cntA: '제품군',
+      cntB: '상품의 가격 ',
+    },
+    {
+      id: '3',
+      catA: '(필수입력)소개',
+      catB: '(필수입력)상품 해쉬태그',
+      cntA: '상품에 대한 설명',
+      cntB: '상품을 홍보',
+    },
+    {
+      id: '4',
+      catA: '(필수입력)상품 단계',
+      catB: '(필수입력)상품 상태설명',
+      cntA: '상품의 품질의 단계 (최상,중상,중)',
+      cntB: '품질에 대한 구체적인 사유 ',
+    },
+    {
+      id: '5',
+      catA: '(필수입력)상품 희망사항',
+      catB: '(필수입력)상품거래 희망주소',
+      cntA: '상품에 대한 구체적인 희망사항',
+      cntB: '상품을 거래하려는 주소.',
+    },
+    {
+      id: '6',
+      catA: '(선택)사이즈 별 상품가격',
+      catB: '(선택)색상별 별 상품가격',
+      cntA: '사이즈 별 상품의 가격',
+      cntB: '색상 별 상품의 가격',
+    },
+  ];
+
   return (
     <SectionUnit>
       <SectionLayout>
         <SectionTitle>상품 등록하기</SectionTitle>
         <SectionTitleDes>상품을 업로드 할 수 있습니다.</SectionTitleDes>
         <SectionContent>
+          <Notification />
           <PForm onSubmit={handleSubmit(registerForm)}>
             <FormControl
               isInvalid={errors}
               position="relative"
               display="flex"
               justifyContent="space-between"
-              margin={'20px 0 20px 0'}
+              margin={'40px 0 20px 0'}
             >
               {/* 섹션-1 : 상품카테고리, 상품 이미지, 버튼영역(상품페이지 미리보기, 상품등록하기) */}
               <FlexAlignDiv fixed>
                 <PFormContent>
                   {/* 상품 카테고리 */}
                   <PFormUnit>
-                    <FormLabel htmlFor="pdCategory" fontWeight="bold">
+                    <FormLabel
+                      htmlFor="pdCategory"
+                      fontWeight="bold"
+                      color="#FF0000"
+                    >
                       상품 카테고리
                     </FormLabel>
                     <PFormDesWrapper>
@@ -448,7 +505,11 @@ function FashionUpload() {
 
                   {/* 상품 이미지 */}
                   <PFormUnit>
-                    <FormLabel htmlFor="PFormImg" fontWeight="bold">
+                    <FormLabel
+                      htmlFor="PFormImg"
+                      fontWeight="bold"
+                      color="#FF0000"
+                    >
                       상품 이미지
                     </FormLabel>
                     <PFormDesWrapper>
@@ -501,12 +562,16 @@ function FashionUpload() {
                 </PFormContent>
               </FlexAlignDiv>
 
-              {/* 섹션-2 : 상품명, 상품 브랜드, 상품타입, 상품가격, 상품소개, 상품 해쉬태그, 상품단계, 상품상태 설명, 상품희망사항, 상품거래 희망주소, 사이즈별 제품가격, 색상별 제품가격 */}
+              {/* 섹션-2 : 상품명, 상품 브랜드, 상품타입, 상품가격, 상품소개, 상품 해쉬태그, 상품단계, 상품상태 설명, 상품희망사항, 상품거래 희망주소, 사이즈별 상품가격, 색상별 상품가격 */}
               <FlexAlignDiv>
                 <PFormContent>
                   {/* 상품명 */}
                   <PFormUnit>
-                    <FormLabel htmlFor="pdTitle" fontWeight="bold">
+                    <FormLabel
+                      htmlFor="pdTitle"
+                      fontWeight="bold"
+                      color="#FF0000"
+                    >
                       상품명
                     </FormLabel>
                     <PFormDesWrapper>
@@ -515,9 +580,7 @@ function FashionUpload() {
                           <PFormDes>*필수 입력사항입니다</PFormDes>
                         </PFormDesLi>
                         <PFormDesLi>
-                          <PFormDes>
-                            상품의 이름을 정해주세요 (예: 히트상품 )
-                          </PFormDes>
+                          <PFormDes>상품의 이름을 정해주세요</PFormDes>
                         </PFormDesLi>
                       </PFormDesList>
                     </PFormDesWrapper>
@@ -525,6 +588,7 @@ function FashionUpload() {
                       type="text"
                       id="pdTitle"
                       name="pdTitle"
+                      placeholder="예) 핸드폰, 제습기, 에어콘"
                       {...register('pdTitle', {
                         required: '상품명을 입력해주세요',
                         onChange: onInputChange,
@@ -537,7 +601,11 @@ function FashionUpload() {
 
                   {/* 상품 브랜드 */}
                   <PFormUnit>
-                    <FormLabel htmlFor="pdBrand" fontWeight="bold">
+                    <FormLabel
+                      htmlFor="pdBrand"
+                      fontWeight="bold"
+                      color="#FF0000"
+                    >
                       상품 브랜드
                     </FormLabel>
                     <PFormDesWrapper>
@@ -546,9 +614,7 @@ function FashionUpload() {
                           <PFormDes>*필수 입력사항입니다</PFormDes>
                         </PFormDesLi>
                         <PFormDesLi>
-                          <PFormDes>
-                            *상품의 브랜드명을 입력해주세요 (예: 애플,삼성,LG)
-                          </PFormDes>
+                          <PFormDes>*상품의 브랜드명을 입력해주세요</PFormDes>
                         </PFormDesLi>
                       </PFormDesList>
                     </PFormDesWrapper>
@@ -556,6 +622,7 @@ function FashionUpload() {
                       type="text"
                       id="pdBrand"
                       name="pdBrand"
+                      placeholder="예) 애플,삼성,LG,샤오미"
                       {...register('pdBrand', {
                         required: '상품의 브랜드명을 입력해주세요',
                         onChange: onInputChange,
@@ -568,7 +635,11 @@ function FashionUpload() {
 
                   {/* 상품 타입 */}
                   <PFormUnit>
-                    <FormLabel htmlFor="pdType" fontWeight="bold">
+                    <FormLabel
+                      htmlFor="pdType"
+                      fontWeight="bold"
+                      color="#FF0000"
+                    >
                       상품 타입
                     </FormLabel>
                     <PFormDesWrapper>
@@ -577,10 +648,7 @@ function FashionUpload() {
                           <PFormDes>*필수 입력사항입니다</PFormDes>
                         </PFormDesLi>
                         <PFormDesLi>
-                          <PFormDes>
-                            *상품의 타입을 입력해주세요 (예: 컴퓨터, 노트북,
-                            핸드폰, 아이폰,)
-                          </PFormDes>
+                          <PFormDes>*상품의 타입을 입력해주세요</PFormDes>
                         </PFormDesLi>
                       </PFormDesList>
                     </PFormDesWrapper>
@@ -588,6 +656,7 @@ function FashionUpload() {
                       type="text"
                       id="pdType"
                       name="pdType"
+                      placeholder="예) 컴퓨터, 노트북, 핸드폰, 아이폰"
                       {...register('pdType', {
                         required: '상품의 브랜드명을 입력해주세요',
                         onChange: onInputChange,
@@ -598,10 +667,14 @@ function FashionUpload() {
                     </FormErrorMessage>
                   </PFormUnit>
 
-                  {/* 상품가격 */}
+                  {/* 상품 가격 */}
                   <PFormUnit>
-                    <FormLabel htmlFor="pdPrice" fontWeight="bold">
-                      상품가격
+                    <FormLabel
+                      htmlFor="pdPrice"
+                      fontWeight="bold"
+                      color="#FF0000"
+                    >
+                      상품 가격
                     </FormLabel>
                     <PFormDesWrapper>
                       <PFormDesList>
@@ -630,6 +703,7 @@ function FashionUpload() {
                       id="pdPrice"
                       name="pdPrice"
                       autoComplete="off"
+                      placeholder="예)10000원 -> 10000"
                       {...register('pdPrice', {
                         required: '상품 가격을 입력해주세요',
                         maxLength: {
@@ -646,8 +720,12 @@ function FashionUpload() {
 
                   {/* 상품소개 */}
                   <PFormUnit>
-                    <FormLabel htmlFor="pdDes" fontWeight="bold">
-                      상품소개
+                    <FormLabel
+                      htmlFor="pdDes"
+                      fontWeight="bold"
+                      color="#FF0000"
+                    >
+                      상품 소개
                     </FormLabel>
                     <PFormDesWrapper>
                       <PFormDesList>
@@ -660,7 +738,7 @@ function FashionUpload() {
                       </PFormDesList>
                     </PFormDesWrapper>
                     <Textarea
-                      placeholder="예 : 00에 장점이 있습니다"
+                      placeholder="예) 가성비가 좋습니다."
                       id="pdDes"
                       name="pdDes"
                       size="sm"
@@ -677,7 +755,9 @@ function FashionUpload() {
 
                   {/* 상품 해쉬태그 */}
                   <PFormUnit>
-                    <FormLabel fontWeight="bold">상품 해쉬태그</FormLabel>
+                    <FormLabel fontWeight="bold" color="#FF0000">
+                      상품 해쉬태그
+                    </FormLabel>
                     <PFormDesWrapper>
                       <PFormDesList>
                         <PFormDesLi>
@@ -711,17 +791,21 @@ function FashionUpload() {
                           <TagInput
                             type="text"
                             onKeyPress={handleTags}
-                            placeholder="상품에 대한 태그를 입력해주세요 (예: 신상)"
+                            placeholder="예) #신상-> 신상"
                           />
                         </FormWrapper>
                       </TagContainer>
                     </TagWrapper>
                   </PFormUnit>
 
-                  {/* 상품단계 */}
+                  {/* 상품 단계 */}
                   <PFormUnit>
-                    <FormLabel htmlFor="pdDegree" fontWeight="bold">
-                      상품단계
+                    <FormLabel
+                      htmlFor="pdDegree"
+                      fontWeight="bold"
+                      color="#FF0000"
+                    >
+                      상품 단계
                     </FormLabel>
                     <PFormDesWrapper>
                       <PFormDesList>
@@ -758,7 +842,11 @@ function FashionUpload() {
 
                   {/* 상품상태 설명 */}
                   <PFormUnit>
-                    <FormLabel htmlFor="pdStatus" fontWeight="bold">
+                    <FormLabel
+                      htmlFor="pdStatus"
+                      fontWeight="bold"
+                      color="#FF0000"
+                    >
                       상품상태 설명
                     </FormLabel>
                     <PFormDesWrapper>
@@ -824,7 +912,7 @@ function FashionUpload() {
                           <TagInput
                             type="text"
                             onKeyPress={handleKeyDown}
-                            placeholder="내용을 입력해주세요"
+                            placeholder="예) #신상->신상"
                           />
                         </FormWrapper>
                       </TagContainer>
@@ -833,7 +921,11 @@ function FashionUpload() {
 
                   {/* 상품희망사항 */}
                   <PFormUnit>
-                    <FormLabel htmlFor="pdWish" fontWeight="bold">
+                    <FormLabel
+                      htmlFor="pdWish"
+                      fontWeight="bold"
+                      color="#FF0000"
+                    >
                       상품 희망사항
                     </FormLabel>
                     <PFormDesWrapper>
@@ -849,7 +941,7 @@ function FashionUpload() {
                       </PFormDesList>
                     </PFormDesWrapper>
                     <Textarea
-                      placeholder="예 : 배송 관련해서는 직접 옮기셔야 합니다."
+                      placeholder="예) 배송은 직접대면 요청합니다."
                       id="pdWish"
                       name="pdWish"
                       size="sm"
@@ -864,7 +956,11 @@ function FashionUpload() {
 
                   {/* 상품거래 희망주소 입력 */}
                   <PFormUnit>
-                    <FormLabel htmlFor="pdAddress" fontWeight="bold">
+                    <FormLabel
+                      htmlFor="pdAddress"
+                      fontWeight="bold"
+                      color="#FF0000"
+                    >
                       상품거래 희망주소
                     </FormLabel>
                     <PFormDesWrapper>
@@ -906,10 +1002,10 @@ function FashionUpload() {
                     </FormErrorMessage>
                   </PFormUnit>
 
-                  {/* 입력 선택부분, 사이즈 별 제품가격 */}
+                  {/* 입력 선택부분, 사이즈 별 상품가격 */}
                   <PFormBlock>
                     <PFormBlockTitle>
-                      사이즈 별 제품 가격
+                      사이즈 별 상품 가격
                       <PFormBlockTitleDes>(*선택입력사항)</PFormBlockTitleDes>
                     </PFormBlockTitle>
                     <PFormList>
@@ -955,7 +1051,7 @@ function FashionUpload() {
                                   mt="10px"
                                   fontWeight="bold"
                                 >
-                                  사이즈 별 제품가격
+                                  사이즈 별 상품가격
                                 </FormLabel>
                                 <PFormDesWrapper>
                                   <PFormDesList>
@@ -985,6 +1081,7 @@ function FashionUpload() {
                                   autoComplete="off"
                                   value={pdPriceBySize}
                                   onChange={(e) => addSize(e, index)}
+                                  placeholder="예)1000원-> 1000"
                                 />
                                 <FormErrorMessage as="p">
                                   {errors?.pdPriceBySize &&
@@ -1016,10 +1113,10 @@ function FashionUpload() {
                     </PFormList>
                   </PFormBlock>
 
-                  {/* 입력 선택부분, 색상 별 제품가격 */}
+                  {/* 입력 선택부분, 색상 별 상품가격 */}
                   <PFormBlock>
                     <PFormBlockTitle>
-                      색상 별 제품 가격
+                      색상 별 상품 가격
                       <PFormBlockTitleDes>(*선택입력사항)</PFormBlockTitleDes>
                     </PFormBlockTitle>
                     <PFormList>
@@ -1052,6 +1149,7 @@ function FashionUpload() {
                                   value={pdColor}
                                   autoComplete="off"
                                   onChange={(e) => addColor(e, index)}
+                                  placeholder="예) 노랑,yellow,베이지 등등"
                                 />
                                 <FormErrorMessage as="p">
                                   {errors?.pdColor && errors?.pdColor?.message}
@@ -1063,7 +1161,7 @@ function FashionUpload() {
                                   mt="10px"
                                   fontWeight="bold"
                                 >
-                                  색상 별 제품가격
+                                  색상 별 상품가격
                                 </FormLabel>
                                 <PFormDesWrapper>
                                   <PFormDesList>
@@ -1093,6 +1191,7 @@ function FashionUpload() {
                                   value={pdPriceByColor}
                                   autoComplete="off"
                                   onChange={(e) => addColor(e, index)}
+                                  placeholder="예) 1000원-> 1000"
                                 />
                                 <FormErrorMessage as="p">
                                   {errors?.pdPriceByColor &&
@@ -1127,7 +1226,6 @@ function FashionUpload() {
               </FlexAlignDiv>
             </FormControl>
           </PForm>
-          <Introduction />
 
           {/* 상품 미리보기 모달 */}
           {isFmodalOpen && <ProductReport prReport={prReport} />}
