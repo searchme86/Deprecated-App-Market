@@ -404,6 +404,7 @@ function FashionUpload() {
               justifyContent="space-between"
               margin={'20px 0 20px 0'}
             >
+              {/* 섹션-1 : 상품카테고리, 상품 이미지, 버튼영역(상품페이지 미리보기, 상품등록하기) */}
               <FlexAlignDiv fixed>
                 <PFormContent>
                   {/* 상품 카테고리 */}
@@ -497,6 +498,7 @@ function FashionUpload() {
                 </PFormContent>
               </FlexAlignDiv>
 
+              {/* 섹션-2 : 상품명, 상품 브랜드, 상품타입, 상품가격, 상품소개, 상품 해쉬태그, 상품단계, 상품상태 설명, 상품희망사항, 상품거래 희망주소, 사이즈별 제품가격, 색상별 제품가격 */}
               <FlexAlignDiv>
                 <PFormContent>
                   {/* 상품명 */}
@@ -1122,7 +1124,9 @@ function FashionUpload() {
               </FlexAlignDiv>
             </FormControl>
           </PForm>
+          {/* 상품 미리보기 모달 */}
           {isFmodalOpen && <ProductReport prReport={prReport} />}
+          {/* 카카오 주소 검색 모달 */}
           {postModalOpen && <ProductPostCode postCode={postCode} />}
         </SectionContent>
       </SectionLayout>
