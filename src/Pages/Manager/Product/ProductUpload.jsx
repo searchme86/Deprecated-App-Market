@@ -451,7 +451,7 @@ function FashionUpload() {
         <SectionTitle>상품 등록하기</SectionTitle>
         <SectionTitleDes>상품을 업로드 할 수 있습니다.</SectionTitleDes>
         <SectionContent>
-          <Notification />
+          <Notification content={NotiContent} />
           <PForm onSubmit={handleSubmit(registerForm)}>
             <FormControl
               isInvalid={errors}
