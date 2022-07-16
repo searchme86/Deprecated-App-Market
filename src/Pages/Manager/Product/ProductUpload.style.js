@@ -1,13 +1,13 @@
 import styled, { css } from 'styled-components';
 
-export const SectionUnit = styled.section`
+export const SectionUnit = styled.div`
   width: 100%;
   padding: 60px 0 60px 0;
   margin: 0 0 30px 0;
   background: ${({ color }) => (color ? `${color}` : '#fff')};
 `;
 
-export const SectionLayout = styled.div`
+export const SectionLayout = styled.section`
   width: 1280px;
   margin: 0 auto;
 `;
@@ -44,6 +44,7 @@ export const FlexContainer = styled.div`
 `;
 
 export const FlexAlignDiv = styled.div`
+  width: calc((100% - 170px) / 2);
   ${({ fixed }) =>
     fixed &&
     css`
@@ -60,7 +61,6 @@ export const PForm = styled.form`
 
 export const PFormContent = styled.div`
   position: relative;
-  width: ${({ wd }) => wd};
   padding: ${({ padding }) => padding};
   margin-right: ${({ mr }) => mr};
   &:first-child {
