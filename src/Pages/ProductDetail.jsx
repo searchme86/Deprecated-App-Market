@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import ProductRelated from '../Components/ProductRelated/ProductRelated';
 import {
-  SectionHeader,
   SectionLayout,
   SectionTitle,
   SectionUnit,
@@ -176,9 +175,7 @@ function ProductDetail() {
     <>
       <SectionUnit>
         <SectionLayout>
-          <SectionHeader>
-            <SectionTitle>상세 페이지</SectionTitle>
-          </SectionHeader>
+          <SectionTitle>상세 페이지</SectionTitle>
           <SectionContent>
             <PForm>
               <div className="" style={{ display: 'flex' }}>
@@ -605,9 +602,7 @@ function ProductDetail() {
       {relatedItems.length > 0 && (
         <SectionUnit>
           <SectionLayout>
-            <SectionHeader>
-              <SectionTitle>관련상품 보기</SectionTitle>
-            </SectionHeader>
+            <SectionTitle>관련상품 보기</SectionTitle>
             <SectionContent>
               <div className="">
                 <ul

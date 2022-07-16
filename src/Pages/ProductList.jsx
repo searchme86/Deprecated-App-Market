@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import {
   SectionContent,
-  SectionHeader,
   SectionLayout,
   SectionTitle,
   SectionUnit,
@@ -53,9 +52,7 @@ function ProductList() {
   return (
     <SectionUnit>
       <SectionLayout>
-        <SectionHeader>
-          <SectionTitle>신규 상품 둘러보기</SectionTitle>
-        </SectionHeader>
+        <SectionTitle>신규 상품 둘러보기</SectionTitle>
         <SectionContent>
           <div className="">
             <ul

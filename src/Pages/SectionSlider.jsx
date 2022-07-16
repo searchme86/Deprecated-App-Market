@@ -1,7 +1,6 @@
 import React from 'react';
 import { OffScreenTitle } from '../Assets/Styles/Basic.style';
 import {
-  SectionHeader,
   SectionLayout,
   SectionUnit,
   SectionContent,
@@ -13,9 +12,7 @@ function SectionSlider() {
   return (
     <SectionUnit color="#f2ead7">
       <SectionLayout>
-        <SectionHeader>
-          <OffScreenTitle>메인 슬라이더</OffScreenTitle>
-        </SectionHeader>
+        <OffScreenTitle>메인 슬라이더</OffScreenTitle>
         <SectionContent>
           <div style={{ display: 'flex' }}>
             <Slider autoPlay={2} />

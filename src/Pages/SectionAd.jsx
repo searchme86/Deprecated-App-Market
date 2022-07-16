@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   SectionContent,
-  SectionHeader,
   SectionLayout,
   SectionUnit,
 } from './Manager/Product/ProductUpload.style';
@@ -17,9 +16,7 @@ function SectionAd() {
     <>
       <SectionUnit>
         <SectionLayout>
-          <SectionHeader>
-            <OffScreenTitle>섹션 제목</OffScreenTitle>
-          </SectionHeader>
+          <OffScreenTitle>상품 홍보</OffScreenTitle>
           <SectionContent>
             <ProTypeA />
           </SectionContent>
@@ -28,9 +25,7 @@ function SectionAd() {
 
       <SectionUnit color="#f2ead7">
         <SectionLayout>
-          <SectionHeader>
-            <OffScreenTitle>섹션 제목</OffScreenTitle>
-          </SectionHeader>
+          <OffScreenTitle>상품 홍보</OffScreenTitle>
           <SectionContent>
             <ProTypeB />
           </SectionContent>
