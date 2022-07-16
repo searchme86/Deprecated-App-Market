@@ -8,6 +8,7 @@ import {
   SectionUnit,
   SectionContent,
   PForm,
+  SectionTitleDes,
 } from './Manager/Product/ProductUpload.style';
 
 import {
@@ -176,6 +177,9 @@ function ProductDetail() {
       <SectionUnit>
         <SectionLayout>
           <SectionTitle>상세 페이지</SectionTitle>
+          <SectionTitleDes>
+            상품의 상세정보를 확인할 수 있습니다.
+          </SectionTitleDes>
           <SectionContent>
             <PForm>
               <div className="" style={{ display: 'flex' }}>
@@ -603,6 +607,9 @@ function ProductDetail() {
         <SectionUnit>
           <SectionLayout>
             <SectionTitle>관련상품 보기</SectionTitle>
+            <SectionTitleDes>
+              등록한 상품과 연관상품을 확인할 수 있습니다.
+            </SectionTitleDes>
             <SectionContent>
               <div className="">
                 <ul

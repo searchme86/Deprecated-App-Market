@@ -41,6 +41,7 @@ import {
   PButtonArea,
   PButtonList,
   PButtonLi,
+  SectionTitleDes,
 } from './ProductUpload.style';
 import { PFormButton } from '../../../Config/Styles/Button.style.js';
 import {
@@ -60,6 +61,7 @@ import {
   CategorySelector,
 } from '../../../Store/Features/CategorySlice';
 import ProductPostCode from './ProductPostCode';
+import Introduction from '../../../Components/Introduction';
 
 const productSchema = {
   pdTitle: '',
@@ -395,6 +397,7 @@ function FashionUpload() {
     <SectionUnit>
       <SectionLayout>
         <SectionTitle>상품 등록하기</SectionTitle>
+        <SectionTitleDes>상품을 업로드 할 수 있습니다.</SectionTitleDes>
         <SectionContent>
           <PForm onSubmit={handleSubmit(registerForm)}>
             <FormControl
@@ -1124,6 +1127,8 @@ function FashionUpload() {
               </FlexAlignDiv>
             </FormControl>
           </PForm>
+          <Introduction />
+
           {/* 상품 미리보기 모달 */}
           {isFmodalOpen && <ProductReport prReport={prReport} />}
           {/* 카카오 주소 검색 모달 */}
