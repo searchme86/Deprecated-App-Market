@@ -7,10 +7,10 @@ import * as api from '../SendApi';
 
 export const ncreateProduct = createAsyncThunk(
   'nproduct/createProduct',
-  async ({ newProduct, navigate, toast }, { rejectWithValue }) => {
+  async ({ newProduct, navigate }, { rejectWithValue }) => {
     try {
       const response = await api.createProduct(newProduct);
-      toast.success('Product Added Successfully');
+      // toast.success('Product Added Successfully');
       navigate('/');
       return response.data;
     } catch (err) {

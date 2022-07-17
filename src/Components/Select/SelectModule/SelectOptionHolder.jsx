@@ -32,7 +32,9 @@ function SelectOptionHolder({
         {selectedOption ? (
           <>
             <SelectTitleSubject>{cntShow}</SelectTitleSubject>
-            <SelectTitleContent>{cntValue}</SelectTitleContent>
+            <SelectTitleContent>
+              {Number(cntValue).toLocaleString('ko-KR')} 원
+            </SelectTitleContent>
           </>
         ) : (
           selectPlaceholder

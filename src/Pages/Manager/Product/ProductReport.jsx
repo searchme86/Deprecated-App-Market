@@ -1,12 +1,10 @@
 import React from 'react';
 import {
   ModalContent,
-  ModalForm,
   ModalHeader,
   ModalTitle,
 } from '../../../Components/Modal/Modal.style';
 import ModalFrame from '../../../Components/Modal/ModalFrame';
-// import { useSelector } from 'react-redux';
 import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
 import {
   ReportAlert,
@@ -46,11 +44,6 @@ import defaultImg from '../../../Assets/Image/default-product-upload.png';
 function ProductReport({ prReport }) {
   const { handleClose, isOpen, newProduct } = prReport;
 
-  // const {
-  //   user: {
-  //     result: { nickname },
-  //   },
-  // } = useSelector((state) => state.auth);
   const {
     pdUploaderNickname,
     pdUploaderImage,
@@ -70,39 +63,8 @@ function ProductReport({ prReport }) {
     inputAddressValue,
   } = newProduct;
 
-  const [{ pdSize, pdPriceBySize }] = pdSizeInfo;
-  const [{ pdColor, pdPriceByColor }] = pdColorInfo;
-
-  const isBlank = [
-    pdCategory,
-    pdBrand,
-    pdType,
-    pdTitle,
-    pdImage,
-    pdPrice,
-    pdDes,
-    pdWish,
-    pdDegree,
-    pdStatus,
-    inputAddressValue,
-  ].every(Boolean);
-
-  console.log(
-    'isBlank',
-    pdCategory,
-    pdTitle,
-    // pdImage,
-    pdPrice,
-    pdDes,
-    pdWish,
-    pdDegree,
-    pdStatus,
-    inputAddressValue,
-    pdBrand,
-    pdType
-  );
-
-  console.log('isBlank', isBlank);
+  console.log('pdtags', pdtags);
+  console.log('pdStatus', pdStatus);
 
   return (
     <div>
@@ -118,18 +80,6 @@ function ProductReport({ prReport }) {
           <ModalContent>
             <ReportContent>
               <ReportHeader>
-                {!isBlank && (
-                  <ReportAlert>
-                    <ReportAlertList>
-                      <ReportAlertMessage>
-                        * 상품 등록 후, 미리보기가 가능합니다
-                      </ReportAlertMessage>
-                      <ReportAlertMessage>
-                        * 미 등록된 항목은 "공란" 이란 텍스트로 표현됩니다.
-                      </ReportAlertMessage>
-                    </ReportAlertList>
-                  </ReportAlert>
-                )}
                 <ReportIntro>
                   <ReportUserImage>
                     <ImageHolder br="100%">
@@ -139,26 +89,40 @@ function ProductReport({ prReport }) {
                   <ReportUser>{pdUploaderNickname}</ReportUser>
                   님이 등록하시는 상품 요약입니다.
                 </ReportIntro>
-                <Breadcrumb as="div" mt="15px" mb="10px">
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#" fontWeight="bold" fontSize="18px">
-                      {pdCategory}
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
+                {pdCategory && pdBrand && pdType && (
+                  <Breadcrumb as="div" mt="15px" mb="10px">
+                    <BreadcrumbItem>
+                      <BreadcrumbLink
+                        href="#"
+                        fontWeight="bold"
+                        fontSize="18px"
+                      >
+                        {pdCategory}
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
 
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#" fontWeight="bold" fontSize="18px">
-                      {pdBrand}
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink
+                        href="#"
+                        fontWeight="bold"
+                        fontSize="18px"
+                      >
+                        {pdBrand}
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
 
-                  <BreadcrumbItem isCurrentPage>
-                    <BreadcrumbLink href="#" fontWeight="bold" fontSize="18px">
-                      {pdType}
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                </Breadcrumb>
-                {/* {!isBlank && (
+                    <BreadcrumbItem isCurrentPage>
+                      <BreadcrumbLink
+                        href="#"
+                        fontWeight="bold"
+                        fontSize="18px"
+                      >
+                        {pdType}
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                  </Breadcrumb>
+                )}
+                {/* {isBlank && (
                 )} */}
               </ReportHeader>
               <ReportMain>
@@ -177,13 +141,7 @@ function ProductReport({ prReport }) {
                         {/* 상품명 */}
                         <ReportInfoItem>
                           <ReportTitle>상품명</ReportTitle>
-                          <ReportDTitle>
-                            {!isBlank ? (
-                              <ReportBlank>공란</ReportBlank>
-                            ) : (
-                              pdTitle
-                            )}
-                          </ReportDTitle>
+                          <ReportDTitle>{pdTitle}</ReportDTitle>
                         </ReportInfoItem>
 
                         {/* 상품가격 */}
@@ -197,13 +155,7 @@ function ProductReport({ prReport }) {
                         {/* 상품단계 */}
                         <ReportInfoItem>
                           <ReportTitle>상품단계</ReportTitle>
-                          <ReportDTitle>
-                            {!isBlank ? (
-                              <ReportBlank>공란</ReportBlank>
-                            ) : (
-                              pdDegree
-                            )}
-                          </ReportDTitle>
+                          <ReportDTitle>{pdDegree}</ReportDTitle>
                         </ReportInfoItem>
                       </AlignList>
                     </ReportInfoLi>
@@ -211,9 +163,7 @@ function ProductReport({ prReport }) {
                     {/* 상품소개 */}
                     <ReportInfoLi>
                       <ReportTitle>상품소개</ReportTitle>
-                      <ReportDOpinion>
-                        {!isBlank ? <ReportBlank>공란</ReportBlank> : pdDes}
-                      </ReportDOpinion>
+                      <ReportDOpinion>{pdDes}</ReportDOpinion>
                     </ReportInfoLi>
                   </ReportInfoList>
                 </ReportInfo>
@@ -225,13 +175,7 @@ function ProductReport({ prReport }) {
                   {/* 상품거래 희망주소 */}
                   <ReportInfoLi>
                     <ReportTitle>상품거래 희망주소</ReportTitle>
-                    <ReportDOpinion>
-                      {!isBlank ? (
-                        <ReportBlank>공란</ReportBlank>
-                      ) : (
-                        inputAddressValue
-                      )}
-                    </ReportDOpinion>
+                    <ReportDOpinion>{inputAddressValue}</ReportDOpinion>
                   </ReportInfoLi>
                   {/* 희망사항 */}
                   <ReportInfoLi>
@@ -240,13 +184,7 @@ function ProductReport({ prReport }) {
                       <ReportOverflowList>
                         {pdtags.map((tag, index) => (
                           <ReportOverflowLi key={index}>
-                            <ReportHashTag>
-                              {!isBlank ? (
-                                <ReportBlank>공란</ReportBlank>
-                              ) : (
-                                `#${tag}`
-                              )}
-                            </ReportHashTag>
+                            <ReportHashTag>#{tag}</ReportHashTag>
                           </ReportOverflowLi>
                         ))}
                       </ReportOverflowList>
@@ -265,13 +203,7 @@ function ProductReport({ prReport }) {
                       <ReportOverflowList>
                         {pdStatus.map((status, index) => (
                           <ReportOverflowLi key={index}>
-                            <ReportDOpinion>
-                              {!isBlank ? (
-                                <ReportBlank>공란</ReportBlank>
-                              ) : (
-                                status
-                              )}
-                            </ReportDOpinion>
+                            <ReportHashTag>#{status}</ReportHashTag>
                           </ReportOverflowLi>
                         ))}
                       </ReportOverflowList>
@@ -281,9 +213,7 @@ function ProductReport({ prReport }) {
                   <ReportInfoLi>
                     <ReportTitle>희망사항</ReportTitle>
                     <ReportOverflow>
-                      <ReportDOpinion>
-                        {!isBlank ? <ReportBlank>공란</ReportBlank> : pdWish}
-                      </ReportDOpinion>
+                      <ReportDOpinion>{pdWish}</ReportDOpinion>
                     </ReportOverflow>
                   </ReportInfoLi>
                 </AlignList>
@@ -291,28 +221,62 @@ function ProductReport({ prReport }) {
 
               {/* 사이즈별 가격, 색상별 가격 */}
               <ReportMore>
-                {!isBlank ? (
-                  <AlignList>
-                    <ReportInfoLi>
-                      <ReportTitle>사이즈 별 가격</ReportTitle>
-                      <ReportBlank>공란</ReportBlank>
-                    </ReportInfoLi>
-                    <ReportInfoLi>
-                      <ReportTitle>색상 별 가격</ReportTitle>
-                      <ReportBlank>공란</ReportBlank>
-                    </ReportInfoLi>
-                  </AlignList>
-                ) : (
-                  <AlignList>
-                    <ReportInfoLi>
-                      {pdSize && pdPriceBySize && (
-                        <>
-                          <ReportTitle>사이즈 별 가격</ReportTitle>
+                <AlignList>
+                  <ReportInfoLi>
+                    {pdSizeInfo && (
+                      <>
+                        <ReportTitle>사이즈 별 가격</ReportTitle>
+                        <RTableWrapper>
+                          <RTable>
+                            <caption>
+                              <OffScreenSpan>
+                                사이즈 별 가격 테이블
+                              </OffScreenSpan>
+                            </caption>
+                            <colgroup>
+                              <col
+                                style={{
+                                  width: '50%',
+                                }}
+                              />
+                              <col style={{ width: '50%' }} />
+                            </colgroup>
+                            <thead>
+                              <tr>
+                                <RTableTh scope="col">상품 사이즈</RTableTh>
+                                <RTableTh scope="col">가격</RTableTh>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {pdSizeInfo &&
+                                pdSizeInfo.map(
+                                  ({ pdSize, pdPriceBySize }, index) => (
+                                    <tr key={index}>
+                                      <RTableTh scope="row">{pdSize}</RTableTh>
+                                      <RTableTd>
+                                        {`${Number(
+                                          pdPriceBySize
+                                        ).toLocaleString('ko-KR')} 원`}
+                                      </RTableTd>
+                                    </tr>
+                                  )
+                                )}
+                            </tbody>
+                          </RTable>
+                        </RTableWrapper>
+                      </>
+                    )}
+                  </ReportInfoLi>
+                  <ReportInfoLi>
+                    <>
+                      {pdColorInfo && (
+                        <ReportInfoLi>
+                          <ReportTitle>색상 별 가격</ReportTitle>
                           <RTableWrapper>
                             <RTable>
                               <caption>
                                 <OffScreenSpan>
-                                  사이즈 별 가격 테이블
+                                  색상 별 가격 테이블
                                 </OffScreenSpan>
                               </caption>
                               <colgroup>
@@ -325,57 +289,13 @@ function ProductReport({ prReport }) {
                               </colgroup>
                               <thead>
                                 <tr>
-                                  <RTableTh scope="col">상품 사이즈</RTableTh>
+                                  <RTableTh scope="col">상품 색상</RTableTh>
                                   <RTableTh scope="col">가격</RTableTh>
                                 </tr>
                               </thead>
                               <tbody>
-                                {pdSizeInfo.map(
-                                  ({ pdSize, pdPriceBySize }, index) => (
-                                    <tr key={index}>
-                                      <RTableTh scope="row">{pdSize}</RTableTh>
-                                      <RTableTd>
-                                        {`${Number(
-                                          pdPriceBySize
-                                        ).toLocaleString('ko-KR')} 원`}
-                                      </RTableTd>
-                                    </tr>
-                                  )
-                                )}
-                              </tbody>
-                            </RTable>
-                          </RTableWrapper>
-                        </>
-                      )}
-                    </ReportInfoLi>
-                    <ReportInfoLi>
-                      <>
-                        {pdColor && pdPriceByColor && (
-                          <ReportInfoLi>
-                            <ReportTitle>색상 별 가격</ReportTitle>
-                            <RTableWrapper>
-                              <RTable>
-                                <caption>
-                                  <OffScreenSpan>
-                                    색상 별 가격 테이블
-                                  </OffScreenSpan>
-                                </caption>
-                                <colgroup>
-                                  <col
-                                    style={{
-                                      width: '50%',
-                                    }}
-                                  />
-                                  <col style={{ width: '50%' }} />
-                                </colgroup>
-                                <thead>
-                                  <tr>
-                                    <RTableTh scope="col">상품 색상</RTableTh>
-                                    <RTableTh scope="col">가격</RTableTh>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {pdColorInfo.map(
+                                {pdColorInfo &&
+                                  pdColorInfo.map(
                                     ({ pdColor, pdPriceByColor }, index) => (
                                       <tr key={index}>
                                         <RTableTh scope="row">
@@ -389,19 +309,16 @@ function ProductReport({ prReport }) {
                                       </tr>
                                     )
                                   )}
-                                </tbody>
-                              </RTable>
-                            </RTableWrapper>
-                          </ReportInfoLi>
-                        )}
-                      </>
-                    </ReportInfoLi>
-                  </AlignList>
-                )}
+                              </tbody>
+                            </RTable>
+                          </RTableWrapper>
+                        </ReportInfoLi>
+                      )}
+                    </>
+                  </ReportInfoLi>
+                </AlignList>
               </ReportMore>
             </ReportContent>
-            {/* <ModalForm>
-            </ModalForm> */}
           </ModalContent>
         </>
       </ModalFrame>

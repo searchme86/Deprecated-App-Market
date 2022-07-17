@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import {
   SectionContent,
-  SectionHeader,
   SectionLayout,
   SectionUnit,
 } from './Manager/Product/ProductUpload.style';
@@ -45,9 +44,7 @@ function SectionProduct() {
   return (
     <SectionUnit color="#f2ead7">
       <SectionLayout>
-        <SectionHeader>
-          <OffScreenTitle>신규 등록 상품</OffScreenTitle>
-        </SectionHeader>
+        <OffScreenTitle>신규 등록 상품</OffScreenTitle>
         <SectionContent>
           <div className="">
             <ul

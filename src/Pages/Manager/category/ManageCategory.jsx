@@ -10,7 +10,6 @@ import { getCategoryList } from '../../../Store/Features/CategorySlice';
 import { toast } from 'react-toastify';
 import {
   SectionContent,
-  SectionHeader,
   SectionLayout,
   SectionUnit,
 } from '../Product/ProductUpload.style';
@@ -28,12 +27,10 @@ function ManageCategory() {
   return (
     <SectionUnit>
       <SectionLayout>
-        <SectionHeader>
-          <OffScreenTitle>카테고리별 상품찾기</OffScreenTitle>
-          <SectionContent>
-            <CategoryView categories={categories} />
-          </SectionContent>
-        </SectionHeader>
+        <OffScreenTitle>카테고리별 상품찾기</OffScreenTitle>
+        <SectionContent>
+          <CategoryView categories={categories} />
+        </SectionContent>
       </SectionLayout>
     </SectionUnit>
   );

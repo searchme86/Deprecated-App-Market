@@ -1,13 +1,14 @@
 import styled, { css } from 'styled-components';
 
-export const SectionUnit = styled.section`
+export const SectionUnit = styled.div`
   width: 100%;
   padding: 60px 0 60px 0;
   margin: 0 0 30px 0;
   background: ${({ color }) => (color ? `${color}` : '#fff')};
 `;
 
-export const SectionLayout = styled.div`
+export const SectionLayout = styled.section`
+  position: relative;
   width: 1280px;
   margin: 0 auto;
 `;
@@ -18,9 +19,9 @@ export const SectionTitle = styled.h1`
   position: relative;
   font-size: 32px;
   font-weight: bold;
-  padding: 0 0 30px 0;
-  margin: 0 0 0 30px 0;
+  padding: 0 0 16px 0;
   transition: 0.2s;
+  line-height: 1;
   &:after {
     position: absolute;
     content: '';
@@ -32,8 +33,16 @@ export const SectionTitle = styled.h1`
   }
 `;
 
+export const SectionTitleDes = styled.p`
+  position: absolute;
+  top: 0;
+  margin-left: 218px;
+  font-size: 16px;
+  font-weight: 400;
+`;
+
 export const SectionContent = styled.div`
-  margin: 20px 0 20px 0;
+  margin: 30px 0 20px 0;
 `;
 
 export const FlexContainer = styled.div`
@@ -44,6 +53,7 @@ export const FlexContainer = styled.div`
 `;
 
 export const FlexAlignDiv = styled.div`
+  width: calc((100% - 170px) / 2);
   ${({ fixed }) =>
     fixed &&
     css`
@@ -60,7 +70,6 @@ export const PForm = styled.form`
 
 export const PFormContent = styled.div`
   position: relative;
-  width: ${({ wd }) => wd};
   padding: ${({ padding }) => padding};
   margin-right: ${({ mr }) => mr};
   &:first-child {

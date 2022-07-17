@@ -36,10 +36,10 @@ export const getSingleCategory = createAsyncThunk(
 //저장된 모든 카테고리 정보를 가져옴
 export const getCategoryList = createAsyncThunk(
   'category/getCategory',
-  async ({ toast }, { rejectWithValue }) => {
+  async ({ rejectWithValue }) => {
     try {
       const response = await api.getCategories();
-      toast.success('Category Retrieved Successfully');
+
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

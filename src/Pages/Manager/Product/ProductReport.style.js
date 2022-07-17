@@ -70,9 +70,14 @@ export const ReportTitle = styled.strong`
 `;
 
 export const ReportDTitle = styled.span`
+  display: inline-block;
+  width: 70px;
   margin: 0 0 0 10px;
   font-size: 14px;
   font-weight: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 export const ReportDOpinion = styled.p`
@@ -82,9 +87,11 @@ export const ReportDOpinion = styled.p`
 
 export const ReportHashTag = styled.span`
   border: 1px solid #767676;
-  padding: 5px 10px 5px 10px;
+  padding: 3px;
   box-sizing: border-box;
   border-radius: 15px;
+  font-size: 13px;
+  line-height: 1;
 `;
 
 export const ReportInfoItem = styled.li`
@@ -106,8 +113,7 @@ export const ReportOverflowList = styled.ul`
 `;
 
 export const ReportOverflowLi = styled.li`
-  margin: 0 7px 7px 0;
-  padding: 0 0 4px 0;
+  margin: 0 7px 3px 0;
   &:first-child {
     margin-left: 0;
   }

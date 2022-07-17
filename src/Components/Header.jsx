@@ -11,7 +11,7 @@ import {
   MDBNavbarBrand,
 } from 'mdb-react-ui-kit';
 import { useSelector, useDispatch } from 'react-redux';
-import { setLogout } from '../Store/Features/AuthSlice';
+import { AuthSelector, setLogout } from '../Store/Features/AuthSlice';
 import { searchTours } from '../Store/Features/TourSlice';
 
 import { useNavigate } from 'react-router-dom';
@@ -21,10 +21,16 @@ function Header() {
   const [show, setShow] = useState(false);
   const [search, setSearch] = useState('');
   const { user } = useSelector((state) => ({ ...state.auth }));
+
+  // const something = useSelector(AuthSelector);
+  // console.log('something', something);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   //백엔드에서 1시간으로 토큰이 만료가 되기 때문에 토큰 처리를 해야함
   const token = user?.token;
+
+  console.log('보이나 user', user);
+  console.log('보이나 token', token);
 
   if (token) {
     const decodedToken = decode(token);
@@ -70,9 +76,9 @@ function Header() {
         </MDBNavbarToggler>
         <MDBCollapse show={show} navbar>
           <MDBNavbarNav right fullWidth={false} className="mb-2 mb-lg-0">
-            {user?.result?._id && (
+            {user?.newUser?._id && (
               <h5 style={{ marginRight: '30px', marginTop: '27px' }}>
-                Logged in as: {user?.result?.name}
+                Logged in as: {user?.newUser?.name}
               </h5>
             )}
             <MDBNavbarItem>
@@ -80,7 +86,7 @@ function Header() {
                 <p className="header-text">Home</p>
               </MDBNavbarLink>
             </MDBNavbarItem>
-            {user?.result?._id && (
+            {user?.newUser?._id && (
               <>
                 <MDBNavbarItem>
                   <MDBNavbarLink href="/create">
@@ -99,7 +105,7 @@ function Header() {
                 </MDBNavbarItem> */}
               </>
             )}
-            {user?.result?._id ? (
+            {user?.newUser?._id ? (
               <>
                 {/* <MDBNavbarItem>
                   <MDBNavbarLink href="/userProduct">
@@ -112,11 +118,11 @@ function Header() {
                     <p className="header-text">상품등록</p>
                   </MDBNavbarLink>
                 </MDBNavbarItem> */}
-                <MDBNavbarItem>
+                {/* <MDBNavbarItem>
                   <MDBNavbarLink href="/category">
                     <p className="header-text">카테고리 관리</p>
                   </MDBNavbarLink>
-                </MDBNavbarItem>
+                </MDBNavbarItem> */}
                 <MDBNavbarItem>
                   <MDBNavbarLink href="/login">
                     <p className="header-text" onClick={() => handleLogout()}>
@@ -132,13 +138,13 @@ function Header() {
                 </MDBNavbarLink>
               </MDBNavbarItem>
             )}
-            {user?.result?.imageFile ? (
+            {user?.newUser?.imageFile ? (
               <MDBNavbarItem>
-                <MDBNavbarLink href={`/profile/${user.result.nickname}`}>
+                <MDBNavbarLink href={`/profile/${user.newUser.nickname}`}>
                   <div className="">
                     <img
-                      src={user?.result?.imageFile}
-                      alt={user?.result?.name}
+                      src={user?.newUser?.imageFile}
+                      alt={user?.newUser?.name}
                       style={{ width: '50px', marginTop: '10px' }}
                     />
                   </div>
