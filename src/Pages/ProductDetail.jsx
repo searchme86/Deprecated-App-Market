@@ -186,7 +186,7 @@ function ProductDetail() {
                 {!loading ? (
                   <>
                     <PdetailImage>
-                      <ImageHolder width="590px" br="14px">
+                      <ImageHolder width="590px" height="480px" br="14px">
                         <Image src={pdImage} alt={`${pdTitle} 이미지`} />
                       </ImageHolder>
                     </PdetailImage>
@@ -373,7 +373,8 @@ function ProductDetail() {
           <SectionLayout>
             <SectionTitle>관련상품 보기</SectionTitle>
             <SectionTitleDes>
-              등록한 상품과 연관상품을 확인할 수 있습니다.
+              <strong>브랜드</strong> 혹은 <strong>상품타입</strong>이 동일한
+              상품을 확인할 수 있습니다.
             </SectionTitleDes>
             <SectionContent>
               <RelatedSection>

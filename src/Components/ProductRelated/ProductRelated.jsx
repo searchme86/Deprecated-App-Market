@@ -19,10 +19,14 @@ import {
   PCardTagText,
   PCardLike,
   PCardDgree,
+  PcardIconBox,
+  PcardIcon,
 } from '../CardProduct/CardProduct.style';
 import { Image, ImageHolder } from '../../Assets/Styles/Image.style';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 import { RelatedImage, RelatedHref, RelatedInfo } from './ProductRelated.style';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFaceSmileWink } from '@fortawesome/free-solid-svg-icons';
 
 function ProductRelated(related) {
   const {
@@ -47,6 +51,7 @@ function ProductRelated(related) {
   const userId = user?.result?._id;
 
   const dispatch = useDispatch();
+
   // const excerpt = (str) => {
   //   if (str.length > 45) {
   //     str = str.substring(0, 45) + ' ...';
@@ -141,7 +146,9 @@ function ProductRelated(related) {
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
-        <PCardPrice>{`${Number(pdPrice).toLocaleString('ko-KR')}`}</PCardPrice>
+        <PCardPrice>{`${Number(pdPrice).toLocaleString(
+          'ko-KR'
+        )} 원`}</PCardPrice>
         <PCardTitle>
           <Link to={`/product/${_id}`}>{pdTitle}</Link>
         </PCardTitle>
@@ -155,19 +162,32 @@ function ProductRelated(related) {
         <PCardLike>
           <MDBBtn
             style={{ float: 'right' }}
-            tag="a"
+            tag="div"
             color="none"
-            onClick={!user?.result ? null : handleLike}
+            onClick={!user?.newUser ? null : handleLike}
           >
-            {!user?.result ? (
-              <MDBTooltip title="Please login to like tour" tag="a">
+            {!user?.newUser ? (
+              <MDBTooltip title="좋아요는 로그인 후에 가능합니다." tag="p">
                 <Likes />
               </MDBTooltip>
             ) : (
               <Likes />
             )}
           </MDBBtn>
-          <PCardDgree>{pdDegree}</PCardDgree>
+
+          <PcardIconBox>
+            <PCardDgree>{pdDegree}</PCardDgree>
+            <PcardIcon>
+              <FontAwesomeIcon
+                icon={faFaceSmileWink}
+                style={{
+                  fontSize: '20px',
+                  color: '#303C6C',
+                  marginLeft: '2px',
+                }}
+              />
+            </PcardIcon>
+          </PcardIconBox>
         </PCardLike>
         <PCardUser>
           <PUserImage>

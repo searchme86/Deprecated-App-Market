@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const PdetailContainer = styled.div`
   display: flex;
+  height: 550px;
 `;
 
 export const PdetailImage = styled.div`
