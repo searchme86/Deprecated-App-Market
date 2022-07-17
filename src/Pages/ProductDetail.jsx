@@ -19,6 +19,7 @@ import {
 
 import { Image, ImageHolder } from '../Assets/Styles/Image.style';
 import {
+  Input,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
@@ -340,10 +341,7 @@ function ProductDetail() {
                         style={{
                           display: 'flex',
                           flexDirection: 'row',
-                          width: '110px',
                           height: '32px',
-                          borderRadius: '6px',
-                          border: '1px solid red',
                           background: '#fff',
                         }}
                       >
@@ -351,7 +349,7 @@ function ProductDetail() {
                           type="button"
                           onClick={increaseNum}
                           style={{
-                            width: '30px',
+                            width: '37px',
                             height: '30px',
                             background: '#fff',
                             cursor: 'pointer',
@@ -363,25 +361,30 @@ function ProductDetail() {
                         <div
                           className=""
                           style={{
-                            width: '42px',
+                            width: '62px',
                             fontSize: '13px',
-                            borderLeft: '1px solid #ddd',
-                            borderRight: '1px solid #ddd',
+                            borderLeft: '1px solid #333',
+                            borderRight: '1px solid #333',
                             textAlign: 'center',
                             lineHeight: '30px',
                           }}
                         >
-                          <input
+                          <Input
                             type="number"
-                            // defaultValue="1"
+                            display="block"
+                            width="100%"
+                            height="100%"
                             value={orderCount}
+                            borderRadius="0"
+                            border="0px"
+                            textAlign="center"
                             disabled
                           />
                         </div>
                         <button
                           type="button"
                           style={{
-                            width: '30px',
+                            width: '37px',
                             height: '30px',
                             background: '#fff',
                             cursor: 'pointer',
