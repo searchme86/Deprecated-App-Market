@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React from 'react';
 import { MDBBtn, MDBIcon, MDBTooltip } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
 import { likeProduct } from '../../Store/Features/NProductSlice';
@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AuthSelector } from '../../Store/Features/AuthSlice';
 import {
   PCardCategory,
-  PCardDes,
   PCardIspace,
   PCardItem,
   PCardPrice,
@@ -15,43 +14,32 @@ import {
   PUserAddress,
   PUserImage,
   PUserInfo,
+  PCardTags,
+  PCardTag,
+  PCardTagText,
+  PCardLike,
+  PCardDgree,
 } from '../CardProduct/CardProduct.style';
 import { Image, ImageHolder } from '../../Assets/Styles/Image.style';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
+import { RelatedImage, RelatedHref, RelatedInfo } from './ProductRelated.style';
 
 function ProductRelated(related) {
-  // console.log('ProductRelated', related);
   const {
     _id,
     pdUploaderNickname,
     pdUploaderImage,
     pdCategory,
+    pdBrand,
+    pdType,
     pdImage,
     pdPrice,
-    pdDes,
     pdTitle,
-    pdtags,
     pdlikes,
     pdAddress,
     pdStatus,
     pdDegree,
   } = related;
-
-  // console.log(
-  //   'item',
-  //   _id,
-  //   pdUploaderNickname,
-  //   pdUploaderImage,
-  //   pdCategory,
-  //   pdImage,
-  //   pdPrice,
-  //   pdDes,
-  //   pdTitle,
-  //   pdtags,
-  //   pdlikes,
-  //   pdAddress,
-  //   pdStatus,
-  //   pdDegree
-  // );
 
   const {
     auth: { user },
@@ -59,12 +47,12 @@ function ProductRelated(related) {
   const userId = user?.result?._id;
 
   const dispatch = useDispatch();
-  const excerpt = (str) => {
-    if (str.length > 45) {
-      str = str.substring(0, 45) + ' ...';
-    }
-    return str;
-  };
+  // const excerpt = (str) => {
+  //   if (str.length > 45) {
+  //     str = str.substring(0, 45) + ' ...';
+  //   }
+  //   return str;
+  // };
 
   const Likes = () => {
     if (pdlikes.length > 0) {
@@ -80,7 +68,7 @@ function ProductRelated(related) {
               {pdlikes.length} Likes
             </MDBTooltip>
           ) : (
-            `${pdlikes.length} Like${pdlikes.length > 1 ? 's' : ''}`
+            `${pdlikes.length} Like ${pdlikes.length > 1 ? 's' : ''}`
           )}
         </>
       ) : (
@@ -104,93 +92,83 @@ function ProductRelated(related) {
 
   return (
     <PCardItem>
-      <div className="">
-        <div className="">
-          <Link to={`/product/${_id}`}>
-            <ImageHolder
-              height="150px"
+      <RelatedImage>
+        <RelatedHref to={`/product/${_id}`}>
+          <ImageHolder
+            height="150px"
+            style={{
+              position: 'relative',
+              width: 'initial',
+              height: 'initial',
+              boxSizing: 'border-box',
+              padding: '0',
+              margin: '0',
+            }}
+          >
+            <PCardIspace />
+            <Image
+              src={pdImage}
+              alt={pdTitle}
               style={{
-                position: 'relative',
-                width: 'initial',
-                height: 'initial',
-                boxSizing: 'border-box',
-                padding: '0',
-                margin: '0',
+                position: 'absolute',
+                width: '100%',
+                height: '100%',
+                top: '0',
               }}
-            >
-              <PCardIspace />
-              <Image
-                src={pdImage}
-                alt={pdTitle}
-                style={{
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  top: '0',
-                }}
-              />
-            </ImageHolder>
-          </Link>
-        </div>
-        <div className="" style={{ padding: '20px', boxSizing: 'border-box' }}>
-          <PCardCategory>{pdCategory}</PCardCategory>
-          <PCardPrice>{`${Number(pdPrice).toLocaleString(
-            'ko-KR'
-          )}`}</PCardPrice>
+            />
+          </ImageHolder>
+        </RelatedHref>
+      </RelatedImage>
 
-          <PCardTitle>
-            <Link to={`/product/${_id}`}>{pdTitle}</Link>
-          </PCardTitle>
-          <PCardDes>{pdDes}</PCardDes>
-          <div className="">
-            <ul style={{}}>
-              {pdStatus.map((status, index) => (
-                <li
-                  key={index}
-                  style={{
-                    display: 'inline-block',
-                    border: '1px solid red',
-                    borderRadius: '15px',
-                    marginBottom: '10px',
-                    marginRight: '5px',
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: '15px',
-                      padding: '10px',
-                      boxSizing: 'border-box',
-                    }}
-                  >
-                    #{status}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="">
-            <div
-              className=""
-              style={{ display: 'flex', justifyContent: 'space-between' }}
-            >
-              <MDBBtn
-                style={{ float: 'right' }}
-                tag="a"
-                color="none"
-                onClick={!user?.result ? null : handleLike}
-              >
-                {!user?.result ? (
-                  <MDBTooltip title="Please login to like tour" tag="a">
-                    <Likes />
-                  </MDBTooltip>
-                ) : (
-                  <Likes />
-                )}
-              </MDBBtn>
-              <span>{pdDegree}</span>
-            </div>
-          </div>
-        </div>
+      <RelatedInfo>
+        <PCardCategory>{pdCategory}</PCardCategory>
+        <Breadcrumb as="div" mt="5px">
+          <BreadcrumbItem>
+            <BreadcrumbLink fontWeight="bold" fontSize="18px">
+              {pdCategory}
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+
+          <BreadcrumbItem>
+            <BreadcrumbLink fontWeight="bold" fontSize="18px">
+              {pdBrand}
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+
+          <BreadcrumbItem isCurrentPage>
+            <BreadcrumbLink fontWeight="bold" fontSize="18px">
+              {pdType}
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+        </Breadcrumb>
+        <PCardPrice>{`${Number(pdPrice).toLocaleString('ko-KR')}`}</PCardPrice>
+        <PCardTitle>
+          <Link to={`/product/${_id}`}>{pdTitle}</Link>
+        </PCardTitle>
+        <PCardTags>
+          {pdStatus.map((status, index) => (
+            <PCardTag key={index}>
+              <PCardTagText>#{status}</PCardTagText>
+            </PCardTag>
+          ))}
+        </PCardTags>
+        <PCardLike>
+          <MDBBtn
+            style={{ float: 'right' }}
+            tag="a"
+            color="none"
+            onClick={!user?.result ? null : handleLike}
+          >
+            {!user?.result ? (
+              <MDBTooltip title="Please login to like tour" tag="a">
+                <Likes />
+              </MDBTooltip>
+            ) : (
+              <Likes />
+            )}
+          </MDBBtn>
+          <PCardDgree>{pdDegree}</PCardDgree>
+        </PCardLike>
         <PCardUser>
           <PUserImage>
             <ImageHolder br="100%">
@@ -202,7 +180,7 @@ function ProductRelated(related) {
             <PUserAddress>{pdAddress}</PUserAddress>
           </PUserInfo>
         </PCardUser>
-      </div>
+      </RelatedInfo>
     </PCardItem>
   );
 }
