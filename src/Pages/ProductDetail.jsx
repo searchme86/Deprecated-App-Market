@@ -408,7 +408,7 @@ function ProductDetail() {
                           }}
                         >
                           {!orderTotal
-                            ? pdPrice
+                            ? Number(pdPrice).toLocaleString('ko-KR')
                             : Number(orderCount * pdPrice).toLocaleString(
                                 'ko-KR'
                               )}
