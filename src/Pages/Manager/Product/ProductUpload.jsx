@@ -53,7 +53,7 @@ import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
 import ProductReport from './ProductReport';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ncreateProduct } from '../../../Store/Features/NProductSlice';
 import {
@@ -83,7 +83,6 @@ function FashionUpload() {
       newUser: { imageFile, nickname },
     },
   } = useSelector((state) => state.auth);
-  // console.log('user', imageFile, nickname);
 
   const { ProductSize, ProductDegree, ProductStatus, error } = useSelector(
     (state) => state.nproduct
@@ -92,12 +91,9 @@ function FashionUpload() {
   // console.log('상품등록 페이지에서 categories', categories);
   const categoryValue = Object.values(categories).map(
     ({ _id, categoryTitle }) => {
-      // console.log('1');
       return { id: _id, PdCategoryValue: categoryTitle };
     }
   );
-
-  // console.log(categoryValue, categoryValue);
 
   const [pdInfo, setPdInfo] = useState(productSchema);
   const [pdCategory, setPdCategory] = useState('');
@@ -341,8 +337,6 @@ function FashionUpload() {
     prdColorItem,
   ]);
 
-  // console.log('newProduct', newProduct);
-
   // 상품모달
   const prReport = { handleClose, isOpen, newProduct };
   const postCode = { handleClose, isOpen, setAddress };
@@ -360,40 +354,7 @@ function FashionUpload() {
   ].every(Boolean);
 
   const canSubmit = pdtags.length !== 0 && filledIn;
-  const canPreview = false;
   const checked = postModalOpen;
-
-  // console.log(
-  //   'disabled',
-  //   pdCategory,
-  //   pdTitle,
-  //   pdImage,
-  //   pdPrice,
-  //   pdDegree,
-  //   prdStatus,
-  //   pdWish,
-  //   pdDes,
-  //   pdtags,
-  //   canSubmit
-  // );
-  // console.log('pdInfo', newProduct);
-  // console.log('userId', userId);
-  // console.log('pdtags', pdtags.length);
-  // console.log('postModalOpen', postModalOpen);
-  // console.log('1');
-  // console.log('pdAddress', pdAddress);
-  // console.log('addressRef', inputAddressValue);
-
-  // console.log('zonecode', zonecode);
-  // console.log('fullAddress', fullAddress);
-  // console.log('refinedAddress', refinedAddress);
-
-  const registerForm = useCallback(
-    (event) => {
-      dispatch(ncreateProduct({ newProduct, navigate, toast }));
-    },
-    [dispatch, navigate, newProduct]
-  );
 
   const NotiContent = [
     {
@@ -446,6 +407,13 @@ function FashionUpload() {
       cntB: '색상 별 상품의 가격',
     },
   ];
+
+  const registerForm = useCallback(
+    (event) => {
+      dispatch(ncreateProduct({ newProduct, navigate, toast }));
+    },
+    [dispatch, navigate, newProduct]
+  );
 
   return (
     <SectionUnit>
@@ -546,12 +514,7 @@ function FashionUpload() {
                   <PButtonArea>
                     <PButtonList>
                       <PButtonLi>
-                        <PFormButton
-                          type="button"
-                          onClick={handleFirstModal}
-                          // canPreview={!canPreview}
-                          // disabled={!canPreview}
-                        >
+                        <PFormButton type="button" onClick={handleFirstModal}>
                           상품페이지 미리보기
                         </PFormButton>
                       </PButtonLi>
