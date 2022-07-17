@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ProductRelated from '../Components/ProductRelated/ProductRelated';
 import {
   SectionLayout,
@@ -23,6 +23,8 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  Skeleton,
+  SkeletonCircle,
 } from '@chakra-ui/react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,7 +33,7 @@ import {
   faMinus,
   faPenToSquare,
 } from '@fortawesome/free-solid-svg-icons';
-import { OffScreenSpan } from '../Assets/Styles/Basic.style';
+
 import SelectUnit from '../Components/Select/SelectUnit';
 import {
   PdetailImage,
@@ -61,10 +63,12 @@ import {
   PdEdit,
   RelatedSection,
 } from './ProductDetail.style';
+import { OffScreenSpan } from '../Assets/Styles/Basic.style';
 
 function ProductDetail() {
   const {
     product: {
+      loading,
       nproduct,
       nproduct: {
         _id,
@@ -179,146 +183,184 @@ function ProductDetail() {
           <SectionContent>
             <PForm>
               <PdetailContainer>
-                <PdetailImage>
-                  <ImageHolder width="590px" br="14px">
-                    <Image src={pdImage} alt={`${pdTitle} 이미지`} />
-                  </ImageHolder>
-                </PdetailImage>
+                {!loading ? (
+                  <>
+                    <PdetailImage>
+                      <ImageHolder width="590px" br="14px">
+                        <Image src={pdImage} alt={`${pdTitle} 이미지`} />
+                      </ImageHolder>
+                    </PdetailImage>
 
-                {/* 레이아웃 오른쪽 */}
-                <PdetailInfo>
-                  <PdetailUser>
-                    <ImageHolder width="64px" br="100%">
-                      <Image src={pdUploaderImage} alt={pdUploaderNickname} />
-                    </ImageHolder>
-                    <PdetailUserSection>
-                      <PdetailUserNicName>
-                        {pdUploaderNickname}
-                      </PdetailUserNicName>
-                      <PdetailUserAddress>{pdAddress}</PdetailUserAddress>
-                    </PdetailUserSection>
-                  </PdetailUser>
-
-                  <Breadcrumb as="div" mt="5px">
-                    <BreadcrumbItem>
-                      <BreadcrumbLink fontWeight="bold" fontSize="18px">
-                        {pdCategory}
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
-
-                    <BreadcrumbItem>
-                      <BreadcrumbLink fontWeight="bold" fontSize="18px">
-                        {pdBrand}
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
-
-                    <BreadcrumbItem isCurrentPage>
-                      <BreadcrumbLink fontWeight="bold" fontSize="18px">
-                        {pdType}
-                      </BreadcrumbLink>
-                    </BreadcrumbItem>
-                  </Breadcrumb>
-
-                  <PdetailTags>
-                    {pdStatus &&
-                      pdStatus.map((status, index) => (
-                        <PdetailTagItems key={index}>
-                          <PdetailTag>#{status}</PdetailTag>
-                        </PdetailTagItems>
-                      ))}
-                  </PdetailTags>
-                  <PdetailItemDes>[ {pdDes} ]</PdetailItemDes>
-                  <PdetailItemTitle>{pdTitle}</PdetailItemTitle>
-                  <PdetailItemPrice>
-                    <PdetailItemPriceBold>
-                      {Number(pdPrice).toLocaleString('ko-KR')}
-                    </PdetailItemPriceBold>
-                    원
-                  </PdetailItemPrice>
-                  <PdetailInfoElse>
-                    {pdSizeItems ? (
-                      pdSizeItems.length > 0 ? (
-                        <SelectUnit data={sizeData} handler={setSize} />
-                      ) : (
-                        ' '
-                      )
-                    ) : (
-                      ''
-                    )}
-
-                    {pdColorItems ? (
-                      pdColorItems.length > 0 ? (
-                        <SelectUnit data={colorData} handler={setColor} />
-                      ) : (
-                        ''
-                      )
-                    ) : (
-                      ''
-                    )}
-                  </PdetailInfoElse>
-
-                  <PdCalcButton>
-                    <PdCalcButtonContent>
-                      <PdCalcButtonLayout>
-                        <PdCalcLeftButton type="button" onClick={increaseNum}>
-                          <OffScreenSpan>수량 증가 버튼</OffScreenSpan>
-                          <FontAwesomeIcon icon={faPlus} />
-                        </PdCalcLeftButton>
-                        <PdCalcCount>
-                          <Input
-                            type="number"
-                            display="block"
-                            width="100%"
-                            height="100%"
-                            value={orderCount}
-                            borderRadius="0"
-                            border="0px"
-                            textAlign="center"
-                            disabled
+                    <PdetailInfo>
+                      <PdetailUser>
+                        <ImageHolder width="64px" br="100%">
+                          <Image
+                            src={pdUploaderImage}
+                            alt={pdUploaderNickname}
                           />
-                        </PdCalcCount>
-                        <PdCalcRightButton
-                          type="button"
-                          onClick={orderCount > 1 ? decreaseNum : ''}
-                        >
-                          <OffScreenSpan>수량 감소 버튼</OffScreenSpan>
-                          <FontAwesomeIcon icon={faMinus} />
-                        </PdCalcRightButton>
-                      </PdCalcButtonLayout>
+                        </ImageHolder>
+                        <PdetailUserSection>
+                          <PdetailUserNicName>
+                            {pdUploaderNickname}
+                          </PdetailUserNicName>
+                          <PdetailUserAddress>{pdAddress}</PdetailUserAddress>
+                        </PdetailUserSection>
+                      </PdetailUser>
 
-                      <PdCalcPrice>
-                        <PdCalcPriceBold>
-                          {!orderTotal
-                            ? Number(pdPrice).toLocaleString('ko-KR')
-                            : Number(pdPrice * orderCount).toLocaleString(
-                                'ko-KR'
-                              )}
-                        </PdCalcPriceBold>{' '}
+                      <Breadcrumb as="div" mt="5px">
+                        <BreadcrumbItem>
+                          <BreadcrumbLink fontWeight="bold" fontSize="18px">
+                            {pdCategory}
+                          </BreadcrumbLink>
+                        </BreadcrumbItem>
+
+                        <BreadcrumbItem>
+                          <BreadcrumbLink fontWeight="bold" fontSize="18px">
+                            {pdBrand}
+                          </BreadcrumbLink>
+                        </BreadcrumbItem>
+
+                        <BreadcrumbItem isCurrentPage>
+                          <BreadcrumbLink fontWeight="bold" fontSize="18px">
+                            {pdType}
+                          </BreadcrumbLink>
+                        </BreadcrumbItem>
+                      </Breadcrumb>
+
+                      <PdetailTags>
+                        {pdStatus &&
+                          pdStatus.map((status, index) => (
+                            <PdetailTagItems key={index}>
+                              <PdetailTag>#{status}</PdetailTag>
+                            </PdetailTagItems>
+                          ))}
+                      </PdetailTags>
+                      <PdetailItemDes>[ {pdDes} ]</PdetailItemDes>
+                      <PdetailItemTitle>{pdTitle}</PdetailItemTitle>
+                      <PdetailItemPrice>
+                        <PdetailItemPriceBold>
+                          {Number(pdPrice).toLocaleString('ko-KR')}
+                        </PdetailItemPriceBold>
                         원
-                      </PdCalcPrice>
-                    </PdCalcButtonContent>
-                  </PdCalcButton>
+                      </PdetailItemPrice>
+                      <PdetailInfoElse>
+                        {pdSizeItems ? (
+                          pdSizeItems.length > 0 ? (
+                            <SelectUnit data={sizeData} handler={setSize} />
+                          ) : (
+                            ' '
+                          )
+                        ) : (
+                          ''
+                        )}
 
-                  <PdCart type="button">장바구니 담기</PdCart>
-                  <PdEdit
-                    to={`/edit/${_id}`}
-                    role="button"
-                    style={{
-                      position: 'absolute',
-                      right: '0px',
-                      bottom: '0px',
-                    }}
-                  >
-                    <OffScreenSpan>상품 업데이트 버튼</OffScreenSpan>
-                    <FontAwesomeIcon
-                      icon={faPenToSquare}
-                      style={{
-                        fontSize: '40px',
-                        color: '#62a3d2',
-                      }}
-                    />
-                  </PdEdit>
-                </PdetailInfo>
+                        {pdColorItems ? (
+                          pdColorItems.length > 0 ? (
+                            <SelectUnit data={colorData} handler={setColor} />
+                          ) : (
+                            ''
+                          )
+                        ) : (
+                          ''
+                        )}
+                      </PdetailInfoElse>
+
+                      <PdCalcButton>
+                        <PdCalcButtonContent>
+                          <PdCalcButtonLayout>
+                            <PdCalcLeftButton
+                              type="button"
+                              onClick={increaseNum}
+                            >
+                              <OffScreenSpan>수량 증가 버튼</OffScreenSpan>
+                              <FontAwesomeIcon icon={faPlus} />
+                            </PdCalcLeftButton>
+                            <PdCalcCount>
+                              <Input
+                                type="number"
+                                display="block"
+                                width="100%"
+                                height="100%"
+                                value={orderCount}
+                                borderRadius="0"
+                                border="0px"
+                                textAlign="center"
+                                disabled
+                              />
+                            </PdCalcCount>
+                            <PdCalcRightButton
+                              type="button"
+                              onClick={orderCount > 1 ? decreaseNum : ''}
+                            >
+                              <OffScreenSpan>수량 감소 버튼</OffScreenSpan>
+                              <FontAwesomeIcon icon={faMinus} />
+                            </PdCalcRightButton>
+                          </PdCalcButtonLayout>
+
+                          <PdCalcPrice>
+                            <PdCalcPriceBold>
+                              {!orderTotal
+                                ? Number(pdPrice).toLocaleString('ko-KR')
+                                : Number(pdPrice * orderCount).toLocaleString(
+                                    'ko-KR'
+                                  )}
+                            </PdCalcPriceBold>{' '}
+                            원
+                          </PdCalcPrice>
+                        </PdCalcButtonContent>
+                      </PdCalcButton>
+
+                      <PdCart type="button">장바구니 담기</PdCart>
+                      <PdEdit
+                        to={`/edit/${_id}`}
+                        role="button"
+                        style={{
+                          position: 'absolute',
+                          right: '0px',
+                          bottom: '0px',
+                        }}
+                      >
+                        <OffScreenSpan>상품 업데이트 버튼</OffScreenSpan>
+                        <FontAwesomeIcon
+                          icon={faPenToSquare}
+                          style={{
+                            fontSize: '40px',
+                            color: '#62a3d2',
+                          }}
+                        />
+                      </PdEdit>
+                    </PdetailInfo>
+                  </>
+                ) : (
+                  <>
+                    <PdetailImage>
+                      <Skeleton width="100%" height="100%" />
+                    </PdetailImage>
+                    <PdetailInfo>
+                      <PdetailUser>
+                        <ImageHolder width="64px" br="100%">
+                          <SkeletonCircle width="100%" height="100%" />
+                        </ImageHolder>
+                        <PdetailUserSection>
+                          <Skeleton
+                            marginTop="5px"
+                            marginBottom="5px"
+                            height="30px"
+                          />
+                          <Skeleton marginBottom="5px" height="30px" />
+                        </PdetailUserSection>
+                        <Skeleton marginBottom="5px" height="27px" />
+                        <Skeleton marginBottom="5px" height="34px" />
+                        <Skeleton marginBottom="5px" height="29px" />
+                        <Skeleton marginBottom="5px" height="37px" />
+                        <Skeleton marginBottom="5px" height="47px" />
+                        <Skeleton marginBottom="5px" height="115px" />
+                        <Skeleton marginBottom="5px" height="72px" />
+                        <Skeleton marginBottom="5px" height="54px" />
+                      </PdetailUser>
+                    </PdetailInfo>
+                  </>
+                )}
               </PdetailContainer>
             </PForm>
           </SectionContent>
