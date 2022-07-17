@@ -10,13 +10,11 @@ import {
 } from '@chakra-ui/react';
 import FileBase from 'react-file-base64';
 import defaultImg from '../../../Assets/Image/default-product-upload.png';
-import { toast } from 'react-toastify';
 import {
   SectionUnit,
   SectionLayout,
   SectionTitle,
   SectionContent,
-  FlexContainer,
   FlexAlignDiv,
   PForm,
   PFormContent,
@@ -84,7 +82,7 @@ function FashionUpload() {
     },
   } = useSelector((state) => state.auth);
 
-  const { ProductSize, ProductDegree, ProductStatus, error } = useSelector(
+  const { ProductSize, ProductDegree, ProductStatus } = useSelector(
     (state) => state.nproduct
   );
 
@@ -126,7 +124,7 @@ function FashionUpload() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCategoryList({ toast }));
+    dispatch(getCategoryList({}));
   }, []);
 
   useEffect(() => {
@@ -148,10 +146,6 @@ function FashionUpload() {
     };
     changeAddressValue();
   }, [pdAddress]);
-
-  useEffect(() => {
-    error && toast.error(error);
-  }, [error]);
 
   const onInputChange = useCallback(
     (e) => {
@@ -410,7 +404,7 @@ function FashionUpload() {
 
   const registerForm = useCallback(
     (event) => {
-      dispatch(ncreateProduct({ newProduct, navigate, toast }));
+      dispatch(ncreateProduct({ newProduct, navigate }));
     },
     [dispatch, navigate, newProduct]
   );
