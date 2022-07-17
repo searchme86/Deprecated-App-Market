@@ -200,31 +200,19 @@ function ProductDetail() {
 
                   <Breadcrumb as="div" mt="5px">
                     <BreadcrumbItem>
-                      <BreadcrumbLink
-                        href="#"
-                        fontWeight="bold"
-                        fontSize="18px"
-                      >
+                      <BreadcrumbLink fontWeight="bold" fontSize="18px">
                         {pdCategory}
                       </BreadcrumbLink>
                     </BreadcrumbItem>
 
                     <BreadcrumbItem>
-                      <BreadcrumbLink
-                        href="#"
-                        fontWeight="bold"
-                        fontSize="18px"
-                      >
+                      <BreadcrumbLink fontWeight="bold" fontSize="18px">
                         {pdBrand}
                       </BreadcrumbLink>
                     </BreadcrumbItem>
 
                     <BreadcrumbItem isCurrentPage>
-                      <BreadcrumbLink
-                        href="#"
-                        fontWeight="bold"
-                        fontSize="18px"
-                      >
+                      <BreadcrumbLink fontWeight="bold" fontSize="18px">
                         {pdType}
                       </BreadcrumbLink>
                     </BreadcrumbItem>
