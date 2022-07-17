@@ -214,55 +214,54 @@ function ProductDetail() {
                     </div>
                   </div>
                   {/* 범주 */}
-                  <div className="">
-                    <Breadcrumb as="div" mt="15px" mb="10px">
-                      <BreadcrumbItem>
-                        <BreadcrumbLink
-                          href="#"
-                          fontWeight="bold"
-                          fontSize="18px"
-                        >
-                          {pdCategory}
-                        </BreadcrumbLink>
-                      </BreadcrumbItem>
+                  <Breadcrumb as="div" mt="5px">
+                    <BreadcrumbItem>
+                      <BreadcrumbLink
+                        href="#"
+                        fontWeight="bold"
+                        fontSize="18px"
+                      >
+                        {pdCategory}
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
 
-                      <BreadcrumbItem>
-                        <BreadcrumbLink
-                          href="#"
-                          fontWeight="bold"
-                          fontSize="18px"
-                        >
-                          {pdBrand}
-                        </BreadcrumbLink>
-                      </BreadcrumbItem>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink
+                        href="#"
+                        fontWeight="bold"
+                        fontSize="18px"
+                      >
+                        {pdBrand}
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
 
-                      <BreadcrumbItem isCurrentPage>
-                        <BreadcrumbLink
-                          href="#"
-                          fontWeight="bold"
-                          fontSize="18px"
-                        >
-                          {pdType}
-                        </BreadcrumbLink>
-                      </BreadcrumbItem>
-                    </Breadcrumb>
-                  </div>
+                    <BreadcrumbItem isCurrentPage>
+                      <BreadcrumbLink
+                        href="#"
+                        fontWeight="bold"
+                        fontSize="18px"
+                      >
+                        {pdType}
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                  </Breadcrumb>
                   {/* 상품상태 */}
-                  <div className="" style={{ borderBottom: '1px solid red' }}>
-                    <ul style={{ display: 'flex' }}>
-                      {pdStatus &&
-                        pdStatus.map((status, index) => (
-                          <li key={index}>
-                            <span>{status}</span>
-                          </li>
-                        ))}
-                    </ul>
-                  </div>
+                  <ul style={{ display: 'flex', padding: '5px 0' }}>
+                    {pdStatus &&
+                      pdStatus.map((status, index) => (
+                        <li key={index} style={{ marginRight: '10px' }}>
+                          <span>#{status}</span>
+                        </li>
+                      ))}
+                  </ul>
                   {/* 상품정보 */}
-                  <div className="">
+                  <div
+                    className=""
+                    style={{ marginTop: '5px', marginBottom: '5px' }}
+                  >
                     <p
                       style={{
-                        fontSize: '28px',
+                        fontSize: '19px',
                         wordBreak: 'break-all',
                       }}
                     >
@@ -273,16 +272,15 @@ function ProductDetail() {
                         display: 'block',
                         marginTop: '10px',
                         marginBottom: '10px',
+                        fontSize: '25px',
                       }}
                     >
                       {pdTitle}
                     </strong>
-                    <div className=""></div>
                     <span
                       style={{
                         fontSize: '22px',
                         display: 'block',
-                        borderBottom: '1px solid red',
                       }}
                     >
                       <strong
@@ -298,12 +296,10 @@ function ProductDetail() {
                     </span>
                   </div>
                   {/* 색상별 사이즈별 셀렉트 박스 */}
-                  <div className="">
+                  <div>
                     {pdSizeItems ? (
                       pdSizeItems.length > 0 ? (
-                        <div className="" style={{ marginTop: '10px' }}>
-                          <SelectUnit data={sizeData} handler={setSize} />
-                        </div>
+                        <SelectUnit data={sizeData} handler={setSize} />
                       ) : (
                         ' '
                       )
@@ -313,9 +309,7 @@ function ProductDetail() {
 
                     {pdColorItems ? (
                       pdColorItems.length > 0 ? (
-                        <div className="" style={{ marginTop: '20px' }}>
-                          <SelectUnit data={colorData} handler={setColor} />
-                        </div>
+                        <SelectUnit data={colorData} handler={setColor} />
                       ) : (
                         ''
                       )
@@ -323,6 +317,7 @@ function ProductDetail() {
                       ''
                     )}
                   </div>
+
                   {/* 가격 계산, 클릭버튼 */}
                   <div
                     className=""
@@ -417,154 +412,12 @@ function ProductDetail() {
                       </span>
                     </div>
                   </div>
-                  {/* 탭 메뉴 */}
-                  <div className="">
-                    <Tabs variant="enclosed">
-                      <TabList>
-                        <Tab>거래 희망사항</Tab>
-                        <Tab>색상 별 가격표</Tab>
-                        <Tab>사이즈 별 가격표</Tab>
-                      </TabList>
-                      <TabPanels>
-                        <TabPanel>
-                          <div className="">
-                            <TableContainer>
-                              <p>{pdWish}</p>
-                            </TableContainer>
-                          </div>
-                        </TabPanel>
-                        <TabPanel>
-                          <div className="">
-                            <TableContainer>
-                              <Table variant="simple">
-                                <TableCaption>
-                                  Imperial to metric conversion factors
-                                </TableCaption>
-                                <Thead>
-                                  <Tr>
-                                    <Th>To convert</Th>
-                                    <Th>into</Th>
-                                    <Th isNumeric>multiply by</Th>
-                                  </Tr>
-                                </Thead>
-                                <Tbody>
-                                  <Tr>
-                                    <Td>inches</Td>
-                                    <Td>millimetres (mm)</Td>
-                                    <Td isNumeric>25.4</Td>
-                                  </Tr>
-                                  <Tr>
-                                    <Td>feet</Td>
-                                    <Td>centimetres (cm)</Td>
-                                    <Td isNumeric>30.48</Td>
-                                  </Tr>
-                                  <Tr>
-                                    <Td>yards</Td>
-                                    <Td>metres (m)</Td>
-                                    <Td isNumeric>0.91444</Td>
-                                  </Tr>
-                                </Tbody>
-                                <Tfoot>
-                                  <Tr>
-                                    <Th>To convert</Th>
-                                    <Th>into</Th>
-                                    <Th isNumeric>multiply by</Th>
-                                  </Tr>
-                                </Tfoot>
-                              </Table>
-                            </TableContainer>
-                          </div>
-                        </TabPanel>
-                        <TabPanel>
-                          <div className="">
-                            <TableContainer>
-                              <Table variant="simple">
-                                <TableCaption>
-                                  Imperial to metric conversion factors
-                                </TableCaption>
-                                <Thead>
-                                  <Tr>
-                                    <Th>To convert</Th>
-                                    <Th>into</Th>
-                                    <Th isNumeric>multiply by</Th>
-                                  </Tr>
-                                </Thead>
-                                <Tbody>
-                                  <Tr>
-                                    <Td>inches</Td>
-                                    <Td>millimetres (mm)</Td>
-                                    <Td isNumeric>25.4</Td>
-                                  </Tr>
-                                  <Tr>
-                                    <Td>feet</Td>
-                                    <Td>centimetres (cm)</Td>
-                                    <Td isNumeric>30.48</Td>
-                                  </Tr>
-                                  <Tr>
-                                    <Td>yards</Td>
-                                    <Td>metres (m)</Td>
-                                    <Td isNumeric>0.91444</Td>
-                                  </Tr>
-                                </Tbody>
-                                <Tfoot>
-                                  <Tr>
-                                    <Th>To convert</Th>
-                                    <Th>into</Th>
-                                    <Th isNumeric>multiply by</Th>
-                                  </Tr>
-                                </Tfoot>
-                              </Table>
-                            </TableContainer>
-                          </div>
-                        </TabPanel>
-                        <TabPanel>
-                          <div className="">
-                            <TableContainer>
-                              <Table variant="simple">
-                                <TableCaption>
-                                  Imperial to metric conversion factors
-                                </TableCaption>
-                                <Thead>
-                                  <Tr>
-                                    <Th>To convert</Th>
-                                    <Th>into</Th>
-                                    <Th isNumeric>multiply by</Th>
-                                  </Tr>
-                                </Thead>
-                                <Tbody>
-                                  <Tr>
-                                    <Td>inches</Td>
-                                    <Td>millimetres (mm)</Td>
-                                    <Td isNumeric>25.4</Td>
-                                  </Tr>
-                                  <Tr>
-                                    <Td>feet</Td>
-                                    <Td>centimetres (cm)</Td>
-                                    <Td isNumeric>30.48</Td>
-                                  </Tr>
-                                  <Tr>
-                                    <Td>yards</Td>
-                                    <Td>metres (m)</Td>
-                                    <Td isNumeric>0.91444</Td>
-                                  </Tr>
-                                </Tbody>
-                                <Tfoot>
-                                  <Tr>
-                                    <Th>To convert</Th>
-                                    <Th>into</Th>
-                                    <Th isNumeric>multiply by</Th>
-                                  </Tr>
-                                </Tfoot>
-                              </Table>
-                            </TableContainer>
-                          </div>
-                        </TabPanel>
-                      </TabPanels>
-                    </Tabs>
-                  </div>
                   <button
                     type="submit"
                     style={{
+                      position: 'absolute',
+                      bottom: '0',
+                      left: '0',
                       width: '130px',
                       height: '54px',
                       lineHeight: '51px',
@@ -578,25 +431,23 @@ function ProductDetail() {
                   >
                     장바구니 담기
                   </button>
-                  {/*  */}.
-                  <Link to={`/edit/${_id}`}>
-                    <button
-                      type="button"
+                  <Link
+                    to={`/edit/${_id}`}
+                    role="button"
+                    style={{
+                      position: 'absolute',
+                      right: '0px',
+                      bottom: '0px',
+                    }}
+                  >
+                    <OffScreenSpan>상품 업데이트 버튼</OffScreenSpan>
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
                       style={{
-                        position: 'absolute',
-                        bottom: '0px',
-                        right: '0px',
+                        fontSize: 50,
+                        color: '#000',
                       }}
-                    >
-                      <OffScreenSpan>상품 업데이트 버튼</OffScreenSpan>
-                      <FontAwesomeIcon
-                        icon={faPenToSquare}
-                        style={{
-                          fontSize: 50,
-                          color: '#000',
-                        }}
-                      />
-                    </button>
+                    />
                   </Link>
                 </div>
               </div>

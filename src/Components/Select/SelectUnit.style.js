@@ -5,14 +5,15 @@ export const SelectBox = styled.div`
   position: relative;
   width: 100%;
   border-radius: 5px;
-  border: 1px solid #ddd;
+  border: 1px solid #7aa25d;
+  margin: 10px 0 0 0;
 `;
 
 export const SelectTitle = styled.div`
   position: relative;
   display: block;
   width: 100%;
-  font-size: 14px;
+  font-size: 17px;
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
@@ -30,14 +31,14 @@ export const SelectTitle = styled.div`
 
 export const SelectTitleSubject = styled.strong`
   display: block;
-  font-size: 12px;
+  font-size: 15px;
   color: #757575;
   margin: 0 0 2px 0;
 `;
 
 export const SelectTitleContent = styled.span`
   display: block;
-  font-size: 14px;
+  font-size: 17px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
