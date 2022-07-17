@@ -63,9 +63,6 @@ function ProductReport({ prReport }) {
     inputAddressValue,
   } = newProduct;
 
-  const [{ pdSize, pdPriceBySize }] = pdSizeInfo;
-  const [{ pdColor, pdPriceByColor }] = pdColorInfo;
-
   const isBlank = [
     pdCategory,
     pdBrand,
@@ -298,7 +295,7 @@ function ProductReport({ prReport }) {
                 ) : (
                   <AlignList>
                     <ReportInfoLi>
-                      {pdSize && pdPriceBySize && (
+                      {pdSizeInfo && (
                         <>
                           <ReportTitle>사이즈 별 가격</ReportTitle>
                           <RTableWrapper>
@@ -323,18 +320,21 @@ function ProductReport({ prReport }) {
                                 </tr>
                               </thead>
                               <tbody>
-                                {pdSizeInfo.map(
-                                  ({ pdSize, pdPriceBySize }, index) => (
-                                    <tr key={index}>
-                                      <RTableTh scope="row">{pdSize}</RTableTh>
-                                      <RTableTd>
-                                        {`${Number(
-                                          pdPriceBySize
-                                        ).toLocaleString('ko-KR')} 원`}
-                                      </RTableTd>
-                                    </tr>
-                                  )
-                                )}
+                                {pdSizeInfo &&
+                                  pdSizeInfo.map(
+                                    ({ pdSize, pdPriceBySize }, index) => (
+                                      <tr key={index}>
+                                        <RTableTh scope="row">
+                                          {pdSize}
+                                        </RTableTh>
+                                        <RTableTd>
+                                          {`${Number(
+                                            pdPriceBySize
+                                          ).toLocaleString('ko-KR')} 원`}
+                                        </RTableTd>
+                                      </tr>
+                                    )
+                                  )}
                               </tbody>
                             </RTable>
                           </RTableWrapper>
@@ -343,7 +343,7 @@ function ProductReport({ prReport }) {
                     </ReportInfoLi>
                     <ReportInfoLi>
                       <>
-                        {pdColor && pdPriceByColor && (
+                        {pdColorInfo && (
                           <ReportInfoLi>
                             <ReportTitle>색상 별 가격</ReportTitle>
                             <RTableWrapper>
@@ -368,20 +368,21 @@ function ProductReport({ prReport }) {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  {pdColorInfo.map(
-                                    ({ pdColor, pdPriceByColor }, index) => (
-                                      <tr key={index}>
-                                        <RTableTh scope="row">
-                                          {pdColor}
-                                        </RTableTh>
-                                        <RTableTd>
-                                          {`${Number(
-                                            pdPriceByColor
-                                          ).toLocaleString('ko-KR')} 원`}
-                                        </RTableTd>
-                                      </tr>
-                                    )
-                                  )}
+                                  {pdColorInfo &&
+                                    pdColorInfo.map(
+                                      ({ pdColor, pdPriceByColor }, index) => (
+                                        <tr key={index}>
+                                          <RTableTh scope="row">
+                                            {pdColor}
+                                          </RTableTh>
+                                          <RTableTd>
+                                            {`${Number(
+                                              pdPriceByColor
+                                            ).toLocaleString('ko-KR')} 원`}
+                                          </RTableTd>
+                                        </tr>
+                                      )
+                                    )}
                                 </tbody>
                               </RTable>
                             </RTableWrapper>
