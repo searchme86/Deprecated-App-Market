@@ -59,6 +59,7 @@ import {
   PdCalcPriceBold,
   PdCart,
   PdEdit,
+  RelatedSection,
 } from './ProductDetail.style';
 
 function ProductDetail() {
@@ -333,21 +334,12 @@ function ProductDetail() {
               등록한 상품과 연관상품을 확인할 수 있습니다.
             </SectionTitleDes>
             <SectionContent>
-              <div className="">
-                <ul
-                  style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    width: '100%',
-                    marginTop: '10px',
-                  }}
-                >
-                  {relatedItems &&
-                    relatedItems.map((related, index) => (
-                      <ProductRelated key={index} {...related} />
-                    ))}
-                </ul>
-              </div>
+              <RelatedSection>
+                {relatedItems &&
+                  relatedItems.map((related, index) => (
+                    <ProductRelated key={index} {...related} />
+                  ))}
+              </RelatedSection>
             </SectionContent>
           </SectionLayout>
         </SectionUnit>

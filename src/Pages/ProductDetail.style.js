@@ -141,3 +141,10 @@ export const PdEdit = styled(Link)`
   right: 0px;
   bottom: 0;
 `;
+
+export const RelatedSection = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 10px 0 0 0;
+`;
