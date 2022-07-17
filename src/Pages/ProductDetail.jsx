@@ -33,6 +33,33 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { OffScreenSpan } from '../Assets/Styles/Basic.style';
 import SelectUnit from '../Components/Select/SelectUnit';
+import {
+  PdetailImage,
+  PdetailContainer,
+  PdetailInfo,
+  PdetailUser,
+  PdetailUserSection,
+  PdetailUserNicName,
+  PdetailUserAddress,
+  PdetailTags,
+  PdetailTagItems,
+  PdetailTag,
+  PdetailItemDes,
+  PdetailItemTitle,
+  PdetailItemPrice,
+  PdetailItemPriceBold,
+  PdetailInfoElse,
+  PdCalcButton,
+  PdCalcButtonContent,
+  PdCalcButtonLayout,
+  PdCalcLeftButton,
+  PdCalcCount,
+  PdCalcRightButton,
+  PdCalcPrice,
+  PdCalcPriceBold,
+  PdCart,
+  PdEdit,
+} from './ProductDetail.style';
 
 function ProductDetail() {
   const {
@@ -150,37 +177,27 @@ function ProductDetail() {
           </SectionTitleDes>
           <SectionContent>
             <PForm>
-              <div className="" style={{ display: 'flex' }}>
-                {/* 상품이미지 */}
-                <div className="" style={{ width: '50%' }}>
+              <PdetailContainer>
+                <PdetailImage>
                   <ImageHolder width="590px" br="14px">
                     <Image src={pdImage} alt={`${pdTitle} 이미지`} />
                   </ImageHolder>
-                </div>
+                </PdetailImage>
 
                 {/* 레이아웃 오른쪽 */}
-                <div
-                  className=""
-                  style={{ width: '50%', position: 'relative' }}
-                >
-                  {/* 유저 설명 */}
-                  <div
-                    className=""
-                    style={{ display: 'flex', alignItems: 'center' }}
-                  >
+                <PdetailInfo>
+                  <PdetailUser>
                     <ImageHolder width="64px" br="100%">
                       <Image src={pdUploaderImage} alt={pdUploaderNickname} />
                     </ImageHolder>
-                    <div className="">
-                      <strong style={{ fontSize: '20px', marginLeft: '12px' }}>
+                    <PdetailUserSection>
+                      <PdetailUserNicName>
                         {pdUploaderNickname}
-                      </strong>
-                      <p style={{ fontSize: '20px', marginLeft: '12px' }}>
-                        {pdAddress}
-                      </p>
-                    </div>
-                  </div>
-                  {/* 범주 */}
+                      </PdetailUserNicName>
+                      <PdetailUserAddress>{pdAddress}</PdetailUserAddress>
+                    </PdetailUserSection>
+                  </PdetailUser>
+
                   <Breadcrumb as="div" mt="5px">
                     <BreadcrumbItem>
                       <BreadcrumbLink
@@ -212,58 +229,24 @@ function ProductDetail() {
                       </BreadcrumbLink>
                     </BreadcrumbItem>
                   </Breadcrumb>
-                  {/* 상품상태 */}
-                  <ul style={{ display: 'flex', padding: '5px 0' }}>
+
+                  <PdetailTags>
                     {pdStatus &&
                       pdStatus.map((status, index) => (
-                        <li key={index} style={{ marginRight: '10px' }}>
-                          <span>#{status}</span>
-                        </li>
+                        <PdetailTagItems key={index}>
+                          <PdetailTag>#{status}</PdetailTag>
+                        </PdetailTagItems>
                       ))}
-                  </ul>
-                  {/* 상품정보 */}
-                  <div
-                    className=""
-                    style={{ marginTop: '5px', marginBottom: '5px' }}
-                  >
-                    <p
-                      style={{
-                        fontSize: '19px',
-                        wordBreak: 'break-all',
-                      }}
-                    >
-                      [ {pdDes} ]
-                    </p>
-                    <strong
-                      style={{
-                        display: 'block',
-                        marginTop: '10px',
-                        marginBottom: '10px',
-                        fontSize: '25px',
-                      }}
-                    >
-                      {pdTitle}
-                    </strong>
-                    <span
-                      style={{
-                        fontSize: '22px',
-                        display: 'block',
-                      }}
-                    >
-                      <strong
-                        style={{
-                          display: 'inline-block',
-                          fontSize: '28px',
-                          marginRight: '2px',
-                        }}
-                      >
-                        {Number(pdPrice).toLocaleString('ko-KR')}
-                      </strong>
-                      원
-                    </span>
-                  </div>
-                  {/* 색상별 사이즈별 셀렉트 박스 */}
-                  <div>
+                  </PdetailTags>
+                  <PdetailItemDes>[ {pdDes} ]</PdetailItemDes>
+                  <PdetailItemTitle>{pdTitle}</PdetailItemTitle>
+                  <PdetailItemPrice>
+                    <PdetailItemPriceBold>
+                      {Number(pdPrice).toLocaleString('ko-KR')}
+                    </PdetailItemPriceBold>
+                    원
+                  </PdetailItemPrice>
+                  <PdetailInfoElse>
                     {pdSizeItems ? (
                       pdSizeItems.length > 0 ? (
                         <SelectUnit data={sizeData} handler={setSize} />
@@ -283,54 +266,16 @@ function ProductDetail() {
                     ) : (
                       ''
                     )}
-                  </div>
+                  </PdetailInfoElse>
 
-                  {/* 가격 계산, 클릭버튼 */}
-                  <div
-                    className=""
-                    style={{
-                      padding: '20px',
-                      boxSizing: 'border-box',
-                      borderRadius: '6px',
-                      background: '#f8f8f8',
-                      marginTop: '20px',
-                      marginBottom: '20px',
-                    }}
-                  >
-                    <div className="" style={{ display: 'flex' }}>
-                      <div
-                        className=""
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'row',
-                          height: '32px',
-                          background: '#fff',
-                        }}
-                      >
-                        <button
-                          type="button"
-                          onClick={increaseNum}
-                          style={{
-                            width: '37px',
-                            height: '30px',
-                            background: '#fff',
-                            cursor: 'pointer',
-                          }}
-                        >
+                  <PdCalcButton>
+                    <PdCalcButtonContent>
+                      <PdCalcButtonLayout>
+                        <PdCalcLeftButton type="button" onClick={increaseNum}>
                           <OffScreenSpan>수량 증가 버튼</OffScreenSpan>
                           <FontAwesomeIcon icon={faPlus} />
-                        </button>
-                        <div
-                          className=""
-                          style={{
-                            width: '62px',
-                            fontSize: '13px',
-                            borderLeft: '1px solid #333',
-                            borderRight: '1px solid #333',
-                            textAlign: 'center',
-                            lineHeight: '30px',
-                          }}
-                        >
+                        </PdCalcLeftButton>
+                        <PdCalcCount>
                           <Input
                             type="number"
                             display="block"
@@ -342,63 +287,31 @@ function ProductDetail() {
                             textAlign="center"
                             disabled
                           />
-                        </div>
-                        <button
+                        </PdCalcCount>
+                        <PdCalcRightButton
                           type="button"
-                          style={{
-                            width: '37px',
-                            height: '30px',
-                            background: '#fff',
-                            cursor: 'pointer',
-                          }}
                           onClick={orderCount > 1 ? decreaseNum : ''}
                         >
                           <OffScreenSpan>수량 감소 버튼</OffScreenSpan>
                           <FontAwesomeIcon icon={faMinus} />
-                        </button>
-                      </div>
+                        </PdCalcRightButton>
+                      </PdCalcButtonLayout>
 
-                      <span style={{ marginLeft: 'auto', fontSize: '15px' }}>
-                        <strong
-                          style={{
-                            fontSize: '22px',
-                            fontWeight: '700',
-                            lineHeight: '22px',
-                            letterSpacing: '0px',
-                            wordBreak: 'keep-all',
-                            wordWrap: 'nowrap',
-                          }}
-                        >
+                      <PdCalcPrice>
+                        <PdCalcPriceBold>
                           {!orderTotal
                             ? Number(pdPrice).toLocaleString('ko-KR')
                             : Number(pdPrice * orderCount).toLocaleString(
                                 'ko-KR'
                               )}
-                        </strong>{' '}
+                        </PdCalcPriceBold>{' '}
                         원
-                      </span>
-                    </div>
-                  </div>
-                  <button
-                    type="submit"
-                    style={{
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      width: '130px',
-                      height: '54px',
-                      lineHeight: '51px',
-                      border: '1px solid #ff3c50',
-                      fontSize: '16px',
-                      textAlign: 'center',
-                      cursor: 'pointer',
-                      background: '#ff3c50',
-                      color: '#fff',
-                    }}
-                  >
-                    장바구니 담기
-                  </button>
-                  <Link
+                      </PdCalcPrice>
+                    </PdCalcButtonContent>
+                  </PdCalcButton>
+
+                  <PdCart type="button">장바구니 담기</PdCart>
+                  <PdEdit
                     to={`/edit/${_id}`}
                     role="button"
                     style={{
@@ -411,13 +324,13 @@ function ProductDetail() {
                     <FontAwesomeIcon
                       icon={faPenToSquare}
                       style={{
-                        fontSize: 50,
-                        color: '#000',
+                        fontSize: '40px',
+                        color: '#62a3d2',
                       }}
                     />
-                  </Link>
-                </div>
-              </div>
+                  </PdEdit>
+                </PdetailInfo>
+              </PdetailContainer>
             </PForm>
           </SectionContent>
         </SectionLayout>
