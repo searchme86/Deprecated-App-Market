@@ -1,12 +1,10 @@
 import React from 'react';
 import {
   ModalContent,
-  ModalForm,
   ModalHeader,
   ModalTitle,
 } from '../../../Components/Modal/Modal.style';
 import ModalFrame from '../../../Components/Modal/ModalFrame';
-// import { useSelector } from 'react-redux';
 import { Image, ImageHolder } from '../../../Assets/Styles/Image.style';
 import {
   ReportAlert,
@@ -46,11 +44,6 @@ import defaultImg from '../../../Assets/Image/default-product-upload.png';
 function ProductReport({ prReport }) {
   const { handleClose, isOpen, newProduct } = prReport;
 
-  // const {
-  //   user: {
-  //     result: { nickname },
-  //   },
-  // } = useSelector((state) => state.auth);
   const {
     pdUploaderNickname,
     pdUploaderImage,
