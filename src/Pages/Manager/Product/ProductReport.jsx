@@ -129,25 +129,39 @@ function ProductReport({ prReport }) {
                   <ReportUser>{pdUploaderNickname}</ReportUser>
                   님이 등록하시는 상품 요약입니다.
                 </ReportIntro>
-                <Breadcrumb as="div" mt="15px" mb="10px">
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#" fontWeight="bold" fontSize="18px">
-                      {pdCategory}
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
+                {pdCategory && pdBrand && pdType && (
+                  <Breadcrumb as="div" mt="15px" mb="10px">
+                    <BreadcrumbItem>
+                      <BreadcrumbLink
+                        href="#"
+                        fontWeight="bold"
+                        fontSize="18px"
+                      >
+                        {pdCategory}
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
 
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#" fontWeight="bold" fontSize="18px">
-                      {pdBrand}
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink
+                        href="#"
+                        fontWeight="bold"
+                        fontSize="18px"
+                      >
+                        {pdBrand}
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
 
-                  <BreadcrumbItem isCurrentPage>
-                    <BreadcrumbLink href="#" fontWeight="bold" fontSize="18px">
-                      {pdType}
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                </Breadcrumb>
+                    <BreadcrumbItem isCurrentPage>
+                      <BreadcrumbLink
+                        href="#"
+                        fontWeight="bold"
+                        fontSize="18px"
+                      >
+                        {pdType}
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                  </Breadcrumb>
+                )}
                 {/* {!isBlank && (
                 )} */}
               </ReportHeader>
@@ -255,13 +269,13 @@ function ProductReport({ prReport }) {
                       <ReportOverflowList>
                         {pdStatus.map((status, index) => (
                           <ReportOverflowLi key={index}>
-                            <ReportDOpinion>
+                            <ReportHashTag>
                               {!isBlank ? (
                                 <ReportBlank>공란</ReportBlank>
                               ) : (
-                                status
+                                `#${status}`
                               )}
-                            </ReportDOpinion>
+                            </ReportHashTag>
                           </ReportOverflowLi>
                         ))}
                       </ReportOverflowList>
