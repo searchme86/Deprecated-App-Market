@@ -360,7 +360,9 @@ function FashionUpload() {
   ].every(Boolean);
 
   const canSubmit = pdtags.length !== 0 && filledIn;
+  const canPreview = false;
   const checked = postModalOpen;
+
   // console.log(
   //   'disabled',
   //   pdCategory,
@@ -544,7 +546,12 @@ function FashionUpload() {
                   <PButtonArea>
                     <PButtonList>
                       <PButtonLi>
-                        <PFormButton type="button" onClick={handleFirstModal}>
+                        <PFormButton
+                          type="button"
+                          onClick={handleFirstModal}
+                          // canPreview={!canPreview}
+                          // disabled={!canPreview}
+                        >
                           상품페이지 미리보기
                         </PFormButton>
                       </PButtonLi>
@@ -703,7 +710,7 @@ function FashionUpload() {
                       id="pdPrice"
                       name="pdPrice"
                       autoComplete="off"
-                      placeholder="예)10000원 -> 10000"
+                      placeholder="예) 10000원 -> 10000"
                       {...register('pdPrice', {
                         required: '상품 가격을 입력해주세요',
                         maxLength: {
@@ -1081,7 +1088,7 @@ function FashionUpload() {
                                   autoComplete="off"
                                   value={pdPriceBySize}
                                   onChange={(e) => addSize(e, index)}
-                                  placeholder="예)1000원-> 1000"
+                                  placeholder="예) 1000원-> 1000"
                                 />
                                 <FormErrorMessage as="p">
                                   {errors?.pdPriceBySize &&
