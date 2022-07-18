@@ -14,23 +14,25 @@ import {
 import CardProduct from '../Components/CardProduct/CardProduct';
 import { OffScreenTitle } from '../Assets/Styles/Basic.style';
 import { Skeleton } from '@chakra-ui/react';
+import { ProductList } from './SectionProduct.style';
+import { SProductItem, SProductList } from '../Config/Styles/Skeleton.style';
 
-// const shuffle = (arr) => {
-//   if (!arr && !arr.length > 0) return;
-//   let currentIndex = arr.length;
-//   while (0 !== currentIndex) {
-//     let randomIndex = Math.floor(Math.random() * currentIndex);
-//     currentIndex -= 1;
-//     let temporary = arr[currentIndex];
-//     arr[currentIndex] = arr[randomIndex];
-//     arr[randomIndex] = temporary;
-//   }
-//   return arr.splice(0, 8);
-// };
+const shuffle = (arr) => {
+  if (!arr && !arr.length > 0) return;
+  // let currentIndex = arr.length;
+  // while (0 !== currentIndex) {
+  //   let randomIndex = Math.floor(Math.random() * currentIndex);
+  //   currentIndex -= 1;
+  //   let temporary = arr[currentIndex];
+  //   arr[currentIndex] = arr[randomIndex];
+  //   arr[randomIndex] = temporary;
+  // }
+  return arr.splice(0, 8);
+};
 
 function SectionProduct() {
   const {
-    product: { savedProducts },
+    product: { savedProducts, loading },
   } = useSelector(ProductSelector);
 
   const dispatch = useDispatch();
@@ -39,34 +41,51 @@ function SectionProduct() {
     dispatch(fetchAllProducts({}));
   }, []);
 
-  // let shuffledItems = savedProducts && shuffle(Object.values(savedProducts));
+  let shuffledItems = savedProducts && shuffle(Object.values(savedProducts));
 
   return (
     <SectionUnit color="#f2ead7">
       <SectionLayout>
         <OffScreenTitle>신규 등록 상품</OffScreenTitle>
         <SectionContent>
-          <div className="">
-            <ul
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                width: '100%',
-                marginTop: '10px',
-              }}
-            >
-              {/* {shuffledItems
+          {!loading ? (
+            <ProductList>
+              {shuffledItems
                 ? shuffledItems.map((item) => (
                     <CardProduct key={item._id} {...item} />
                   ))
                 : savedProducts.map((item) => (
                     <CardProduct key={item._id} {...item} />
-                  ))} */}
-              {savedProducts.map((item) => (
-                <CardProduct key={item._id} {...item} />
-              ))}
-            </ul>
-          </div>
+                  ))}
+            </ProductList>
+          ) : (
+            <SProductList>
+              <SProductItem>
+                <Skeleton />
+              </SProductItem>
+              <SProductItem>
+                <Skeleton />
+              </SProductItem>
+              <SProductItem>
+                <Skeleton />
+              </SProductItem>
+              <SProductItem>
+                <Skeleton />
+              </SProductItem>
+              <SProductItem>
+                <Skeleton />
+              </SProductItem>
+              <SProductItem>
+                <Skeleton />
+              </SProductItem>
+              <SProductItem>
+                <Skeleton />
+              </SProductItem>
+              <SProductItem>
+                <Skeleton />
+              </SProductItem>
+            </SProductList>
+          )}
         </SectionContent>
       </SectionLayout>
     </SectionUnit>
