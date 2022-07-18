@@ -21,6 +21,7 @@ import ProductDetail from '../Pages/ProductDetail';
 import UserEnter from '../Pages/Manager/User/Enter/UserEnter';
 import { useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import ProductList from '../Pages/ProductList';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -40,6 +41,7 @@ function AnimatedRoutes() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/tours/search" element={<Home />} />
+          <Route path="/productList" element={<ProductList />} />
           <Route path="/tours/tag/:tag" element={<TagTours />} />
           <Route
             path="/profile/:nickname"
