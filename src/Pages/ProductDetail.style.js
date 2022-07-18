@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 
 export const PdetailContainer = styled.div`
   display: flex;
-  height: 550px;
+  height: 590px;
+  margin: 30px 0 0 0;
 `;
 
 export const PdetailImage = styled.div`
@@ -147,5 +148,5 @@ export const RelatedSection = styled.ul`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  margin: 10px 0 0 0;
+  margin: 30px 0 0 0;
 `;

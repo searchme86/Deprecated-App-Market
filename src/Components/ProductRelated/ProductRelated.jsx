@@ -21,12 +21,14 @@ import {
   PCardDgree,
   PcardIconBox,
   PcardIcon,
+  PUserNickname,
 } from '../CardProduct/CardProduct.style';
 import { Image, ImageHolder } from '../../Assets/Styles/Image.style';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 import { RelatedImage, RelatedHref, RelatedInfo } from './ProductRelated.style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceSmileWink } from '@fortawesome/free-solid-svg-icons';
+import defaultImage from '../../Assets/Image/default-product-upload.png';
 
 function ProductRelated(related) {
   const {
@@ -43,6 +45,7 @@ function ProductRelated(related) {
     pdAddress,
     pdStatus,
     pdDegree,
+    pdtags,
   } = related;
 
   const {
@@ -111,95 +114,148 @@ function ProductRelated(related) {
             }}
           >
             <PCardIspace />
-            <Image
-              src={pdImage}
-              alt={pdTitle}
-              style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                top: '0',
-              }}
-            />
+
+            {pdImage ? (
+              <Image
+                src={pdImage}
+                alt={pdTitle}
+                style={{
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  top: '0',
+                }}
+              />
+            ) : (
+              <Image
+                src={defaultImage}
+                alt="기본 이미지"
+                style={{
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  top: '0',
+                }}
+              />
+            )}
           </ImageHolder>
         </RelatedHref>
       </RelatedImage>
 
       <RelatedInfo>
-        <PCardCategory>{pdCategory}</PCardCategory>
-        <Breadcrumb as="div" mt="5px">
-          <BreadcrumbItem>
-            <BreadcrumbLink fontWeight="bold" fontSize="18px">
-              {pdCategory}
-            </BreadcrumbLink>
-          </BreadcrumbItem>
+        {pdCategory ? (
+          <PCardCategory>{pdCategory}</PCardCategory>
+        ) : (
+          <PCardCategory>상품 타이틀</PCardCategory>
+        )}
+        {pdCategory && pdBrand && pdType && (
+          <Breadcrumb as="div" mt="5px">
+            <BreadcrumbItem>
+              <BreadcrumbLink fontWeight="bold" fontSize="18px">
+                {pdCategory}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
 
-          <BreadcrumbItem>
-            <BreadcrumbLink fontWeight="bold" fontSize="18px">
-              {pdBrand}
-            </BreadcrumbLink>
-          </BreadcrumbItem>
+            <BreadcrumbItem>
+              <BreadcrumbLink fontWeight="bold" fontSize="18px">
+                {pdBrand}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
 
-          <BreadcrumbItem isCurrentPage>
-            <BreadcrumbLink fontWeight="bold" fontSize="18px">
-              {pdType}
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        </Breadcrumb>
-        <PCardPrice>{`${Number(pdPrice).toLocaleString(
-          'ko-KR'
-        )} 원`}</PCardPrice>
-        <PCardTitle>
-          <Link to={`/product/${_id}`}>{pdTitle}</Link>
-        </PCardTitle>
-        <PCardTags>
-          {pdStatus.map((status, index) => (
-            <PCardTag key={index}>
-              <PCardTagText>#{status}</PCardTagText>
-            </PCardTag>
-          ))}
-        </PCardTags>
-        <PCardLike>
-          <MDBBtn
-            style={{ float: 'right' }}
-            tag="div"
-            color="none"
-            onClick={!user?.newUser ? null : handleLike}
-          >
-            {!user?.newUser ? (
-              <MDBTooltip title="좋아요는 로그인 후에 가능합니다." tag="p">
+            <BreadcrumbItem isCurrentPage>
+              <BreadcrumbLink fontWeight="bold" fontSize="18px">
+                {pdType}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
+        )}
+        {pdtags ? (
+          <PCardTags>
+            {pdtags.map((tags, index) => (
+              <PCardTag key={index}>
+                <PCardTagText>#{tags}</PCardTagText>
+              </PCardTag>
+            ))}
+          </PCardTags>
+        ) : (
+          ''
+        )}
+        {pdPrice ? (
+          <PCardPrice>
+            {`${Number(pdPrice).toLocaleString('ko-KR')}`}
+          </PCardPrice>
+        ) : (
+          <PCardPrice> 0 원</PCardPrice>
+        )}
+        {_id ? (
+          <PCardTitle>
+            <Link to={`/product/${_id}`}>{pdTitle}</Link>
+          </PCardTitle>
+        ) : (
+          <PCardTitle>
+            <Link to={`/`}>홈으로 이동</Link>
+          </PCardTitle>
+        )}
+        {pdStatus ? (
+          <PCardTags>
+            {pdStatus.map((status, index) => (
+              <PCardTag key={index}>
+                <PCardTagText>#{status}</PCardTagText>
+              </PCardTag>
+            ))}
+          </PCardTags>
+        ) : (
+          ''
+        )}
+
+        {user?.newUser ? (
+          <PCardLike>
+            <MDBBtn
+              style={{ float: 'right' }}
+              tag="div"
+              color="none"
+              onClick={!user?.newUser ? null : handleLike}
+            >
+              {!user?.newUser ? (
+                <MDBTooltip title="좋아요는 로그인 후에 가능합니다." tag="p">
+                  <Likes />
+                </MDBTooltip>
+              ) : (
                 <Likes />
-              </MDBTooltip>
-            ) : (
-              <Likes />
-            )}
-          </MDBBtn>
-
-          <PcardIconBox>
-            <PCardDgree>{pdDegree}</PCardDgree>
-            <PcardIcon>
-              <FontAwesomeIcon
-                icon={faFaceSmileWink}
-                style={{
-                  fontSize: '20px',
-                  color: '#303C6C',
-                  marginLeft: '2px',
-                }}
-              />
-            </PcardIcon>
-          </PcardIconBox>
-        </PCardLike>
-        <PCardUser>
-          <PUserImage>
-            <ImageHolder br="100%">
-              <Image src={pdUploaderImage} alt={pdUploaderNickname} />
-            </ImageHolder>
-          </PUserImage>
-          <PUserInfo>
-            <PUserAddress>{pdUploaderNickname}</PUserAddress>
-            <PUserAddress>{pdAddress}</PUserAddress>
-          </PUserInfo>
-        </PCardUser>
+              )}
+            </MDBBtn>
+            <PcardIconBox>
+              <PCardDgree>{pdDegree}</PCardDgree>
+              <PcardIcon>
+                <FontAwesomeIcon
+                  icon={faFaceSmileWink}
+                  style={{
+                    fontSize: '20px',
+                    color: '#303C6C',
+                    marginLeft: '2px',
+                  }}
+                />
+              </PcardIcon>
+            </PcardIconBox>
+          </PCardLike>
+        ) : (
+          ''
+        )}
+        {user?.newUser ? (
+          <PCardUser>
+            <PUserImage>
+              <ImageHolder br="100%">
+                <Image src={pdUploaderImage} alt={pdUploaderNickname} />
+              </ImageHolder>
+            </PUserImage>
+            <PUserInfo>
+              <PUserNickname>{pdUploaderNickname}</PUserNickname>
+              <PUserAddress>{pdAddress}</PUserAddress>
+            </PUserInfo>
+          </PCardUser>
+        ) : (
+          ''
+        )}
       </RelatedInfo>
     </PCardItem>
   );

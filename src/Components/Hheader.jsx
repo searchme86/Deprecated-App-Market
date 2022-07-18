@@ -31,8 +31,15 @@ function Hheader() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  if (user?.newUser?.token) {
-    const decodedToken = decode(user?.newUser?.token);
+  // if (user?.newUser?.token) {
+  //   const decodedToken = decode(user?.newUser?.token);
+  //   if (decodedToken.exp * 1000 < new Date().getTime()) {
+  //     //토큰이 만료된다면,
+  //     dispatch(setLogout());
+  //   }
+  // }
+  if (user?.token) {
+    const decodedToken = decode(user?.token);
     if (decodedToken.exp * 1000 < new Date().getTime()) {
       //토큰이 만료된다면,
       dispatch(setLogout());

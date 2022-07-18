@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SectionContent,
   SectionLayout,
@@ -6,10 +6,6 @@ import {
   SectionUnit,
 } from './Manager/Product/ProductUpload.style';
 
-import { Select, FormLabel } from '@chakra-ui/react';
-
-import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -20,11 +16,14 @@ import {
 
 import Pagination from '../Components/Pagination';
 import CardProduct from '../Components/CardProduct/CardProduct';
+import { ProductLayOut } from './SectionProduct.style';
+import { NoProduct, NoProductText } from './ProductList.style';
+import { Image, ImageHolder } from '../Assets/Styles/Image.style';
+import defaultImamge from '../Assets/Image/cat01.jpeg';
 
 function ProductList() {
-  const [change, setChange] = useState('');
   const {
-    product: { nproducts, loading, currentPage, numberOfPages },
+    product: { savedProducts, loading, currentPage, numberOfPages },
   } = useSelector(ProductSelector);
 
   const useQuery = () => {
@@ -39,46 +38,35 @@ function ProductList() {
     dispatch(ngetProducts(currentPage));
   }, [dispatch, currentPage]);
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm();
-
-  const changeCategory = (e) => {
-    setChange(e.target.value);
-  };
-
   return (
     <SectionUnit>
       <SectionLayout>
         <SectionTitle>신규 상품 둘러보기</SectionTitle>
         <SectionContent>
-          <div className="">
-            <ul
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                width: '100%',
-                marginTop: '10px',
-              }}
-            >
-              {nproducts &&
-                nproducts.map((item) => (
+          {savedProducts.length > 0 ? (
+            <ProductLayOut>
+              {savedProducts &&
+                savedProducts.map((item) => (
                   <CardProduct key={item._id} {...item} />
                 ))}
-            </ul>
-          </div>
-          <div className="">
-            {nproducts?.length > 0 && !searchQuery && (
-              <Pagination
-                setCurrentPage={setCurrentPage}
-                numberOfPages={numberOfPages}
-                currentPage={currentPage}
-                dispatch={dispatch}
-              />
-            )}
-          </div>
+            </ProductLayOut>
+          ) : (
+            <NoProduct>
+              <ImageHolder width="570px">
+                <Image src={defaultImamge} alt="기본이미지" />
+              </ImageHolder>
+              <NoProductText>현재 등록된 상품이 없습니다.</NoProductText>
+            </NoProduct>
+          )}
+
+          {savedProducts?.length > 0 && !searchQuery && (
+            <Pagination
+              setCurrentPage={setCurrentPage}
+              numberOfPages={numberOfPages}
+              currentPage={currentPage}
+              dispatch={dispatch}
+            />
+          )}
         </SectionContent>
       </SectionLayout>
     </SectionUnit>

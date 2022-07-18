@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const PCardItem = styled.li`
   width: calc((100% - 78px) / 4);
-  height: 500px;
-  margin: 0 13px 20px 13px;
+  height: 575px;
+  margin: 0 10px 10px 10px;
   &:first-child {
     margin-left: 0;
   }
@@ -25,9 +25,9 @@ export const PCardIspace = styled.span`
 `;
 
 export const PCardCategory = styled.span`
-  display: block;
-  width: 49px;
+  display: inline-block;
   background: #f4976c;
+  padding: 0 5px;
   font-size: 15px;
   color: #fff;
   text-align: center;
@@ -52,6 +52,7 @@ export const PCardTags = styled.ul`
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  margin: 10px 0 0 0;
 `;
 
 export const PCardTag = styled.li`
@@ -91,6 +92,17 @@ export const PCardDes = styled.p`
 export const PCardLike = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+export const PcardIconBox = styled.div`
+  display: flex;
+  margin: 0 0 0 auto;
+`;
+
+export const PcardIcon = styled.span`
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
 `;
 
 export const PCardDgree = styled.strong`
