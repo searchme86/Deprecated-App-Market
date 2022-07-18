@@ -207,7 +207,6 @@ function ProductDetail() {
                           <PdetailUserAddress>{pdAddress}</PdetailUserAddress>
                         </PdetailUserSection>
                       </PdetailUser>
-
                       <Breadcrumb as="div" mt="5px">
                         <BreadcrumbItem>
                           <BreadcrumbLink fontWeight="bold" fontSize="18px">
@@ -227,7 +226,6 @@ function ProductDetail() {
                           </BreadcrumbLink>
                         </BreadcrumbItem>
                       </Breadcrumb>
-
                       <PdetailTags>
                         {pdStatus &&
                           pdStatus.map((status, index) => (
@@ -237,8 +235,6 @@ function ProductDetail() {
                           ))}
                       </PdetailTags>
                       <PdetailItemDes>[ {pdDes} ]</PdetailItemDes>
-
-                      {/*  */}
                       <PdetailTags>
                         {pdtags &&
                           pdtags.map((tag, index) => (
@@ -247,9 +243,6 @@ function ProductDetail() {
                             </PdetailTagItems>
                           ))}
                       </PdetailTags>
-
-                      {/*  */}
-
                       <PdetailItemTitle>{pdTitle}</PdetailItemTitle>
                       <PdetailItemPrice>
                         <PdetailItemPriceBold>
@@ -278,7 +271,6 @@ function ProductDetail() {
                           ''
                         )}
                       </PdetailInfoElse>
-
                       <PdCalcButton>
                         <PdCalcButtonContent>
                           <PdCalcButtonLayout>
@@ -323,7 +315,6 @@ function ProductDetail() {
                           </PdCalcPrice>
                         </PdCalcButtonContent>
                       </PdCalcButton>
-
                       <PdCart type="button">장바구니 담기</PdCart>
                       <PdEdit
                         to={`/edit/${_id}`}

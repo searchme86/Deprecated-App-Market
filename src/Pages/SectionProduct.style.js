@@ -5,7 +5,6 @@ export const ProductLayOut = styled.ul`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  margin: 10px 0 10px 0;
 `;
 
 export const ProductMore = styled(Link)`

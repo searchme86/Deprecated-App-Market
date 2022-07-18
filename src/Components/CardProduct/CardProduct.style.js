@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const PCardItem = styled.li`
   width: calc((100% - 78px) / 4);
   height: 575px;
-  margin: 0 13px 0px 13px;
+  margin: 0 10px 10px 10px;
   &:first-child {
     margin-left: 0;
   }

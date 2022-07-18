@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components';
 
 export const SectionUnit = styled.div`
+  position: relative;
   width: 100%;
-  min-height: 660px;
-  padding: 60px 0 60px 0;
-  margin: 0 0 30px 0;
+  padding: 30px 0 30px 0;
+  ${'' /* min-height: 660px; */}
   background: ${({ color }) => (color ? `${color}` : '#fff ')};
 `;
 
@@ -20,6 +20,7 @@ export const SectionTitle = styled.h1`
   position: relative;
   font-size: 32px;
   font-weight: bold;
+  margin: 16px 0 0 0;
   padding: 0 0 16px 0;
   transition: 0.2s;
   line-height: 1;
@@ -43,7 +44,7 @@ export const SectionTitleDes = styled.p`
 `;
 
 export const SectionContent = styled.div`
-  margin: 30px 0 20px 0;
+  ${'' /* margin: 30px 0 20px 0; */}
 `;
 
 export const FlexContainer = styled.div`

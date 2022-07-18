@@ -88,6 +88,19 @@ export const PFormButton = styled(CommonBtn)`
       background: #ea035c;
       color: #fff;
     `}
+
+    ${
+    '' /* ${({ canPreview }) =>
+    canPreview
+      ? css`
+          background: #ea035c;
+          color: #fff;
+        `
+      : css`
+          cursor: not-allowed !important;
+          pointer-events: all !important;
+        `} */
+  }
 `;
 
 export const RegisterButton = styled(CommonBtn)`

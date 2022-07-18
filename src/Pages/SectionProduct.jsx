@@ -81,7 +81,7 @@ function SectionProduct() {
               </>
             ) : (
               <ProductLayOut>
-                <PCardItem style={{ height: '400px', background: '#62a3d2' }}>
+                <PCardItem style={{ background: '#62a3d2', height: '400px' }}>
                   <ImageHolder>
                     <Image src={defaultImage} alt="기본 이미지" />
                   </ImageHolder>
@@ -102,7 +102,7 @@ function SectionProduct() {
                     </PCardUser>
                   </RelatedInfo>
                 </PCardItem>
-                <PCardItem style={{ height: '400px', background: '#62a3d2' }}>
+                <PCardItem style={{ background: '#62a3d2', height: '400px' }}>
                   <ImageHolder>
                     <Image src={defaultImage} alt="기본 이미지" />
                   </ImageHolder>
@@ -123,7 +123,7 @@ function SectionProduct() {
                     </PCardUser>
                   </RelatedInfo>
                 </PCardItem>
-                <PCardItem style={{ height: '400px', background: '#62a3d2' }}>
+                <PCardItem style={{ background: '#62a3d2', height: '400px' }}>
                   <ImageHolder>
                     <Image src={defaultImage} alt="기본 이미지" />
                   </ImageHolder>
@@ -144,7 +144,7 @@ function SectionProduct() {
                     </PCardUser>
                   </RelatedInfo>
                 </PCardItem>
-                <PCardItem style={{ height: '400px', background: '#62a3d2' }}>
+                <PCardItem style={{ background: '#62a3d2', height: '400px' }}>
                   <ImageHolder>
                     <Image src={defaultImage} alt="기본 이미지" />
                   </ImageHolder>
