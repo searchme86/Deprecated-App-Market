@@ -82,6 +82,7 @@ function ProductDetail() {
         pdPrice,
         pdImage,
         pdStatus,
+        pdtags,
         pdDes,
         pdColorInfo,
         pdSizeInfo,
@@ -236,6 +237,19 @@ function ProductDetail() {
                           ))}
                       </PdetailTags>
                       <PdetailItemDes>[ {pdDes} ]</PdetailItemDes>
+
+                      {/*  */}
+                      <PdetailTags>
+                        {pdtags &&
+                          pdtags.map((tag, index) => (
+                            <PdetailTagItems key={index}>
+                              <PdetailTag>#{tag}</PdetailTag>
+                            </PdetailTagItems>
+                          ))}
+                      </PdetailTags>
+
+                      {/*  */}
+
                       <PdetailItemTitle>{pdTitle}</PdetailItemTitle>
                       <PdetailItemPrice>
                         <PdetailItemPriceBold>

@@ -21,7 +21,6 @@ export const PamphletContent = styled.div`
 export const PamphletList = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  margin: -60px -10px 0 -10px;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;

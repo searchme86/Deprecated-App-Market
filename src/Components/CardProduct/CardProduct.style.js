@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const PCardItem = styled.li`
   width: calc((100% - 78px) / 4);
-  height: 500px;
-  margin: 0 13px 20px 13px;
+  height: 575px;
+  margin: 0 13px 0px 13px;
   &:first-child {
     margin-left: 0;
   }
