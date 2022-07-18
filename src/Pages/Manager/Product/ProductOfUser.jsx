@@ -71,9 +71,10 @@ function ProductOfUser() {
   // } = useSelector(AuthSelector);
   const {
     auth: {
-      user: {
-        newUser: { _id: userId },
-      },
+      user: { newUser },
+      // user: {
+      //   newUser: { _id: userId },
+      // },
     },
   } = useSelector(AuthSelector);
   const dispatch = useDispatch();
@@ -83,8 +84,8 @@ function ProductOfUser() {
   } = useSelector(ProductSelector);
 
   useEffect(() => {
-    if (userId) {
-      dispatch(getProductsByUser(userId));
+    if (newUser?._id) {
+      dispatch(getProductsByUser(newUser?._id));
     }
   }, []);
 
