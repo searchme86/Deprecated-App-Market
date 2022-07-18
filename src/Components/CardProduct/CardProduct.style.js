@@ -25,9 +25,9 @@ export const PCardIspace = styled.span`
 `;
 
 export const PCardCategory = styled.span`
-  display: block;
-  width: 49px;
+  display: inline-block;
   background: #f4976c;
+  padding: 0 5px;
   font-size: 15px;
   color: #fff;
   text-align: center;
@@ -91,6 +91,17 @@ export const PCardDes = styled.p`
 export const PCardLike = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+export const PcardIconBox = styled.div`
+  display: flex;
+  margin: 0 0 0 auto;
+`;
+
+export const PcardIcon = styled.span`
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
 `;
 
 export const PCardDgree = styled.strong`

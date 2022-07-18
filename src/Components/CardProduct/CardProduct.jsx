@@ -1,10 +1,3 @@
-/**
- * _id :  각 상품이 저장될때, 상품 하나의 해당하는 몽고Documents의 _id 값
- *
- *
- *
- *  */
-
 import React from 'react';
 import { MDBBtn, MDBIcon, MDBTooltip } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
@@ -23,11 +16,24 @@ import {
   PCardDes,
   PCardTitle,
   PUserNickname,
+  PCardTags,
+  PCardTag,
+  PCardTagText,
+  PCardLike,
+  PcardIconBox,
+  PCardDgree,
+  PcardIcon,
 } from './CardProduct.style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceSmileWink } from '@fortawesome/free-solid-svg-icons';
 
 import { AuthSelector } from '../../Store/Features/AuthSlice.js';
+
+import {
+  RelatedImage,
+  RelatedHref,
+  RelatedInfo,
+} from '../ProductRelated/ProductRelated.style.js';
 
 function CardProduct(item) {
   const {
@@ -37,9 +43,7 @@ function CardProduct(item) {
     pdCategory,
     pdImage,
     pdPrice,
-    pdDes,
     pdTitle,
-    pdtags,
     pdlikes,
     pdAddress,
     pdStatus,
@@ -62,13 +66,13 @@ function CardProduct(item) {
 
           {pdlikes.length > 2 ? (
             <MDBTooltip
-              tag="a"
+              tag="p"
               title={`You and ${pdlikes.length - 1} other people likes`}
             >
               {pdlikes.length} Likes
             </MDBTooltip>
           ) : (
-            `${pdlikes.length} Like${pdlikes.length > 1 ? 's' : ''}`
+            `${pdlikes.length} Like ${pdlikes.length > 1 ? 's' : ''}`
           )}
         </>
       ) : (
@@ -94,8 +98,8 @@ function CardProduct(item) {
   return (
     <>
       <PCardItem>
-        <div className="">
-          <Link to={`/product/${_id}`}>
+        <RelatedImage>
+          <RelatedHref to={`/product/${_id}`}>
             <ImageHolder
               height="150px"
               style={{
@@ -119,71 +123,53 @@ function CardProduct(item) {
                 }}
               />
             </ImageHolder>
-          </Link>
-        </div>
-        <div className="" style={{ padding: '5px', boxSizing: 'border-box' }}>
-          <div className="">
-            <PCardCategory>{pdCategory}</PCardCategory>
-            <PCardPrice>
-              {`${Number(pdPrice).toLocaleString('ko-KR')}`}
-            </PCardPrice>
-            <PCardTitle>
-              <Link to={`/product/${_id}`}>{pdTitle}</Link>
-            </PCardTitle>
-            <div
-              className=""
-              style={{ display: 'flex', justifyContent: 'space-between' }}
+          </RelatedHref>
+        </RelatedImage>
+
+        <RelatedInfo>
+          <PCardCategory>{pdCategory}</PCardCategory>
+          <PCardPrice>
+            {`${Number(pdPrice).toLocaleString('ko-KR')}`}
+          </PCardPrice>
+          <PCardTitle>
+            <Link to={`/product/${_id}`}>{pdTitle}</Link>
+          </PCardTitle>
+          <PCardTags>
+            {pdStatus.map((status, index) => (
+              <PCardTag key={index}>
+                <PCardTagText>#{status}</PCardTagText>
+              </PCardTag>
+            ))}
+          </PCardTags>
+          <PCardLike>
+            <MDBBtn
+              style={{ float: 'right' }}
+              tag="div"
+              color="none"
+              onClick={!user?.newUser ? null : handleLike}
             >
-              <MDBBtn
-                style={{ float: 'right' }}
-                tag="button"
-                color="none"
-                onClick={!user?.newUser ? null : handleLike}
-              >
-                {!user?.newUser ? (
-                  <MDBTooltip
-                    title="좋아요는 로그인 후에 가능합니다."
-                    tag="span"
-                  >
-                    <Likes />
-                  </MDBTooltip>
-                ) : (
+              {!user?.newUser ? (
+                <MDBTooltip title="좋아요는 로그인 후에 가능합니다." tag="p">
                   <Likes />
-                )}
-              </MDBBtn>
-              <div
-                className=""
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <span
+                </MDBTooltip>
+              ) : (
+                <Likes />
+              )}
+            </MDBBtn>
+            <PcardIconBox>
+              <PCardDgree>{pdDegree}</PCardDgree>
+              <PcardIcon>
+                <FontAwesomeIcon
+                  icon={faFaceSmileWink}
                   style={{
-                    marginRight: '2px',
-                    lineHeight: '1',
-                    display: 'inline-block',
-                    verticalAlign: 'middle',
+                    fontSize: '20px',
+                    color: '#303C6C',
+                    marginLeft: '2px',
                   }}
-                >
-                  {pdDegree}
-                </span>
-                <span
-                  style={{
-                    lineHeight: '1',
-                    display: 'inline-block',
-                    verticalAlign: 'middle',
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={faFaceSmileWink}
-                    style={{ fontSize: '20px', color: '#303C6C' }}
-                  />
-                </span>
-              </div>
-            </div>
-          </div>
+                />
+              </PcardIcon>
+            </PcardIconBox>
+          </PCardLike>
 
           <PCardUser>
             <PUserImage>
@@ -196,7 +182,7 @@ function CardProduct(item) {
               <PUserAddress>{pdAddress}</PUserAddress>
             </PUserInfo>
           </PCardUser>
-        </div>
+        </RelatedInfo>
       </PCardItem>
     </>
   );
