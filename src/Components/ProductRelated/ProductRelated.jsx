@@ -43,6 +43,7 @@ function ProductRelated(related) {
     pdAddress,
     pdStatus,
     pdDegree,
+    pdtags,
   } = related;
 
   const {
@@ -146,6 +147,13 @@ function ProductRelated(related) {
             </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
+        <PCardTags>
+          {pdtags.map((tags, index) => (
+            <PCardTag key={index}>
+              <PCardTagText>#{tags}</PCardTagText>
+            </PCardTag>
+          ))}
+        </PCardTags>
         <PCardPrice>{`${Number(pdPrice).toLocaleString(
           'ko-KR'
         )} 원`}</PCardPrice>

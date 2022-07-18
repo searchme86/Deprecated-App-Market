@@ -48,8 +48,10 @@ function CardProduct(item) {
     pdAddress,
     pdStatus,
     pdDegree,
+    pdtags,
   } = item;
 
+  console.log('pdtags', pdtags);
   const {
     auth: { user },
   } = useSelector(AuthSelector);
@@ -128,6 +130,13 @@ function CardProduct(item) {
 
         <RelatedInfo>
           <PCardCategory>{pdCategory}</PCardCategory>
+          <PCardTags>
+            {pdtags.map((tags, index) => (
+              <PCardTag key={index}>
+                <PCardTagText>#{tags}</PCardTagText>
+              </PCardTag>
+            ))}
+          </PCardTags>
           <PCardPrice>
             {`${Number(pdPrice).toLocaleString('ko-KR')}`}
           </PCardPrice>

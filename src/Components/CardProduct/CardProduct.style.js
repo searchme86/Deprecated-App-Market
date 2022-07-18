@@ -52,6 +52,7 @@ export const PCardTags = styled.ul`
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  margin: 10px 0 0 0;
 `;
 
 export const PCardTag = styled.li`
