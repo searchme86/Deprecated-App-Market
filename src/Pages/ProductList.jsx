@@ -17,6 +17,9 @@ import {
 import Pagination from '../Components/Pagination';
 import CardProduct from '../Components/CardProduct/CardProduct';
 import { ProductLayOut } from './SectionProduct.style';
+import { NoProduct, NoProductText } from './ProductList.style';
+import { Image, ImageHolder } from '../Assets/Styles/Image.style';
+import defaultImamge from '../Assets/Image/cat01.jpeg';
 
 function ProductList() {
   const {
@@ -48,7 +51,12 @@ function ProductList() {
                 ))}
             </ProductLayOut>
           ) : (
-            <p>현재 등록된 상품이 없습니다.</p>
+            <NoProduct>
+              <ImageHolder width="570px">
+                <Image src={defaultImamge} alt="기본이미지" />
+              </ImageHolder>
+              <NoProductText>현재 등록된 상품이 없습니다.</NoProductText>
+            </NoProduct>
           )}
 
           {savedProducts?.length > 0 && !searchQuery && (

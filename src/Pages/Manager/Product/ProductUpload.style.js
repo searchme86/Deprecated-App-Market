@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const SectionUnit = styled.div`
   width: 100%;
-  height: 660px;
+  min-height: 660px;
   padding: 60px 0 60px 0;
   margin: 0 0 30px 0;
   background: ${({ color }) => (color ? `${color}` : '#fff ')};
