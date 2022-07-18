@@ -14,7 +14,7 @@ import {
 import CardProduct from '../Components/CardProduct/CardProduct';
 import { OffScreenTitle } from '../Assets/Styles/Basic.style';
 import { Skeleton } from '@chakra-ui/react';
-import { ProductList } from './SectionProduct.style';
+import { ProductLayOut, ProductMore } from './SectionProduct.style';
 import { SProductItem, SProductList } from '../Config/Styles/Skeleton.style';
 
 const shuffle = (arr) => {
@@ -49,15 +49,18 @@ function SectionProduct() {
         <OffScreenTitle>신규 등록 상품</OffScreenTitle>
         <SectionContent>
           {!loading ? (
-            <ProductList>
-              {shuffledItems
-                ? shuffledItems.map((item) => (
-                    <CardProduct key={item._id} {...item} />
-                  ))
-                : savedProducts.map((item) => (
-                    <CardProduct key={item._id} {...item} />
-                  ))}
-            </ProductList>
+            <>
+              <ProductLayOut>
+                {shuffledItems
+                  ? shuffledItems.map((item) => (
+                      <CardProduct key={item._id} {...item} />
+                    ))
+                  : savedProducts.map((item) => (
+                      <CardProduct key={item._id} {...item} />
+                    ))}
+              </ProductLayOut>
+              <ProductMore to={'/productList'}>더보기</ProductMore>
+            </>
           ) : (
             <SProductList>
               <SProductItem>
