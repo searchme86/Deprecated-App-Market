@@ -68,6 +68,10 @@ function UserPage() {
   // 인풋의 값을 보이고 안 보이는데 값을 저장할 용도
   const [visible, setVisible] = useState(false);
 
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
+
   //버튼, 비밀번호 중복확인을 클릭하는 핸들러 함수
   const checkMatch = (e) => {
     e.preventDefault();
@@ -115,10 +119,6 @@ function UserPage() {
   const showText = () => {
     setVisible((value) => !value);
   };
-
-  useEffect(() => {
-    error && toast.error(error);
-  }, [error]);
 
   const {
     handleSubmit,
