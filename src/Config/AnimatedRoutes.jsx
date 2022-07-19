@@ -73,7 +73,9 @@ function AnimatedRoutes() {
           {/*  */}
           {/*  */}
 
+          <Route path="/productList/" element={<ProductList />} />
           <Route path="/product/category/:id" element={<CategoryProduct />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
           <Route
             path="/profile/:nickname"
             element={
@@ -115,7 +117,7 @@ function AnimatedRoutes() {
               </PrivateRoute>
             }
           />
-          <Route path="/product/:id" element={<ProductDetail />} />
+
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
