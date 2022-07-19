@@ -23,7 +23,7 @@ import defaultImamge from '../Assets/Image/cat01.jpeg';
 
 function ProductList() {
   const {
-    product: { savedProducts, loading, currentPage, numberOfPages },
+    product: { nproducts, loading, currentPage, numberOfPages },
   } = useSelector(ProductSelector);
 
   const useQuery = () => {
@@ -43,10 +43,10 @@ function ProductList() {
       <SectionLayout>
         <SectionTitle>신규 상품 둘러보기</SectionTitle>
         <SectionContent>
-          {savedProducts.length > 0 ? (
+          {nproducts.length > 0 ? (
             <ProductLayOut>
-              {savedProducts &&
-                savedProducts.map((item) => (
+              {nproducts &&
+                nproducts.map((item) => (
                   <CardProduct key={item._id} {...item} />
                 ))}
             </ProductLayOut>
@@ -59,7 +59,7 @@ function ProductList() {
             </NoProduct>
           )}
 
-          {savedProducts?.length > 0 && !searchQuery && (
+          {nproducts?.length > 0 && !searchQuery && (
             <Pagination
               setCurrentPage={setCurrentPage}
               numberOfPages={numberOfPages}
