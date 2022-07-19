@@ -65,8 +65,12 @@ function UpdateCateory({ UpdateProps }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { categoryTitle, categoryDescription, categoryLink, ImageDescription } =
-    category;
+  const {
+    categoryTitle,
+    categoryDescription,
+    // categoryLink,
+    ImageDescription,
+  } = category;
   const { newTitle, newDescription, newLink, newImageDescription } =
     updatedCategory;
 
@@ -228,7 +232,7 @@ function UpdateCateory({ UpdateProps }) {
                   </ModalItem>
 
                   {/* 카테코리 링크 */}
-                  <ModalItem>
+                  {/* <ModalItem>
                     <AlignComponents>
                       <ModalHalf mr="10">
                         <FormLabel
@@ -281,7 +285,7 @@ function UpdateCateory({ UpdateProps }) {
                         <ModalDesIndication>{categoryLink}</ModalDesIndication>
                       </ModalHalf>
                     </AlignComponents>
-                  </ModalItem>
+                  </ModalItem> */}
 
                   {/* 카테고리 이미지 */}
                   <ModalItem>
