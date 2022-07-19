@@ -22,6 +22,7 @@ import UserEnter from '../Pages/Manager/User/Enter/UserEnter';
 import { useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import ProductList from '../Pages/ProductList';
+import CategoryProduct from '../Pages/Manager/category/CategoryProduct';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -40,9 +41,39 @@ function AnimatedRoutes() {
         <Route path="/register" element={<UserEnter />} />
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/tours/search" element={<Home />} />
-          <Route path="/productList" element={<ProductList />} />
+          {/*  */}
+          {/*  */}
           <Route path="/tours/tag/:tag" element={<TagTours />} />
+          <Route path="/tours/search" element={<Home />} />
+          <Route
+            path="/addTour"
+            element={
+              <PrivateRoute>
+                <AddEditTour />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/editTour/:id"
+            element={
+              <PrivateRoute>
+                <AddEditTour />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/tour/:id" element={<SingleTour />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          {/*  */}
+          {/*  */}
+
+          <Route path="/product/category/:id" element={<CategoryProduct />} />
           <Route
             path="/profile/:nickname"
             element={
@@ -84,32 +115,7 @@ function AnimatedRoutes() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/addTour"
-            element={
-              <PrivateRoute>
-                <AddEditTour />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/editTour/:id"
-            element={
-              <PrivateRoute>
-                <AddEditTour />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/tour/:id" element={<SingleTour />} />
           <Route path="/product/:id" element={<ProductDetail />} />
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
