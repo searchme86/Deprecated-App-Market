@@ -7,7 +7,7 @@ import {
   CreateCategoryBtn,
   FunctionList,
 } from './Category.style';
-import { OffScreen } from '../../../Assets/Styles/Basic.style';
+import { OffScreen, OffScreenSpan } from '../../../Assets/Styles/Basic.style';
 import {
   ListContainer,
   ContentDivider,
@@ -207,6 +207,7 @@ function CategoryView({ categories }) {
               )}
             </ListContainer>
             <CreateCategoryBtn onClick={handleFirstModal}>
+              <OffScreenSpan>카테고리 생성버튼</OffScreenSpan>
               <FontAwesomeIcon icon={faCirclePlus} style={{ fontSize: 50 }} />
             </CreateCategoryBtn>
           </AlignComponents>
