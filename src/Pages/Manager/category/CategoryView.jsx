@@ -170,7 +170,7 @@ function CategoryView({ categories }) {
                   ImageDescription,
                 }) => (
                   <CategoryItem key={_id}>
-                    <Link to={`localhost:3000/product/${categoryLink}`}>
+                    <Link to={`/product/${categoryLink}`}>
                       <ImageHolder height="150px">
                         <Image
                           src={imageFile}
