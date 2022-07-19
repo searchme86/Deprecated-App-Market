@@ -148,7 +148,7 @@ function CategoryModal({ ParentProps }) {
                     카테고리 링크
                   </FormLabel>
                   <InputGroup size="sm">
-                    <InputLeftAddon children="category/" />
+                    <InputLeftAddon children="localhost:3000/product/" />
                     <Input
                       id="categoryLink"
                       type="text"
@@ -174,7 +174,6 @@ function CategoryModal({ ParentProps }) {
                       focusBorderColor="lime"
                       errorBorderColor="crimson"
                     />
-                    <InputRightAddon children=".com" />
                   </InputGroup>
                   <FormErrorMessage as="p">
                     {errors.categoryLink && errors.categoryLink.message}
