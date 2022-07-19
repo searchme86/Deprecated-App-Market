@@ -53,7 +53,6 @@ function CardProduct(item) {
     pdtags,
   } = item;
 
-  console.log('pdtags', pdtags);
   const {
     auth: { user },
   } = useSelector(AuthSelector);
