@@ -35,17 +35,12 @@ import {
 import { useForm } from 'react-hook-form';
 import FileBase from 'react-file-base64';
 import { useDebounce } from '../../../Components/useDebounce';
-import useOnClickOutside from '../../../Components/Select/SelectConfig/useOnClickOutside';
 
 function UserPage() {
   const {
     auth: {
-      profile,
       status,
       user: { newUser },
-      // user: {
-      //   newUser: { imageFile: ImgSrc, name: UserName },
-      // },
       error,
       pwdChangable,
     },
@@ -73,11 +68,9 @@ function UserPage() {
   // 인풋의 값을 보이고 안 보이는데 값을 저장할 용도
   const [visible, setVisible] = useState(false);
 
-  // 폼 아래 얼럿창 핸들링 스테이트
-  // const [flag, setFlag] = useState(false);
-
-  // 비밀번호 버튼 아래 메세지 핸들링 스테이트
-  // const [msgState, setMsgState] = useState(false);
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
 
   //버튼, 비밀번호 중복확인을 클릭하는 핸들러 함수
   const checkMatch = (e) => {
@@ -127,20 +120,6 @@ function UserPage() {
     setVisible((value) => !value);
   };
 
-  const clickOutside = () => {
-    console.log('dddddddddd');
-  };
-
-  // useEffect(() => {
-  //   if (changable) {
-  //     setFlag(true);
-  //   }
-  // }, [changable]);
-
-  useEffect(() => {
-    error && toast.error(error);
-  }, [error]);
-
   const {
     handleSubmit,
     register,
@@ -148,8 +127,6 @@ function UserPage() {
   } = useForm();
 
   const { confirmPassword, imageFile } = newProfile;
-
-  useOnClickOutside(confirmRef, clickOutside);
 
   // 핵심
   // 초반에는 버튼이 disabeld
@@ -163,10 +140,6 @@ function UserPage() {
     if (!confirmPassword && !imageFile) return;
     dispatch(changeUserInfo({ nickname, newProfile }));
   };
-
-  console.log('current', current);
-
-  console.log('newProfile', newProfile);
 
   return (
     <>

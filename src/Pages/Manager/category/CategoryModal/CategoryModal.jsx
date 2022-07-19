@@ -44,7 +44,7 @@ function CategoryModal({ ParentProps }) {
     registerForm,
     categoryTitle,
     categoryDescription,
-    categoryLink,
+    // categoryLink,
     ImageDescription,
     canTrigger,
   } = ParentProps;
@@ -143,12 +143,12 @@ function CategoryModal({ ParentProps }) {
                       errors.categoryDescription.message}
                   </FormErrorMessage>
                 </ModalItem>
-                <ModalItem>
+                {/* <ModalItem>
                   <FormLabel htmlFor="categoryLink" mb={0} mr={0} fontSize={16}>
                     카테고리 링크
                   </FormLabel>
                   <InputGroup size="sm">
-                    <InputLeftAddon children="category/" />
+                    <InputLeftAddon children="localhost:3000/product/" />
                     <Input
                       id="categoryLink"
                       type="text"
@@ -174,12 +174,11 @@ function CategoryModal({ ParentProps }) {
                       focusBorderColor="lime"
                       errorBorderColor="crimson"
                     />
-                    <InputRightAddon children=".com" />
                   </InputGroup>
                   <FormErrorMessage as="p">
                     {errors.categoryLink && errors.categoryLink.message}
                   </FormErrorMessage>
-                </ModalItem>
+                </ModalItem> */}
                 <ModalItem>
                   <div className="">
                     <FileBase
@@ -258,7 +257,7 @@ function CategoryModal({ ParentProps }) {
                       입니다. (예: 전기전자 제품을 확인 할 수 있습니다. )
                     </ModalInfoDes>
                   </ModalItem>
-                  <ModalItem mb="10" display="flex">
+                  {/* <ModalItem mb="10" display="flex">
                     <FontAwesomeIcon
                       icon={faCheck}
                       style={{ fontSize: 10, color: '#ffd43b' }}
@@ -268,7 +267,7 @@ function CategoryModal({ ParentProps }) {
                       <ModalInfoBold>이동할 페이지 주소</ModalInfoBold>를
                       의미합니다. (예: electric)
                     </ModalInfoDes>
-                  </ModalItem>
+                  </ModalItem> */}
                   <ModalItem mb="10" display="flex">
                     <FontAwesomeIcon
                       icon={faCheck}

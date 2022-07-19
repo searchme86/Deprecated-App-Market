@@ -116,8 +116,6 @@ function Login() {
     }
   };
 
-  console.log('error', error);
-  console.log('errorMsg', errMsg);
   return (
     <LoginWrapper
       initial={{ width: 0 }}

@@ -114,10 +114,6 @@ function SearchBox() {
 
   SearchDebounce(query, 500, findItem);
 
-  console.log('query', query.length);
-  console.log('expand', Expand);
-  console.log('height', height);
-
   return (
     <>
       <SearchBarContainer

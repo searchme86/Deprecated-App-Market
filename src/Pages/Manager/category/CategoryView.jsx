@@ -7,7 +7,7 @@ import {
   CreateCategoryBtn,
   FunctionList,
 } from './Category.style';
-import { OffScreen } from '../../../Assets/Styles/Basic.style';
+import { OffScreen, OffScreenSpan } from '../../../Assets/Styles/Basic.style';
 import {
   ListContainer,
   ContentDivider,
@@ -35,7 +35,7 @@ function CategoryView({ categories }) {
   const initialState = {
     categoryTitle: '',
     categoryDescription: '',
-    categoryLink: '',
+    // categoryLink: '',
     ImageDescription: '',
   };
 
@@ -48,8 +48,12 @@ function CategoryView({ categories }) {
   const { error } = useSelector((state) => state.category);
   const navigate = useNavigate();
 
-  const { categoryTitle, categoryDescription, categoryLink, ImageDescription } =
-    category;
+  const {
+    categoryTitle,
+    categoryDescription,
+    // categoryLink,
+    ImageDescription,
+  } = category;
 
   useEffect(() => {
     error && toast.error(error);
@@ -97,7 +101,7 @@ function CategoryView({ categories }) {
     setCategory({
       categoryTitle: '',
       categoryDescription: '',
-      categoryLink: '',
+      // categoryLink: '',
       ImageDescription: '',
       imageFile: '',
     });
@@ -107,7 +111,7 @@ function CategoryView({ categories }) {
     if (
       categoryTitle &&
       categoryDescription &&
-      categoryLink &&
+      // categoryLink &&
       ImageDescription
     ) {
       dispatch(createCategory({ category, toast, navigate }));
@@ -120,7 +124,7 @@ function CategoryView({ categories }) {
     category,
     categoryTitle,
     categoryDescription,
-    categoryLink,
+    // categoryLink,
     ImageDescription,
     handleClear,
     handleClose,
@@ -129,7 +133,7 @@ function CategoryView({ categories }) {
   const canTrigger = [
     categoryTitle,
     categoryDescription,
-    categoryLink,
+    // categoryLink,
     ImageDescription,
   ].every(Boolean);
 
@@ -143,7 +147,7 @@ function CategoryView({ categories }) {
     registerForm,
     categoryTitle,
     categoryDescription,
-    categoryLink,
+    // categoryLink,
     ImageDescription,
     canTrigger,
   };
@@ -170,7 +174,7 @@ function CategoryView({ categories }) {
                   ImageDescription,
                 }) => (
                   <CategoryItem key={_id}>
-                    <Link to={categoryLink}>
+                    <Link to={`/product/category/${categoryTitle}`}>
                       <ImageHolder height="150px">
                         <Image
                           src={imageFile}
@@ -207,6 +211,7 @@ function CategoryView({ categories }) {
               )}
             </ListContainer>
             <CreateCategoryBtn onClick={handleFirstModal}>
+              <OffScreenSpan>카테고리 생성버튼</OffScreenSpan>
               <FontAwesomeIcon icon={faCirclePlus} style={{ fontSize: 50 }} />
             </CreateCategoryBtn>
           </AlignComponents>
@@ -220,12 +225,12 @@ function CategoryView({ categories }) {
               _id,
               categoryTitle,
               categoryDescription,
-              categoryLink,
+
               imageFile,
               ImageDescription,
             }) => (
               <CategoryItem key={_id}>
-                <Link to={categoryLink}>
+                <Link to={`/product/category/${categoryTitle}`}>
                   <ImageHolder height="150px">
                     <Image
                       src={imageFile}
