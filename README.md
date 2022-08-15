@@ -9,6 +9,6 @@
 #### 종료 : 08/11, 2022
 ---
 
-#### 3. 작업 레포지토리
+#### 3. 관련 레포지토리
 #### (리팩터링) : https://github.com/searchme86/Refactoring-App-agora-Market
 #### (배포) : https://github.com/searchme86/App_Final_Deployed
