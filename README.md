@@ -1,4 +1,4 @@
-#### [#작업코드, #Deprecated, #Base Product] 포트폴리오, Agora, 작업물
+#### [#작업코드, #Deprecated, #Base Product] App, Agora 어플리케이션
 
 #### 1. 레포지토리 소개
 #### App, Agora의 프로젝트 작업코드 모음
