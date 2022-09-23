@@ -1,4 +1,4 @@
-#### [#작업코드, #Deprecated, #Base Product] App, Agora 어플리케이션 ( https://fleamarketagora.herokuapp.com/ )
+#### [#작업코드, #Base Product] App, Agora 어플리케이션 ( https://fleamarketagora.herokuapp.com/ )
 
 #### 1. 레포지토리 소개
 #### App, Agora의 프로젝트 작업코드 모음
